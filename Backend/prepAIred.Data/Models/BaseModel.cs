@@ -20,7 +20,7 @@ namespace prepAIred.Data
         /// </summary>
         /// <value>The creation timestamp, defaults to the current date and time.</value>
         [Required]
-        public DateTime DateCreated { get; set; } = DateTime.Now;
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Converts the model to its corresponding DTO type.
