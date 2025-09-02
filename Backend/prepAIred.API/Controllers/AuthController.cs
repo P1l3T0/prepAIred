@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace prepAIred.API
 {
-    /// <summary>
-    /// Controller for handling authentication-related endpoints.
-    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class AuthController(IAuthRepository authRepository, IRefreshTokenRepository refreshTokenRepository) : Controller
@@ -43,7 +40,6 @@ namespace prepAIred.API
         }
 
         [HttpPost("refresh-token")]
-        [Route("")]
         public async Task<IActionResult> GenerateNewRefreshToken()
         {
             try
