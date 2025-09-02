@@ -1,4 +1,5 @@
 using prepAIred.Data;
+using prepAIred.Services;
 using DotNetEnv;
 using DotNetEnv.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,15 @@ builder.Services.AddDbContext<DataContext>(options =>
     string connectionString = builder.Configuration["Appsettings:DefaultConnection"]!;
     options.UseSqlServer(connectionString);
 });
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<ICookieService, CookieService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
