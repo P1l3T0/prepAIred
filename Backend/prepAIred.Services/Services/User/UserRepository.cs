@@ -2,19 +2,22 @@
 
 namespace prepAIred.Services
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository(IUserService userService) : IUserRepository
     {
-        public Task<CurrentUserDTO> GetCurrentUserAsync()
+        private readonly IUserService _userService = userService;
+
+        public async Task<CurrentUserDTO> GetCurrentUserAsync()
+        {
+            User user = await _userService.GetCurrentUserAsync();
+            return user.ToDto<CurrentUserDTO>();
+        }
+
+        public Task DeleteUser(int userID)
         {
             throw new NotImplementedException();
         }
 
         public Task<User> UpdateUserAsync(int userID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteUser(int userID)
         {
             throw new NotImplementedException();
         }

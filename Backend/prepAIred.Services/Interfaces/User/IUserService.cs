@@ -91,6 +91,6 @@ namespace prepAIred.Services
         /// </summary>
         /// <param name="userPrincipal">The current user's claims principal.</param>
         /// <returns>The username from the claims principal.</returns>
-        string GetCurrentUserUsername(ClaimsPrincipal userPrincipal);
+        string? GetCurrentUserUsername(ClaimsPrincipal userPrincipal);
     }
 }
