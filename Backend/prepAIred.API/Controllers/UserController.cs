@@ -2,8 +2,17 @@
 using prepAIred.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace prepAIred.API.Controllers
+namespace prepAIred.API
 {
+    /// <summary>
+    /// Provides endpoints for managing user-related operations.
+    /// </summary>
+    /// <remarks>
+    /// This controller is responsible for handling HTTP requests related to user data. It interacts
+    /// with the <see cref="IUserRepository"/> to retrieve and manage user information.
+    /// </remarks>
+    /// <param name="userRepository">Repository for handling user-related operations</param>
+    [ApiController]
     [Route("[controller]")]
     public class UserController(IUserRepository userRepository) : Controller
     {

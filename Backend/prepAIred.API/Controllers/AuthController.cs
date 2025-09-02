@@ -4,6 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace prepAIred.API
 {
+    /// <summary>
+    /// Provides endpoints for authentication and authorization operations.
+    /// </summary>
+    /// <remarks>
+    /// This controller is responsible for handling HTTP requests related to authentication flows. It interacts 
+    /// with the <see cref="IAuthRepository"/> for authentication operations and <see cref="IRefreshTokenRepository"/> for token management.
+    /// </remarks>
+    /// <param name="authRepository">Repository for handling authentication operations</param>
+    /// <param name="refreshTokenRepository">Repository for managing refresh tokens</param>
     [ApiController]
     [Route("[controller]")]
     public class AuthController(IAuthRepository authRepository, IRefreshTokenRepository refreshTokenRepository) : Controller
