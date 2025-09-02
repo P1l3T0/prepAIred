@@ -1,4 +1,5 @@
 ﻿using prepAIred.Data;
+using prepAIred.Exceptions;
 
 namespace prepAIred.Services
 {
@@ -22,11 +23,11 @@ namespace prepAIred.Services
 
         public async Task<User> LoginAsync(LoginDTO loginDto)
         {
-            if (!await _userService.UserExistsAsync(loginDto.Email)) throw new Exception("User does not exist");
+            if (!await _userService.UserExistsAsync(loginDto.Email)) throw new ResourceNotFoundException("User does not exist");
 
             User user = await _userService.GetUserByEmailAsync(loginDto.Email);
 
-            if (!_userService.CheckPassword(user, loginDto)) throw new Exception("Invalid Password");
+            if (!_userService.CheckPassword(user, loginDto)) throw new InvalidCredentialsException("Invalid Password");
 
             return user;
         }

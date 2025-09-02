@@ -8,7 +8,7 @@ namespace prepAIred.Services
 
         public void CreateCookie(string name, string value)
         {
-            _httpContextAccessor.HttpContext.Response.Cookies.Append(name, value, new CookieOptions()
+            _httpContextAccessor.HttpContext!.Response.Cookies.Append(name, value, new CookieOptions()
             {
                 HttpOnly = name == "AccessToken" ? true : false,
                 Secure = true,
@@ -23,7 +23,7 @@ namespace prepAIred.Services
 
         public void DeleteCookie(string name)
         {
-            _httpContextAccessor.HttpContext.Response.Cookies.Delete(name, new CookieOptions()
+            _httpContextAccessor.HttpContext!.Response.Cookies.Delete(name, new CookieOptions()
             {
                 HttpOnly = true,
                 Secure = true,

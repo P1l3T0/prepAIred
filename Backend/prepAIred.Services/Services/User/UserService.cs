@@ -1,11 +1,12 @@
 ﻿using prepAIred.Data;
-using System.Text;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
-using System.IdentityModel.Tokens.Jwt;
+using prepAIred.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace prepAIred.Services
 {
@@ -23,15 +24,17 @@ namespace prepAIred.Services
             return user;
         }
 
-        public async Task<User> GetUserByEmailAsync(string email) => await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == email) ?? throw new Exception("Invalid Email");
+        public async Task<User> GetUserByEmailAsync(string email) => await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == email) ?? throw new InvalidCredentialsException("Invalid Email");
 
-        public async Task<User> GetUserByUsernameAsync(string username) => await _dataContext.Users.FirstOrDefaultAsync(u => u.Username == username) ?? throw new Exception("Invalid Username");
+        public async Task<User> GetUserByUsernameAsync(string username) => await _dataContext.Users.FirstOrDefaultAsync(u => u.Username == username) ?? throw new InvalidCredentialsException("Invalid Username");
 
-        public async Task<User> GetUserByIdAsync(int userID) => await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == userID) ?? throw new Exception("Invalid User ID");
+        public async Task<User> GetUserByIdAsync(int userID) => await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == userID) ?? throw new InvalidCredentialsException("Invalid User ID");
 
         public async Task<User> GetCurrentUserAsync()
         {
-            string jwt = _httpContextAccessor.HttpContext!.Request.Cookies["AccessToken"];
+            string jwt = _httpContextAccessor.HttpContext!.Request.Cookies["AccessToken"]!;
+
+            if (string.IsNullOrEmpty(jwt)) throw new InvalidAccessTokenException("Access Token is not valid!");
 
             try
             {
@@ -41,19 +44,19 @@ namespace prepAIred.Services
 
                 return currentUser;
             }
-            catch (Exception ex)
+            catch (NoUserLoggedInException ex)
             {
-                throw new Exception($"No user currently logged in! ${ex.Message}");
+                throw new NoUserLoggedInException($"No user currently logged in! ${ex.Message}");
             }
         }
 
         public async Task ValidateUserAsync(RegisterDTO registerDto)
         {
-            if (!AreFieldsEmpty(registerDto)) throw new Exception("Enter data in all fields");
+            if (!AreFieldsEmpty(registerDto)) throw new EmptyFieldsException("Enter data in all fields");
 
-            if (await UserExistsAsync(registerDto.Email)) throw new Exception("User already exists");
+            if (await UserExistsAsync(registerDto.Email)) throw new UserAlreadyExistsException("User already exists");
 
-            if (!ValidateEmailAndPassword(registerDto.Email, registerDto.Password)) throw new Exception("Invalid Email or Password");
+            if (!ValidateEmailAndPassword(registerDto.Email, registerDto.Password)) throw new InvalidCredentialsException("Invalid Email or Password");
         }
 
         public bool AreFieldsEmpty(RegisterDTO registerDto)
