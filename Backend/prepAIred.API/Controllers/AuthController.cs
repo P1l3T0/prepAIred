@@ -39,8 +39,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpPost]
-        [Route("refresh-token")]
+        [HttpPost("refresh-token")]
         public async Task<IActionResult> GenerateNewRefreshToken()
         {
             try
