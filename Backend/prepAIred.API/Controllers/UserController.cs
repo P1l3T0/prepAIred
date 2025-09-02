@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace prepAIred.API.Controllers
 {
+    /// <summary>
+    /// Controller for handling authentication-related endpoints.
+    /// </summary>
+    [ApiController]
     [Route("[controller]")]
     public class UserController(IUserRepository userRepository) : Controller
     {
