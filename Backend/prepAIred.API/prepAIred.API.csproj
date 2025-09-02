@@ -12,5 +12,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\prepAIred.Data\prepAIred.Data.csproj" />
+		<ProjectReference Include="..\prepAIred.Services\prepAIred.Services.csproj" />
 	</ItemGroup>
 </Project>
