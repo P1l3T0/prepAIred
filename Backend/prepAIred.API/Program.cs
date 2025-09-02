@@ -1,11 +1,11 @@
 using prepAIred.Data;
 using prepAIred.Services;
+using prepAIred.Exceptions;
 using DotNetEnv;
 using DotNetEnv.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Scalar.AspNetCore;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +16,15 @@ builder.Configuration
     .AddEnvironmentVariables()
     .AddDotNetEnv(".env", LoadOptions.TraversePath())
     .Build();
+
+builder.Services.AddProblemDetails(config =>
+{
+    config.CustomizeProblemDetails = context =>
+    {
+        context.ProblemDetails.Extensions.TryAdd("requestID", context.HttpContext.TraceIdentifier);
+    };
+});
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -56,12 +65,9 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference(options =>
-    {
-        options.Title = "prepAIred API";
-        options.WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
-    });
 }
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 

@@ -2,11 +2,11 @@
 using prepAIred.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Text;
 using System.Text.RegularExpressions;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace prepAIred.Services
 {

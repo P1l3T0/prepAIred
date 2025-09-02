@@ -23,57 +23,29 @@ namespace prepAIred.API
         [HttpPost("register")]
         public async Task<ActionResult> Register([FromBody] RegisterDTO registerDto)
         {
-            try
-            {
-                await _authRepository.RegisterAsync(registerDto);
-                return Ok("Register successful");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await _authRepository.RegisterAsync(registerDto);
+            return Ok("Register successful");
         }
 
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginDTO loginDto)
         {
-            try
-            {
-                await _authRepository.LoginAsync(loginDto);
-                return Ok("Login successful");
-            }
-            catch (Exception ex)
-            {
-                return Unauthorized(ex.Message);
-            }
+            await _authRepository.LoginAsync(loginDto);
+            return Ok("Login successful");
         }
 
         [HttpPost("refresh-token")]
         public async Task<IActionResult> GenerateNewRefreshToken()
         {
-            try
-            {
-                RefreshTokenResponseDTO newRefreshToken = await _refreshTokenService.GenerateNewRefreshTokenAsync();
-                return Ok(newRefreshToken);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            RefreshTokenResponseDTO newRefreshToken = await _refreshTokenService.GenerateNewRefreshTokenAsync();
+            return Ok(newRefreshToken);
         }
 
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            try
-            {
-                await _authRepository.Logout();
-                return Ok("Logged out successfully");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await _authRepository.Logout();
+            return Ok("Logged out successfully");
         }
     }
 }
