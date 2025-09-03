@@ -7,11 +7,13 @@ const DEFAULT_REFRESH_INTERVAL = 5 * 60;
 
 const useRefreshToken = () => {
   const tokenRefreshTimeout = useRef<NodeJS.Timeout | null>(null);
-  const { setAuth } = useAuth();
+  const { setAuth, isUserLoggedIn } = useAuth();
   const cookies = document.cookie.split("=")[1];
   const [refreshToken, setRefreshToken] = useState({ refreshToken: cookies });
 
   const refresh = async () => {
+    if (!isUserLoggedIn) return;
+
     const response = await axios.post(`${refreshTokenEndPoint}`, refreshToken, { withCredentials: true });
     const { username, newAccessToken, newRefreshToken, expiresIn } = response.data;
 
