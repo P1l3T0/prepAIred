@@ -12,7 +12,7 @@ const useLogOut = () => {
 
   const logOut = async () => {
     await axios
-      .post(logoutEndPoint, { withCredentials: true })
+      .post(logoutEndPoint, null, { withCredentials: true })
       .then(() => navigate("/login"))
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
