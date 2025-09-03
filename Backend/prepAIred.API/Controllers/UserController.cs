@@ -21,15 +21,8 @@ namespace prepAIred.API
         [HttpGet("get-user")]
         public async Task<IActionResult> GetCurrentUser()
         {
-            try
-            {
-                CurrentUserDTO currentUser = await _userRepository.GetCurrentUserAsync();
-                return Ok(currentUser);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            CurrentUserDTO currentUser = await _userRepository.GetCurrentUserAsync();
+            return Ok(currentUser);
         }
     }
 }

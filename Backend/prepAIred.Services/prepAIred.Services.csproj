@@ -6,6 +6,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\prepAIred.Data\prepAIred.Data.csproj" />
+		<ProjectReference Include="..\prepAIred.Exceptions\prepAIred.Exceptions.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />

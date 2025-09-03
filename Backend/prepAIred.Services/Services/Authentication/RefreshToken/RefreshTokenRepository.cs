@@ -1,4 +1,5 @@
 ﻿using prepAIred.Data;
+using prepAIred.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace prepAIred.Services
@@ -14,12 +15,12 @@ namespace prepAIred.Services
 
         public async Task<RefreshTokenResponseDTO> GenerateNewRefreshTokenAsync()
         {
-            string refreshToken = _httpContextAccessor.HttpContext.Request.Cookies["RefreshToken"]!;
+            string refreshToken = _httpContextAccessor.HttpContext!.Request.Cookies["RefreshToken"]!;
             RefreshToken storedToken = await _refreshTokenService.GetRefreshTokenAsync(refreshToken);
 
             if (storedToken is null || storedToken.ExpiryDate < DateTime.Now || storedToken.IsRevoked)
             {
-                throw new Exception("Invalid or expired refresh token.");
+                throw new InvalidRefreshTokenException("Invalid or expired refresh token.");
             }
 
             storedToken.IsRevoked = true;
