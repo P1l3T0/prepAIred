@@ -5,7 +5,7 @@ const Login = () => {
 
   return (
     <>
-      <form method="post" autoComplete="off">
+      <form method="post" autoComplete="off" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email</label>
           <input type="email" id="email" name="email" onChange={handleChange} required />
@@ -15,7 +15,7 @@ const Login = () => {
           <input type="password" id="password" name="password" onChange={handleChange} required /> 
         </div>
 
-        <button onClick={handleSubmit}>Login</button>
+        <button type="submit">Login</button>
       </form>
     </>
   )
