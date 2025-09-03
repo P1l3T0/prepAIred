@@ -10,10 +10,9 @@ namespace prepAIred.Services
         {
             _httpContextAccessor.HttpContext!.Response.Cookies.Append(name, value, new CookieOptions()
             {
-                HttpOnly = name == "AccessToken" ? true : false,
+                HttpOnly = name == "AccessToken",
                 Secure = true,
                 SameSite = SameSiteMode.None,
-                Domain = "localhost",
                 Path = "/",
                 Expires = name == "AccessToken"
                     ? DateTime.Now.AddSeconds(1200)
@@ -25,11 +24,10 @@ namespace prepAIred.Services
         {
             _httpContextAccessor.HttpContext!.Response.Cookies.Delete(name, new CookieOptions()
             {
-                HttpOnly = true,
+                HttpOnly = name == "AccessToken",
                 Secure = true,
                 SameSite = SameSiteMode.None,
-                Domain = "localhost",
-                Path = "/"
+                Path = "/",
             });
         }
     }
