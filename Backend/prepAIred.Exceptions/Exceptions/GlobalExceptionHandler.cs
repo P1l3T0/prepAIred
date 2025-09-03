@@ -5,12 +5,10 @@ using Microsoft.AspNetCore.Diagnostics;
 
 namespace prepAIred.Exceptions
 {
-    public sealed class GlobalExceptionHandler(IProblemDetailsService problemDetailsService,ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
+    public sealed class GlobalExceptionHandler(IProblemDetailsService problemDetailsService) : IExceptionHandler
     {
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
-            logger.LogError(exception, "An unhandled exception occurred.");
-
             httpContext.Response.StatusCode = exception switch
             {
                 InvalidCredentialsException => StatusCodes.Status401Unauthorized,

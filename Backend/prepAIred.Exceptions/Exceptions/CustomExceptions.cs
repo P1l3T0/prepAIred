@@ -3,12 +3,12 @@
     /// <summary>
     /// Exception thrown when an access token is invalid.
     /// </summary>
-    public class InvalidRefreshTokenException(string message) : Exception(message);
+    public class InvalidAccessTokenException(string message) : Exception(message);
 
     /// <summary>
     /// Exception thrown when a refresh token is invalid or expired.
     /// </summary>
-    public class InvalidAccessTokenException(string message) : Exception(message);
+    public class InvalidRefreshTokenException(string message) : Exception(message);
 
     /// <summary>
     /// Exception thrown when authentication fails due to invalid credentials.
