@@ -1,3 +1,8 @@
+/**
+ * Custom hook for fetching the current user from the backend API.
+ * Uses react-query for data fetching and caching.
+ * @returns {Object} - data, isLoading, isError
+ */
 import { useQuery } from "react-query";
 import axios, { AxiosError, type AxiosResponse } from "axios";
 import { getCurrentUserEndPoint } from "../../Utils/endpoints";

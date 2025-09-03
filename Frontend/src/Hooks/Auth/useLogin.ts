@@ -1,3 +1,9 @@
+/**
+ * Custom hook for handling user login functionality.
+ * Manages user state, handles input changes, and submits login requests.
+ * On success, navigates to home and updates auth context.
+ * @returns {Object} - handleChange and handleSubmit functions
+ */
 import axios, { AxiosError } from "axios";
 import { useState, type SyntheticEvent } from "react";
 import { loginEndPoint } from "../../Utils/endpoints";

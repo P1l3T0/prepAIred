@@ -1,3 +1,9 @@
+/**
+ * Custom hook for handling user registration functionality.
+ * Manages user state, handles input changes, and submits registration requests.
+ * On success, navigates to home and updates auth context.
+ * @returns {Object} - handleChange and handleSubmit functions
+ */
 import axios, { AxiosError } from "axios";
 import { useState, type SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";
