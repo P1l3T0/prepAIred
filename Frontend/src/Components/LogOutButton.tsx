@@ -1,11 +1,11 @@
 import useLogOut from "../Hooks/Auth/useLogOut";
 
 const LogOutButton = () => {
-  const { hadnleLogOut } = useLogOut();
+  const { handleLogOut } = useLogOut();
 
   return (
     <>
-      <button onClick={hadnleLogOut}>Logout</button>
+      <button onClick={handleLogOut}>Logout</button>
     </>
   );
 };

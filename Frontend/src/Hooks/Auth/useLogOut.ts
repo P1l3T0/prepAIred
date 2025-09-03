@@ -1,7 +1,7 @@
 /**
  * Custom hook for handling user logout functionality.
  * Sends logout request, updates auth context, and navigates to login page.
- * @returns {Object} - hadnleLogOut function
+ * @returns {Object} - handleLogOut function
  */
 import axios, { AxiosError } from "axios";
 import type { SyntheticEvent } from "react";
@@ -34,12 +34,12 @@ const useLogOut = () => {
     },
   });
 
-  const hadnleLogOut = async (e: SyntheticEvent) => {
+  const handleLogOut = async (e: SyntheticEvent) => {
     e.preventDefault();
     mutateAsync();
   };
 
-  return { hadnleLogOut };
+  return { handleLogOut };
 };
 
 export default useLogOut;
