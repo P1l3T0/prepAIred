@@ -21,6 +21,11 @@ namespace prepAIred.API
         [HttpGet("get-user")]
         public async Task<IActionResult> GetCurrentUser()
         {
+            if (string.IsNullOrEmpty(Request.Cookies["AccessToken"]))
+            {
+                return NoContent();
+            }
+
             CurrentUserDTO currentUser = await _userRepository.GetCurrentUserAsync();
             return Ok(currentUser);
         }

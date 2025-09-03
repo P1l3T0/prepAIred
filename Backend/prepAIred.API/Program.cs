@@ -60,6 +60,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", options =>
+    {
+        string frontendUrl = builder.Configuration["Appsettings:FrontendURL"] ?? "http://localhost:5173";
+
+        options.WithOrigins(frontendUrl)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -68,9 +81,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseExceptionHandler();
-
+app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
