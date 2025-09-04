@@ -42,6 +42,8 @@ builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<ICookieService, CookieService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAIRepository, AIRepository>();
+builder.Services.AddScoped<IAIService, AIService>();
 
 builder.Services.AddHttpContextAccessor();
 

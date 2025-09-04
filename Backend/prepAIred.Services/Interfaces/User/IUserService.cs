@@ -29,11 +29,18 @@ namespace prepAIred.Services
         Task<CurrentUserDTO> GetUserByUsernameAsync(string name);
 
         /// <summary>
-        /// Retrieves a user by their ID.
+        /// Retrieves a user dto by their ID.
+        /// </summary>
+        /// <param name="userId">The ID of the user to retrieve.</param>
+        /// <returns>The matching user dto if found.</returns>
+        Task<CurrentUserDTO> GetUserByIdAsync(int userId);
+
+        /// <summary>
+        /// Retrieves a user entity by their ID.
         /// </summary>
         /// <param name="userId">The ID of the user to retrieve.</param>
         /// <returns>The matching user entity if found.</returns>
-        Task<CurrentUserDTO> GetUserByIdAsync(int userId);
+        Task<User> GetUserEntityByIdAsync(int userId);
 
         /// <summary>
         /// Retrieves the currently authenticated user.
