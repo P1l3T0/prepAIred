@@ -44,6 +44,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAIRepository, AIRepository>();
 builder.Services.AddScoped<IAIService, AIService>();
+builder.Services.AddScoped<IInterviewService, InterviewService>();
 
 builder.Services.AddHttpContextAccessor();
 
