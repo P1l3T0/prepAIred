@@ -8,6 +8,7 @@ namespace prepAIred.Data
     {
         public int UserID { get; set; }
         public string Question { get; set; } = string.Empty;
+        public bool IsAnswered { get; set; }
         public string AnswersJson { get; set; } = "[]";
 
         [NotMapped]
@@ -27,7 +28,8 @@ namespace prepAIred.Data
                 ID = ID,
                 DateCreated = DateCreated,
                 Question = Question,
-                Answers = Answers
+                Answers = Answers,
+                IsAnswered = IsAnswered
             };
 
             return (T)(object)interviewDTO;
