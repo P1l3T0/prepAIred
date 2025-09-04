@@ -29,6 +29,8 @@ namespace prepAIred.Services
 
         public async Task<CurrentUserDTO> GetUserByIdAsync(int userID) => (await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == userID))!.ToDto<CurrentUserDTO>() ?? throw new InvalidCredentialsException("Invalid User ID");
 
+        public async Task<User> GetUserEntityByIdAsync(int userID) => await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == userID) ?? throw new InvalidCredentialsException("Invalid User ID");
+
         public async Task<CurrentUserDTO> GetCurrentUserAsync()
         {
             string jwt = _httpContextAccessor.HttpContext!.Request.Cookies["AccessToken"]!;
