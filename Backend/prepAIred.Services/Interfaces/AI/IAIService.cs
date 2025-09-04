@@ -4,9 +4,9 @@ namespace prepAIred.Services
 {
     public interface IAIService
     {
-        Task<AIInterviewSession> AskChatGPT(User currentUser, string prompt);
-        Task<AIInterviewSession> AskGemini(User currentUser, string prompt);
-        Task<AIInterviewSession> AskClaude(User currentUser, string prompt);
-        string CreatePrompt(AIRequestDTO aIRequest);
+        Task<List<Interview>> AskChatGPTAsync(User currentUser, string prompt);
+        Task<List<Interview>> AskGeminiAsync(User currentUser, string prompt);
+        Task<List<Interview>> AskClaudeAsync(User currentUser, string prompt);
+        string CreatePrompt(AIRequestDTO aIRequest, int currentUserID);
     }
 }
