@@ -13,16 +13,16 @@ namespace prepAIred.Services
 
             (byte[] hashedPassword, byte[] saltPassword) = _userService.HashPassword(registerDto);
 
-            User user = await _authService.RegisterAsync(registerDto, hashedPassword, saltPassword);
+            CurrentUserDTO currentUser = await _authService.RegisterAsync(registerDto, hashedPassword, saltPassword);
 
-            await _authService.GenerateAuthResponse(user);
+            await _authService.GenerateAuthResponse(currentUser);
         }
 
         public async Task LoginAsync(LoginDTO loginDto)
         {
-            User user = await _authService.LoginAsync(loginDto);
+            CurrentUserDTO currentUser = await _authService.LoginAsync(loginDto);
 
-            await _authService.GenerateAuthResponse(user);
+            await _authService.GenerateAuthResponse(currentUser);
         }
 
         public Task Logout()

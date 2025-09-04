@@ -55,7 +55,9 @@ namespace prepAIred.Data
                 ID = ID,
                 Email = Email,
                 Username = Username,
-                DateCreated = DateCreated
+                PasswordHash = PasswordHash,
+                PasswordSalt = PasswordSalt,
+                DateCreated = DateCreated,
             };
 
             return (T)(object)currentUser;

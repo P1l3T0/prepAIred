@@ -14,14 +14,14 @@ namespace prepAIred.Services
         /// <param name="hashedPassword">The pre-hashed password.</param>
         /// <param name="saltPassword">The salt used in password hashing.</param>
         /// <returns>The newly created user entity.</returns>
-        Task<User> RegisterAsync(RegisterDTO registerDto, byte[] hashedPassword, byte[] saltPassword);
+        Task<CurrentUserDTO> RegisterAsync(RegisterDTO registerDto, byte[] hashedPassword, byte[] saltPassword);
 
         /// <summary>
         /// Authenticates a user and returns their information.
         /// </summary>
         /// <param name="loginDto">The login credentials.</param>
         /// <returns>The authenticated user entity.</returns>
-        Task<User> LoginAsync(LoginDTO loginDto);
+        Task<CurrentUserDTO> LoginAsync(LoginDTO loginDto);
 
         /// <summary>
         /// Logs out the current user and cleans up their session.
@@ -32,8 +32,8 @@ namespace prepAIred.Services
         /// <summary>
         /// Generates authentication response for a user.
         /// </summary>
-        /// <param name="user">The user to generate authentication response for.</param>
+        /// <param name="currentUser">The user to generate authentication response for.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task GenerateAuthResponse(User user);
+        Task GenerateAuthResponse(CurrentUserDTO currentUser);
     }
 }

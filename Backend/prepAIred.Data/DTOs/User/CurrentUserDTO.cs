@@ -1,4 +1,6 @@
-﻿namespace prepAIred.Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace prepAIred.Data
 {
     /// <summary>
     /// Data Transfer Object representing the currently authenticated user's public information.
@@ -22,6 +24,18 @@
         /// </summary>
         /// <value>The username chosen by the user.</value>
         public string Username { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the hashed password for the user.
+        /// </summary>
+        /// <value>The password hash byte array used for secure authentication.</value>
+        public byte[] PasswordHash { get; set; } = Array.Empty<byte>();
+
+        /// <summary>
+        /// Gets or sets the salt used in password hashing.
+        /// </summary>
+        /// <value>The password salt byte array used in the hashing process.</value>
+        public byte[] PasswordSalt { get; set; } = Array.Empty<byte>();
 
         /// <summary>
         /// Gets or sets the date when the user account was created.

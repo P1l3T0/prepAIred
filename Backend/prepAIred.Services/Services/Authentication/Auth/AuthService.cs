@@ -10,38 +10,42 @@ namespace prepAIred.Services
         private readonly ICookieService _cookieService = cookieService;
         private readonly IUserService _userService = userService;
 
-        public async Task<User> RegisterAsync(RegisterDTO registerDto, byte[] hashedPassword, byte[] saltPassword)
+        public async Task<CurrentUserDTO> RegisterAsync(RegisterDTO registerDto, byte[] hashedPassword, byte[] saltPassword)
         {
-            return await _userService.CreateUserAsync(new User()
+            User newUser = new User()
             {
                 Email = registerDto.Email,
                 Username = registerDto.Username,
                 PasswordHash = hashedPassword,
                 PasswordSalt = saltPassword
-            });
+            };
+
+            await _userService.CreateUserAsync(newUser);
+
+            return newUser.ToDto<CurrentUserDTO>();
         }
 
-        public async Task<User> LoginAsync(LoginDTO loginDto)
+        public async Task<CurrentUserDTO> LoginAsync(LoginDTO loginDto)
         {
             if (!await _userService.UserExistsAsync(loginDto.Email)) throw new ResourceNotFoundException("User does not exist");
 
-            User user = await _userService.GetUserByEmailAsync(loginDto.Email);
+            CurrentUserDTO currentUser = await _userService.GetUserByEmailAsync(loginDto.Email);
 
-            if (!_userService.CheckPassword(user, loginDto)) throw new InvalidCredentialsException("Invalid Password");
+            if (!_userService.CheckPassword(currentUser, loginDto)) throw new InvalidCredentialsException("Invalid Password");
 
-            return user;
+            return currentUser;
         }
 
-        public async Task GenerateAuthResponse(User user)
+        public async Task GenerateAuthResponse(CurrentUserDTO currentUser)
         {
-            string accessToken = _jwtService.GenerateAcessToken(user.ID);
-            string refreshToken = _jwtService.GenerateRefreshToken(user.ID);
+            string accessToken = _jwtService.GenerateAcessToken(currentUser.ID);
+            string refreshToken = _jwtService.GenerateRefreshToken(currentUser.ID);
 
             await _refreshTokenService.AddRefreshTokenAsync(new RefreshToken()
             {
                 Token = refreshToken,
                 ExpiryDate = DateTime.Now.AddDays(1),
-                UserID = user.ID
+                UserID = currentUser.ID
             });
 
             _cookieService.CreateCookie("AccessToken", accessToken);

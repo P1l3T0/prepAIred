@@ -1,5 +1,4 @@
 ﻿using prepAIred.Data;
-using System.Security.Claims;
 
 namespace prepAIred.Services
 {
@@ -20,27 +19,27 @@ namespace prepAIred.Services
         /// </summary>
         /// <param name="email">The email address to search for.</param>
         /// <returns>The matching user entity if found.</returns>
-        Task<User> GetUserByEmailAsync(string email);
+        Task<CurrentUserDTO> GetUserByEmailAsync(string email);
 
         /// <summary>
         /// Retrieves a user by their username.
         /// </summary>
         /// <param name="name">The username to search for.</param>
         /// <returns>The matching user entity if found.</returns>
-        Task<User> GetUserByUsernameAsync(string name);
+        Task<CurrentUserDTO> GetUserByUsernameAsync(string name);
 
         /// <summary>
         /// Retrieves a user by their ID.
         /// </summary>
         /// <param name="userId">The ID of the user to retrieve.</param>
         /// <returns>The matching user entity if found.</returns>
-        Task<User> GetUserByIdAsync(int userId);
+        Task<CurrentUserDTO> GetUserByIdAsync(int userId);
 
         /// <summary>
         /// Retrieves the currently authenticated user.
         /// </summary>
         /// <returns>The current user entity.</returns>
-        Task<User> GetCurrentUserAsync();
+        Task<CurrentUserDTO> GetCurrentUserAsync();
 
         /// <summary>
         /// Validates user registration data.
@@ -81,16 +80,9 @@ namespace prepAIred.Services
         /// <summary>
         /// Verifies a user's password during login.
         /// </summary>
-        /// <param name="user">The user entity to check against.</param>
+        /// <param name="currentUser">The user entity to check against.</param>
         /// <param name="loginDto">The login credentials to verify.</param>
         /// <returns>True if the password is correct, false otherwise.</returns>
-        bool CheckPassword(User user, LoginDTO loginDto);
-
-        /// <summary>
-        /// Gets the username of the currently authenticated user.
-        /// </summary>
-        /// <param name="userPrincipal">The current user's claims principal.</param>
-        /// <returns>The username from the claims principal.</returns>
-        string? GetCurrentUserUsername(ClaimsPrincipal userPrincipal);
+        bool CheckPassword(CurrentUserDTO currentUser, LoginDTO loginDto);
     }
 }

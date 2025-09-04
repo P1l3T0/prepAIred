@@ -3,7 +3,6 @@ using prepAIred.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
-using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,13 +23,13 @@ namespace prepAIred.Services
             return user;
         }
 
-        public async Task<User> GetUserByEmailAsync(string email) => await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == email) ?? throw new InvalidCredentialsException("Invalid Email");
+        public async Task<CurrentUserDTO> GetUserByEmailAsync(string email) => (await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == email))!.ToDto<CurrentUserDTO>() ?? throw new InvalidCredentialsException("Invalid Email");
 
-        public async Task<User> GetUserByUsernameAsync(string username) => await _dataContext.Users.FirstOrDefaultAsync(u => u.Username == username) ?? throw new InvalidCredentialsException("Invalid Username");
+        public async Task<CurrentUserDTO> GetUserByUsernameAsync(string username) => (await _dataContext.Users.FirstOrDefaultAsync(u => u.Username == username))!.ToDto<CurrentUserDTO>() ?? throw new InvalidCredentialsException("Invalid Username");
 
-        public async Task<User> GetUserByIdAsync(int userID) => await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == userID) ?? throw new InvalidCredentialsException("Invalid User ID");
+        public async Task<CurrentUserDTO> GetUserByIdAsync(int userID) => (await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == userID))!.ToDto<CurrentUserDTO>() ?? throw new InvalidCredentialsException("Invalid User ID");
 
-        public async Task<User> GetCurrentUserAsync()
+        public async Task<CurrentUserDTO> GetCurrentUserAsync()
         {
             string jwt = _httpContextAccessor.HttpContext!.Request.Cookies["AccessToken"]!;
 
@@ -40,7 +39,7 @@ namespace prepAIred.Services
             {
                 JwtSecurityToken token = _jwtService.Verify(jwt);
                 int.TryParse(_jwtService.GetUserIdFromToken(token), out int userID);
-                User currentUser = await GetUserByIdAsync(userID);
+                CurrentUserDTO currentUser = await GetUserByIdAsync(userID);
 
                 return currentUser;
             }
@@ -90,7 +89,7 @@ namespace prepAIred.Services
             return (hashedPassword, saltPassword);
         }
 
-        public bool CheckPassword(User user, LoginDTO loginDto)
+        public bool CheckPassword(CurrentUserDTO user, LoginDTO loginDto)
         {
             using HMACSHA512 hmac = new HMACSHA512(user.PasswordSalt);
             byte[] computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
@@ -98,12 +97,6 @@ namespace prepAIred.Services
             if (!computedHash.SequenceEqual(user.PasswordHash)) return false;
 
             return true;
-        }
-
-        public string? GetCurrentUserUsername(ClaimsPrincipal userPrincipal)
-        {
-            string username = userPrincipal.Identity?.Name!;
-            return string.IsNullOrEmpty(username) ? null : username;
         }
     }
 }

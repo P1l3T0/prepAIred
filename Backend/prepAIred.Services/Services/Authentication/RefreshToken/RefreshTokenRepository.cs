@@ -35,7 +35,7 @@ namespace prepAIred.Services
                 UserID = storedToken.UserID,
             });
 
-            CurrentUserDTO user = (await _userService.GetUserByIdAsync(storedToken.UserID)).ToDto<CurrentUserDTO>();
+            CurrentUserDTO currentUser = await _userService.GetUserByIdAsync(storedToken.UserID);
 
             _cookieService.DeleteCookie("RefreshToken");
             _cookieService.CreateCookie("AccessToken", newAccessToken);
@@ -46,7 +46,7 @@ namespace prepAIred.Services
                 NewAccessToken = newAccessToken,
                 NewRefreshToken = newRefreshToken,
                 ExpiresIn = 600,
-                Username = user.Username
+                Username = currentUser.Username
             };
         }
     }

@@ -8,8 +8,8 @@ namespace prepAIred.Services
 
         public async Task<CurrentUserDTO> GetCurrentUserAsync()
         {
-            User user = await _userService.GetCurrentUserAsync();
-            return user.ToDto<CurrentUserDTO>();
+            CurrentUserDTO user = await _userService.GetCurrentUserAsync();
+            return user;
         }
 
         public Task DeleteUser(int userID)
