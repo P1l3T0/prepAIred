@@ -7,5 +7,6 @@ namespace prepAIred.Services
         Task<AIResponse> AskChatGPT(User currentUser, string prompt);
         Task<AIResponse> AskGemini(User currentUser, string prompt);
         Task<AIResponse> AskClaude(User currentUser, string prompt);
+        string CreatePrompt(AIRequestDTO aIRequest);
     }
 }

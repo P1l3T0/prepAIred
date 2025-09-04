@@ -4,6 +4,6 @@ namespace prepAIred.Services
 {
     public interface IAIRepository
     {
-        Task<AIResponse> GetAIResponse(AIRequest aIRequest);
+        Task<AIResponse> GetAIResponse(AIRequestDTO aIRequest);
     }
 }
