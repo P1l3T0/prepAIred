@@ -4,6 +4,6 @@ namespace prepAIred.Services
 {
     public interface IAIRepository
     {
-        Task<AIResponse> GetAIResponse(AIRequestDTO aIRequest);
+        Task<AIInterviewSession> GetAIInterviewSession(AIRequestDTO aIRequest);
     }
 }
