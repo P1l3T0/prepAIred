@@ -2,13 +2,13 @@
 
 namespace prepAIred.Services
 {
-    public class AIRepository(IAIService aIService, IUserService userService, IInterviewService interviewService) : IAIRepository
+    public class InterviewRepository(IAIService aIService, IUserService userService, IInterviewService interviewService) : IInterviewRepository
     {
         private readonly IAIService _aIService = aIService;
         private readonly IUserService _userService = userService;
         private readonly IInterviewService _interviewService = interviewService;
 
-        public async Task CreateAiInterview(AIRequestDTO aIRequest)
+        public async Task CreateAiInterviews(AIRequestDTO aIRequest)
         {
             int currentUserID = (await _userService.GetCurrentUserAsync()).ID;
             string prompt = _aIService.CreatePrompt(aIRequest, currentUserID);

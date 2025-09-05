@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using prepAIred.Data;
+﻿using prepAIred.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace prepAIred.Services
 {

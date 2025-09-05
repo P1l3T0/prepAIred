@@ -2,10 +2,10 @@
 using prepAIred.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace prepAIred.API.Controllers
+namespace prepAIred.API
 {
     /// <summary>
-    /// Provides endpoints for managing AI interviews.
+    /// Provides endpoints for managing interviews.
     /// </summary>
     /// <remarks>This controller serves as the API layer for interacting with AI interview data. It exposes
     /// endpoints for creating new AI interviews and retrieving existing ones. The controller depends on an 
@@ -13,21 +13,21 @@ namespace prepAIred.API.Controllers
     /// <param name="aIRepository"></param>
     [ApiController]
     [Route("[controller]")]
-    public class AIController(IAIRepository aIRepository) : Controller
+    public class InterviewController(IInterviewRepository interviewRepository) : Controller
     {
-        private readonly IAIRepository _aIRepository = aIRepository;
+        private readonly IInterviewRepository _interviewRepository = interviewRepository;
 
-        [HttpPost("create-ai-interviews")]
-        public async Task<IActionResult> CreateAiInterview([FromBody] AIRequestDTO aIRequest)
+        [HttpPost("generate-ai-interviews")]
+        public async Task<IActionResult> GenerateAiInterview([FromBody] AIRequestDTO aIRequest)
         {
-            await _aIRepository.CreateAiInterview(aIRequest);
+            await _interviewRepository.CreateAiInterviews(aIRequest);
             return Ok("AI interviews created successfully.");
         }
 
         [HttpGet("get-ai-interviews")]
         public async Task<IActionResult> GetAiInterviews()
         {
-            List<InterviewDTO> interviews = await _aIRepository.GetAiInterview();
+            List<InterviewDTO> interviews = await _interviewRepository.GetAiInterview();
             return Ok(interviews);
         }
     }
