@@ -1,9 +1,11 @@
 ﻿using prepAIred.Data;
-using System.Text.Json;
-using System.ClientModel;
-using OpenAI.Chat;
-using Microsoft.Extensions.Configuration;
 using prepAIred.Exceptions;
+using System.ClientModel;
+using System.Text.Json;
+using OpenAI.Chat;
+using GenerativeAI;
+using GenerativeAI.Types;
+using Microsoft.Extensions.Configuration;
 
 namespace prepAIred.Services
 {
@@ -67,7 +69,7 @@ namespace prepAIred.Services
         private async Task<List<Interview>> AskChatGPTAsync(string prompt)
         {
             string apiKey = _configuration.GetSection("Appsettings:OpenAIAPIKEY").Value!;
-            string model = _configuration.GetSection("Appsettings:Model").Value!;
+            string model = _configuration.GetSection("Appsettings:OpenAIModel").Value!;
 
             ChatClient chatClient = new ChatClient(model, apiKey);
             ClientResult<ChatCompletion> completion = await chatClient.CompleteChatAsync(prompt);
@@ -81,9 +83,16 @@ namespace prepAIred.Services
             throw new NotImplementedException();
         }
 
-        private Task<List<Interview>> AskGeminiAsync(string prompt)
+        private async Task<List<Interview>> AskGeminiAsync(string prompt)
         {
-            throw new NotImplementedException();
+            string apiKey = _configuration.GetSection("Appsettings:GeminiAPIKEY").Value!;
+            string model = _configuration.GetSection("Appsettings:GeminiModel").Value!;
+
+            GenerativeModel generativeModel = new GenerativeModel(apiKey, model);
+            GenerateContentResponse aiResponse = await generativeModel.GenerateContentAsync(prompt);
+            string response = aiResponse.Text.Trim();
+
+            return DeserializeInterviews(response);
         }
 
         private List<Interview> DeserializeInterviews(string response)
