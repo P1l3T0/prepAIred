@@ -34,4 +34,9 @@
     /// Exception thrown when the frontend is trying to access a certain endpoint but no user is currently logged in.
     /// </summary>
     public class NoUserLoggedInException(string message) : Exception(message);
+
+    /// <summary>
+    /// Exception thrown when an unsupported AI agent is specified.
+    /// </summary>
+    public class UnsupportedAiAgentException(string message) : Exception(message);
 }
