@@ -1,6 +1,9 @@
 ﻿namespace prepAIred.Data
 {
-    public class BaseDTO
+    /// <summary>
+    /// Base abstract class for all dtos in the system.
+    /// </summary>
+    public abstract class BaseDTO
     {
         /// <summary>
         /// Gets or sets the unique identifier of the user.
