@@ -1,27 +1,28 @@
 ﻿namespace prepAIred.Data
 {
     /// <summary>
-    /// Data Transfer Object for the AI request.
+    /// DTO for requesting AI-generated interview questions.
+    /// Contains agent, field, level, and number of questions.
     /// </summary>
     public class AIRequestDTO
     {
         /// <summary>
-        /// Gets or sets the name of the AI agent.
+        /// The AI agent to use for generating interview questions (e.g., ChatGPT, Claude, Gemini).
         /// </summary>
         public string AIAgent { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the value of the field.
+        /// The field or topic for the interview questions (e.g., Software Engineering).
         /// </summary>
         public string Field { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the level associated with the current context.
+        /// The difficulty level for the interview questions (e.g., Junior, Senior).
         /// </summary>
         public string Level { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the number of questions in the current context.
+        /// The number of questions to generate for the interview.
         /// </summary>
         public int NumberOfQuestions { get; set; }
     }

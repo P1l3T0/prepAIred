@@ -3,7 +3,8 @@
 namespace prepAIred.Data
 {
     /// <summary>
-    /// Data Transfer Object for interview questions and answers.
+    /// DTO for interview questions and answers.
+    /// Used for transferring interview data between layers.
     /// </summary>
     public class InterviewDTO : BaseDTO
     {
