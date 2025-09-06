@@ -31,11 +31,11 @@ namespace prepAIred.Services
         public string CreatePrompt(AIRequestDTO aIRequest, int currentUserID)
         {
             string contentRules = $@"
-                Act as an experienced technical interviewer conducting an interview for a {aIRequest.Level} {aIRequest.Field} position.
+                Act as an experienced technical interviewer conducting an interview for a {aIRequest.Level} {aIRequest.Topic} position.
                 Generate {aIRequest.NumberOfQuestions} interview questions with detailed answers.
 
                 Focus on:
-                - Real-world scenarios and practical problems commonly encountered in {aIRequest.Field} roles.
+                - Real-world scenarios and practical problems commonly encountered in {aIRequest.Topic} roles.
                 - A mix of technical concepts, problem-solving approaches, and best practices relevant to a {aIRequest.Level} position.
                 - Questions that are challenging and thought-provoking, requiring in-depth knowledge and critical thinking.
                 - Comprehensive, well-explained answers that demonstrate deep understanding.
@@ -128,11 +128,6 @@ namespace prepAIred.Services
         {
             JsonSerializerOptions options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             List<Interview> interviews = JsonSerializer.Deserialize<List<Interview>>(response, options) ?? new List<Interview>();
-
-            foreach (Interview interview in interviews)
-            {
-                interview.ID = 0;
-            }
 
             return interviews;
         }
