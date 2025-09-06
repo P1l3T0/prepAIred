@@ -7,8 +7,16 @@ namespace prepAIred.Services
     {
         private readonly DataContext _dataContext = dataContext;
 
-        public async Task CreateInterviewsAsync(List<Interview> interviews)
+        public async Task CreateInterviewsAsync(List<Interview> interviews, User currentUser, InterviewSession interviewSession)
         {
+            foreach (Interview interview in interviews)
+            {
+                interview.ID = 0;
+                interview.User = currentUser;
+                interview.InterviewSession = interviewSession;
+                interview.InterviewSessionID = interviewSession.ID;
+            }
+
             await _dataContext.Interviews.AddRangeAsync(interviews);
             await _dataContext.SaveChangesAsync();
         }
