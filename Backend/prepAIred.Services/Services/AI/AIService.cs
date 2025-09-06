@@ -1,10 +1,12 @@
 ﻿using prepAIred.Data;
 using prepAIred.Exceptions;
-using System.ClientModel;
-using System.Text.Json;
-using OpenAI.Chat;
+using Anthropic.SDK;
+using Anthropic.SDK.Messaging;
 using GenerativeAI;
 using GenerativeAI.Types;
+using OpenAI.Chat;
+using System.Text.Json;
+using System.ClientModel;
 using Microsoft.Extensions.Configuration;
 
 namespace prepAIred.Services
@@ -45,7 +47,7 @@ namespace prepAIred.Services
                 Format the response as strict JSON that can be deserialized into this class: 
 
                 {{
-                    ""userID"": {currentUserID},
+                    ""userID"": {currentUserID}, // Use the provided currentUserID as the current User's ID
                     ""question"": """",
                     ""answersJson"": ""[]""
                 }}
@@ -78,9 +80,36 @@ namespace prepAIred.Services
             return DeserializeInterviews(response);
         }
 
-        private Task<List<Interview>> AskClaudeAsync(string prompt)
+        private async Task<List<Interview>> AskClaudeAsync(string prompt)
         {
-            throw new NotImplementedException();
+            string apiKey = _configuration.GetSection("Appsettings:ClaudeAPIKEY").Value!;
+            string model = _configuration.GetSection("Appsettings:ClaudeModel").Value!;
+
+            AnthropicClient client = new AnthropicClient(apiKey);
+            MessageParameters parameters = new MessageParameters()
+            {
+                Model = model,
+                MaxTokens = 1024,
+                Messages = new List<Message>()
+                {
+                    new Message()
+                    {
+                        Role = RoleType.User,
+                        Content = new List<ContentBase>()
+                        {
+                            new TextContent() 
+                            { 
+                                Text = prompt
+                            }
+                        }
+                    }
+                }
+            };
+
+            MessageResponse aiResponse = await client.Messages.GetClaudeMessageAsync(parameters);
+            string response = string.Join("\n", aiResponse.Content.OfType<TextContent>().Select(c => c.Text));
+
+            return DeserializeInterviews(response);
         }
 
         private async Task<List<Interview>> AskGeminiAsync(string prompt)
