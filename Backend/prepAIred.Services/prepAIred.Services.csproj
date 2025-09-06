@@ -9,6 +9,9 @@
 		<ProjectReference Include="..\prepAIred.Exceptions\prepAIred.Exceptions.csproj" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="Anthropic.SDK" Version="5.5.1" />
+		<PackageReference Include="Google_GenerativeAI" Version="3.0.0" />
+		<PackageReference Include="OpenAI" Version="2.3.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
 	</ItemGroup>
 </Project>

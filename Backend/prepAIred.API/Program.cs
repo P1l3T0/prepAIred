@@ -42,6 +42,9 @@ builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<ICookieService, CookieService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();
+builder.Services.AddScoped<IAIService, AIService>();
+builder.Services.AddScoped<IInterviewService, InterviewService>();
 
 builder.Services.AddHttpContextAccessor();
 
@@ -64,7 +67,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", options =>
     {
-        string frontendUrl = builder.Configuration["Appsettings:FrontendURL"] ?? "http://localhost:5173";
+        string frontendUrl = builder.Configuration["Appsettings:FrontendURL"] ?? "http://localhost:5174";
 
         options.WithOrigins(frontendUrl)
             .AllowAnyHeader()

@@ -1,18 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Text.Json.Serialization;
 
 namespace prepAIred.Data
 {
     /// <summary>
     /// Data Transfer Object representing the currently authenticated user's public information.
     /// </summary>
-    public class CurrentUserDTO
+    public class CurrentUserDTO : BaseDTO
     {
-        /// <summary>
-        /// Gets or sets the unique identifier of the user.
-        /// </summary>
-        /// <value>The user's database ID.</value>
-        public int ID { get; set; }
-
         /// <summary>
         /// Gets or sets the user's email address.
         /// </summary>
@@ -29,18 +23,14 @@ namespace prepAIred.Data
         /// Gets or sets the hashed password for the user.
         /// </summary>
         /// <value>The password hash byte array used for secure authentication.</value>
+        [JsonIgnore]
         public byte[] PasswordHash { get; set; } = Array.Empty<byte>();
 
         /// <summary>
         /// Gets or sets the salt used in password hashing.
         /// </summary>
         /// <value>The password salt byte array used in the hashing process.</value>
+        [JsonIgnore]
         public byte[] PasswordSalt { get; set; } = Array.Empty<byte>();
-
-        /// <summary>
-        /// Gets or sets the date when the user account was created.
-        /// </summary>
-        /// <value>The timestamp of account creation.</value>
-        public DateTime DateCreated { get; set; }
     }
 }

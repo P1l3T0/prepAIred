@@ -44,6 +44,13 @@ namespace prepAIred.Data
         public ICollection<RefreshToken> RefreshTokens { get; } = new List<RefreshToken>();
 
         /// <summary>
+        /// Gets the collection of AI responses associated with the user.
+        /// </summary>
+        /// <value>A collection of AI-generated questions and answers.</value>
+        [JsonIgnore]
+        public ICollection<Interview> Interviews { get; } = new List<Interview>();
+
+        /// <summary>
         /// Converts the User model to its DTO representation
         /// </summary>
         /// <typeparam name="T">The type of DTO to convert to, must be CurrentUserDTO</typeparam>
