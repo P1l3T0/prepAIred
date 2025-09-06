@@ -11,7 +11,7 @@ namespace prepAIred.Services
         /// Creates multiple interview entities in the database.
         /// </summary>
         /// <param name="interviews">List of Interview entities to create.</param>
-        Task CreateInterviewsAsync(List<Interview> interviews);
+        Task CreateInterviewsAsync(List<Interview> interviews, User currentUser, InterviewSession interviewSession);
 
         /// <summary>
         /// Retrieves interviews for a specific user by their ID.
