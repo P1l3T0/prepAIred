@@ -8,7 +8,7 @@ namespace prepAIred.Services
         private readonly IUserService _userService = userService;
         private readonly IInterviewService _interviewService = interviewService;
 
-        public async Task CreateAiInterviews(AIRequestDTO aIRequest)
+        public async Task GenerateAiInterviews(AIRequestDTO aIRequest)
         {
             int currentUserID = (await _userService.GetCurrentUserAsync()).ID;
             string prompt = _aIService.CreatePrompt(aIRequest, currentUserID);
