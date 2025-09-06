@@ -51,6 +51,13 @@ namespace prepAIred.Data
         public ICollection<Interview> Interviews { get; } = new List<Interview>();
 
         /// <summary>
+        /// Gets the collection of Interview Sessions associated with the user.
+        /// </summary>
+        /// <value>A collection of Interview Sessions.</value>
+        [JsonIgnore]
+        public ICollection<InterviewSession> InterviewSessions { get; } = new List<InterviewSession>();
+
+        /// <summary>
         /// Converts the User model to its DTO representation
         /// </summary>
         /// <typeparam name="T">The type of DTO to convert to, must be CurrentUserDTO</typeparam>

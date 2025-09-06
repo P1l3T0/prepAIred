@@ -14,6 +14,8 @@ namespace prepAIred.Data
         /// </summary>
         public int UserID { get; set; }
 
+        public int InterviewSessionID { get; set; }
+
         /// <summary>
         /// The interview question text.
         /// </summary>
@@ -44,6 +46,12 @@ namespace prepAIred.Data
         /// </summary>
         [JsonIgnore]
         public User? User { get; set; }
+
+        /// <summary>
+        /// The Interview Session entity associated with this interview (navigation property).
+        /// </summary>
+        [JsonIgnore]
+        public InterviewSession? InterviewSession { get; set; }
 
         /// <summary>
         /// Converts the Interview entity to its DTO representation.
