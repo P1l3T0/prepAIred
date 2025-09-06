@@ -12,9 +12,9 @@
         public string AIAgent { get; set; } = string.Empty;
 
         /// <summary>
-        /// The field or topic for the interview questions (e.g., Software Engineering).
+        /// The topic for the interview questions (e.g., Software Engineering).
         /// </summary>
-        public string Field { get; set; } = string.Empty;
+        public string Topic { get; set; } = string.Empty;
 
         /// <summary>
         /// The difficulty level for the interview questions (e.g., Junior, Senior).
