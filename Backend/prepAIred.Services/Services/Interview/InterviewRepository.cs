@@ -2,19 +2,20 @@
 
 namespace prepAIred.Services
 {
-    public class InterviewRepository(IAIService aIService, IUserService userService,
-        IInterviewService interviewService, IInterviewSessionService interviewSessionService) : IInterviewRepository
+    public class InterviewRepository(IAIService aIService, IUserService userService, IInterviewService interviewService, 
+        IInterviewSessionService interviewSessionService, IPromptService promptService) : IInterviewRepository
     {
         private readonly IAIService _aIService = aIService;
         private readonly IUserService _userService = userService;
         private readonly IInterviewService _interviewService = interviewService;
         private readonly IInterviewSessionService _interviewSessionService = interviewSessionService;
+        private readonly IPromptService _promptService = promptService;
 
         public async Task GenerateAiInterviews(AIRequestDTO aIRequest)
         {
             int currentUserID = (await _userService.GetCurrentUserAsync()).ID;
             User currentUser = await _userService.GetUserEntityByIdAsync(currentUserID);
-            string prompt = _aIService.CreatePrompt(aIRequest, currentUserID);
+            string prompt = _promptService.CreatePrompt(aIRequest, currentUserID);
 
             AIAgent aiAgent = Enum.Parse<AIAgent>(aIRequest.AIAgent);
             List<Interview> interviews = await _aIService.AskAiAgentAsync(aiAgent, prompt);
