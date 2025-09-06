@@ -5,34 +5,39 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace prepAIred.Data
 {
     /// <summary>
-    /// Entity representing an interview question and its answers for a user.
+    /// Represents an interview question, its answers, and related user/session information.
     /// </summary>
     public class Interview : BaseModel
     {
         /// <summary>
-        /// The ID of the user associated with this interview.
+        /// Gets or sets the ID of the user to whom this interview belongs.
         /// </summary>
         public int UserID { get; set; }
 
+        /// <summary>
+        /// Gets or sets the ID of the interview session this interview is part of.
+        /// </summary>
         public int InterviewSessionID { get; set; }
 
         /// <summary>
-        /// The interview question text.
+        /// Gets or sets the text of the interview question.
         /// </summary>
         public string Question { get; set; } = string.Empty;
 
         /// <summary>
-        /// Indicates whether the question has been answered.
+        /// Gets or sets a value indicating whether the interview question has been answered.
         /// </summary>
         public bool IsAnswered { get; set; }
 
         /// <summary>
-        /// JSON representation of the answers list.
+        /// Gets or sets the JSON-serialized list of answers for this interview question.
+        /// Used for database storage.
         /// </summary>
         public string AnswersJson { get; set; } = "[]";
 
         /// <summary>
-        /// List of answers for the interview question (not mapped to DB).
+        /// Gets or sets the list of answers for the interview question.
+        /// This property is not mapped to the database directly.
         /// </summary>
         [NotMapped]
         public List<string> Answers
@@ -42,20 +47,22 @@ namespace prepAIred.Data
         }
 
         /// <summary>
-        /// The user entity associated with this interview (navigation property).
+        /// Gets or sets the user entity associated with this interview (navigation property).
         /// </summary>
         [JsonIgnore]
         public User? User { get; set; }
 
         /// <summary>
-        /// The Interview Session entity associated with this interview (navigation property).
+        /// Gets or sets the interview session entity associated with this interview (navigation property).
         /// </summary>
         [JsonIgnore]
         public InterviewSession? InterviewSession { get; set; }
 
         /// <summary>
-        /// Converts the Interview entity to its DTO representation.
+        /// Converts this Interview entity to its corresponding DTO representation.
         /// </summary>
+        /// <typeparam name="T">The type of DTO to convert to.</typeparam>
+        /// <returns>The DTO representation of this interview.</returns>
         public override T ToDto<T>()
         {
             InterviewDTO interviewDTO = new InterviewDTO()
