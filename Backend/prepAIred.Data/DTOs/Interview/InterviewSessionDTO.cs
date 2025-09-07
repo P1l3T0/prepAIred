@@ -11,6 +11,16 @@
         public int UserID { get; set; }
 
         /// <summary>
+        /// Gets or sets the topic associated with the current context.
+        /// </summary>
+        public string Topic { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the interview session has been completed.
+        /// </summary>
+        public bool IsCompleted { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets the AI agent used for this interview session.
         /// </summary>
         public AIAgent AIAgent { get; set; } = AIAgent.ChatGPT;

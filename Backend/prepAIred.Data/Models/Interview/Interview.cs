@@ -68,6 +68,8 @@ namespace prepAIred.Data
             InterviewDTO interviewDTO = new InterviewDTO()
             {
                 ID = ID,
+                UserID = UserID,
+                InterviewSessionID = InterviewSessionID,
                 DateCreated = DateCreated,
                 Question = Question,
                 Answers = Answers,

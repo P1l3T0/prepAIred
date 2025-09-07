@@ -18,6 +18,11 @@
         public string Topic { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the interview session has been completed.
+        /// </summary>
+        public bool IsCompleted { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets the AI agent used to conduct or assist with the interview session.
         /// </summary>
         /// <value>The AI agent used for the session.</value>
@@ -53,6 +58,7 @@
                 ID = ID,
                 UserID = UserID,
                 Topic = Topic,
+                IsCompleted = IsCompleted,
                 AIAgent = AIAgent,
                 Score = Score,
                 Interviews = Interviews.ConvertAll(interview => interview.ToDto<InterviewDTO>()),
