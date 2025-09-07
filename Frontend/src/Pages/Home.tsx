@@ -1,3 +1,5 @@
+import AiInterviews from "../Components/InterviewSessions/GenerateInterviewSession";
+import GetAiInterviews from "../Components/InterviewSessions/GetInterviewSession";
 import LogOutButton from "../Components/LogOutButton";
 import useGetUser from "../Hooks/User/useGetUser";
 
@@ -15,6 +17,11 @@ const Home = () => {
       <p>User ID: {user?.id}</p>
 
       <LogOutButton />
+
+      <br />
+      <br />
+      <AiInterviews />
+      <GetAiInterviews />
     </>
   );
 };
