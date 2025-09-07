@@ -1,4 +1,5 @@
-﻿using prepAIred.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using prepAIred.Data;
 
 namespace prepAIred.Services
 {
@@ -9,6 +10,15 @@ namespace prepAIred.Services
         public async Task CreateInterviewSessionAsync(InterviewSession interviewSession)
         {
             await _dataContext.InterviewSessions.AddRangeAsync(interviewSession);
+        }
+
+        public async Task<List<InterviewSessionDTO>> GetInterviewSessionsByUserIdAsync(int userID)
+        {
+            return await _dataContext.InterviewSessions
+                .Where(s => s.UserID == userID)
+                .Include(s => s.Interviews)
+                .Select(s => s.ToDto<InterviewSessionDTO>())
+                .ToListAsync();
         }
     }
 }

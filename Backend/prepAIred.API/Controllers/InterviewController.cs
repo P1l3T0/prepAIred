@@ -27,8 +27,8 @@ namespace prepAIred.API
         [HttpGet("get-interview-sessions")]
         public async Task<IActionResult> GetAiInterviews()
         {
-            List<InterviewSessionDTO> interviews = await _interviewRepository.GetInterviewSessionsAsync();
-            return Ok(interviews);
+            List<InterviewSessionDTO> interviewSessions = await _interviewRepository.GetInterviewSessionsAsync();
+            return Ok(interviewSessions);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace prepAIred.Services
         public async Task<List<InterviewSessionDTO>> GetInterviewSessionsAsync()
         {
             int currentUserID = (await _userService.GetCurrentUserAsync()).ID;
-            List<InterviewSessionDTO> interviewDTOs = new List<InterviewSessionDTO>();
+            List<InterviewSessionDTO> interviewDTOs = await _interviewSessionService.GetInterviewSessionsByUserIdAsync(currentUserID);
 
             return interviewDTOs;
         }

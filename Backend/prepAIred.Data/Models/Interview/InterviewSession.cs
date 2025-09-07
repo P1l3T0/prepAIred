@@ -50,10 +50,13 @@
         {
             InterviewSessionDTO interviewSessionDTO = new InterviewSessionDTO()
             {
+                ID = ID,
                 UserID = UserID,
+                Topic = Topic,
                 AIAgent = AIAgent,
                 Score = Score,
                 Interviews = Interviews.ConvertAll(interview => interview.ToDto<InterviewDTO>()),
+                DateCreated = DateCreated,
             };
 
             return (T)(object)interviewSessionDTO;
