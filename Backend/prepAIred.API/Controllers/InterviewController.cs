@@ -17,17 +17,17 @@ namespace prepAIred.API
     {
         private readonly IInterviewRepository _interviewRepository = interviewRepository;
 
-        [HttpPost("generate-ai-interviews")]
-        public async Task<IActionResult> GenerateAiInterview([FromBody] AIRequestDTO aIRequest)
+        [HttpPost("generate-interviews")]
+        public async Task<IActionResult> GenerateInterview([FromBody] AIRequestDTO aIRequest)
         {
-            await _interviewRepository.GenerateAiInterviews(aIRequest);
+            await _interviewRepository.GenerateInterviewsAsync(aIRequest);
             return Ok("AI interviews created successfully.");
         }
 
-        [HttpGet("get-ai-interviews")]
+        [HttpGet("get-interview-sessions")]
         public async Task<IActionResult> GetAiInterviews()
         {
-            List<InterviewDTO> interviews = await _interviewRepository.GetAiInterview();
+            List<InterviewSessionDTO> interviews = await _interviewRepository.GetInterviewSessionsAsync();
             return Ok(interviews);
         }
     }

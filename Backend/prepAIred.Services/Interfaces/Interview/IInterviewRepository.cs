@@ -12,12 +12,12 @@ namespace prepAIred.Services
         /// </summary>
         /// <param name="aIRequest">The request DTO containing parameters such as agent, topic, level, and number of questions.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task GenerateAiInterviews(AIRequestDTO aIRequest);
+        Task GenerateInterviewsAsync(AIRequestDTO aIRequest);
 
         /// <summary>
         /// Retrieves all AI-generated interviews currently stored in the system.
         /// </summary>
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="InterviewDTO"/> objects.</returns>
-        Task<List<InterviewDTO>> GetAiInterview();
+        Task<List<InterviewSessionDTO>> GetInterviewSessionsAsync();
     }
 }

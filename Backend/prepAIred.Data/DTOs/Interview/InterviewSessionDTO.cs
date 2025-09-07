@@ -3,7 +3,7 @@
     /// <summary>
     /// Data Transfer Object for representing an interview session.
     /// </summary>
-    internal class InterviewSessionDTO : BaseDTO
+    public class InterviewSessionDTO : BaseDTO
     {
         /// <summary>
         /// Gets or sets the ID of the user who owns this interview session.

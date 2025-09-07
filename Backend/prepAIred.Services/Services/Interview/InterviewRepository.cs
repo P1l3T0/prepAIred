@@ -20,7 +20,7 @@ namespace prepAIred.Services
         private readonly IInterviewSessionService _interviewSessionService = interviewSessionService;
         private readonly IPromptService _promptService = promptService;
 
-        public async Task GenerateAiInterviews(AIRequestDTO aIRequest)
+        public async Task GenerateInterviewsAsync(AIRequestDTO aIRequest)
         {
             int currentUserID = (await _userService.GetCurrentUserAsync()).ID;
             User currentUser = await _userService.GetUserEntityByIdAsync(currentUserID);
@@ -43,10 +43,10 @@ namespace prepAIred.Services
             await _interviewService.CreateInterviewsAsync(interviews, currentUser, interviewSession);
         }
 
-        public async Task<List<InterviewDTO>> GetAiInterview()
+        public async Task<List<InterviewSessionDTO>> GetInterviewSessionsAsync()
         {
             int currentUserID = (await _userService.GetCurrentUserAsync()).ID;
-            List<InterviewDTO> interviewDTOs = await _interviewService.GetInterviewsByUserIdAsync(currentUserID);
+            List<InterviewSessionDTO> interviewDTOs = new List<InterviewSessionDTO>();
 
             return interviewDTOs;
         }
