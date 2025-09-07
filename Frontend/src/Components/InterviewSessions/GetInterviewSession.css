@@ -1,0 +1,50 @@
+.root {
+  margin: 1rem;
+  padding: 1rem;
+  background: #fafbfc;
+  border-radius: 8px;
+  font-family: system-ui, sans-serif;
+}
+
+.fieldset {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  margin-bottom: 24px;
+  padding: 18px;
+  background: #fff;
+}
+
+.legend {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.meta {
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.interview {
+  margin-bottom: 14px;
+  padding: 10px 0 0 0;
+}
+
+.question {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.answer {
+  margin-bottom: 6px;
+}
+
+.label {
+  margin-left: 4px;
+}
+
+.empty {
+  text-align: center;
+  color: #888;
+  font-size: 1rem;
+}

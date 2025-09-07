@@ -1,4 +1,5 @@
 import useGetAiInterviews from "../../Hooks/Interviews/useGetAiInterviews";
+import "./GetInterviewSession.css";
 
 const GetAiInterviews = () => {
   const { data: interviewSessions, isLoading, isError } = useGetAiInterviews();
@@ -8,29 +9,47 @@ const GetAiInterviews = () => {
 
   return (
     <>
-      {interviewSessions && interviewSessions.length > 0 ? (
-        interviewSessions.map((interviewSession) => (
-          <fieldset key={interviewSession.id}>
-            <legend>Interview Topic: {interviewSession.topic}</legend>
-            Generated at: {interviewSession.dateCreated.toLocaleDateString()}
-            AI agent used: {interviewSession.aiAgent}
-            Score: {interviewSession.score}
-            {interviewSession.interviews.map((interview) => (
-              <div key={interview.id}>
-                <strong>{interview.question}</strong>
-                {interview.answers.map((answer, index) => (
-                  <span key={index}>
-                    <input type="radio" id={`interview-questions-${interview.id}-${index}`} name={`interview-${interview.id}`} value={answer} />
-                    <label htmlFor={`interview-questions-${interview.id}-${index}`} style={{ marginLeft: 4 }}>{answer}</label>
-                  </span>
-                ))}
+      <div className="root">
+        {interviewSessions && interviewSessions.length > 0 ? (
+          interviewSessions.map((interviewSession, interviewSessionIndex) => (
+            <fieldset key={interviewSessionIndex} className="fieldset">
+              <legend className="legend">
+                Interview Topic: {interviewSession.topic}
+              </legend>
+              <div className="meta">
+                Generated at:{" "}
+                {interviewSession.dateCreated.toLocaleDateString()} | AI agent:{" "}
+                {interviewSession.aiAgent} | Score: {interviewSession.score}
               </div>
-            ))}
-          </fieldset>
-        ))
-      ) : (
-        <div>No interview Sessions found</div>
-      )}
+              {interviewSession.interviews.map((interview, interviewIndex) => (
+                <div key={interviewIndex} className="interview">
+                  <div className="question">{interview.question}</div>
+                  <div>
+                    {interview.answers.map((answer, answerIndex) => (
+                      <div key={answerIndex} className="answer">
+                        <input
+                          type="radio"
+                          id={`interview-questions-${interviewIndex}-${answerIndex}`}
+                          name={`interview-${interviewIndex}`}
+                          value={answer}
+                          disabled={interviewSession.isCompleted}
+                        />
+                        <label
+                          htmlFor={`interview-questions-${interviewIndex}-${answerIndex}`}
+                        >
+                          {answer}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </fieldset>
+          ))
+        ) : (
+          <div className="empty">No interview sessions found</div>
+        )}
+      </div>
     </>
   );
 }
