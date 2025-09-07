@@ -11,8 +11,12 @@
         public string Question { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets the type of the question.
+        /// </summary>
+        public string QuestionType { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the interview question has been answered.
-        /// This property is ignored during JSON serialization.
         /// </summary>
         public bool IsAnswered { get; set; } = false;
 

@@ -23,12 +23,12 @@
         /// <summary>
         /// Gets or sets the AI agent used for this interview session.
         /// </summary>
-        public AIAgent AIAgent { get; set; } = AIAgent.ChatGPT;
+        public string AIAgent { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the score or rating assigned to this interview session.
         /// </summary>
-        public InterviewSessionScore Score { get; set; } = InterviewSessionScore.NotRated;
+        public string Score { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the list of interviews that are part of this session.

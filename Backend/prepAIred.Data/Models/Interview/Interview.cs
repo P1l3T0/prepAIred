@@ -25,6 +25,11 @@ namespace prepAIred.Data
         public string Question { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets the type of the question.
+        /// </summary>
+        public QuestionType QuestionType { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the interview question has been answered.
         /// </summary>
         public bool IsAnswered { get; set; }
@@ -73,7 +78,8 @@ namespace prepAIred.Data
                 DateCreated = DateCreated,
                 Question = Question,
                 Answers = Answers,
-                IsAnswered = IsAnswered
+                IsAnswered = IsAnswered,
+                QuestionType = nameof(QuestionType)
             };
 
             return (T)(object)interviewDTO;
