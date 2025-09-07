@@ -2,6 +2,15 @@
 
 namespace prepAIred.Services
 {
+    /// <summary>
+    /// Provides operations for generating and retrieving AI-generated interviews, including session management and user context.
+    /// Coordinates between AI services, user services, and interview/session services to create and fetch interview data.
+    /// </summary>
+    /// <param name="aIService">The AI service used to generate interview questions and answers.</param>
+    /// <param name="userService">The user service for retrieving user information and context.</param>
+    /// <param name="interviewService">The interview service for managing interview entities.</param>
+    /// <param name="interviewSessionService">The interview session service for managing interview session entities.</param>
+    /// <param name="promptService">The prompt service for generating prompts for the AI agent.</param>
     public class InterviewRepository(IAIService aIService, IUserService userService, IInterviewService interviewService, 
         IInterviewSessionService interviewSessionService, IPromptService promptService) : IInterviewRepository
     {

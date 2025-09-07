@@ -3,21 +3,24 @@
 namespace prepAIred.Services
 {
     /// <summary>
-    /// Service interface for interview data management and retrieval.
+    /// Defines methods for managing and retrieving interview data.
     /// </summary>
     public interface IInterviewService
     {
         /// <summary>
-        /// Creates multiple interview entities in the database.
+        /// Creates and persists multiple interview entities in the database for a given user and session.
         /// </summary>
-        /// <param name="interviews">List of Interview entities to create.</param>
+        /// <param name="interviews">The list of <see cref="Interview"/> entities to create.</param>
+        /// <param name="currentUser">The user for whom the interviews are being created.</param>
+        /// <param name="interviewSession">The interview session to which the interviews belong.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         Task CreateInterviewsAsync(List<Interview> interviews, User currentUser, InterviewSession interviewSession);
 
         /// <summary>
-        /// Retrieves interviews for a specific user by their ID.
+        /// Retrieves all interviews associated with a specific user by their unique identifier.
         /// </summary>
-        /// <param name="userId">The ID of the user.</param>
-        /// <returns>List of InterviewDTO objects.</returns>
+        /// <param name="userId">The unique identifier of the user.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="InterviewDTO"/> objects.</returns>
         Task<List<InterviewDTO>> GetInterviewsByUserIdAsync(int userId);
     }
 }

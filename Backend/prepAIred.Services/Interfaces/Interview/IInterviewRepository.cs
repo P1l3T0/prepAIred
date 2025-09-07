@@ -3,20 +3,21 @@
 namespace prepAIred.Services
 {
     /// <summary>
-    /// Repository interface for AI interview data operations.
+    /// Defines methods for performing data operations related to AI-generated interviews.
     /// </summary>
     public interface IInterviewRepository
     {
         /// <summary>
-        /// Generates a new AI-generated interview based on the request parameters.
+        /// Generates and stores a new set of AI-generated interviews based on the specified request parameters.
         /// </summary>
-        /// <param name="aIRequest">The request DTO containing interview parameters.</param>
+        /// <param name="aIRequest">The request DTO containing parameters such as agent, topic, level, and number of questions.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         Task GenerateAiInterviews(AIRequestDTO aIRequest);
 
         /// <summary>
-        /// Retrieves a list of AI-generated interviews.
+        /// Retrieves all AI-generated interviews currently stored in the system.
         /// </summary>
-        /// <returns>List of InterviewDTO objects.</returns>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="InterviewDTO"/> objects.</returns>
         Task<List<InterviewDTO>> GetAiInterview();
     }
 }
