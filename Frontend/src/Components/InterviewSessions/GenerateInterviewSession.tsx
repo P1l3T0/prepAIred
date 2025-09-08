@@ -1,7 +1,7 @@
-import useGenerateAiInterviews from "../../Hooks/Interviews/useGenerateAiInterviews";
+import useGenerateAiInterviews from "../../Hooks/InterviewSessions/useGenerateInterviewSession";
 
 const AiInterviews = () => {
-  const { handleSelectChange, handleInputChange, handleGenerateAiInterviews } = useGenerateAiInterviews();
+  const { handleSelectChange, handleInputChange, handleGenerateInterviewSessions } = useGenerateAiInterviews();
 
   return (
     <>
@@ -24,7 +24,7 @@ const AiInterviews = () => {
       </select>
 
       <input type="number" name="numberOfQuestions" onChange={handleInputChange} />
-      <button onClick={handleGenerateAiInterviews}>Generate AI Interviews</button>
+      <button onClick={handleGenerateInterviewSessions}>Generate Interview Sessions</button>
     </>
   );
 };

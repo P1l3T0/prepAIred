@@ -9,14 +9,14 @@ import { useMutation, useQueryClient } from "react-query";
 import { generateInterviewsEndPoint } from "../../Utils/endpoints";
 import type { AIRequestDTO } from "../../Utils/interviewTypes";
 
-const useGenerateAiInterviews = () => {
+const useGetInterviewSessions = () => {
   const queryClient = useQueryClient();
 
   const [aiRequest, setAIRequest] = useState<AIRequestDTO>({
     aiAgent: "ChatGPT",
     topic: "OOP",
     level: "Entry Level",
-    numberOfQuestions: 3
+    numberOfQuestions: 3,
   });
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -24,7 +24,7 @@ const useGenerateAiInterviews = () => {
       ...aiRequest,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAIRequest({
@@ -33,7 +33,7 @@ const useGenerateAiInterviews = () => {
     });
   };
 
-  const generateAiInterviews = async () => {
+  const generateInterviewSessions = async () => {
     await axios
       .post(generateInterviewsEndPoint, aiRequest, { withCredentials: true })
       .catch((err: AxiosError) => {
@@ -43,18 +43,18 @@ const useGenerateAiInterviews = () => {
   };
 
   const { mutateAsync } = useMutation({
-    mutationFn: generateAiInterviews,
+    mutationFn: generateInterviewSessions,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["ai-interviews"] });
+      queryClient.invalidateQueries({ queryKey: ["interview-sessions"] });
     },
   });
 
-  const handleGenerateAiInterviews = async (e: SyntheticEvent) => {
+  const handleGenerateInterviewSessions = async (e: SyntheticEvent) => {
     e.preventDefault();
     mutateAsync();
   };
 
-  return { handleSelectChange, handleInputChange, handleGenerateAiInterviews };
+  return { handleSelectChange, handleInputChange, handleGenerateInterviewSessions };
 };
 
-export default useGenerateAiInterviews;
+export default useGetInterviewSessions;

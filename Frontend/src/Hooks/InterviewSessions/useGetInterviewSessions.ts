@@ -8,8 +8,8 @@ import axios, { AxiosError, type AxiosResponse } from "axios";
 import { getInterviewSessionsEndPoint } from "../../Utils/endpoints";
 import type { InterviewSessionDTO } from "../../Utils/interviewTypes";
 
-const useGetAiInterviews = () => {
-  const getAiInterviews = async () => {
+const useGetInterviewSessions = () => {
+  const getInterviewSessions = async () => {
     return await axios
       .get<InterviewSessionDTO[]>(`${getInterviewSessionsEndPoint}`, { withCredentials: true })
       .then((res: AxiosResponse<InterviewSessionDTO[]>) => {
@@ -30,15 +30,15 @@ const useGetAiInterviews = () => {
       });
   };
 
-  const aiInterviewsQuery = useQuery({
-    queryKey: ["ai-interviews"],
-    queryFn: getAiInterviews,
+  const interviewSessionsQuery = useQuery({
+    queryKey: ["interview-sessions"],
+    queryFn: getInterviewSessions,
     refetchOnWindowFocus: false,
   });
 
-  const { data, isLoading, isError } = aiInterviewsQuery;
+  const { data, isLoading, isError } = interviewSessionsQuery;
 
   return { data, isLoading, isError };
 };
 
-export default useGetAiInterviews;
+export default useGetInterviewSessions;
