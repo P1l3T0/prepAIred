@@ -7,11 +7,6 @@ import { useQuery } from "react-query";
 import axios, { AxiosError, type AxiosResponse } from "axios";
 import { getInterviewSessionsEndPoint } from "../../Utils/endpoints";
 import type { InterviewSessionDTO } from "../../Utils/interviewTypes";
-import { AIAgent, InterviewSessionScore } from "../../Utils/enums";
-
-const getEnumValueFromNumber = (numberType: number, enumType: typeof AIAgent | typeof InterviewSessionScore): string => {
-  return enumType[numberType];
-};
 
 const useGetAiInterviews = () => {
   const getAiInterviews = async () => {
@@ -20,8 +15,6 @@ const useGetAiInterviews = () => {
       .then((res: AxiosResponse<InterviewSessionDTO[]>) => {
         return res.data.map((interviewSession) => ({
           ...interviewSession,
-          aiAgent: getEnumValueFromNumber(parseInt(interviewSession.aiAgent), AIAgent),
-          score: getEnumValueFromNumber(parseInt(interviewSession.score), InterviewSessionScore),
           interviews: interviewSession.interviews.map((interview) => {
             return {
               ...interview,

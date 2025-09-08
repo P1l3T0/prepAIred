@@ -14,7 +14,7 @@ const useGenerateAiInterviews = () => {
 
   const [aiRequest, setAIRequest] = useState<AIRequestDTO>({
     aiAgent: "ChatGPT",
-    field: "OOP",
+    topic: "OOP",
     level: "Entry Level",
     numberOfQuestions: 3
   });

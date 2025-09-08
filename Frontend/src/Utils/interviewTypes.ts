@@ -1,6 +1,6 @@
 export type AIRequestDTO = {
   aiAgent: string;
-  field: string;
+  topic: string;
   level: string;
   numberOfQuestions: number;
 };
@@ -24,4 +24,5 @@ export type InterviewDTO = {
   userID: number;
   interviewSessionID: number;
   answers: string[];
+  questionType: string;
 };
