@@ -37,12 +37,13 @@ namespace prepAIred.Services
                     ""AnswersJson"": ""[]""       // string - JSON array of answers as a string
                 }}
 
+                - Depending on the number of questions requested, the response must contain equal questions from all the possible question types.
                 - Property names must match exactly: UserID, InterviewSessionID, Question, QuestionType, AnswersJson.
                 - QuestionType must be an integer, not a string.
                 - AnswersJson must always be a valid JSON array string:
                     * Example: ""[\""answer one\"", \""answer two\"", \""answer three\""]""
                 - No additional properties are allowed.
-                - No nulls allowed (use empty string "" or empty array [] if needed).
+                - No nulls allowed (use empty array []).
                 - Strings must be properly escaped for JSON.
                 - Do not include explanations, markdown, or code fences. Output raw JSON only.
                 - No trailing commas in arrays or objects.";

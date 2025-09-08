@@ -1,4 +1,4 @@
-import useGetAiInterviews from "../../Hooks/Interviews/useGetAiInterviews";
+import useGetAiInterviews from "../../Hooks/InterviewSessions/useGetInterviewSessions";
 import "./GetInterviewSession.css";
 
 const GetAiInterviews = () => {
@@ -25,22 +25,51 @@ const GetAiInterviews = () => {
                 <div key={interviewIndex} className="interview">
                   <div className="question">{interview.question}</div>
                   <div>
-                    {interview.answers.map((answer, answerIndex) => (
-                      <div key={answerIndex} className="answer">
-                        <input
-                          type="radio"
-                          id={`interview-questions-${interviewIndex}-${answerIndex}`}
-                          name={`interview-${interviewIndex}`}
-                          value={answer}
-                          disabled={interviewSession.isCompleted}
-                        />
-                        <label
-                          htmlFor={`interview-questions-${interviewIndex}-${answerIndex}`}
-                        >
-                          {answer}
-                        </label>
-                      </div>
-                    ))}
+                    {(() => {
+                      switch (interview.questionType) {
+                        case "SingleChoice":
+                          return interview.answers.map((answer, answerIndex) => (
+                            <div key={answerIndex} className="answer">
+                              <input
+                                type="radio"
+                                id={`interview-questions-${interviewIndex}-${answerIndex}`}
+                                name={`interview-${interviewIndex}`}
+                                value={answer}
+                                disabled={interviewSession.isCompleted}
+                              />
+                              <label htmlFor={`interview-questions-${interviewIndex}-${answerIndex}`}>
+                                {answer}
+                              </label>
+                            </div>
+                          ));
+                        case "MultipleChoice":
+                          return interview.answers.map((answer, answerIndex) => (
+                            <div key={answerIndex} className="answer">
+                              <input
+                                type="checkbox"
+                                id={`interview-questions-${interviewIndex}-${answerIndex}`}
+                                name={`interview-${interviewIndex}`}
+                                value={answer}
+                                disabled={interviewSession.isCompleted}
+                              />
+                              <label htmlFor={`interview-questions-${interviewIndex}-${answerIndex}`}>
+                                {answer}
+                              </label>
+                            </div>
+                          ));
+                        case "OpenEnded":
+                          return (
+                            <textarea
+                              className="answer"
+                              name={`interview-${interviewIndex}`}
+                              placeholder="Type your answer..."
+                              disabled={interviewSession.isCompleted}
+                            />
+                          );
+                        default:
+                          return null;
+                      }
+                    })()}
                   </div>
                 </div>
               ))}
