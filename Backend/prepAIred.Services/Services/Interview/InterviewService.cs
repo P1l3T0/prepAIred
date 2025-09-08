@@ -11,7 +11,6 @@ namespace prepAIred.Services
         {
             foreach (Interview interview in interviews)
             {
-                interview.ID = 0;
                 interview.User = currentUser;
                 interview.InterviewSession = interviewSession;
                 interview.InterviewSessionID = interviewSession.ID;

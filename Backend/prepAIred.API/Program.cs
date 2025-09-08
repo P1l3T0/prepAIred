@@ -69,7 +69,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", options =>
     {
-        string frontendUrl = builder.Configuration["Appsettings:FrontendURL"] ?? "http://localhost:5174";
+        string frontendUrl = builder.Configuration["Appsettings:FrontendURL"]!;
 
         options.WithOrigins(frontendUrl)
             .AllowAnyHeader()

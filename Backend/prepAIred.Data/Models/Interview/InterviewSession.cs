@@ -59,8 +59,8 @@
                 UserID = UserID,
                 Topic = Topic,
                 IsCompleted = IsCompleted,
-                AIAgent = nameof(AIAgent),
-                Score = nameof(Score),
+                AIAgent = AIAgent.ToString(),
+                Score = Score.ToString(),
                 Interviews = Interviews.ConvertAll(i => i.ToDto<InterviewDTO>()),
                 DateCreated = DateCreated,
             };

@@ -79,7 +79,7 @@ namespace prepAIred.Data
                 Question = Question,
                 Answers = Answers,
                 IsAnswered = IsAnswered,
-                QuestionType = nameof(QuestionType)
+                QuestionType = QuestionType.ToString()
             };
 
             return (T)(object)interviewDTO;
