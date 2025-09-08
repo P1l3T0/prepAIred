@@ -46,9 +46,17 @@ namespace prepAIred.Services
         public async Task<List<InterviewSessionDTO>> GetInterviewSessionsAsync()
         {
             int currentUserID = (await _userService.GetCurrentUserAsync()).ID;
-            List<InterviewSessionDTO> interviewDTOs = await _interviewSessionService.GetInterviewSessionsByUserIdAsync(currentUserID);
+            List<InterviewSessionDTO> interviewDTOs = (await _interviewSessionService.GetInterviewSessionsByUserIdAsync(currentUserID)).ConvertAll(i => i.ToDto<InterviewSessionDTO>());
 
             return interviewDTOs;
+        }
+
+        public async Task DeleteInterviewSessionsAsync()
+        {
+            int currentUserID = (await _userService.GetCurrentUserAsync()).ID;
+            List<InterviewSession> interviewDTOs = await _interviewSessionService.GetInterviewSessionsByUserIdAsync(currentUserID);
+
+            await _interviewSessionService.DeleteInterviewSessionsAsync(interviewDTOs);
         }
     }
 }

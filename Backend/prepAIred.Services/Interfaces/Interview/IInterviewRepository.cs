@@ -19,5 +19,10 @@ namespace prepAIred.Services
         /// </summary>
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="InterviewDTO"/> objects.</returns>
         Task<List<InterviewSessionDTO>> GetInterviewSessionsAsync();
+
+        /// <summary>
+        /// Deletes all interview sessions asynchronously.
+        /// </summary>
+        Task DeleteInterviewSessionsAsync();
     }
 }
