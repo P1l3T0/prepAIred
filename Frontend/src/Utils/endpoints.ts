@@ -17,3 +17,4 @@ export const getCurrentUserEndPoint = `${userController}/get-user`;
 //  Interviews
 export const generateInterviewsEndPoint = `${interviewController}/generate-interviews`;
 export const getInterviewSessionsEndPoint = `${interviewController}/get-interview-sessions`;
+export const deleteInterviewSessionsEndPoint = `${interviewController}/delete-interview-sessions`;

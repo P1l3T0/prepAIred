@@ -1,3 +1,4 @@
+import DeleteInterviewSessions from "../Components/InterviewSessions/DeleteInterviewSessions";
 import AiInterviews from "../Components/InterviewSessions/GenerateInterviewSession";
 import GetAiInterviews from "../Components/InterviewSessions/GetInterviewSession";
 import LogOutButton from "../Components/LogOutButton";
@@ -17,6 +18,7 @@ const Home = () => {
       <p>User ID: {user?.id}</p>
 
       <LogOutButton />
+      <DeleteInterviewSessions />
 
       <br />
       <br />
