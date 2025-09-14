@@ -8,11 +8,12 @@ namespace prepAIred.Services
     public interface IInterviewRepository
     {
         /// <summary>
-        /// Generates and stores a new set of AI-generated interviews based on the specified request parameters.
+        /// Generates a collection of interviews based on the specified AI request.
         /// </summary>
-        /// <param name="aIRequest">The request DTO containing parameters such as agent, topic, level, and number of questions.</param>
-        /// <returns>A task representing the asynchronous operation.</returns>
-        Task GenerateInterviewsAsync(AIRequestDTO aIRequest);
+        /// <typeparam name="TInterview">The type of the interview objects to generate. Must be a reference type.</typeparam>
+        /// <param name="aIRequest">The AI request containing the parameters and context for generating interviews.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        Task GenerateInterviewsAsync<TInterview>(BaseRequestDTO aIRequest) where TInterview : class;
 
         /// <summary>
         /// Retrieves all AI-generated interviews currently stored in the system.
