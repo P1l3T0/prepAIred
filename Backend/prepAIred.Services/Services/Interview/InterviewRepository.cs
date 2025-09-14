@@ -74,7 +74,7 @@ namespace prepAIred.Services
             List<Interview> interviews = await _aIService.AskAiAgentAsync<TechnicalInterview>(aiAgent, prompt);
             InterviewSession interviewSession = await _interviewSessionService.GetAdjacentInterviewSessionAsync(currentUser.ID);
 
-            interviewSession.Topic = techRequest.Topic;
+            interviewSession.Subject = techRequest.Subject;
 
             await _interviewSessionService.UpdateInterviewSessionAsync(interviewSession);
             await _interviewService.CreateInterviewsAsync(interviews, currentUser, interviewSession);
