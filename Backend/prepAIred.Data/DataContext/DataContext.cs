@@ -11,28 +11,31 @@ namespace prepAIred.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<HRInterview>().ToTable("HRInterviews");
+            modelBuilder.Entity<TechnicalInterview>().ToTable("TechnicalInterviews");
+
+            modelBuilder.Entity<Interview>()
+                .HasOne(i => i.User)
+                .WithMany(u => u.Interviews)
+                .HasForeignKey(i => i.UserID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Interview>()
+                .HasOne(i => i.InterviewSession)
+                .WithMany(s => s.Interviews)
+                .HasForeignKey(i => i.InterviewSessionID)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<RefreshToken>()
                 .HasOne(n => n.User)
                 .WithMany(u => u.RefreshTokens)
                 .HasForeignKey(n => n.UserID)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Interview>()
-                .HasOne(i => i.User)
-                .WithMany(s => s.Interviews)
-                .HasForeignKey(q => q.UserID)
-                .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<InterviewSession>()
                 .HasOne(s => s.User)
                 .WithMany(u => u.InterviewSessions)
                 .HasForeignKey(s => s.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<InterviewSession>()
-                .HasMany(s => s.Interviews)
-                .WithOne(i => i.InterviewSession)
-                .HasForeignKey(i => i.InterviewSessionID)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
