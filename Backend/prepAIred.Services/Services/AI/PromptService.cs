@@ -4,7 +4,7 @@ namespace prepAIred.Services
 {
     public class PromptService : IPromptService
     {
-        public string CreatePrompt(AIRequestDTO aIRequest, int currentUserID)
+        public string CreatePrompt(TechnicalRequestDTO aIRequest, int currentUserID)
         {
             string contentRules = $@"
                 Act as an experienced technical interviewer conducting an interview for a {aIRequest.Level} {aIRequest.Topic} position.
@@ -47,6 +47,62 @@ namespace prepAIred.Services
                 - Strings must be properly escaped for JSON.
                 - Do not include explanations, markdown, or code fences. Output raw JSON only.
                 - No trailing commas in arrays or objects.";
+
+            string prompt = string.Join(" ", contentRules, formatRules);
+
+            return prompt.Trim();
+        }
+
+        public string CreateHrPrompt(HrRequestDTO hrRequest, int currentUserID)
+        {
+            string contentRules = $@"
+                Act as an experienced HR professional conducting a behavioral and competency-based interview for a position.
+                Generate {hrRequest.NumberOfQuestions} interview questions with evaluation criteria.
+
+                Content requirements:
+                - Questions must follow the STAR (Situation, Task, Action, Result) interview methodology
+                - Include a balanced mix of:
+                    * Behavioral questions assessing past experiences
+                    * Competency-based questions evaluating specific skills - {hrRequest.SoftSkillFocus}
+                    * Cultural fit and values alignment questions
+                    * Leadership and teamwork scenarios - {hrRequest.ContextScenario}
+                - Each question must:
+                    * Target specific soft skills and competencies
+                    * Reveal candidate's problem-solving approach
+                    * Assess interpersonal abilities
+                    * Evaluate communication skills
+                - For non-open-ended questions, include 3 sample responses reflecting:
+                    * A strong answer demonstrating desired competencies
+                    * A mediocre answer showing partial understanding
+                    * A weak answer indicating lack of required skills";
+
+            string formatRules = $@"
+                Format requirements:
+                - Output must be a **strict JSON array** of objects
+                - Return only raw JSON without Markdown code fences
+                - Each object must strictly follow this schema:
+
+                {{
+                    ""UserID"": {currentUserID},          // int - provided user ID
+                    ""Question"": """",                   // string - the behavioral question
+                    ""QuestionType"": 0,                  // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
+                    ""AnswersJson"": ""[]"",              // string - JSON array of answers as a string
+                    ""CompetencyArea"": """",             // string - primary competency being assessed
+                    ""BehavioralContext"": """"          // string - specific behavior or skill being evaluated
+                    ""SoftSkillFocus"": {hrRequest.SoftSkillFocus}
+                }}
+
+                - Questions must be evenly distributed across:
+                    * Leadership and management scenarios
+                    * Team collaboration situations
+                    * Conflict resolution cases
+                    * Problem-solving scenarios
+                    * Communication challenges
+                - QuestionType must be an integer (0, 1, or 2)
+                - AnswersJson must be a valid JSON array string with properly escaped quotes
+                - No additional properties allowed
+                - No nulls (use empty strings/arrays)
+                - Output raw JSON only without explanations";
 
             string prompt = string.Join(" ", contentRules, formatRules);
 
