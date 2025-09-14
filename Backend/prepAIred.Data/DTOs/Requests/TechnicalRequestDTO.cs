@@ -9,13 +9,23 @@
     public class TechnicalRequestDTO : BaseRequestDTO
     {
         /// <summary>
+        /// Gets or sets the language associated with the current context.
+        /// </summary>
+        public string ProgrammingLanguage { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets the main topic or subject area for the interview questions (e.g., Software Engineering).
         /// </summary>
-        public string Topic { get; set; } = string.Empty;
+        public string Subject { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the difficulty level for the interview questions (e.g., Junior, Senior).
         /// </summary>
-        public string Level { get; set; } = string.Empty;
+        public string DifficultyLevel { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the position or title associated with an entity.
+        /// </summary>
+        public string Position { get; set; } = string.Empty;
     }
 }

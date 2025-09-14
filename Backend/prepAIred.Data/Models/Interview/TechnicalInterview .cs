@@ -22,6 +22,11 @@
         /// <summary>
         /// Gets or sets the specific technical topic area being covered in the interview.
         /// </summary>
-        public string TopicArea { get; set; } = string.Empty;
+        public string Subject { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the position or title associated with an entity.
+        /// </summary>
+        public string Position { get; set; } = string.Empty;
     }
 }
