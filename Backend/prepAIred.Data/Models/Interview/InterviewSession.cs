@@ -13,7 +13,7 @@
         /// <summary>
         /// Gets or sets the main topic or subject of the interview session.
         /// </summary>
-        public string Topic { get; set; } = string.Empty;
+        public string Subject { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets a value indicating whether the interview session has been completed.
@@ -51,7 +51,7 @@
             {
                 ID = ID,
                 UserID = UserID,
-                Topic = Topic,
+                Subject = Subject,
                 IsCompleted = IsCompleted,
                 AIAgent = AIAgent.ToString(),
                 Score = Score.ToString(),

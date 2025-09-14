@@ -7,7 +7,7 @@ namespace prepAIred.Data
     /// <summary>
     /// Represents an interview question, its answers, and related user/session information.
     /// </summary>
-    public class Interview : BaseModel
+    public abstract class Interview : BaseModel
     {
         /// <summary>
         /// Gets or sets the ID of the user to whom this interview belongs.

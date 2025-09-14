@@ -13,7 +13,7 @@
         /// <summary>
         /// Gets or sets the topic associated with the current context.
         /// </summary>
-        public string Topic { get; set; } = string.Empty;
+        public string Subject { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets a value indicating whether the interview session has been completed.
