@@ -13,7 +13,7 @@ namespace prepAIred.API
     /// </remarks>
     /// <param name="userRepository">Repository for handling user-related operations</param>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController(IUserRepository userRepository) : Controller
     {
         private readonly IUserRepository _userRepository = userRepository;

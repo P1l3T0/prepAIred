@@ -12,7 +12,7 @@ namespace prepAIred.API
     /// <see cref="IInterviewRepository"/> implementation to handle interview data operations.</remarks>
     /// <param name="interviewRepository">Repository for handling interview operations</param>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class InterviewController(IInterviewRepository interviewRepository) : Controller
     {
         private readonly IInterviewRepository _interviewRepository = interviewRepository;
