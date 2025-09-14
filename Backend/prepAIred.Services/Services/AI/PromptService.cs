@@ -4,7 +4,7 @@ namespace prepAIred.Services
 {
     public class PromptService : IPromptService
     {
-        public string CreatePrompt(TechnicalRequestDTO aIRequest, int currentUserID)
+        public string CreateTechnicalPrompt(TechnicalRequestDTO aIRequest, int currentUserID)
         {
             string contentRules = $@"
                 Act as an experienced technical interviewer conducting an interview for a {aIRequest.Level} {aIRequest.Topic} position.
@@ -21,8 +21,7 @@ namespace prepAIred.Services
                 - Each non-open-ended question must have exactly 3 possible answers.
                 - Answers must be full text only (no prefixes like A/B/C or 1/2/3).
                 - One and only one answer must be correct (but do not label which is correct).
-                - If the question type is OpenEnded, it must not include any answers.
-            ";
+                - If the question type is OpenEnded, it must not include any answers.";
 
             string formatRules = @$"
                 Format requirements:
