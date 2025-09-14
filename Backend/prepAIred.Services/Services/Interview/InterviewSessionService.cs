@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using prepAIred.Data;
+﻿using prepAIred.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace prepAIred.Services
 {
@@ -12,10 +12,24 @@ namespace prepAIred.Services
             await _dataContext.InterviewSessions.AddRangeAsync(interviewSession);
         }
 
+        public async Task UpdateInterviewSessionAsync(InterviewSession interviewSession)
+        {
+            _dataContext.InterviewSessions.Update(interviewSession);
+            await _dataContext.SaveChangesAsync();
+        }
+
+        public async Task<InterviewSession> GetAdjacentInterviewSessionAsync(int currentUserID)
+        {
+            return await _dataContext.InterviewSessions
+                .Where(intSession => intSession.UserID == currentUserID)
+                .OrderByDescending(s => s.DateCreated)
+                .FirstOrDefaultAsync() ?? new InterviewSession();
+        }
+
         public async Task<List<InterviewSession>> GetInterviewSessionsByUserIdAsync(int userID)
         {
             return await _dataContext.InterviewSessions
-                .Where(s => s.UserID == userID)
+                .Where(intSession => intSession.UserID == userID)
                 .Include(s => s.Interviews)
                 .ToListAsync();
         }
