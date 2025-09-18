@@ -28,5 +28,27 @@
         /// Gets or sets the position or title associated with an entity.
         /// </summary>
         public string Position { get; set; } = string.Empty;
+
+        public override T ToDto<T>()
+        {
+            TechnicalInterviewDTO technicalInterviewDTO = new TechnicalInterviewDTO()
+            {
+                ID = ID,
+                DateCreated = DateCreated,
+                UserID = UserID,
+                InterviewSessionID = InterviewSessionID,
+                Question = Question,
+                IsAnswered = IsAnswered,
+                Answers = Answers,
+                QuestionType = QuestionType.ToString(),
+                InterviewType = InterviewType.ToString(),
+                ProgrammingLanguage = ProgrammingLanguage,
+                DifficultyLevel = DifficultyLevel,
+                Subject = Subject,
+                Position = Position
+            };
+
+            return (T)(object)technicalInterviewDTO;
+        }
     }
 }
