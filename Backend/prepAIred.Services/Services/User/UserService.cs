@@ -51,6 +51,12 @@ namespace prepAIred.Services
             }
         }
 
+        public async Task<int> GetCurrentUserID()
+        {
+            CurrentUserDTO currentUserDTO = await GetCurrentUserAsync();
+            return currentUserDTO.ID;
+        }
+
         public async Task ValidateUserAsync(RegisterDTO registerDto)
         {
             if (!AreFieldsEmpty(registerDto)) throw new EmptyFieldsException("Enter data in all fields");

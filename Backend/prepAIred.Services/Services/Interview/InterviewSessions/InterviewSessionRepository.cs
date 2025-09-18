@@ -9,7 +9,7 @@ namespace prepAIred.Services
 
         public async Task<List<InterviewSessionDTO>> GetInterviewSessionDTOsAsync()
         {
-            int currentUserID = (await _userService.GetCurrentUserAsync()).ID;
+            int currentUserID = await _userService.GetCurrentUserID();
             List<InterviewSessionDTO> interviewDTOs = (await _interviewSessionService.GetInterviewSessionsByUserIdAsync(currentUserID)).ConvertAll(i => i.ToDto<InterviewSessionDTO>());
 
             return interviewDTOs;
@@ -17,7 +17,7 @@ namespace prepAIred.Services
 
         public async Task DeleteInterviewSessionsAsync()
         {
-            int currentUserID = (await _userService.GetCurrentUserAsync()).ID;
+            int currentUserID = await _userService.GetCurrentUserID();
             List<InterviewSession> interviewDTOs = await _interviewSessionService.GetInterviewSessionsByUserIdAsync(currentUserID);
 
             await _interviewSessionService.DeleteInterviewSessionsAsync(interviewDTOs);

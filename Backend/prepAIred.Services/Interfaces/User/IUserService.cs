@@ -48,6 +48,8 @@ namespace prepAIred.Services
         /// <returns>The current user entity.</returns>
         Task<CurrentUserDTO> GetCurrentUserAsync();
 
+        Task<int> GetCurrentUserID();
+
         /// <summary>
         /// Validates user registration data.
         /// </summary>

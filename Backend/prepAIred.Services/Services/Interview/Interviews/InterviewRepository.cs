@@ -22,7 +22,7 @@ namespace prepAIred.Services
 
         public async Task GenerateInterviewsAsync<TInterview>(BaseRequestDTO request) where TInterview : class
         {
-            int currentUserID = (await _userService.GetCurrentUserAsync()).ID;
+            int currentUserID = await _userService.GetCurrentUserID();
             User currentUser = await _userService.GetUserEntityByIdAsync(currentUserID);
             AIAgent aiAgent = Enum.Parse<AIAgent>(request.AIAgent);
 
