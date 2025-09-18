@@ -31,6 +31,11 @@
         public int InterviewSessionID { get; set; }
 
         /// <summary>
+        /// Gets or sets the type of interview being conducted.
+        /// </summary>
+        public string InterviewType { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets the list of answers provided for the interview question.
         /// </summary>
         public List<string> Answers { get; set; } = new List<string>();

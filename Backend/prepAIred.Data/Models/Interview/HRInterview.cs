@@ -23,5 +23,26 @@
         /// Gets or sets the behavioral context.
         /// </summary>
         public string BehavioralContext { get; set; } = string.Empty;
+
+        public override T ToDto<T>()
+        {
+            HRInterviewDTO hRInterviewDTO = new HRInterviewDTO()
+            {
+                ID = ID,
+                DateCreated = DateCreated,
+                UserID = UserID,
+                InterviewSessionID = InterviewSessionID,
+                Question = Question,
+                IsAnswered = IsAnswered,
+                Answers = Answers,
+                QuestionType = QuestionType.ToString(),
+                InterviewType = InterviewType.ToString(),
+                SoftSkillFocus = SoftSkillFocus,
+                CompetencyArea = CompetencyArea,
+                BehavioralContext = BehavioralContext
+            };
+
+            return (T)(object)hRInterviewDTO;
+        }
     }
 }
