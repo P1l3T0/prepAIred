@@ -31,6 +31,14 @@ namespace prepAIred.Services
 
         public async Task<User> GetUserEntityByIdAsync(int userID) => await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == userID) ?? throw new InvalidCredentialsException("Invalid User ID");
 
+        public async Task<int> GetCurrentUserID() => (await GetCurrentUserAsync()).ID;
+
+        public async Task DeleteUserAsync(int userID)
+        {
+            await _dataContext.Users.Where(u => u.ID == userID).ExecuteDeleteAsync();
+            await _dataContext.SaveChangesAsync();
+        }
+
         public async Task<CurrentUserDTO> GetCurrentUserAsync()
         {
             string jwt = _httpContextAccessor.HttpContext!.Request.Cookies["AccessToken"]!;
@@ -49,12 +57,6 @@ namespace prepAIred.Services
             {
                 throw new NoUserLoggedInException($"No user currently logged in! ${ex.Message}");
             }
-        }
-
-        public async Task<int> GetCurrentUserID()
-        {
-            CurrentUserDTO currentUserDTO = await GetCurrentUserAsync();
-            return currentUserDTO.ID;
         }
 
         public async Task ValidateUserAsync(RegisterDTO registerDto)

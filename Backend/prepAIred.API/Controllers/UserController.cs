@@ -29,5 +29,12 @@ namespace prepAIred.API
             CurrentUserDTO currentUser = await _userRepository.GetCurrentUserAsync();
             return Ok(currentUser);
         }
+
+        [HttpDelete("delete-current-user")]
+        public async Task<IActionResult> DeleteCurrentUser()
+        {
+            await _userRepository.DeleteCurrentUserAsync();
+            return Ok("User deleted");
+        }
     }
 }

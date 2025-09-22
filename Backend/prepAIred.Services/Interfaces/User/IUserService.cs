@@ -48,7 +48,18 @@ namespace prepAIred.Services
         /// <returns>The current user entity.</returns>
         Task<CurrentUserDTO> GetCurrentUserAsync();
 
+        /// <summary>
+        /// Asynchronously retrieves the unique identifier of the currently authenticated user.
+        /// </summary>
+        /// <returns>The task result contains the unique identifier of the current user.</returns>
         Task<int> GetCurrentUserID();
+
+        /// <summary>
+        /// Deletes the user with the specified user ID.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user to delete. Must be a positive integer.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        Task DeleteUserAsync(int userID);
 
         /// <summary>
         /// Validates user registration data.

@@ -12,14 +12,10 @@ namespace prepAIred.Services
             return user;
         }
 
-        public Task DeleteUser(int userID)
+        public async Task DeleteCurrentUserAsync()
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<User> UpdateUserAsync(int userID)
-        {
-            throw new NotImplementedException();
+            int currentUserID = await _userService.GetCurrentUserID();
+            await _userService.DeleteUserAsync(currentUserID);
         }
     }
 }
