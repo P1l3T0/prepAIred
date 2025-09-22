@@ -39,5 +39,14 @@ namespace prepAIred.Services
             _dataContext.InterviewSessions.RemoveRange(interviewSessions);
             await _dataContext.SaveChangesAsync();
         }
+
+        public async Task<int> GetLatestInterviewSessionID(int userID)
+        {
+            return await _dataContext.InterviewSessions
+                .Where(intSession => intSession.UserID == userID)
+                .OrderByDescending(s => s.DateCreated)
+                .Select(s => s.ID)
+                .FirstOrDefaultAsync();
+        }
     }
 }

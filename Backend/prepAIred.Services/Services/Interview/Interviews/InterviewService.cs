@@ -20,11 +20,11 @@ namespace prepAIred.Services
             await _dataContext.SaveChangesAsync();
         }
 
-        public async Task<List<InterviewDTO>> GetInterviewsByUserIdAsync(int userId)
+        public async Task<List<TInterview>> GetInterviewsBySessionIdAsync<TInterview>(int sessionID) where TInterview : Interview
         {
             return await _dataContext.Interviews
-                .Where(i => i.UserID == userId && !i.IsAnswered)
-                .Select(i => i.ToDto<InterviewDTO>())
+                .Where(i => i.InterviewSessionID == sessionID && i.GetType() == typeof(TInterview))
+                .Cast<TInterview>()
                 .ToListAsync();
         }
     }

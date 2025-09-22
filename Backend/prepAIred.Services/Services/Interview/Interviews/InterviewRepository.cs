@@ -34,6 +34,19 @@ namespace prepAIred.Services
             });
         }
 
+        public async Task<List<TInterviewDTO>> GetLatestInterviews<TInterview, TInterviewDTO>()
+            where TInterview : Interview
+            where TInterviewDTO : InterviewDTO
+        {
+            int currentUserID = await _userService.GetCurrentUserID();
+            int latestSessionID = await _interviewSessionService.GetLatestInterviewSessionID(currentUserID);
+
+            List<TInterview> interviews = await _interviewService.GetInterviewsBySessionIdAsync<TInterview>(latestSessionID);
+            List<TInterviewDTO> interviewDTOs = interviews.Select(i => i.ToDto<TInterviewDTO>()).ToList();
+
+            return interviewDTOs;
+        }
+
         private async Task CreateHrInterviewAsync(HrRequestDTO hrRequest, User currentUser, AIAgent aiAgent)
         {
             string prompt = _promptService.CreateHrPrompt(hrRequest, currentUser.ID);

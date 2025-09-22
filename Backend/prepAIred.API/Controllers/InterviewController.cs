@@ -24,11 +24,25 @@ namespace prepAIred.API
             return Ok("HR interviews created successfully.");
         }
 
+        [HttpGet("get-latest-hr-interviews")]
+        public async Task<IActionResult> GetLatestHrInterview()
+        {
+            List<HRInterviewDTO> hrInterviews = await _interviewRepository.GetLatestInterviews<HRInterview, HRInterviewDTO>();
+            return Ok(hrInterviews);
+        }
+
         [HttpPost("generate-technical-interviews")]
         public async Task<IActionResult> GenerateTechnicalInterviews([FromBody] TechnicalRequestDTO technicalRequest)
         {
             await _interviewRepository.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest);
             return Ok("Technical interviews created successfully.");
+        }
+
+        [HttpGet("get-latest-technical-interviews")]
+        public async Task<IActionResult> GetLatestTechnicalInterview()
+        {
+            List<TechnicalInterviewDTO> technicalInterviews = await _interviewRepository.GetLatestInterviews<TechnicalInterview, TechnicalInterviewDTO>();
+            return Ok(technicalInterviews);
         }
     }
 }
