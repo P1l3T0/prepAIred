@@ -14,17 +14,9 @@ namespace prepAIred.Services
         Task<CurrentUserDTO> GetCurrentUserAsync();
 
         /// <summary>
-        /// Updates a user's information in the database.
+        /// Deletes the currently authenticated user from the system.
         /// </summary>
-        /// <param name="userID">The ID of the user to update.</param>
-        /// <returns>The updated user entity.</returns>
-        Task<User> UpdateUserAsync(int userID);
-
-        /// <summary>
-        /// Deletes a user from the database.
-        /// </summary>
-        /// <param name="userID">The ID of the user to delete.</param>
-        /// <returns>A task representing the asynchronous operation.</returns>
-        Task DeleteUser(int userID);
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        Task DeleteCurrentUserAsync();
     }
 }

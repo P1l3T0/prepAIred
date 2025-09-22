@@ -10,7 +10,6 @@ namespace prepAIred.Data
         /// <summary>
         /// Gets or sets the unique identifier for the entity.
         /// </summary>
-        /// <value>The primary key for the entity.</value>
         [Key]
         [Required]
         public int ID { get; set; }
@@ -18,7 +17,6 @@ namespace prepAIred.Data
         /// <summary>
         /// Gets or sets the date and time when the entity was created.
         /// </summary>
-        /// <value>The creation timestamp, defaults to the current date and time.</value>
         [Required]
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 

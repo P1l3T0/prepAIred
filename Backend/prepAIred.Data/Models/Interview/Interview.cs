@@ -7,7 +7,7 @@ namespace prepAIred.Data
     /// <summary>
     /// Represents an interview question, its answers, and related user/session information.
     /// </summary>
-    public class Interview : BaseModel
+    public abstract class Interview : BaseModel
     {
         /// <summary>
         /// Gets or sets the ID of the user to whom this interview belongs.
@@ -25,11 +25,6 @@ namespace prepAIred.Data
         public string Question { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the type of the question.
-        /// </summary>
-        public QuestionType QuestionType { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the interview question has been answered.
         /// </summary>
         public bool IsAnswered { get; set; }
@@ -39,6 +34,16 @@ namespace prepAIred.Data
         /// Used for database storage.
         /// </summary>
         public string AnswersJson { get; set; } = "[]";
+
+        /// <summary>
+        /// Gets or sets the type of the question.
+        /// </summary>
+        public QuestionType QuestionType { get; set; } = QuestionType.SingleChoice;
+
+        /// <summary>
+        /// Gets or sets the type of interview being conducted.
+        /// </summary>
+        public InterviewType InterviewType { get; set; } = InterviewType.HR;
 
         /// <summary>
         /// Gets or sets the list of answers for the interview question.

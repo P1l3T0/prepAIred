@@ -12,30 +12,37 @@ namespace prepAIred.API
     /// <see cref="IInterviewRepository"/> implementation to handle interview data operations.</remarks>
     /// <param name="interviewRepository">Repository for handling interview operations</param>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class InterviewController(IInterviewRepository interviewRepository) : Controller
     {
         private readonly IInterviewRepository _interviewRepository = interviewRepository;
 
-        [HttpPost("generate-interviews")]
-        public async Task<IActionResult> GenerateInterview([FromBody] AIRequestDTO aIRequest)
+        [HttpPost("generate-hr-interviews")]
+        public async Task<IActionResult> GenerateHrInterview([FromBody] HrRequestDTO hrRequest)
         {
-            await _interviewRepository.GenerateInterviewsAsync(aIRequest);
-            return Ok("AI interviews created successfully.");
+            await _interviewRepository.GenerateInterviewsAsync<HRInterview>(hrRequest);
+            return Ok("HR interviews created successfully.");
         }
 
-        [HttpGet("get-interview-sessions")]
-        public async Task<IActionResult> GetAiInterviews()
+        [HttpGet("get-latest-hr-interviews")]
+        public async Task<IActionResult> GetLatestHrInterview()
         {
-            List<InterviewSessionDTO> interviewSessions = await _interviewRepository.GetInterviewSessionsAsync();
-            return Ok(interviewSessions);
+            List<HRInterviewDTO> hrInterviews = await _interviewRepository.GetLatestInterviews<HRInterview, HRInterviewDTO>();
+            return Ok(hrInterviews);
         }
 
-        [HttpDelete("delete-interview-sessions")]
-        public async Task<IActionResult> DeleteInterviewSessions()
+        [HttpPost("generate-technical-interviews")]
+        public async Task<IActionResult> GenerateTechnicalInterviews([FromBody] TechnicalRequestDTO technicalRequest)
         {
-            await _interviewRepository.DeleteInterviewSessionsAsync();
-            return Ok("All interview sessions deleted successfully.");
+            await _interviewRepository.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest);
+            return Ok("Technical interviews created successfully.");
+        }
+
+        [HttpGet("get-latest-technical-interviews")]
+        public async Task<IActionResult> GetLatestTechnicalInterview()
+        {
+            List<TechnicalInterviewDTO> technicalInterviews = await _interviewRepository.GetLatestInterviews<TechnicalInterview, TechnicalInterviewDTO>();
+            return Ok(technicalInterviews);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace prepAIred.API
     /// <param name="authRepository">Repository for handling authentication operations</param>
     /// <param name="refreshTokenRepository">Repository for managing refresh tokens</param>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AuthController(IAuthRepository authRepository, IRefreshTokenRepository refreshTokenRepository) : Controller
     {
         private readonly IAuthRepository _authRepository = authRepository;

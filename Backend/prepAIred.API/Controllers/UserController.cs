@@ -13,7 +13,7 @@ namespace prepAIred.API
     /// </remarks>
     /// <param name="userRepository">Repository for handling user-related operations</param>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController(IUserRepository userRepository) : Controller
     {
         private readonly IUserRepository _userRepository = userRepository;
@@ -28,6 +28,13 @@ namespace prepAIred.API
 
             CurrentUserDTO currentUser = await _userRepository.GetCurrentUserAsync();
             return Ok(currentUser);
+        }
+
+        [HttpDelete("delete-current-user")]
+        public async Task<IActionResult> DeleteCurrentUser()
+        {
+            await _userRepository.DeleteCurrentUserAsync();
+            return Ok("User deleted");
         }
     }
 }

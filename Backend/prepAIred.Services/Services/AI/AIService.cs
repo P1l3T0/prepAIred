@@ -15,20 +15,20 @@ namespace prepAIred.Services
     {
         private readonly IConfiguration _configuration = configuration;
 
-        public async Task<List<Interview>> AskAiAgentAsync(AIAgent aiAgent, string prompt)
+        public async Task<List<Interview>> AskAiAgentAsync<TInterview>(AIAgent aiAgent, string prompt) where TInterview : Interview
         {
             List<Interview> interviews = await (aiAgent switch
             {
-                AIAgent.ChatGPT => AskChatGPTAsync(prompt),
-                AIAgent.Gemini => AskGeminiAsync(prompt),
-                AIAgent.Claude => AskClaudeAsync(prompt),
+                AIAgent.ChatGPT => AskChatGPTAsync<TInterview>(prompt),
+                AIAgent.Gemini => AskGeminiAsync<TInterview>(prompt),
+                AIAgent.Claude => AskClaudeAsync<TInterview>(prompt),
                 _ => throw new UnsupportedAiAgentException($"Unsupported AI agent: {aiAgent}")
             });
 
             return interviews;
         }
 
-        private async Task<List<Interview>> AskChatGPTAsync(string prompt)
+        private async Task<List<Interview>> AskChatGPTAsync<TInterview>(string prompt) where TInterview : Interview
         {
             string apiKey = _configuration.GetSection("Appsettings:OpenAIAPIKEY").Value!;
             string model = _configuration.GetSection("Appsettings:OpenAIModel").Value!;
@@ -37,10 +37,10 @@ namespace prepAIred.Services
             ClientResult<ChatCompletion> completion = await chatClient.CompleteChatAsync(prompt);
             string response = completion.Value.Content[0].Text.Trim();
 
-            return DeserializeInterviews(response);
+            return DeserializeInterviews<TInterview>(response);
         }
 
-        private async Task<List<Interview>> AskClaudeAsync(string prompt)
+        private async Task<List<Interview>> AskClaudeAsync<TInterview>(string prompt) where TInterview : Interview
         {
             string apiKey = _configuration.GetSection("Appsettings:ClaudeAPIKEY").Value!;
             string model = _configuration.GetSection("Appsettings:ClaudeModel").Value!;
@@ -69,10 +69,10 @@ namespace prepAIred.Services
             MessageResponse aiResponse = await client.Messages.GetClaudeMessageAsync(parameters);
             string response = string.Join("\n", aiResponse.Content.OfType<TextContent>().Select(c => c.Text));
 
-            return DeserializeInterviews(response);
+            return DeserializeInterviews<TInterview>(response);
         }
 
-        private async Task<List<Interview>> AskGeminiAsync(string prompt)
+        private async Task<List<Interview>> AskGeminiAsync<TInterview>(string prompt) where TInterview : Interview
         {
             string apiKey = _configuration.GetSection("Appsettings:GeminiAPIKEY").Value!;
             string model = _configuration.GetSection("Appsettings:GeminiModel").Value!;
@@ -81,15 +81,18 @@ namespace prepAIred.Services
             GenerateContentResponse aiResponse = await generativeModel.GenerateContentAsync(prompt);
             string response = aiResponse.Text.Trim();
 
-            return DeserializeInterviews(response);
+            return DeserializeInterviews<TInterview>(response);
         }
 
-        private List<Interview> DeserializeInterviews(string response)
+        private List<Interview> DeserializeInterviews<TInterview>(string response) where TInterview : Interview
         {
             JsonSerializerOptions options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            List<Interview> interviews = JsonSerializer.Deserialize<List<Interview>>(response, options) ?? new List<Interview>();
 
-            return interviews;
+            return typeof(TInterview) == typeof(HRInterview)
+                ? JsonSerializer.Deserialize<List<HRInterview>>(response, options)?.Cast<Interview>().ToList() ?? new List<Interview>()
+                : typeof(TInterview) == typeof(TechnicalInterview)
+                    ? JsonSerializer.Deserialize<List<TechnicalInterview>>(response, options)?.Cast<Interview>().ToList() ?? new List<Interview>()
+                    : [];
         }
     }
 }
