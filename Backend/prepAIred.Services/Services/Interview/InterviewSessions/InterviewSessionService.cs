@@ -9,7 +9,7 @@ namespace prepAIred.Services
 
         public async Task CreateInterviewSessionAsync(InterviewSession interviewSession)
         {
-            await _dataContext.InterviewSessions.AddRangeAsync(interviewSession);
+            await _dataContext.InterviewSessions.AddAsync(interviewSession);
         }
 
         public async Task UpdateInterviewSessionAsync(InterviewSession interviewSession)
