@@ -13,7 +13,7 @@ namespace prepAIred.Services
         /// <typeparam name="TInterview">The type of the interview objects to generate. Must be a reference type.</typeparam>
         /// <param name="aIRequest">The AI request containing the parameters and context for generating interviews.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task GenerateInterviewsAsync<TInterview>(BaseRequestDTO aIRequest) where TInterview : class;
+        Task GenerateInterviewsAsync<TInterview>(BaseRequestDTO aIRequest) where TInterview : Interview;
 
         /// <summary>
         /// Retrieves the most recent interview record and maps it to the specified DTO type.

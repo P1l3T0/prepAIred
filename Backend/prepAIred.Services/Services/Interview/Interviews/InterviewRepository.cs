@@ -20,7 +20,7 @@ namespace prepAIred.Services
         private readonly IInterviewSessionService _interviewSessionService = interviewSessionService;
         private readonly IPromptService _promptService = promptService;
 
-        public async Task GenerateInterviewsAsync<TInterview>(BaseRequestDTO request) where TInterview : class
+        public async Task GenerateInterviewsAsync<TInterview>(BaseRequestDTO request) where TInterview : Interview
         {
             int currentUserID = await _userService.GetCurrentUserID();
             User currentUser = await _userService.GetUserEntityByIdAsync(currentUserID);

@@ -31,8 +31,9 @@ namespace prepAIred.Services
                 Format requirements:
                 CRITICAL JSON FORMATTING RULES:
                 1. The response MUST be a raw JSON array starting with [ and ending with ]
-                2. DO NOT wrap the array in any additional object or property (no {{""response"":[], ""answers"":[], etc.}})
-                3. Each array element must be an object with EXACTLY these properties:
+                2. The response MUST NOT have any ``` or ```json in the output
+                3. DO NOT wrap the array in any additional object or property (no {{""response"":[], ""answers"":[], etc.}})
+                4. Each array element must be an object with EXACTLY these properties:
 
                 [
                     {{
