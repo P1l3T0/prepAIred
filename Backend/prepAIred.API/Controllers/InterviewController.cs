@@ -30,19 +30,5 @@ namespace prepAIred.API
             await _interviewRepository.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest);
             return Ok("Technical interviews created successfully.");
         }
-
-        [HttpGet("get-interview-sessions")]
-        public async Task<IActionResult> GetAiInterviews()
-        {
-            List<InterviewSessionDTO> interviewSessions = await _interviewRepository.GetInterviewSessionsAsync();
-            return Ok(interviewSessions);
-        }
-
-        [HttpDelete("delete-interview-sessions")]
-        public async Task<IActionResult> DeleteInterviewSessions()
-        {
-            await _interviewRepository.DeleteInterviewSessionsAsync();
-            return Ok("All interview sessions deleted successfully.");
-        }
     }
 }
