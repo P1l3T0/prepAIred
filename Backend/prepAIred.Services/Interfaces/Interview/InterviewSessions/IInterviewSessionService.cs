@@ -36,6 +36,13 @@ namespace prepAIred.Services
         Task<InterviewSession> GetAdjacentInterviewSessionAsync(int userID);
 
         /// <summary>
+        /// Retrieves the most recent interview session ID associated with the specified user.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user whose latest interview session ID is to be retrieved.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the ID of the latest interview session.</returns>
+        Task<int> GetLatestInterviewSessionID(int userID);
+
+        /// <summary>
         /// Retrieves all interviews associated with a specific user by their unique identifier.
         /// </summary>
         /// <param name="userID">The unique identifier of the user.</param>

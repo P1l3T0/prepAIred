@@ -14,5 +14,16 @@ namespace prepAIred.Services
         /// <param name="aIRequest">The AI request containing the parameters and context for generating interviews.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         Task GenerateInterviewsAsync<TInterview>(BaseRequestDTO aIRequest) where TInterview : class;
+
+        /// <summary>
+        /// Retrieves the most recent interview record and maps it to the specified DTO type.
+        /// </summary>
+        /// <typeparam name="TInterview">The type representing the interview entity in the data source.</typeparam>
+        /// <typeparam name="TInterviewDTO">The type to which the interview entity will be mapped.</typeparam>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the most recent interview 
+        /// mapped to the specified DTO type, or <see langword="null"/> if no interviews are available.</returns>
+        Task<List<TInterviewDTO>> GetLatestInterviews<TInterview, TInterviewDTO>() 
+            where TInterview : Interview 
+            where TInterviewDTO : InterviewDTO;
     }
 }
