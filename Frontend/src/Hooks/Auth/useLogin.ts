@@ -9,7 +9,7 @@ import { useState, type SyntheticEvent } from "react";
 import { loginEndPoint } from "../../Utils/endpoints";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
-import type { LoginDto } from "../../Utils/types";
+import type { LoginDto } from "../../Utils/interfaces";
 import useAuth from "../../Context/useAuth";
 
 const useLogin = () => {
