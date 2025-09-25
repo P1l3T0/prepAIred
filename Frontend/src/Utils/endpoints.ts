@@ -4,6 +4,7 @@ const baseURL: string | undefined = process.env.REACT_APP_API_URL;
 const authController: string | undefined = `${baseURL}/Auth`;
 const userController: string | undefined = `${baseURL}/User`;
 const interviewController: string | undefined = `${baseURL}/Interview`;
+const interviewSessionController: string | undefined = `${baseURL}/InterviewSession`;
 
 // Auth
 export const registerEndPoint = `${authController}/register`;
@@ -15,6 +16,10 @@ export const refreshTokenEndPoint = `${authController}/refresh-token`;
 export const getCurrentUserEndPoint = `${userController}/get-user`;
 
 //  Interviews
-export const generateInterviewsEndPoint = `${interviewController}/generate-interviews`;
-export const getInterviewSessionsEndPoint = `${interviewController}/get-interview-sessions`;
-export const deleteInterviewSessionsEndPoint = `${interviewController}/delete-interview-sessions`;
+export const generateHrInterviewsEndPoint = `${interviewController}/generate-hr-interviews`;
+export const getLatestHrInterviewsEndPoint = `${interviewController}/get-latest-hr-interviews`;
+export const generateTechnicalInterviewsEndPoint = `${interviewController}/generate-technical-interviews`;
+export const getLatestTechnicalInterviewsEndPoint = `${interviewController}/get-latest-technical-interviews`;
+
+// Interview Sessions
+export const deleteInterviewSessionsEndPoint = `${interviewSessionController}/delete-interview-sessions`;

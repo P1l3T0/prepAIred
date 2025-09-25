@@ -1,0 +1,102 @@
+// Auth
+
+export interface AuthProviderProps {
+  children: React.ReactNode;
+};
+
+export interface AuthState {
+  username?: string;
+  accessToken?: string;
+  refreshToken?: string;
+};
+
+export interface AuthContextType {
+  auth: AuthState;
+  isUserLoggedIn: boolean;
+  setAuth: React.Dispatch<React.SetStateAction<AuthState>>;
+  login: () => void;
+  logout: () => void;
+};
+
+// Register/Login
+
+export interface RegisterDto {
+  email: string;
+  username: string;
+  password: string;
+};
+
+export interface LoginDto {
+  email: string;
+  password: string;
+};
+
+// User
+
+export interface User {
+  id: string;
+  username: string;
+  email: string;
+  dateCreated: Date;
+};
+
+// Request DTOs
+
+interface BaseRequestDTO {
+  aiAgent: string;
+  numberOfQuestions: number;
+};
+
+export interface AIRequestDTO extends BaseRequestDTO {
+  programmingLanguage: string;
+  subject: string;
+  difficultyLevel: string;
+  position: string;
+};
+
+export interface HrRequestDTO extends BaseRequestDTO {
+  softSkillFocus: string;
+  contextScenario: string;
+};
+
+// BaseDTO
+interface BaseDTO {
+  id: number;
+  dateCreated: string;
+}
+
+// InterviewDTO
+export interface InterviewDTO extends BaseDTO {
+  question: string;
+  questionType: string;
+  isAnswered: boolean;
+  userID: number;
+  interviewSessionID: number;
+  interviewType: string;
+  answers: string[];
+}
+
+// TechnicalInterviewDTO
+export interface TechnicalInterviewDTO extends InterviewDTO {
+  programmingLanguage: string;
+  difficultyLevel: string;
+  subject: string;
+  position: string;
+}
+
+// HRInterviewDTO
+export interface HRInterviewDTO extends InterviewDTO {
+  softSkillFocus: string;
+  competencyArea: string;
+  behavioralContext: string;
+}
+
+// InterviewSessionDTO
+export interface InterviewSessionDTO extends BaseDTO {
+  userID: number;
+  subject: string;
+  isCompleted: boolean;
+  aiAgent: string;
+  score: string;
+  interviews: InterviewDTO[];
+}
