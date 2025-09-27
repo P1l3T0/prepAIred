@@ -47,7 +47,7 @@ interface BaseRequestDTO {
   numberOfQuestions: number;
 };
 
-export interface AIRequestDTO extends BaseRequestDTO {
+export interface TechnicalRequestDTO extends BaseRequestDTO {
   programmingLanguage: string;
   subject: string;
   difficultyLevel: string;
