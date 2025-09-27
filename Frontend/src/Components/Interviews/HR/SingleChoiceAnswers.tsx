@@ -1,0 +1,21 @@
+import type { AnswersProps } from "../../../Utils/interfaces";
+
+
+const SingleChoiceAnswers = ({ answers, interviewIndex, isAnswered } : AnswersProps) => (
+  <>
+    {answers?.map((answer, answerIndex) => (
+      <div key={answerIndex} className="answer">
+        <input
+          type="radio"
+          id={`hrinterview-questions-${interviewIndex}-${answerIndex}`}
+          name={`hrinterview-${interviewIndex}`}
+          value={answer}
+          disabled={isAnswered}
+        />
+        <label htmlFor={`hrinterview-questions-${interviewIndex}-${answerIndex}`}>{answer}</label>
+      </div>
+    ))}
+  </>
+);
+
+export default SingleChoiceAnswers;

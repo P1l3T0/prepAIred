@@ -100,3 +100,10 @@ export interface InterviewSessionDTO extends BaseDTO {
   score: string;
   interviews: InterviewDTO[];
 }
+
+// InterviewsProps
+export interface AnswersProps {
+  answers?: string[];
+  interviewIndex: number;
+  isAnswered: boolean;
+}
