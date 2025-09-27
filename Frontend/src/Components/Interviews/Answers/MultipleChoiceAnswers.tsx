@@ -1,19 +1,24 @@
 import type { AnswersProps } from "../../../Utils/interfaces";
 
-const MultipleChoiceAnswers = ({ answers, interviewIndex, isAnswered }: AnswersProps) => {
+const MultipleChoiceAnswers = ({
+  answers,
+  interviewIndex,
+  isAnswered,
+  interviewType,
+}: AnswersProps) => {
   return (
     <>
       {answers?.map((answer, answerIndex) => (
         <div key={answerIndex} className="answer">
           <input
             type="checkbox"
-            id={`hrinterview-questions-${interviewIndex}-${answerIndex}`}
-            name={`hrinterview-${interviewIndex}`}
+            id={`${interviewType}-questions-${interviewIndex}-${answerIndex}`}
+            name={`${interviewType}-questions-${interviewIndex}`}
             value={answer}
             disabled={isAnswered}
           />
           <label
-            htmlFor={`hrinterview-questions-${interviewIndex}-${answerIndex}`}
+            htmlFor={`${interviewType}-questions-${interviewIndex}-${answerIndex}`}
           >
             {answer}
           </label>

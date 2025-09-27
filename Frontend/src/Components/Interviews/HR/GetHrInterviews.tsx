@@ -1,7 +1,7 @@
 import useGetLatestHrInterviews from "../../../Hooks/Interviews/HR/useGetLatestHrInterviews";
-import SingleChoiceAnswers from "./SingleChoiceAnswers";
-import MultipleChoiceAnswers from "./MultipleChoiceAnswers";
-import OpenEndedAnswer from "./OpenEndedAnswer";
+import SingleChoiceAnswers from "../Answers/SingleChoiceAnswers";
+import MultipleChoiceAnswers from "../Answers/MultipleChoiceAnswers";
+import OpenEndedAnswer from "../Answers/OpenEndedAnswer";
 import "../Interviews.css";
 
 const GetHrInterviews = () => {
@@ -30,6 +30,7 @@ const GetHrInterviews = () => {
                     case "SingleChoice":
                       return (
                         <SingleChoiceAnswers
+                          interviewType="HR-Interview"
                           answers={hrInterview.answers}
                           interviewIndex={interviewIndex}
                           isAnswered={hrInterview.isAnswered}
@@ -38,6 +39,7 @@ const GetHrInterviews = () => {
                     case "MultipleChoice":
                       return (
                         <MultipleChoiceAnswers
+                          interviewType="HR-Interview"
                           answers={hrInterview.answers}
                           interviewIndex={interviewIndex}
                           isAnswered={hrInterview.isAnswered}
@@ -46,6 +48,7 @@ const GetHrInterviews = () => {
                     case "OpenEnded":
                       return (
                         <OpenEndedAnswer
+                          interviewType="HR-Interview"
                           interviewIndex={interviewIndex}
                           isAnswered={hrInterview.isAnswered}
                         />
