@@ -33,7 +33,7 @@ const GenerateHrInterviews = () => {
       <br />
 
       <label htmlFor="number-of-questions">Number of Questions:</label>
-      <input type="number" name="numberOfQuestions" onChange={handleInputChange} />
+      <input id="number-of-questions" type="number" name="numberOfQuestions" min={1} max={10} onChange={handleInputChange} />
 
       <br />
 

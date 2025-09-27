@@ -8,9 +8,9 @@ const useGetLatestHrInterviews = () => {
     return await axios
       .get<HRInterviewDTO[]>(`${getLatestHrInterviewsEndPoint}`, { withCredentials: true })
       .then((res: AxiosResponse<HRInterviewDTO[]>) => {
-        return res.data.map((interviewSession) => ({
-          ...interviewSession,
-          dateCreated: new Date(interviewSession.dateCreated),
+        return res.data.map((interview) => ({
+          ...interview,
+          dateCreated: new Date(interview.dateCreated),
         }));
       })
       .catch((err: AxiosError) => {
