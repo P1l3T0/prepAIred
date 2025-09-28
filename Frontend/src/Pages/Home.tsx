@@ -1,6 +1,7 @@
-import DeleteInterviewSessions from "../Components/InterviewSessions/DeleteInterviewSessions";
-import AiInterviews from "../Components/InterviewSessions/GenerateInterviewSession";
-import GetAiInterviews from "../Components/InterviewSessions/GetInterviewSession";
+import GenerateHrInterviews from "../Components/Interviews/HR/GenerateHrInterviews";
+import GetHrInterviews from "../Components/Interviews/HR/GetHrInterviews";
+import GenerateTechnicalInterviews from "../Components/Interviews/Technical/GenerateTechnicalInterviews";
+import GetTechnicalInterviews from "../Components/Interviews/Technical/GetTechnicalInterviews";
 import LogOutButton from "../Components/LogOutButton";
 import useGetUser from "../Hooks/User/useGetUser";
 
@@ -18,12 +19,15 @@ const Home = () => {
       <p>User ID: {user?.id}</p>
 
       <LogOutButton />
-      <DeleteInterviewSessions />
 
       <br />
       <br />
-      <AiInterviews />
-      <GetAiInterviews />
+
+      <GenerateHrInterviews />
+      <GetHrInterviews />
+
+      <GenerateTechnicalInterviews />
+      <GetTechnicalInterviews />
     </>
   );
 };
