@@ -2,13 +2,13 @@ import SingleChoiceAnswers from "../Answers/SingleChoiceAnswers";
 import MultipleChoiceAnswers from "../Answers/MultipleChoiceAnswers";
 import OpenEndedAnswer from "../Answers/OpenEndedAnswer";
 import "../Interviews.css";
-import useGetLatestTechnicalInterviews from "../../../Hooks/Interviews/Technical/useGetLatestHrInterviews";
+import useGetLatestTechnicalInterviews from "../../../Hooks/Interviews/Technical/useGetLatestTechnicalInterviews";
 
 const GetTechnicalInterviews = () => {
   const { data: technicalInterviews, isLoading, isError } = useGetLatestTechnicalInterviews();
 
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading HR interviews.</div>;
+  if (isError) return <div>Error loading Technical interviews.</div>;
 
   return (
     <>

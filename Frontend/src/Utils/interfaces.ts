@@ -2,13 +2,13 @@
 
 export interface AuthProviderProps {
   children: React.ReactNode;
-};
+}
 
 export interface AuthState {
   username?: string;
   accessToken?: string;
   refreshToken?: string;
-};
+}
 
 export interface AuthContextType {
   auth: AuthState;
@@ -16,7 +16,7 @@ export interface AuthContextType {
   setAuth: React.Dispatch<React.SetStateAction<AuthState>>;
   login: () => void;
   logout: () => void;
-};
+}
 
 // Register/Login DTOs
 
@@ -24,12 +24,12 @@ export interface RegisterDto {
   email: string;
   username: string;
   password: string;
-};
+}
 
 export interface LoginDto {
   email: string;
   password: string;
-};
+}
 
 // User
 
@@ -38,7 +38,7 @@ export interface User {
   username: string;
   email: string;
   dateCreated: Date;
-};
+}
 
 //#endregion
 
@@ -47,19 +47,19 @@ export interface User {
 interface BaseRequestDTO {
   aiAgent: string;
   numberOfQuestions: number;
-};
+}
 
 export interface TechnicalRequestDTO extends BaseRequestDTO {
   programmingLanguage: string;
   subject: string;
   difficultyLevel: string;
   position: string;
-};
+}
 
 export interface HrRequestDTO extends BaseRequestDTO {
   softSkillFocus: string;
   contextScenario: string;
-};
+}
 
 //#endregion
 
