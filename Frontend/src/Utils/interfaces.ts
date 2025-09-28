@@ -1,4 +1,4 @@
-// Auth
+// #region Auth
 
 export interface AuthProviderProps {
   children: React.ReactNode;
@@ -18,7 +18,7 @@ export interface AuthContextType {
   logout: () => void;
 };
 
-// Register/Login
+// Register/Login DTOs
 
 export interface RegisterDto {
   email: string;
@@ -40,7 +40,9 @@ export interface User {
   dateCreated: Date;
 };
 
-// Request DTOs
+//#endregion
+
+//#region Request DTOs
 
 interface BaseRequestDTO {
   aiAgent: string;
@@ -59,7 +61,10 @@ export interface HrRequestDTO extends BaseRequestDTO {
   contextScenario: string;
 };
 
-// BaseDTO
+//#endregion
+
+//#region Response DTOs
+
 interface BaseDTO {
   id: number;
   dateCreated: string;
@@ -76,7 +81,6 @@ export interface InterviewDTO extends BaseDTO {
   answers: string[];
 }
 
-// TechnicalInterviewDTO
 export interface TechnicalInterviewDTO extends InterviewDTO {
   programmingLanguage: string;
   difficultyLevel: string;
@@ -84,14 +88,12 @@ export interface TechnicalInterviewDTO extends InterviewDTO {
   position: string;
 }
 
-// HRInterviewDTO
 export interface HRInterviewDTO extends InterviewDTO {
   softSkillFocus: string;
   competencyArea: string;
   behavioralContext: string;
 }
 
-// InterviewSessionDTO
 export interface InterviewSessionDTO extends BaseDTO {
   userID: number;
   subject: string;
@@ -101,8 +103,11 @@ export interface InterviewSessionDTO extends BaseDTO {
   interviews: InterviewDTO[];
 }
 
+//#endregion
+
 // InterviewsProps
 export interface AnswersProps {
+  interviewType: string;
   answers?: string[];
   interviewIndex: number;
   isAnswered: boolean;

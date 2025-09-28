@@ -125,7 +125,7 @@ namespace prepAIred.Services
                 - No null values (use empty strings """" instead)
                 - No trailing commas
                 - No comments in the output
-                - No markdown fences (```
+                - No markdown fences (``` or ```json) - this is the MOST IMPORTANT RULE!
                 - No explanations or text before or after the JSON array
                 - Questions must be evenly distributed across all QuestionTypes
 
