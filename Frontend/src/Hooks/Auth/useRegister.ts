@@ -48,8 +48,7 @@ const useRegister = () => {
     }
   });
 
-  const handleSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     mutateAsync();
   };
 
