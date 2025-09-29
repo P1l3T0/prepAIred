@@ -67,7 +67,7 @@ export interface HrRequestDTO extends BaseRequestDTO {
 
 interface BaseDTO {
   id: number;
-  dateCreated: string;
+  dateCreated: Date;
 }
 
 // InterviewDTO
@@ -105,10 +105,24 @@ export interface InterviewSessionDTO extends BaseDTO {
 
 //#endregion
 
-// InterviewsProps
+//#region Answers
+
 export interface AnswersProps {
   interviewType: string;
   answers?: string[];
   interviewIndex: number;
   isAnswered: boolean;
+  onChange: (value: string) => void;
 }
+
+export interface Answer {
+  question: string;
+  answer: string;
+}
+
+export interface MultipleChoiceAnswer {
+  question: string;
+  answers: string[];
+}
+
+//#endregion

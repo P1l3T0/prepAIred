@@ -5,6 +5,7 @@ const MultipleChoiceAnswers = ({
   interviewIndex,
   isAnswered,
   interviewType,
+  onChange
 }: AnswersProps) => {
   return (
     <>
@@ -12,13 +13,13 @@ const MultipleChoiceAnswers = ({
         <div key={answerIndex} className="answer">
           <input
             type="checkbox"
-            id={`${interviewType}-questions-${interviewIndex}-${answerIndex}`}
-            name={`${interviewType}-questions-${interviewIndex}`}
+            id={`${interviewType}-multiple-choice-answer-${interviewIndex}-${answerIndex}`}
             value={answer}
             disabled={isAnswered}
+            onChange={(e) => onChange(e.target.value)}
           />
           <label
-            htmlFor={`${interviewType}-questions-${interviewIndex}-${answerIndex}`}
+            htmlFor={`${interviewType}-multiple-choice-answer-${interviewIndex}-${answerIndex}`}
           >
             {answer}
           </label>

@@ -5,19 +5,20 @@ const SingleChoiceAnswers = ({
   interviewIndex,
   isAnswered,
   interviewType,
+  onChange,
 }: AnswersProps) => (
   <>
     {answers?.map((answer, answerIndex) => (
       <div key={answerIndex} className="answer">
         <input
           type="radio"
-          id={`${interviewType}-questions-${interviewIndex}-${answerIndex}`}
-          name={`${interviewType}-${interviewIndex}`}
+          id={`${interviewType}-single-choice-answer-${interviewIndex}-${answerIndex}`}
           value={answer}
           disabled={isAnswered}
+          onChange={(e) => onChange(e.target.value)}
         />
         <label
-          htmlFor={`${interviewType}-questions-${interviewIndex}-${answerIndex}`}
+          htmlFor={`${interviewType}-single-choice-answer-${interviewIndex}-${answerIndex}`}
         >
           {answer}
         </label>

@@ -2,10 +2,19 @@ import useGetLatestHrInterviews from "../../../Hooks/Interviews/HR/useGetLatestH
 import SingleChoiceAnswers from "../Answers/SingleChoiceAnswers";
 import MultipleChoiceAnswers from "../Answers/MultipleChoiceAnswers";
 import OpenEndedAnswer from "../Answers/OpenEndedAnswer";
+import useHandleAnswers from "../../../Hooks/Interviews/useHandleAnswers";
 import "../Interviews.css";
 
 const GetHrInterviews = () => {
   const { data: hrInterviews, isLoading, isError } = useGetLatestHrInterviews();
+  const {
+    handleSingleChoiceChange,
+    handleMultipleChoiceChange,
+    handleOpenEndedChange,
+    singleChoiceAnswers,
+    multipleChoiceAnswers,
+    openEndedAnswers,
+  } = useHandleAnswers(hrInterviews ?? []);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading HR interviews.</div>;
@@ -28,29 +37,41 @@ const GetHrInterviews = () => {
                 {(() => {
                   switch (hrInterview.questionType) {
                     case "SingleChoice":
+                      const singleChoiceIdx = singleChoiceAnswers.findIndex((a) => a.question === hrInterview.question);
                       return (
                         <SingleChoiceAnswers
                           interviewType="HR-Interview"
                           answers={hrInterview.answers}
-                          interviewIndex={interviewIndex}
+                          interviewIndex={singleChoiceIdx}
                           isAnswered={hrInterview.isAnswered}
+                          onChange={(value) =>
+                            handleSingleChoiceChange(singleChoiceIdx, value)
+                          }
                         />
                       );
                     case "MultipleChoice":
+                      const multipleChoiceIdx = multipleChoiceAnswers.findIndex((a) => a.question === hrInterview.question);
                       return (
                         <MultipleChoiceAnswers
                           interviewType="HR-Interview"
                           answers={hrInterview.answers}
-                          interviewIndex={interviewIndex}
+                          interviewIndex={multipleChoiceIdx}
                           isAnswered={hrInterview.isAnswered}
+                          onChange={(value) =>
+                            handleMultipleChoiceChange(multipleChoiceIdx, value)
+                          }
                         />
                       );
                     case "OpenEnded":
+                      const openEndedIdx = openEndedAnswers.findIndex((a) => a.question === hrInterview.question);
                       return (
                         <OpenEndedAnswer
                           interviewType="HR-Interview"
-                          interviewIndex={interviewIndex}
+                          interviewIndex={openEndedIdx}
                           isAnswered={hrInterview.isAnswered}
+                          onChange={(value) =>
+                            handleOpenEndedChange(openEndedIdx, value)
+                          }
                         />
                       );
                     default:
