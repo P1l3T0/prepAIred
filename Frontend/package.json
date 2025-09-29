@@ -12,6 +12,7 @@
   "dependencies": {
     "@progress/kendo-licensing": "^1.7.1",
     "@progress/kendo-react-buttons": "^12.1.0",
+    "@progress/kendo-react-dropdowns": "^12.1.0",
     "@progress/kendo-react-form": "^12.1.0",
     "@progress/kendo-react-inputs": "^12.1.0",
     "@progress/kendo-react-labels": "^12.1.0",
