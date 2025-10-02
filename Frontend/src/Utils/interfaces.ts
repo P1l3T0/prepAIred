@@ -51,7 +51,7 @@ interface BaseRequestDTO {
 
 export interface TechnicalRequestDTO extends BaseRequestDTO {
   programmingLanguage: string;
-  subject: string;
+  subject: string[];
   difficultyLevel: string;
   position: string;
 }

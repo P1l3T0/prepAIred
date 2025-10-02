@@ -37,13 +37,13 @@ namespace prepAIred.Services
 
                 [
                     {{
-                        ""UserID"": {currentUserID},              // int - provided user ID
-                        ""Question"": """",                      // string - the behavioral question
-                        ""QuestionType"": 0,                    // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
-                        ""AnswersJson"": ""[]"",               // string - JSON array of answers as a string
-                        ""CompetencyArea"": """",             // string - primary competency being assessed
-                        ""BehavioralContext"": """"          // string - specific behavior or skill being evaluated
-                        ""SoftSkillFocus"": {string.Join(", ", hrRequest.SoftSkillFocus)}
+                        ""UserID"": {currentUserID},                                                                     // int - provided user ID
+                        ""Question"": """",                                                                             // string - the behavioral question
+                        ""QuestionType"": 0,                                                                           // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
+                        ""AnswersJson"": ""[]"",                                                                      // string - JSON array of answers as a string
+                        ""CompetencyArea"": """",                                                                    // string - primary competency being assessed
+                        ""BehavioralContext"": """"                                                                 // string - specific behavior or skill being evaluated
+                        ""SoftSkillFocus"": Use 1 of the following - {string.Join(", ", hrRequest.SoftSkillFocus)} // string - soft skill focus area
                     }}
                 ]
 
@@ -82,7 +82,7 @@ namespace prepAIred.Services
                 Generate {aIRequest.NumberOfQuestions} interview questions with detailed answers.
 
                 Content requirements:
-                - Questions must reflect real-world, practical scenarios commonly encountered in {aIRequest.Subject} using {aIRequest.ProgrammingLanguage}.
+                - Questions must reflect real-world, practical scenarios commonly encountered in {string.Join(", ", aIRequest.Subject)} using {aIRequest.ProgrammingLanguage}.
                 - Include a balanced mix of:
                     * Core technical concepts specific to {aIRequest.ProgrammingLanguage}
                     * Problem-solving approaches
@@ -103,15 +103,15 @@ namespace prepAIred.Services
 
                 [
                     {{
-                        ""UserID"": {currentUserID},                                       // int - provided user ID
-                        ""Question"": """",                                               // string - the interview question
-                        ""QuestionType"": 0,                                             // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
-                        ""InterviewType"": 1,                                           // int - 0 = HR, 1 = Technical
-                        ""AnswersJson"": ""[]"",                                       // string - JSON array of answers as a string
-                        ""ProgrammingLanguage"": ""{aIRequest.ProgrammingLanguage}"", // string - programming language focus
-                        ""DifficultyLevel"": ""{aIRequest.DifficultyLevel}"",        // string - difficulty level of question
-                        ""Subject"": ""{aIRequest.Subject}"",                       // string - technical topic area
-                        ""Position"": ""{aIRequest.Position}""                     // string - position being interviewed for
+                        ""UserID"": {currentUserID},                                                                // int - provided user ID
+                        ""Question"": """",                                                                        // string - the interview question
+                        ""QuestionType"": 0,                                                                      // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
+                        ""InterviewType"": 1,                                                                    // int - 0 = HR, 1 = Technical
+                        ""AnswersJson"": ""[]"",                                                                // string - JSON array of answers as a string
+                        ""ProgrammingLanguage"": ""{aIRequest.ProgrammingLanguage}""                           // string - programming language focus
+                        ""DifficultyLevel"": ""{aIRequest.DifficultyLevel}"",                                 // string - difficulty level of question
+                        ""Subject"": ""Use 1 of the following - {string.Join(", ", aIRequest.Subject)}"",    // string - technical topic area
+                        ""Position"": ""{aIRequest.Position}""                                              // string - position being interviewed for
                     }}
                 ]
 

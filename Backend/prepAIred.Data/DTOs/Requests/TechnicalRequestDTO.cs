@@ -16,7 +16,7 @@
         /// <summary>
         /// Gets or sets the main topic or subject area for the interview questions (e.g., Software Engineering).
         /// </summary>
-        public string Subject { get; set; } = string.Empty;
+        public List<string> Subject { get; set; } = new List<string>();
 
         /// <summary>
         /// Gets or sets the difficulty level for the interview questions (e.g., Junior, Senior).
