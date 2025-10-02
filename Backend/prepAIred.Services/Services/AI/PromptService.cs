@@ -14,7 +14,7 @@ namespace prepAIred.Services
                 - Questions must follow the STAR (Situation, Task, Action, Result) interview methodology
                 - Include a balanced mix of:
                     * Behavioral questions assessing past experiences
-                    * Competency-based questions evaluating specific skills - {hrRequest.SoftSkillFocus}
+                    * Competency-based questions evaluating specific skills - {string.Join(", ", hrRequest.SoftSkillFocus)}
                     * Cultural fit and values alignment questions
                     * Leadership and teamwork scenarios - {hrRequest.ContextScenario}
                 - Each question must:
@@ -43,7 +43,7 @@ namespace prepAIred.Services
                         ""AnswersJson"": ""[]"",               // string - JSON array of answers as a string
                         ""CompetencyArea"": """",             // string - primary competency being assessed
                         ""BehavioralContext"": """"          // string - specific behavior or skill being evaluated
-                        ""SoftSkillFocus"": {hrRequest.SoftSkillFocus}
+                        ""SoftSkillFocus"": {string.Join(", ", hrRequest.SoftSkillFocus)}
                     }}
                 ]
 

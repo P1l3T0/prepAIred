@@ -57,7 +57,7 @@ export interface TechnicalRequestDTO extends BaseRequestDTO {
 }
 
 export interface HrRequestDTO extends BaseRequestDTO {
-  softSkillFocus: string;
+  softSkillFocus: string[];
   contextScenario: string;
 }
 

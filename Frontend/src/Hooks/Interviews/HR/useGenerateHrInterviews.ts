@@ -3,28 +3,34 @@ import { useState, type SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { generateHrInterviewsEndPoint } from "../../../Utils/endpoints";
 import type { HrRequestDTO } from "../../../Utils/interfaces";
+import type { DropDownListChangeEvent, MultiSelectChangeEvent } from "@progress/kendo-react-dropdowns";
+import type { NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
 const useGenerateHrInterviews = () => {
   const queryClient = useQueryClient();
 
   const [hrRequest, setHrRequest] = useState<HrRequestDTO>({
     aiAgent: "ChatGPT",
-    softSkillFocus: "Communication",
+    softSkillFocus: ["Communication", "Teamwork"],
     contextScenario: "Team Collaboration",
     numberOfQuestions: 3
   });
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleDropDownChange = (e: DropDownListChangeEvent | MultiSelectChangeEvent) => {
+    const name: string = e.target.props.name as string;
+
     setHrRequest({
       ...hrRequest,
-      [e.target.name]: e.target.value,
+      [name]: e.target.value,
     });
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: NumericTextBoxChangeEvent) => {
+    const name: string = e.target.props.name as string;
+
     setHrRequest({
       ...hrRequest,
-      [e.target.name]: parseInt(e.target.value),
+      [name]: e.value
     });
   };
 
@@ -49,7 +55,7 @@ const useGenerateHrInterviews = () => {
     mutateAsync();
   };
 
-  return { handleSelectChange, handleInputChange, handleGenerateHrInterviews };
+  return { handleDropDownChange, handleInputChange, handleGenerateHrInterviews };
 };
 
 export default useGenerateHrInterviews;

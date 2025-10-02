@@ -23,6 +23,9 @@ const GetHrInterviews = () => {
     <>
       <h2>Latest HR Interviews</h2>
       <div className="root">
+        <button onClick={() => console.table(singleChoiceAnswers)}>Show Single Choice Answers</button>
+        <button onClick={() => console.table(multipleChoiceAnswers)}>Show Multiple Choice Answers</button>
+        <button onClick={() => console.table(openEndedAnswers)}>Show Open Ended Answers</button>
         {hrInterviews && hrInterviews.length > 0 ? (
           hrInterviews.map((hrInterview, interviewIndex) => (
             <fieldset key={interviewIndex} className="fieldset">
