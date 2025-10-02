@@ -37,9 +37,9 @@ namespace prepAIred.Services
 
                 [
                     {{
-                        ""UserID"": {currentUserID},               // int - provided user ID
-                        ""Question"": """",                       // string - the behavioral question
-                        ""QuestionType"": 0,                     // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
+                        ""UserID"": {currentUserID},              // int - provided user ID
+                        ""Question"": """",                      // string - the behavioral question
+                        ""QuestionType"": 0,                    // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
                         ""AnswersJson"": ""[]"",               // string - JSON array of answers as a string
                         ""CompetencyArea"": """",             // string - primary competency being assessed
                         ""BehavioralContext"": """"          // string - specific behavior or skill being evaluated
