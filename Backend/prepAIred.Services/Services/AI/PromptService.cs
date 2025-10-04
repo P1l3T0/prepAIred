@@ -39,7 +39,7 @@ namespace prepAIred.Services
                     {{
                         ""UserID"": {currentUserID},                                                                     // int - provided user ID
                         ""Question"": """",                                                                             // string - the behavioral question
-                        ""QuestionType"": 0,                                                                           // int - 1 = MultipleChoice,
+                        ""QuestionType"": 0,                                                                           // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
                         ""AnswersJson"": ""[]"",                                                                      // string - JSON array of answers as a string
                         ""CompetencyArea"": """",                                                                    // string - primary competency being assessed
                         ""BehavioralContext"": """"                                                                 // string - specific behavior or skill being evaluated
@@ -51,7 +51,7 @@ namespace prepAIred.Services
                 - The outer structure MUST be a bare array [ ]
                 - AnswersJson must be a string containing an escaped JSON array
                 - All string values must use double quotes and be properly escaped
-                - QuestionType values: 1 = MultipleChoice
+                - QuestionType values: 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
                 - Depending on the number of questions, ensure a balanced distribution of all the QuestionTypes
                 - InterviewType must always be 0 for HR interviews
                 - No additional properties

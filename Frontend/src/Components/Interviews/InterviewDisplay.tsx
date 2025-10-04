@@ -86,7 +86,7 @@ const InterviewDisplay = ({
             </fieldset>
           ))
         ) : (
-          <div className="empty">No interview sessions found</div>
+          <div className="empty">No interviews found</div>
         )}
       </div>
     </>
