@@ -1,4 +1,5 @@
 import type { AnswersProps } from "../../../Utils/interfaces";
+import { Checkbox } from '@progress/kendo-react-inputs';
 
 const MultipleChoiceAnswers = ({
   answers,
@@ -11,18 +12,13 @@ const MultipleChoiceAnswers = ({
     <>
       {answers?.map((answer, answerIndex) => (
         <div key={answerIndex} className="answer">
-          <input
-            type="checkbox"
+          <Checkbox
             id={`${interviewType}-multiple-choice-answer-${interviewIndex}-${answerIndex}`}
+            label={answer}
             value={answer}
             disabled={isAnswered}
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) => onChange(e.target.element?.value!)}
           />
-          <label
-            htmlFor={`${interviewType}-multiple-choice-answer-${interviewIndex}-${answerIndex}`}
-          >
-            {answer}
-          </label>
         </div>
       ))}
     </>
