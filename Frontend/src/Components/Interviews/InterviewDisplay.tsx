@@ -2,7 +2,9 @@ import SingleChoiceAnswers from "./Answers/SingleChoiceAnswers";
 import MultipleChoiceAnswers from "./Answers/MultipleChoiceAnswers";
 import OpenEndedAnswer from "./Answers/OpenEndedAnswer";
 import useHandleAnswers from "../../Hooks/Interviews/useHandleAnswers";
+import useEvaluateInterviews from "../../Hooks/Interviews/useEvaluateInterviews";
 import type { HRInterviewDTO, InterviewDisplayProps, TechnicalInterviewDTO } from "../../Utils/interfaces";
+import { Button } from "@progress/kendo-react-buttons";
 import "./Interviews.css";
 
 const InterviewDisplay = ({
@@ -21,6 +23,13 @@ const InterviewDisplay = ({
     openEndedAnswers
   } = useHandleAnswers((interviews as HRInterviewDTO[] | TechnicalInterviewDTO[]) ?? []);
 
+  const { handleEvaluateInterviews, isSubmitting } = useEvaluateInterviews({
+    interviewType,
+    singleChoiceAnswers,
+    multipleChoiceAnswers,
+    openEndedAnswers
+  });
+
   return (
     <>
       <h2>{title}</h2>
@@ -28,13 +37,9 @@ const InterviewDisplay = ({
         {interviews && interviews.length > 0 ? (
           interviews.map((interview, interviewIndex) => (
             <fieldset key={interviewIndex} className="fieldset">
-              <legend className="legend">
-                {renderLegend(interview)}
-              </legend>
+              <legend className="legend">{renderLegend(interview)}</legend>
               {renderMeta && (
-                <div className="meta">
-                  {renderMeta(interview)}
-                </div>
+                <div className="meta">{renderMeta(interview)}</div>
               )}
               <div className="interview">
                 <div className="question">{interview.question}</div>
@@ -88,6 +93,13 @@ const InterviewDisplay = ({
         ) : (
           <div className="empty">No interviews found</div>
         )}
+        <Button
+          onClick={handleEvaluateInterviews}
+          themeColor={"primary"}
+          disabled={isSubmitting || (interviews?.length ?? 0) === 0}
+        >
+          {isSubmitting ? "Evaluating..." : "Evaluate Interviews"}
+        </Button>
       </div>
     </>
   );
