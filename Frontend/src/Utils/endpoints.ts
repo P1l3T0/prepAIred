@@ -18,8 +18,10 @@ export const getCurrentUserEndPoint = `${userController}/get-user`;
 //  Interviews
 export const generateHrInterviewsEndPoint = `${interviewController}/generate-hr-interviews`;
 export const getLatestHrInterviewsEndPoint = `${interviewController}/get-latest-hr-interviews`;
+export const evaluateHrInterviewsEndPoint = `${interviewController}/evaluate-hr-interviews`;
 export const generateTechnicalInterviewsEndPoint = `${interviewController}/generate-technical-interviews`;
 export const getLatestTechnicalInterviewsEndPoint = `${interviewController}/get-latest-technical-interviews`;
+export const evaluateTechnicalInterviewsEndPoint = `${interviewController}/evaluate-technical-interviews`;
 
 // Interview Sessions
 export const deleteInterviewSessionsEndPoint = `${interviewSessionController}/delete-interview-sessions`;
