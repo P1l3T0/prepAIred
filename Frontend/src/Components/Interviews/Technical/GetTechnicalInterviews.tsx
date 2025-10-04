@@ -14,12 +14,12 @@ const GetTechnicalInterviews = () => {
       interviewType="Technical-Interview"
       interviews={technicalInterviews}
       renderLegend={(interview) => (
-        <>Subject: {(interview as TechnicalInterviewDTO).subject}</>
+        <>Positon: {(interview as TechnicalInterviewDTO).position}</>
       )}
       renderMeta={(interview) => (
         <>
-          <b>Diffuculty</b>:{" "}
-          {(interview as TechnicalInterviewDTO).difficultyLevel}
+          <b>Subject:</b>{" "}
+          {(interview as TechnicalInterviewDTO).subject}
         </>
       )}
     />
