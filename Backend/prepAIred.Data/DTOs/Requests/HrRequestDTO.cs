@@ -5,7 +5,7 @@
         /// <summary>
         /// Gets or sets the primary soft skill focus area.
         /// </summary>
-        public string SoftSkillFocus { get; set; } = string.Empty;
+        public List<string> SoftSkillFocus { get; set; } = new List<string>();
 
         /// <summary>
         /// Gets or sets the scenario context as a string.

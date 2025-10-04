@@ -1,43 +1,64 @@
 import useGenerateHrInterviews from "../../../Hooks/Interviews/HR/useGenerateHrInterviews";
+import { aiAgentData, contextScenarioData, softSkillFocusData } from "../../../Utils/data";
+import { NumericTextBox } from "@progress/kendo-react-inputs";
+import { DropDownList, MultiSelect } from "@progress/kendo-react-dropdowns";
+import { Button } from "@progress/kendo-react-buttons";
 
 const GenerateHrInterviews = () => {
-  const { handleSelectChange, handleInputChange, handleGenerateHrInterviews } = useGenerateHrInterviews();
+  const { handleDropDownChange, handleInputChange, handleGenerateHrInterviews } = useGenerateHrInterviews();
 
   return (
     <>
-      <label htmlFor="ai-agent">AI Agent:</label>
-      <select name="aiAgent" id="ai-agent" onChange={handleSelectChange}>
-        <option value="ChatGPT">ChatGPT</option>
-        <option value="Gemini">Gemini</option>
-        <option value="Claude">Claude</option>
-      </select>
+      <DropDownList
+        id="ai-agent"
+        name="aiAgent"
+        data={aiAgentData}
+        label="AI Agent"
+        style={{ width: "500px" }}
+        onChange={handleDropDownChange}
+      />
 
       <br />
 
-      <label htmlFor="soft-skill-focus">Soft Skill Focus:</label>
-      <select name="softSkillFocus" id="soft-skill-focus" onChange={handleSelectChange}>
-        <option value="Communication">Communication</option>
-        <option value="Problem-Solving">Problem-Solving</option>
-        <option value="Teamwork">Teamwork</option>
-      </select>
+      <MultiSelect
+        id="soft-skill-focus"
+        name="softSkillFocus"
+        data={softSkillFocusData}
+        label="Soft Skill Focus"
+        style={{ width: "500px" }}
+        onChange={handleDropDownChange}
+      />
 
       <br />
 
-      <label htmlFor="context-scenario">Context Scenario:</label>
-      <select name="contextScenario" id="context-scenario" onChange={handleSelectChange}>
-        <option value="Team Collaboration">Team Collaboration</option>
-        <option value="Conflict Resolution">Conflict Resolution</option>
-        <option value="Leadership">Leadership</option>
-      </select>
+      <MultiSelect
+        id="context-scenario"
+        name="contextScenario"
+        data={contextScenarioData}
+        autoClose={true}
+        label="Context Scenario"
+        style={{ width: "500px" }}
+        onChange={handleDropDownChange}
+      />
 
       <br />
 
-      <label htmlFor="number-of-questions">Number of Questions:</label>
-      <input id="number-of-questions" type="number" name="numberOfQuestions" min={1} max={10} defaultValue={3} onChange={handleInputChange} />
+      <NumericTextBox
+        id="number-of-questions"
+        name="numberOfQuestions"
+        placeholder="Number of Questions"
+        min={1}
+        max={10}
+        defaultValue={3}
+        style={{ width: "500px" }}
+        onChange={handleInputChange}
+      />
 
       <br />
 
-      <button onClick={handleGenerateHrInterviews}>Generate HR Interviews</button>
+      <Button id="hr-button" onClick={handleGenerateHrInterviews}>
+        Generate HR Interviews
+      </Button>
     </>
   );
 };

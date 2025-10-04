@@ -1,63 +1,85 @@
 import useGenerateTechnicalInterviews from "../../../Hooks/Interviews/Technical/useGenerateTechnicalInterviews";
+import { aiAgentData, difficultyLevelData, positionData, programmingLanguageData, subjectData } from "../../../Utils/data";
+import { NumericTextBox } from "@progress/kendo-react-inputs";
+import { DropDownList, MultiSelect } from "@progress/kendo-react-dropdowns";
+import { Button } from "@progress/kendo-react-buttons";
 
 const GenerateTechnicalInterviews = () => {
-  const { handleSelectChange, handleInputChange, handleGenerateTechnicalInterviews } = useGenerateTechnicalInterviews();
+  const { handleDropDownChange, handleInputChange, handleGenerateTechnicalInterviews } = useGenerateTechnicalInterviews();
 
   return (
     <>
-      <label htmlFor="ai-agent">AI Agent:</label>
-      <select name="aiAgent" id="ai-agent" onChange={handleSelectChange}>
-        <option value="ChatGPT">ChatGPT</option>
-        <option value="Gemini">Gemini</option>
-        <option value="Claude">Claude</option>
-      </select>
+      <DropDownList
+        id="ai-agent"
+        name="aiAgent"
+        data={aiAgentData}
+        label="AI Agent"
+        style={{ width: "500px" }}
+        onChange={handleDropDownChange}
+      />
 
       <br />
 
-      <label htmlFor="programming-language">Programming Language:</label>
-      <select name="programmingLanguage" id="programming-language" onChange={handleSelectChange}>
-        <option value="C#">C#</option>
-        <option value="JavaScript">JavaScript</option>
-        <option value="Python">Python</option>
-        <option value="Java">Java</option>
-      </select>
+      <DropDownList
+        id="programming-language"
+        name="programmingLanguage"
+        data={programmingLanguageData}
+        label="Programming Language"
+        style={{ width: "500px" }}
+        onChange={handleDropDownChange}
+      />
 
       <br />
 
-      <label htmlFor="subject">Subject:</label>
-      <select name="subject" id="subject" onChange={handleSelectChange}>
-        <option value="Object-Oriented Programming">Object-Oriented Programming</option>
-        <option value="Data Structures">Data Structures</option>
-        <option value="Algorithms">Algorithms</option>
-        <option value="Databases">Databases</option>
-      </select>
+      <DropDownList
+        id="difficulty-level"
+        name="difficultyLevel"
+        data={difficultyLevelData}
+        label="Difficulty Level"
+        style={{ width: "500px" }}
+        onChange={handleDropDownChange}
+      />
 
       <br />
 
-      <label htmlFor="difficulty-level">Difficulty Level:</label>
-      <select name="difficultyLevel" id="difficulty-level" onChange={handleSelectChange}>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-      </select>
+      <DropDownList
+        id="position"
+        name="position"
+        data={positionData}
+        label="Position"
+        style={{ width: "500px" }}
+        onChange={handleDropDownChange}
+      />
 
       <br />
 
-      <label htmlFor="position">Position:</label>
-      <select name="position" id="position" onChange={handleSelectChange}>
-        <option value="Junior Developer">Junior Developer</option>
-        <option value="Mid Developer">Mid Developer</option>
-        <option value="Senior Developer">Senior Developer</option>
-      </select>
+      <MultiSelect
+        id="subject"
+        name="subject"
+        data={subjectData}
+        label="Subject"
+        style={{ width: "500px" }}
+        onChange={handleDropDownChange}
+      />
 
       <br />
 
-      <label htmlFor="number-of-questions">Number of Questions:</label>
-      <input id="number-of-questions" type="number" name="numberOfQuestions" min={1} max={10} defaultValue={3} onChange={handleInputChange} />
+      <NumericTextBox
+        id="number-of-questions"
+        name="numberOfQuestions"
+        placeholder="Number of Questions"
+        min={1}
+        max={10}
+        defaultValue={3}
+        style={{ width: "500px" }}
+        onChange={handleInputChange}
+      />
 
       <br />
 
-      <button onClick={handleGenerateTechnicalInterviews}>Generate Technical Interviews</button>
+      <Button id="tech-button" onClick={handleGenerateTechnicalInterviews}>
+        Generate Technical Interviews
+      </Button>
     </>
   );
 };

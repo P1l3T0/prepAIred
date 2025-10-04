@@ -3,6 +3,8 @@ import { useState, type SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { generateTechnicalInterviewsEndPoint } from "../../../Utils/endpoints";
 import type { TechnicalRequestDTO } from "../../../Utils/interfaces";
+import type { DropDownListChangeEvent, MultiSelectChangeEvent } from "@progress/kendo-react-dropdowns";
+import type { NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
 const useGenerateTechnicalInterviews = () => {
   const queryClient = useQueryClient();
@@ -10,24 +12,28 @@ const useGenerateTechnicalInterviews = () => {
   const [technicalRequest, setTechnicalRequest] = useState<TechnicalRequestDTO>({
       aiAgent: "ChatGPT",
       programmingLanguage: "C#",
-      subject: "Object-Oriented Programming",
+      subject: ["Object-Oriented Programming", "Data Structures and Algorithms"],
       difficultyLevel: "Easy",
       position: "Junior Developer",
       numberOfQuestions: 3
     }
   );
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+const handleDropDownChange = (e: DropDownListChangeEvent | MultiSelectChangeEvent) => {
+    const name: string = e.target.props.name as string;
+
     setTechnicalRequest({
       ...technicalRequest,
-      [e.target.name]: e.target.value,
+      [name]: e.target.value,
     });
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: NumericTextBoxChangeEvent) => {
+    const name: string = e.target.props.name as string;
+
     setTechnicalRequest({
       ...technicalRequest,
-      [e.target.name]: parseInt(e.target.value),
+      [name]: e.value,
     });
   };
 
@@ -52,7 +58,7 @@ const useGenerateTechnicalInterviews = () => {
     mutateAsync();
   };
 
-  return { handleSelectChange, handleInputChange, handleGenerateTechnicalInterviews };
+  return { handleDropDownChange, handleInputChange, handleGenerateTechnicalInterviews };
 };
 
 export default useGenerateTechnicalInterviews;

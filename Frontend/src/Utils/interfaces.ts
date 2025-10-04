@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 // #region Auth
 
 export interface AuthProviderProps {
@@ -51,13 +53,13 @@ interface BaseRequestDTO {
 
 export interface TechnicalRequestDTO extends BaseRequestDTO {
   programmingLanguage: string;
-  subject: string;
+  subject: string[];
   difficultyLevel: string;
   position: string;
 }
 
 export interface HrRequestDTO extends BaseRequestDTO {
-  softSkillFocus: string;
+  softSkillFocus: string[];
   contextScenario: string;
 }
 
@@ -67,7 +69,7 @@ export interface HrRequestDTO extends BaseRequestDTO {
 
 interface BaseDTO {
   id: number;
-  dateCreated: string;
+  dateCreated: Date;
 }
 
 // InterviewDTO
@@ -105,10 +107,35 @@ export interface InterviewSessionDTO extends BaseDTO {
 
 //#endregion
 
-// InterviewsProps
+//#region Answers
+
+export interface InterviewDisplayProps {
+  title: string;
+  interviewType: "HR-Interview" | "Technical-Interview";
+  interviews: HRInterviewDTO[] | TechnicalInterviewDTO[] | void;
+  renderLegend: (
+    interview: HRInterviewDTO | TechnicalInterviewDTO
+  ) => ReactNode;
+  renderMeta?: (interview: HRInterviewDTO | TechnicalInterviewDTO) => ReactNode;
+}
+
+
 export interface AnswersProps {
   interviewType: string;
   answers?: string[];
   interviewIndex: number;
   isAnswered: boolean;
+  onChange: (value: string) => void;
 }
+
+export interface Answer {
+  question: string;
+  answer: string;
+}
+
+export interface MultipleChoiceAnswer {
+  question: string;
+  answers: string[];
+}
+
+//#endregion

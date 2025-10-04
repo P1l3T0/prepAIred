@@ -1,29 +1,29 @@
 import type { AnswersProps } from "../../../Utils/interfaces";
+import { RadioButton } from "@progress/kendo-react-inputs";
 
 const SingleChoiceAnswers = ({
   answers,
   interviewIndex,
   isAnswered,
   interviewType,
-}: AnswersProps) => (
-  <>
-    {answers?.map((answer, answerIndex) => (
-      <div key={answerIndex} className="answer">
-        <input
-          type="radio"
-          id={`${interviewType}-questions-${interviewIndex}-${answerIndex}`}
-          name={`${interviewType}-${interviewIndex}`}
-          value={answer}
-          disabled={isAnswered}
-        />
-        <label
-          htmlFor={`${interviewType}-questions-${interviewIndex}-${answerIndex}`}
-        >
-          {answer}
-        </label>
-      </div>
-    ))}
-  </>
-);
+  onChange,
+}: AnswersProps) => {
+  return (
+    <>
+      {answers?.map((answer, answerIndex) => (
+        <div key={answerIndex} className="answer">
+          <RadioButton
+            id={`${interviewType}-single-choice-answer-${interviewIndex}-${answerIndex}`}
+            name="singleAnswers"
+            label={answer}
+            value={answer}
+            disabled={isAnswered}
+            onChange={(e) => onChange(e.value)}
+          />
+        </div>
+      ))}
+    </>
+  );
+};
 
 export default SingleChoiceAnswers;

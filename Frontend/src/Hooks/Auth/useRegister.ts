@@ -5,7 +5,7 @@
  * @returns {Object} - handleChange and handleSubmit functions
  */
 import axios, { AxiosError } from "axios";
-import { useState, type SyntheticEvent } from "react";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { registerEndPoint } from "../../Utils/endpoints";
@@ -48,8 +48,7 @@ const useRegister = () => {
     }
   });
 
-  const handleSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     mutateAsync();
   };
 

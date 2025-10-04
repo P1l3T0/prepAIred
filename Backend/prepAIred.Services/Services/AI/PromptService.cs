@@ -14,7 +14,7 @@ namespace prepAIred.Services
                 - Questions must follow the STAR (Situation, Task, Action, Result) interview methodology
                 - Include a balanced mix of:
                     * Behavioral questions assessing past experiences
-                    * Competency-based questions evaluating specific skills - {hrRequest.SoftSkillFocus}
+                    * Competency-based questions evaluating specific skills - {string.Join(", ", hrRequest.SoftSkillFocus)}
                     * Cultural fit and values alignment questions
                     * Leadership and teamwork scenarios - {hrRequest.ContextScenario}
                 - Each question must:
@@ -37,14 +37,13 @@ namespace prepAIred.Services
 
                 [
                     {{
-                        ""UserID"": {currentUserID},               // int - provided user ID
-                        ""Question"": """",                       // string - the behavioral question
-                        ""QuestionType"": 0,                     // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
-                        ""QuestionType"": 0,                    // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
-                        ""AnswersJson"": ""[]"",               // string - JSON array of answers as a string
-                        ""CompetencyArea"": """",             // string - primary competency being assessed
-                        ""BehavioralContext"": """"          // string - specific behavior or skill being evaluated
-                        ""SoftSkillFocus"": {hrRequest.SoftSkillFocus}
+                        ""UserID"": {currentUserID},                                                                     // int - provided user ID
+                        ""Question"": """",                                                                             // string - the behavioral question
+                        ""QuestionType"": 0,                                                                           // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
+                        ""AnswersJson"": ""[]"",                                                                      // string - JSON array of answers as a string
+                        ""CompetencyArea"": """",                                                                    // string - primary competency being assessed
+                        ""BehavioralContext"": """"                                                                 // string - specific behavior or skill being evaluated
+                        ""SoftSkillFocus"": Use 1 of the following - {string.Join(", ", hrRequest.SoftSkillFocus)} // string - soft skill focus area
                     }}
                 ]
 
@@ -53,6 +52,7 @@ namespace prepAIred.Services
                 - AnswersJson must be a string containing an escaped JSON array
                 - All string values must use double quotes and be properly escaped
                 - QuestionType values: 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
+                - Depending on the number of questions, ensure a balanced distribution of all the QuestionTypes
                 - InterviewType must always be 0 for HR interviews
                 - No additional properties
                 - No null values (use empty strings """" instead)
@@ -82,7 +82,7 @@ namespace prepAIred.Services
                 Generate {aIRequest.NumberOfQuestions} interview questions with detailed answers.
 
                 Content requirements:
-                - Questions must reflect real-world, practical scenarios commonly encountered in {aIRequest.Subject} using {aIRequest.ProgrammingLanguage}.
+                - Questions must reflect real-world, practical scenarios commonly encountered in {string.Join(", ", aIRequest.Subject)} using {aIRequest.ProgrammingLanguage}.
                 - Include a balanced mix of:
                     * Core technical concepts specific to {aIRequest.ProgrammingLanguage}
                     * Problem-solving approaches
@@ -103,15 +103,15 @@ namespace prepAIred.Services
 
                 [
                     {{
-                        ""UserID"": {currentUserID},                                       // int - provided user ID
-                        ""Question"": """",                                               // string - the interview question
-                        ""QuestionType"": 0,                                             // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
-                        ""InterviewType"": 1,                                           // int - 0 = HR, 1 = Technical
-                        ""AnswersJson"": ""[]"",                                       // string - JSON array of answers as a string
-                        ""ProgrammingLanguage"": ""{aIRequest.ProgrammingLanguage}"", // string - programming language focus
-                        ""DifficultyLevel"": ""{aIRequest.DifficultyLevel}"",        // string - difficulty level of question
-                        ""Subject"": ""{aIRequest.Subject}"",                       // string - technical topic area
-                        ""Position"": ""{aIRequest.Position}""                     // string - position being interviewed for
+                        ""UserID"": {currentUserID},                                                                // int - provided user ID
+                        ""Question"": """",                                                                        // string - the interview question
+                        ""QuestionType"": 0,                                                                      // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
+                        ""InterviewType"": 1,                                                                    // int - 0 = HR, 1 = Technical
+                        ""AnswersJson"": ""[]"",                                                                // string - JSON array of answers as a string
+                        ""ProgrammingLanguage"": ""{aIRequest.ProgrammingLanguage}""                           // string - programming language focus
+                        ""DifficultyLevel"": ""{aIRequest.DifficultyLevel}"",                                 // string - difficulty level of question
+                        ""Subject"": ""Use 1 of the following - {string.Join(", ", aIRequest.Subject)}"",    // string - technical topic area
+                        ""Position"": ""{aIRequest.Position}""                                              // string - position being interviewed for
                     }}
                 ]
 
@@ -120,6 +120,7 @@ namespace prepAIred.Services
                 - AnswersJson must be a string containing an escaped JSON array
                 - All string values must use double quotes and be properly escaped
                 - QuestionType values: 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
+                - Depending on the number of questions, ensure a balanced distribution of all the QuestionTypes
                 - InterviewType must always be 1 for Technical interviews
                 - No additional properties
                 - No null values (use empty strings """" instead)

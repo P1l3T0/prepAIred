@@ -5,7 +5,7 @@ export default function ProtectedRoute({ children } : { children: React.ReactNod
   const { isUserLoggedIn } = useAuth();
 
   if (!isUserLoggedIn) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/authenticate" replace />;
   }
 
   return children;
