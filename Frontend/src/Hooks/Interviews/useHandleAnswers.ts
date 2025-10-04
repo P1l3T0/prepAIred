@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import type { Answer, MultipleChoiceAnswer, HRInterviewDTO, TechnicalInterviewDTO } from "../../Utils/interfaces";
 
-const useHandleAnswers = (interviews: HRInterviewDTO[] |TechnicalInterviewDTO[]) => {
+const useHandleAnswers = ( interviews: HRInterviewDTO[] | TechnicalInterviewDTO[]) => {
   const [openEndedAnswers, setOpenEndedAnswers] = useState<Answer[]>([]);
   const [singleChoiceAnswers, setSingleChoiceAnswers] = useState<Answer[]>([]);
   const [multipleChoiceAnswers, setMultipleChoiceAnswers] = useState<MultipleChoiceAnswer[]>([]);
@@ -26,14 +26,6 @@ const useHandleAnswers = (interviews: HRInterviewDTO[] |TechnicalInterviewDTO[])
     }
   }, [interviews]);
 
-  const handleOpenEndedChange = (index: number, value: string) => {
-    setOpenEndedAnswers((prev) =>
-      prev.map((item, idx) =>
-        idx === index ? { ...item, answer: value } : item
-      )
-    );
-  };
-
   const handleSingleChoiceChange = (index: number, value: string) => {
     setSingleChoiceAnswers((prev) => {
       return prev.map((item, idx) =>
@@ -44,10 +36,27 @@ const useHandleAnswers = (interviews: HRInterviewDTO[] |TechnicalInterviewDTO[])
 
   const handleMultipleChoiceChange = (index: number, value: string) => {
     setMultipleChoiceAnswers((prev) => {
-      return prev.map((item, idx) =>
-        idx === index ? { ...item, answers: [...item.answers, value] } : item
-      );
+      return prev.map((item, idx) => {
+        if (idx === index) {
+          const alreadySelected = item.answers.includes(value);
+          return {
+            ...item,
+            answers: alreadySelected
+              ? item.answers.filter((v) => v !== value)
+              : [...item.answers, value],
+          };
+        }
+        return item;
+      });
     });
+  };
+
+  const handleOpenEndedChange = (index: number, value: string) => {
+    setOpenEndedAnswers((prev) =>
+      prev.map((item, idx) =>
+        idx === index ? { ...item, answer: value } : item
+      )
+    );
   };
 
   return {

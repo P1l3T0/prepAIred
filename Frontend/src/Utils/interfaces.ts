@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 // #region Auth
 
 export interface AuthProviderProps {
@@ -106,6 +108,17 @@ export interface InterviewSessionDTO extends BaseDTO {
 //#endregion
 
 //#region Answers
+
+export interface InterviewDisplayProps {
+  title: string;
+  interviewType: "HR-Interview" | "Technical-Interview";
+  interviews: HRInterviewDTO[] | TechnicalInterviewDTO[] | void;
+  renderLegend: (
+    interview: HRInterviewDTO | TechnicalInterviewDTO
+  ) => ReactNode;
+  renderMeta?: (interview: HRInterviewDTO | TechnicalInterviewDTO) => ReactNode;
+}
+
 
 export interface AnswersProps {
   interviewType: string;
