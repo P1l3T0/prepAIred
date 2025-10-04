@@ -31,6 +31,13 @@ namespace prepAIred.API
             return Ok(hrInterviews);
         }
 
+        [HttpPost("evaluate-hr-interviews")]
+        public async Task<IActionResult> EvaluateHrInterviews([FromBody] List<EvaluateRequestDTO> evaluateRequests)
+        {
+            await _interviewRepository.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
+            return Ok("HR interviews evaluated successfully.");
+        }
+
         [HttpPost("generate-technical-interviews")]
         public async Task<IActionResult> GenerateTechnicalInterviews([FromBody] TechnicalRequestDTO technicalRequest)
         {
@@ -43,6 +50,13 @@ namespace prepAIred.API
         {
             List<TechnicalInterviewDTO> technicalInterviews = await _interviewRepository.GetLatestInterviews<TechnicalInterview, TechnicalInterviewDTO>();
             return Ok(technicalInterviews);
+        }
+
+        [HttpPost("evaluate-technical-interviews")]
+        public async Task<IActionResult> EvaluateTechnicalInterviews([FromBody] List<EvaluateRequestDTO> evaluateRequests)
+        {
+            await _interviewRepository.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests);
+            return Ok("Technical interviews evaluated successfully.");
         }
     }
 }

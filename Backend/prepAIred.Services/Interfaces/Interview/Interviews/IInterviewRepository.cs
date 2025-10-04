@@ -25,5 +25,13 @@ namespace prepAIred.Services
         Task<List<TInterviewDTO>> GetLatestInterviews<TInterview, TInterviewDTO>() 
             where TInterview : Interview 
             where TInterviewDTO : InterviewDTO;
+
+        /// <summary>
+        /// Evaluates a collection of interviews based on the specified evaluation request.
+        /// </summary>
+        /// <typeparam name="TInterview">The type of interview to evaluate. Must derive from the <see cref="Interview"/> class.</typeparam>
+        /// <param name="evaluateRequest">The evaluation request containing the criteria and parameters for the evaluation process.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        Task EvaluateInterviewsAsync<TInterview>(List<EvaluateRequestDTO> evaluateRequest) where TInterview : Interview;
     }
 }
