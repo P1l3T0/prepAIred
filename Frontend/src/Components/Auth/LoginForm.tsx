@@ -6,8 +6,7 @@ import useInputValidations from "./useInputValidations";
 
 const LoginForm = () => {
   const { handleSubmit, handleChange } = useLogin();
-  const { emailValidator, EmailInput, passwordValidator, PasswordInput } =
-    useInputValidations();
+  const { emailValidator, EmailInput, passwordValidator, PasswordInput } = useInputValidations();
 
   return (
     <Form
