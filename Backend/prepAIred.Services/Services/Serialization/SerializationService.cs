@@ -1,5 +1,4 @@
-﻿using prepAIred.Data;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace prepAIred.Services
@@ -20,12 +19,5 @@ namespace prepAIred.Services
         public T? Deserialize<T>(string json) where T : class => JsonSerializer.Deserialize<T>(!string.IsNullOrEmpty(json) ? json : throw new ArgumentNullException(nameof(json)), _jsonOptions);
 
         public ICollection<T>? DeserializeCollection<T>(string json) where T : class => JsonSerializer.Deserialize<ICollection<T>>(!string.IsNullOrEmpty(json) ? json : throw new ArgumentNullException(nameof(json)), _jsonOptions);
-
-        // Backwards compatibility methods
-        public string SerializeInterviews<TInterview>(List<TInterview> interviews) where TInterview : Interview => 
-            SerializeCollection(interviews);
-
-        public List<Interview> DeserializeInterviews<TInterview>(string response) where TInterview : Interview => 
-            DeserializeCollection<Interview>(response)?.ToList() ?? new List<Interview>();
     }
 }
