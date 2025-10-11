@@ -1,9 +1,9 @@
+import type { HRInterviewDTO, InterviewDisplayProps, TechnicalInterviewDTO } from "../../Utils/interfaces";
 import SingleChoiceAnswers from "./Answers/SingleChoiceAnswers";
 import MultipleChoiceAnswers from "./Answers/MultipleChoiceAnswers";
 import OpenEndedAnswer from "./Answers/OpenEndedAnswer";
-import useHandleAnswers from "../../Hooks/Interviews/useHandleAnswers";
-import useEvaluateInterviews from "../../Hooks/Interviews/useEvaluateInterviews";
-import type { HRInterviewDTO, InterviewDisplayProps, TechnicalInterviewDTO } from "../../Utils/interfaces";
+import useEvaluateInterviews from "../../Hooks/Interviews/Answers/useEvaluateInterviews";
+import useHandleAnswers from "../../Hooks/Interviews/Answers/useHandleAnswers";
 import { Button } from "@progress/kendo-react-buttons";
 import "./Interviews.css";
 

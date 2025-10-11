@@ -14,7 +14,7 @@ const SingleChoiceAnswers = ({
         <div key={answerIndex} className="answer">
           <RadioButton
             id={`${interviewType}-single-choice-answer-${interviewIndex}-${answerIndex}`}
-            name="singleAnswers"
+            name={`${interviewType}-single-choice-answer-${interviewIndex}`}
             label={answer}
             value={answer}
             disabled={isAnswered}

@@ -1,8 +1,8 @@
 import axios, { AxiosError } from "axios";
 import { useState, type SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { evaluateHrInterviewsEndPoint, evaluateTechnicalInterviewsEndPoint } from "../../Utils/endpoints";
-import type { EvaluateRequestDTO, UseEvaluateInterviewsProps } from "../../Utils/interfaces";
+import { evaluateHrInterviewsEndPoint, evaluateTechnicalInterviewsEndPoint } from "../../../Utils/endpoints";
+import type { UseEvaluateInterviewsProps, EvaluateRequestDTO } from "../../../Utils/interfaces";
 
 const useEvaluateInterviews = ({
   interviewType,
