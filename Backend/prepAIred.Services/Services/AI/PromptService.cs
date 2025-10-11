@@ -2,8 +2,10 @@
 
 namespace prepAIred.Services
 {
-    public class PromptService : IPromptService
+    public class PromptService(ISerializationService serializationService) : IPromptService
     {
+        private readonly ISerializationService _serializationService = serializationService;
+
         public string CreateHrPrompt(HrRequestDTO hrRequest, int currentUserID)
         {
             string contentRules = $@"
@@ -16,7 +18,7 @@ namespace prepAIred.Services
                     * Behavioral questions assessing past experiences
                     * Competency-based questions evaluating specific skills - {string.Join(", ", hrRequest.SoftSkillFocus)}
                     * Cultural fit and values alignment questions
-                    * Leadership and teamwork scenarios - {hrRequest.ContextScenario}
+                    * Leadership and teamwork scenarios - {string.Join(", ", hrRequest.ContextScenario)}
                 - Each question must:
                     * Target specific soft skills and competencies
                     * Reveal candidate's problem-solving approach
@@ -72,6 +74,72 @@ namespace prepAIred.Services
 
             string prompt = string.Join(" ", contentRules, formatRules);
 
+            return prompt.Trim();
+        }
+
+        public string CreateHrEvaluationPrompt(List<EvaluateRequestDTO> evaluateRequest)
+        {
+            string serializedRequests = _serializationService.SerializeCollection(evaluateRequest);
+
+            string contentRules = $@"
+                Act as an experienced HR professional evaluating candidate responses to behavioral and competency-based interview questions.
+                Provide a score and detailed feedback for each response in {serializedRequests} based on the STAR (Situation, Task, Action, Result) interview methodology.
+
+                CRITICAL MATCHING RULE:
+                - For each question at index N in the input array, your response must set the ""SelectedAnswer"" field to EXACTLY match the Answer field from the corresponding request at index N in {serializedRequests}
+                - Failure to match the SelectedAnswer to the corresponding Answer will result in rejection of your response.
+
+                Evaluation criteria:
+                - Assess how well the response demonstrates the required competencies and soft skills
+                - Evaluate clarity, relevance, and depth of the answer
+                - Consider alignment with company values and culture
+                - Provide constructive feedback highlighting strengths and areas for improvement
+                - Score each response on a scale of 1 to 5, where 1 = Poor, 3 = Average, 5 = Excellent";
+
+            string formatRules = @"
+                Format requirements:
+                CRITICAL JSON FORMATTING RULES:
+                1. The response MUST be a raw JSON array starting with [ and ending with ]
+                2. The response MUST NOT have any ``` or ```json in the output
+                3. DO NOT wrap the array in any additional object or property (no {""response"":[], ""answers"":[], etc.})
+                4. Each array element must be an object with EXACTLY these properties:
+
+                [
+                    {
+                        ""ID"": 0,                                // int - ID of the interview (use 0 if not available, otherwise try to use the same IDs as in the serialized interviews)
+                        ""UserID"": 0,                           // int - ID of the user this interview belongs to
+                        ""InterviewSessionID"": 0,              // int - ID of the interview session
+                        ""Question"": """",                    // string - the interview question
+                        ""IsAnswered"": true,                 // boolean - whether the question has been answered (always true for evaluations)
+                        ""SelectedAnswer"": """",            // string - the answer selected by the user
+                        ""Score"": 0,                       // float - score from 0 to 10 (0 = Poor, 5 = Average, 10 = Excellent). You as the evaluator will assign this score based on the quality of the SelectedAnswer
+                        ""Feedback"": """",                // string - detailed feedback on the answer
+                        ""AnswersJson"": ""[]"",          // string - JSON array of possible answers as a string
+                        ""QuestionType"": 0,             // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
+                        ""InterviewType"": 0,           // int - 0 = HR, 1 = Technical (always 0 for HR interviews)
+                        ""SoftSkillFocus"": """",      // string - primary soft skill being assessed
+                        ""CompetencyArea"": """",     // string - specific competency being evaluated
+                        ""BehavioralContext"": """"  // string - behavioral context of the question
+                    }
+                ]
+
+                STRICT REQUIREMENTS:
+                - The outer structure MUST be a bare array [ ]
+                - All string values must use double quotes and be properly escaped
+                - Score must be an integer between 1 and 5
+                - No additional properties
+                - No null values (use empty strings """" instead)
+                - No trailing commas
+                - No comments in the output
+                - No markdown fences (``` or ```json) - this is the MOST IMPORTANT RULE!
+                - No explanations or text before or after the JSON array
+                FORBIDDEN PATTERNS:
+                - {""response"": [...]}
+                - {""data"": [...]}
+                - {""evaluations"": [...]}
+                - Any wrapper object around the main array";
+
+            string prompt = string.Join(" ", contentRules, formatRules);
             return prompt.Trim();
         }
 
@@ -144,6 +212,58 @@ namespace prepAIred.Services
             string prompt = string.Join(" ", contentRules, formatRules);
 
             return prompt.Trim();
+        }
+
+        public string CreateTechnicalEvaluationPrompt(List<EvaluateRequestDTO> evaluateRequest)
+        {
+            string contentRules = $@"
+                Act as an experienced HR professional evaluating candidate responses to behavioral and competency-based interview questions.
+                Provide a score and detailed feedback for each response in {evaluateRequest} based on the STAR (Situation, Task, Action, Result) interview methodology.
+                Evaluation criteria:
+                - Assess how well the response demonstrates the required competencies and soft skills
+                - Evaluate clarity, relevance, and depth of the answer
+                - Consider alignment with company values and culture
+                - Provide constructive feedback highlighting strengths and areas for improvement
+                - Score each response on a scale of 1 to 5, where 1 = Poor, 3 = Average, 5 = Excellent";
+
+            string formatRules = @"
+                Format requirements:
+                CRITICAL JSON FORMATTING RULES:
+                1. The response MUST be a raw JSON array starting with [ and ending with ]
+                2. The response MUST NOT have any ``` or ```json in the output
+                3. DO NOT wrap the array in any additional object or property (no {""response"":[], ""answers"":[], etc.})
+                4. Each array element must be an object with EXACTLY these properties:
+                [
+                    {
+                        ""Question"": """",          // string - the interview question
+                        ""CandidateAnswer"": """",  // string - the candidate's answer to evaluate
+                        ""Score"": 0,               // int - score from 1 to 5
+                        ""Feedback"": """"          // string - detailed feedback on the answer
+                    }
+                ]
+                STRICT REQUIREMENTS:
+                - The outer structure MUST be a bare array [ ]
+                - All string values must use double quotes and be properly escaped
+                - Score must be an integer between 1 and 5
+                - No additional properties
+                - No null values (use empty strings """" instead)
+                - No trailing commas
+                - No comments in the output
+                - No markdown fences (``` or ```json) - this is the MOST IMPORTANT RULE!
+                - No explanations or text before or after the JSON array
+                FORBIDDEN PATTERNS:
+                - {""response"": [...]}
+                - {""data"": [...]}
+                - {""evaluations"": [...]}
+                - Any wrapper object around the main array";
+
+            string prompt = string.Join(" ", contentRules, formatRules);
+            return prompt.Trim();
+        }
+
+        public string GetPromptWithSerializedInterviews(string prompt, string serializedInterviews)
+        {
+            return $"{prompt}\n\nHere are the interviews in JSON format:\n{serializedInterviews}";
         }
     }
 }
