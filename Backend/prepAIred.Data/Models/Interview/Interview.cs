@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace prepAIred.Data
 {
@@ -28,6 +29,22 @@ namespace prepAIred.Data
         /// Gets or sets a value indicating whether the interview question has been answered.
         /// </summary>
         public bool IsAnswered { get; set; }
+
+        /// <summary>
+        /// Gets or sets the answer selected by the user for this question.
+        /// </summary>
+        public string SelectedAnswer { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the score assigned to this question.
+        /// </summary>
+        [MinLength(0), MaxLength(10)]
+        public float Score { get; set; } = 0;
+
+        /// <summary>
+        /// Gets or sets the feedback message provided by AI evaluation.
+        /// </summary>
+        public string Feedback { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the JSON-serialized list of answers for this interview question.

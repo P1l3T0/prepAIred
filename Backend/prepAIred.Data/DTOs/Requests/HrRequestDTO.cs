@@ -10,6 +10,6 @@
         /// <summary>
         /// Gets or sets the scenario context as a string.
         /// </summary>
-        public string ContextScenario { get; set; } = string.Empty;
+        public List<string> ContextScenario { get; set; } = new List<string>();
     }
 }

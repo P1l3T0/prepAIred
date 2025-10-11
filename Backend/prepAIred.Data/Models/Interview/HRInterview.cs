@@ -34,6 +34,8 @@
                 InterviewSessionID = InterviewSessionID,
                 Question = Question,
                 IsAnswered = IsAnswered,
+                SelectedAnswer = SelectedAnswer,
+                Score = Score,
                 Answers = Answers,
                 QuestionType = QuestionType.ToString(),
                 InterviewType = InterviewType.ToString(),

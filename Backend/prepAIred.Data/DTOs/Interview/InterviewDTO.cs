@@ -21,6 +21,16 @@
         public bool IsAnswered { get; set; } = false;
 
         /// <summary>
+        /// Gets or sets the answer selected by the user for this question.
+        /// </summary>
+        public string SelectedAnswer { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the score assigned to this question.
+        /// </summary>
+        public float Score { get; set; } = 0;
+
+        /// <summary>
         /// Gets or sets the unique identifier for the user.
         /// </summary>
         public int UserID { get; set; }
