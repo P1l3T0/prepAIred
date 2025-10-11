@@ -36,6 +36,14 @@ namespace prepAIred.Services
         Task<InterviewSession> GetAdjacentInterviewSessionAsync(int userID);
 
         /// <summary>
+        /// Gets an interview session based on the provided evaluation requests.
+        /// </summary>
+        /// <param name="evaluateRequests">A list of evaluation requests containing the questions and answer.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the generated  
+        /// <see cref="InterviewSession"/> object based on the provided evaluation requests.</returns>
+        Task<InterviewSession> GetInterviewSessionFromQuestionsAsync(List<EvaluateRequestDTO> evaluateRequests);
+
+        /// <summary>
         /// Retrieves the most recent interview session ID associated with the specified user.
         /// </summary>
         /// <param name="userID">The unique identifier of the user whose latest interview session ID is to be retrieved.</param>

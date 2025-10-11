@@ -17,6 +17,14 @@ namespace prepAIred.Services
         Task CreateInterviewsAsync(List<Interview> interviews, User currentUser, InterviewSession interviewSession);
 
         /// <summary>
+        /// Updates multiple interview entities in the database with their current state and evaluation results.
+        /// </summary>
+        /// <typeparam name="TInterview">The type of interview objects to update. Must derive from the Interview class.</typeparam>
+        /// <param name="interviews">The list of interview objects containing updated information to persist to the database.</param>
+        /// <returns>A task representing the asynchronous update operation.</returns>
+        Task UpdateInterviewAsync<TInterview>(List<TInterview> interviews) where TInterview : Interview;
+
+        /// <summary>
         /// Retrieves a list of interviews associated with the specified session ID.
         /// </summary>
         /// <typeparam name="TInterview">The type of interview to retrieve. Must derive from the <see cref="Interview"/> class.</typeparam>

@@ -20,5 +20,19 @@ namespace prepAIred.Services
         /// <param name="currentUserID">The unique identifier of the current user. Must be a valid, non-negative integer.</param>
         /// <returns>A string representing the generated HR prompt.</returns>
         string CreateHrPrompt(HrRequestDTO aIRequest, int currentUserID);
+
+        /// <summary>
+        /// Creates a prompt for evaluating human resources based on the provided evaluation requests.
+        /// </summary>
+        /// <param name="evaluateRequest">A list of evaluation request objects containing the criteria and details for the evaluation.</param>
+        /// <returns>A string representing the generated evaluation prompt.</returns>
+        string CreateHrEvaluationPrompt(List<EvaluateRequestDTO> evaluateRequest);
+
+        /// <summary>
+        /// Creates a prompt for evaluating technical knowledge based on the provided evaluation requests.
+        /// </summary>
+        /// <param name="evaluateRequest">A list of evaluation request objects containing the criteria and details for the evaluation.</param>
+        /// <returns>A string representing the generated evaluation prompt.</returns>
+        string CreateTechnicalEvaluationPrompt(List<EvaluateRequestDTO> evaluateRequest);
     }
 }
