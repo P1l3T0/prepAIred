@@ -27,8 +27,7 @@ namespace prepAIred.Services
         /// <typeparam name="TInterview">The type of interview objects to be evaluated. Must derive from the Interview class.</typeparam>
         /// <param name="prompt">The evaluation prompt containing the criteria and context for assessment.</param>
         /// <param name="agent">The AI agent that will perform the evaluation process.</param>
-        /// <param name="interviews">The list of interview objects containing questions and responses to be evaluated.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of evaluated interview objects with updated scores and feedback.</returns>
-        Task<List<TInterview>> EvaluateInterviewsAsync<TInterview>(string prompt, AIAgent agent, List<TInterview> interviews) where TInterview : Interview;
+        Task<List<Interview>> EvaluateInterviewsAsync<TInterview>(string prompt, AIAgent agent) where TInterview : Interview;
     }
 }

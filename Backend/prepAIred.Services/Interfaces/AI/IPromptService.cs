@@ -34,5 +34,13 @@ namespace prepAIred.Services
         /// <param name="evaluateRequest">A list of evaluation request objects containing the criteria and details for the evaluation.</param>
         /// <returns>A string representing the generated evaluation prompt.</returns>
         string CreateTechnicalEvaluationPrompt(List<EvaluateRequestDTO> evaluateRequest);
+
+        /// <summary>
+        /// Generates a prompt by combining the provided base prompt with serialized interview data.
+        /// </summary>
+        /// <param name="prompt">The base prompt text to be used as the foundation for the generated output.</param>
+        /// <param name="serializedInterviews">A serialized string containing interview data to be incorporated into the prompt.</param>
+        /// <returns>A string representing the combined prompt and serialized interview data.</returns>
+        string GetPromptWithSerializedInterviews(string prompt, string serializedInterviews);
     }
 }
