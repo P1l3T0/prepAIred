@@ -36,7 +36,8 @@ namespace prepAIred.Services
 
         public async Task<InterviewSession> GetInterviewSessionFromQuestionsAsync(List<EvaluateRequestDTO> evaluateRequests)
         {
-            string firstQuestion = evaluateRequests.First().Question;
+            EvaluateRequestDTO firstRequest = evaluateRequests.FirstOrDefault()!;
+            string firstQuestion = firstRequest?.Question!;
 
             return await _dataContext.InterviewSessions
                 .Include(s => s.Interviews)

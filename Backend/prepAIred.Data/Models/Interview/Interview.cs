@@ -38,7 +38,7 @@ namespace prepAIred.Data
         /// <summary>
         /// Gets or sets the score assigned to this question.
         /// </summary>
-        [MinLength(0), MaxLength(10)]
+        [Range(0, 10)]
         public float Score { get; set; } = 0;
 
         /// <summary>
