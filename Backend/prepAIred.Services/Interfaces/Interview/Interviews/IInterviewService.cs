@@ -32,5 +32,13 @@ namespace prepAIred.Services
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of interviews of type
         /// <typeparamref name="TInterview"/> associated with the specified session ID. If no interviews are found, the list will be empty.</returns>
         Task<List<TInterview>> GetInterviewsBySessionIdAsync<TInterview>(int sessionID) where TInterview : Interview;
+
+        /// <summary>
+        /// Updates an existing interview in the collection with the provided evaluated interview.
+        /// </summary>
+        /// <typeparam name="TInterview">The type of the interview, which must derive from <see cref="Interview"/>.</typeparam>
+        /// <param name="evaluated">The evaluated interview to update the existing interview with.</param>
+        /// <param name="existingInterviews">The collection of existing interviews to search for a match to update.</param>
+        void UpdateExistingInterviewWithEvaluation<TInterview>(TInterview evaluated, List<TInterview> existingInterviews) where TInterview : Interview;
     }
 }
