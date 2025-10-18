@@ -21,8 +21,7 @@ const useGetLatestTechnicalInterviews = () => {
 
   const technicalInterviewsQuery = useQuery({
     queryKey: ["technical-interviews"],
-    queryFn: getLatestTechnicalInterviews,
-    refetchOnWindowFocus: false,
+    queryFn: getLatestTechnicalInterviews
   });
 
   const { data, isLoading, isError } = technicalInterviewsQuery;

@@ -9,6 +9,7 @@ import { getCurrentUserEndPoint } from "../../Utils/endpoints";
 import type { User } from "../../Utils/interfaces";
 
 const useGetUser = () => {
+  debugger
   const getUser = async () => {
     return await axios
       .get<User>(`${getCurrentUserEndPoint}`, { withCredentials: true })
@@ -26,8 +27,7 @@ const useGetUser = () => {
 
   const userQuery = useQuery({
     queryKey: ["user"],
-    queryFn: getUser,
-    refetchOnWindowFocus: false,
+    queryFn: getUser
   });
 
   const { data, isLoading, isError } = userQuery;
