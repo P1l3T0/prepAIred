@@ -34,11 +34,6 @@ namespace prepAIred.Services
             await _dataContext.SaveChangesAsync();
         }
 
-        public void UpdateExistingInterviewWithEvaluation<TInterview>(TInterview evaluated, List<TInterview> existingInterviews) where TInterview : Interview
-        {
-          
-        }
-
         public void UpdateExistingInterviewWithEvaluation<TInterview>(List<TInterview> evaluatedInterviews, List<TInterview> existingInterviews) where TInterview : Interview
         {
             foreach (TInterview evaluatedInterview in evaluatedInterviews)
