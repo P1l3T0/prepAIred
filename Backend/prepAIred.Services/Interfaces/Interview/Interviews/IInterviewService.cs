@@ -39,6 +39,6 @@ namespace prepAIred.Services
         /// <typeparam name="TInterview">The type of the interview, which must derive from <see cref="Interview"/>.</typeparam>
         /// <param name="evaluated">The evaluated interview to update the existing interview with.</param>
         /// <param name="existingInterviews">The collection of existing interviews to search for a match to update.</param>
-        void UpdateExistingInterviewWithEvaluation<TInterview>(TInterview evaluated, List<TInterview> existingInterviews) where TInterview : Interview;
+        void UpdateExistingInterviewWithEvaluation<TInterview>(List<TInterview> evaluatedInterviews, List<TInterview> existingInterviews) where TInterview : Interview;
     }
 }

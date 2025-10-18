@@ -36,14 +36,22 @@ namespace prepAIred.Services
 
         public void UpdateExistingInterviewWithEvaluation<TInterview>(TInterview evaluated, List<TInterview> existingInterviews) where TInterview : Interview
         {
-            TInterview? existing = existingInterviews.FirstOrDefault(i => i.ID == evaluated.ID);
-            if (existing is null) return;
+          
+        }
 
-            existing.Score = evaluated.Score;
-            existing.Feedback = evaluated.Feedback;
-            existing.SelectedAnswer = evaluated.SelectedAnswer;
-            existing.IsAnswered = evaluated.IsAnswered;
-            existing.Answers = evaluated.Answers;
+        public void UpdateExistingInterviewWithEvaluation<TInterview>(List<TInterview> evaluatedInterviews, List<TInterview> existingInterviews) where TInterview : Interview
+        {
+            foreach (TInterview evaluatedInterview in evaluatedInterviews)
+            {
+                TInterview? existing = existingInterviews.FirstOrDefault(i => i.ID == evaluatedInterview.ID);
+                if (existing is null) return;
+
+                existing.Score = evaluatedInterview.Score;
+                existing.Feedback = evaluatedInterview.Feedback;
+                existing.SelectedAnswer = evaluatedInterview.SelectedAnswer;
+                existing.IsAnswered = evaluatedInterview.IsAnswered;
+                existing.Answers = evaluatedInterview.Answers;
+            }
         }
     }
 }

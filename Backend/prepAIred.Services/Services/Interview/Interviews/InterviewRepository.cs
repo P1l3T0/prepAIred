@@ -81,7 +81,6 @@ namespace prepAIred.Services
         public async Task EvaluateInterviewsAsync<TInterview>(List<EvaluateRequestDTO> evaluateRequest) where TInterview : Interview
         {
             InterviewSession interviewSession = await _interviewSessionService.GetInterviewSessionFromQuestionsAsync(evaluateRequest);
-            AIAgent aiAgent = interviewSession.AIAgent;
 
             string basePrompt = typeof(TInterview).Name switch
             {
@@ -93,12 +92,10 @@ namespace prepAIred.Services
             List<TInterview> existingInterviews = await _interviewService.GetInterviewsBySessionIdAsync<TInterview>(interviewSession.ID);
             string serializedInterviews = _serializationService.SerializeCollection(existingInterviews);
             string prompt = _promptService.GetPromptWithSerializedInterviews(basePrompt, serializedInterviews);
-            List<Interview> evaluatedInterviews = await _aIService.EvaluateInterviewsAsync<TInterview>(prompt, aiAgent);
 
-            foreach (TInterview evaluated in evaluatedInterviews.Cast<TInterview>())
-            {
-                _interviewService.UpdateExistingInterviewWithEvaluation(evaluated, existingInterviews);
-            }
+            List<Interview> evaluatedInterviews = await _aIService.EvaluateInterviewsAsync<TInterview>(prompt, interviewSession.AIAgent);
+            List<TInterview> evaluatedTInterviews = [..evaluatedInterviews.Cast<TInterview>()];
+            _interviewService.UpdateExistingInterviewWithEvaluation(evaluatedTInterviews, existingInterviews);
 
             await _interviewService.UpdateInterviewAsync(existingInterviews);
         }
