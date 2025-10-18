@@ -34,6 +34,16 @@ namespace prepAIred.Services
                 .ToListAsync();
         }
 
+        public async Task<InterviewSession> GetInterviewSessionFromQuestionsAsync(List<EvaluateRequestDTO> evaluateRequests)
+        {
+            string firstQuestion = evaluateRequests.First().Question;
+
+            return await _dataContext.InterviewSessions
+                .Include(s => s.Interviews)
+                .Where(s => s.Interviews.Any(i => i.Question == firstQuestion && !i.IsAnswered))
+                .FirstOrDefaultAsync() ?? new InterviewSession();
+        }
+
         public async Task DeleteInterviewSessionsAsync(List<InterviewSession> interviewSessions)
         {
             _dataContext.InterviewSessions.RemoveRange(interviewSessions);

@@ -216,40 +216,63 @@ namespace prepAIred.Services
 
         public string CreateTechnicalEvaluationPrompt(List<EvaluateRequestDTO> evaluateRequest)
         {
+            string serializedRequests = _serializationService.SerializeCollection(evaluateRequest);
+
             string contentRules = $@"
-                Act as an experienced HR professional evaluating candidate responses to behavioral and competency-based interview questions.
-                Provide a score and detailed feedback for each response in {evaluateRequest} based on the STAR (Situation, Task, Action, Result) interview methodology.
+                Act as an experienced technical interviewer evaluating candidate responses to technical interview questions.
+                Provide detailed evaluation for each response in {serializedRequests} based on technical accuracy, problem-solving approach, and coding best practices.
+
                 Evaluation criteria:
-                - Assess how well the response demonstrates the required competencies and soft skills
-                - Evaluate clarity, relevance, and depth of the answer
-                - Consider alignment with company values and culture
+                - Assess technical accuracy and completeness of the solution
+                - Evaluate problem-solving methodology and approach
+                - Consider code quality, efficiency, and best practices
+                - Review understanding of the specific programming language concepts
+                - Analyze solution scalability and performance considerations
                 - Provide constructive feedback highlighting strengths and areas for improvement
-                - Score each response on a scale of 1 to 5, where 1 = Poor, 3 = Average, 5 = Excellent";
+                - Score each response on a scale of 0 to 10, where:
+                    * 0-2 = Poor (Incorrect or severely lacking)
+                    * 3-4 = Fair (Partially correct with significant gaps)
+                    * 5-6 = Average (Correct but basic implementation)
+                    * 7-8 = Good (Correct with good practices)
+                    * 9-10 = Excellent (Optimal solution with best practices)";
 
             string formatRules = @"
                 Format requirements:
                 CRITICAL JSON FORMATTING RULES:
                 1. The response MUST be a raw JSON array starting with [ and ending with ]
                 2. The response MUST NOT have any ``` or ```json in the output
-                3. DO NOT wrap the array in any additional object or property (no {""response"":[], ""answers"":[], etc.})
+                3. DO NOT wrap the array in any additional object or property
                 4. Each array element must be an object with EXACTLY these properties:
+
                 [
                     {
-                        ""Question"": """",          // string - the interview question
-                        ""CandidateAnswer"": """",  // string - the candidate's answer to evaluate
-                        ""Score"": 0,               // int - score from 1 to 5
-                        ""Feedback"": """"          // string - detailed feedback on the answer
+                        ""ID"": 0,                                  // int - ID of the interview (use 0 if not available, otherwise try to use the same IDs as in the serialized interviews)
+                        ""UserID"": 0,                             // int - ID of the user this interview belongs to
+                        ""InterviewSessionID"": 0,                // int - ID of the interview session
+                        ""Question"": """",                      // string - the technical question
+                        ""IsAnswered"": true,                   // boolean - always true for evaluations
+                        ""SelectedAnswer"": """",              // string - the candidate's submitted answer
+                        ""Score"": 0,                         // float - score from 0 to 10
+                        ""Feedback"": """",                  // string - detailed technical feedback
+                        ""AnswersJson"": ""[]"",            // string - JSON array of possible answers
+                        ""QuestionType"": 0,               // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
+                        ""InterviewType"": 1,             // int - must be 1 for Technical interviews
+                        ""ProgrammingLanguage"": """",   // string - language being evaluated
+                        ""DifficultyLevel"": """",      // string - difficulty level of the question
+                        ""Subject"": """",             // string - technical topic area
+                        ""Position"": """"            // string - position being interviewed for
                     }
                 ]
+
                 STRICT REQUIREMENTS:
                 - The outer structure MUST be a bare array [ ]
                 - All string values must use double quotes and be properly escaped
-                - Score must be an integer between 1 and 5
+                - Score must be between 0 and 10
                 - No additional properties
                 - No null values (use empty strings """" instead)
                 - No trailing commas
                 - No comments in the output
-                - No markdown fences (``` or ```json) - this is the MOST IMPORTANT RULE!
+                - No markdown fences (``` or ```json)
                 - No explanations or text before or after the JSON array
                 FORBIDDEN PATTERNS:
                 - {""response"": [...]}

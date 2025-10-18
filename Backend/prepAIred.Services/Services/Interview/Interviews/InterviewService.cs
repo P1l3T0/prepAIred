@@ -27,5 +27,23 @@ namespace prepAIred.Services
                 .Cast<TInterview>()
                 .ToListAsync();
         }
+
+        public async Task UpdateInterviewAsync<TInterview>(List<TInterview> interviews) where TInterview : Interview
+        {
+            _dataContext.Interviews.UpdateRange(interviews);
+            await _dataContext.SaveChangesAsync();
+        }
+
+        public void UpdateExistingInterviewWithEvaluation<TInterview>(TInterview evaluated, List<TInterview> existingInterviews) where TInterview : Interview
+        {
+            TInterview? existing = existingInterviews.FirstOrDefault(i => i.ID == evaluated.ID);
+            if (existing is null) return;
+
+            existing.Score = evaluated.Score;
+            existing.Feedback = evaluated.Feedback;
+            existing.SelectedAnswer = evaluated.SelectedAnswer;
+            existing.IsAnswered = evaluated.IsAnswered;
+            existing.Answers = evaluated.Answers;
+        }
     }
 }
