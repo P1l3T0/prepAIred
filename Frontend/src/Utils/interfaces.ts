@@ -93,6 +93,9 @@ export interface InterviewDTO extends BaseDTO {
   interviewSessionID: number;
   interviewType: string;
   answers: string[];
+  feedback: string;
+  score: number;
+  selectedAnswer: string;
 }
 
 export interface TechnicalInterviewDTO extends InterviewDTO {
@@ -125,18 +128,13 @@ export interface InterviewDisplayProps {
   title: string;
   interviewType: "HR-Interview" | "Technical-Interview";
   interviews: HRInterviewDTO[] | TechnicalInterviewDTO[] | void;
-  renderLegend: (
-    interview: HRInterviewDTO | TechnicalInterviewDTO
-  ) => ReactNode;
-  renderMeta?: (interview: HRInterviewDTO | TechnicalInterviewDTO) => ReactNode;
 }
 
 
 export interface AnswersProps {
+  interview: InterviewDTO;
   interviewType: string;
-  answers?: string[];
   interviewIndex: number;
-  isAnswered: boolean;
   onChange: (value: string) => void;
 }
 

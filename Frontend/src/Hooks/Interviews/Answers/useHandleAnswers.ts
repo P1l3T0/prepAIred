@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Answer, MultipleChoiceAnswer, HRInterviewDTO, TechnicalInterviewDTO } from "../../Utils/interfaces";
+import type { Answer, MultipleChoiceAnswer, HRInterviewDTO, TechnicalInterviewDTO } from "../../../Utils/interfaces";
 
 const useHandleAnswers = ( interviews: HRInterviewDTO[] | TechnicalInterviewDTO[]) => {
   const [openEndedAnswers, setOpenEndedAnswers] = useState<Answer[]>([]);
