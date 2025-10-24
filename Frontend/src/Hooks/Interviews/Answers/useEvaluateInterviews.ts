@@ -1,8 +1,8 @@
 import axios, { AxiosError } from "axios";
 import { useState, type SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { evaluateHrInterviewsEndPoint, evaluateTechnicalInterviewsEndPoint } from "../../../Utils/endpoints";
-import type { UseEvaluateInterviewsProps, EvaluateRequestDTO } from "../../../Utils/interfaces";
+import type { UseEvaluateInterviewsProps } from "../../../Utils/interfaces";
+import usePrepareEvaluationRequests from "./usePrepareEvaluationRequests";
 
 const useEvaluateInterviews = ({
   interviewType,
@@ -13,44 +13,12 @@ const useEvaluateInterviews = ({
   const queryClient = useQueryClient();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const getEndpoint = () => {
-    return interviewType === "HR-Interview"
-      ? evaluateHrInterviewsEndPoint
-      : evaluateTechnicalInterviewsEndPoint;
-  };
-
-  const prepareEvaluationRequests = (): EvaluateRequestDTO[] => {
-    const evaluationRequests: EvaluateRequestDTO[] = [];
-
-    singleChoiceAnswers.forEach((answer) => {
-      if (answer.answer.trim()) {
-        evaluationRequests.push({
-          question: answer.question,
-          answer: answer.answer,
-        });
-      }
-    });
-
-    multipleChoiceAnswers.forEach((answer) => {
-      if (answer.answers.length > 0) {
-        evaluationRequests.push({
-          question: answer.question,
-          answer: answer.answers,
-        });
-      }
-    });
-
-    openEndedAnswers.forEach((answer) => {
-      if (answer.answer.trim()) {
-        evaluationRequests.push({
-          question: answer.question,
-          answer: answer.answer,
-        });
-      }
-    });
-
-    return evaluationRequests;
-  };
+  const { getEndpoint, prepareEvaluationRequests } = usePrepareEvaluationRequests({
+    interviewType,
+    singleChoiceAnswers,
+    multipleChoiceAnswers,
+    openEndedAnswers,
+  });
 
   const evaluateInterviews = async () => {
     const endpoint = getEndpoint();
