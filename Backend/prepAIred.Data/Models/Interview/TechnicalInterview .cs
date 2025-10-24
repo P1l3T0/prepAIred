@@ -43,6 +43,9 @@
                 QuestionType = QuestionType.ToString(),
                 InterviewType = InterviewType.ToString(),
                 ProgrammingLanguage = ProgrammingLanguage,
+                Score = Score,
+                SelectedAnswer = SelectedAnswer,
+                Feedback = Feedback,
                 DifficultyLevel = DifficultyLevel,
                 Subject = Subject,
                 Position = Position

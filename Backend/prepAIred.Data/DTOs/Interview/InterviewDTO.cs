@@ -31,6 +31,11 @@
         public float Score { get; set; } = 0;
 
         /// <summary>
+        /// Gets or sets the feedback provided for this question.
+        /// </summary>
+        public string Feedback { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets the unique identifier for the user.
         /// </summary>
         public int UserID { get; set; }
