@@ -1,6 +1,5 @@
 import InterviewDisplay from "../InterviewDisplay";
 import useGetLatestHrInterviews from "../../../Hooks/Interviews/HR/useGetLatestHrInterviews";
-import type { HRInterviewDTO } from "../../../Utils/interfaces";
 
 const GetHrInterviews = () => {
   const { data: hrInterviews, isLoading, isError } = useGetLatestHrInterviews();
@@ -13,15 +12,6 @@ const GetHrInterviews = () => {
       title="Latest HR Interviews"
       interviewType="HR-Interview"
       interviews={hrInterviews}
-      renderLegend={(interview) => (
-        <>Competency Area: {(interview as HRInterviewDTO).competencyArea}</>
-      )}
-      renderMeta={(interview) => (
-        <>
-          <b>Behavioral Context:</b>{" "}
-          {(interview as HRInterviewDTO).behavioralContext}{" "}
-        </>
-      )}
     />
   );
 };
