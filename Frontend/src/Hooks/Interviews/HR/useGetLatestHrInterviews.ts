@@ -21,8 +21,7 @@ const useGetLatestHrInterviews = () => {
 
   const hrInterviewsQuery = useQuery({
     queryKey: ["hr-interviews"],
-    queryFn: getLatestHrInterviews,
-    refetchOnWindowFocus: false,
+    queryFn: getLatestHrInterviews
   });
 
   const { data, isLoading, isError } = hrInterviewsQuery;

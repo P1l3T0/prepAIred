@@ -17,6 +17,14 @@ namespace prepAIred.Services
         Task CreateInterviewsAsync(List<Interview> interviews, User currentUser, InterviewSession interviewSession);
 
         /// <summary>
+        /// Updates multiple interview entities in the database with their current state and evaluation results.
+        /// </summary>
+        /// <typeparam name="TInterview">The type of interview objects to update. Must derive from the Interview class.</typeparam>
+        /// <param name="interviews">The list of interview objects containing updated information to persist to the database.</param>
+        /// <returns>A task representing the asynchronous update operation.</returns>
+        Task UpdateInterviewAsync<TInterview>(List<TInterview> interviews) where TInterview : Interview;
+
+        /// <summary>
         /// Retrieves a list of interviews associated with the specified session ID.
         /// </summary>
         /// <typeparam name="TInterview">The type of interview to retrieve. Must derive from the <see cref="Interview"/> class.</typeparam>
@@ -24,5 +32,13 @@ namespace prepAIred.Services
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of interviews of type
         /// <typeparamref name="TInterview"/> associated with the specified session ID. If no interviews are found, the list will be empty.</returns>
         Task<List<TInterview>> GetInterviewsBySessionIdAsync<TInterview>(int sessionID) where TInterview : Interview;
+
+        /// <summary>
+        /// Updates an existing interview in the collection with the provided evaluated interview.
+        /// </summary>
+        /// <typeparam name="TInterview">The type of the interview, which must derive from <see cref="Interview"/>.</typeparam>
+        /// <param name="evaluated">The evaluated interview to update the existing interview with.</param>
+        /// <param name="existingInterviews">The collection of existing interviews to search for a match to update.</param>
+        void UpdateExistingInterviewWithEvaluation<TInterview>(List<TInterview> evaluatedInterviews, List<TInterview> existingInterviews) where TInterview : Interview;
     }
 }

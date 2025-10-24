@@ -7,9 +7,7 @@ import LoginForm from "./LoginForm";
 const AuthForm = () => {
   const [selected, setSelected] = useState<number>(0);
 
-  const handleSelect = (e: TabStripSelectEventArguments) => {
-    setSelected(e.selected);
-  };
+  const handleSelect = (e: TabStripSelectEventArguments) => setSelected(e.selected);
 
   return (
     <>

@@ -5,15 +5,15 @@ using Anthropic.SDK.Messaging;
 using GenerativeAI;
 using GenerativeAI.Types;
 using OpenAI.Chat;
-using System.Text.Json;
 using System.ClientModel;
 using Microsoft.Extensions.Configuration;
 
 namespace prepAIred.Services
 {
-    public class AIService(IConfiguration configuration) : IAIService
+    public class AIService(IConfiguration configuration, ISerializationService serializationService) : IAIService
     {
         private readonly IConfiguration _configuration = configuration;
+        private readonly ISerializationService _serializationService = serializationService;
 
         public async Task<List<Interview>> AskAiAgentAsync<TInterview>(AIAgent aiAgent, string prompt) where TInterview : Interview
         {
@@ -28,6 +28,19 @@ namespace prepAIred.Services
             return interviews;
         }
 
+        public async Task<List<Interview>> EvaluateInterviewsAsync<TInterview>(string prompt, AIAgent aiAgent) where TInterview : Interview
+        {
+            List<Interview> evaluatedInterviews = await (aiAgent switch
+            {
+                AIAgent.ChatGPT => AskChatGPTAsync<TInterview>(prompt),
+                AIAgent.Gemini => AskGeminiAsync<TInterview>(prompt),
+                AIAgent.Claude => AskClaudeAsync<TInterview>(prompt),
+                _ => throw new UnsupportedAiAgentException($"Unsupported AI agent: {aiAgent}")
+            });
+
+            return evaluatedInterviews;
+        }
+
         private async Task<List<Interview>> AskChatGPTAsync<TInterview>(string prompt) where TInterview : Interview
         {
             string apiKey = _configuration.GetSection("Appsettings:OpenAIAPIKEY").Value!;
@@ -37,7 +50,8 @@ namespace prepAIred.Services
             ClientResult<ChatCompletion> completion = await chatClient.CompleteChatAsync(prompt);
             string response = completion.Value.Content[0].Text.Trim();
 
-            return DeserializeInterviews<TInterview>(response);
+            ICollection<TInterview> interviews = _serializationService.DeserializeCollection<TInterview>(response) ?? [];
+            return [..interviews.Cast<Interview>()];
         }
 
         private async Task<List<Interview>> AskClaudeAsync<TInterview>(string prompt) where TInterview : Interview
@@ -55,12 +69,9 @@ namespace prepAIred.Services
                     new Message()
                     {
                         Role = RoleType.User,
-                        Content = new List<ContentBase>()
+                        Content = new List<ContentBase>() 
                         {
-                            new TextContent() 
-                            { 
-                                Text = prompt
-                            }
+                            new TextContent() { Text = prompt }
                         }
                     }
                 }
@@ -69,7 +80,8 @@ namespace prepAIred.Services
             MessageResponse aiResponse = await client.Messages.GetClaudeMessageAsync(parameters);
             string response = string.Join("\n", aiResponse.Content.OfType<TextContent>().Select(c => c.Text));
 
-            return DeserializeInterviews<TInterview>(response);
+            ICollection<TInterview> interviews = _serializationService.DeserializeCollection<TInterview>(response) ?? [];
+            return [..interviews.Cast<Interview>()];
         }
 
         private async Task<List<Interview>> AskGeminiAsync<TInterview>(string prompt) where TInterview : Interview
@@ -81,18 +93,8 @@ namespace prepAIred.Services
             GenerateContentResponse aiResponse = await generativeModel.GenerateContentAsync(prompt);
             string response = aiResponse.Text.Trim();
 
-            return DeserializeInterviews<TInterview>(response);
-        }
-
-        private List<Interview> DeserializeInterviews<TInterview>(string response) where TInterview : Interview
-        {
-            JsonSerializerOptions options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
-            return typeof(TInterview) == typeof(HRInterview)
-                ? JsonSerializer.Deserialize<List<HRInterview>>(response, options)?.Cast<Interview>().ToList() ?? new List<Interview>()
-                : typeof(TInterview) == typeof(TechnicalInterview)
-                    ? JsonSerializer.Deserialize<List<TechnicalInterview>>(response, options)?.Cast<Interview>().ToList() ?? new List<Interview>()
-                    : [];
+            ICollection<TInterview> interviews = _serializationService.DeserializeCollection<TInterview>(response) ?? [];
+            return [..interviews.Cast<Interview>()];
         }
     }
 }

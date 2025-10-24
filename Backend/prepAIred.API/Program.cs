@@ -48,6 +48,7 @@ builder.Services.AddScoped<IInterviewService, InterviewService>();
 builder.Services.AddScoped<IInterviewSessionRepository, InterviewSessionRepository>();
 builder.Services.AddScoped<IInterviewSessionService, InterviewSessionService>();
 builder.Services.AddScoped<IPromptService, PromptService>();
+builder.Services.AddScoped<ISerializationService, SerializationService>();
 
 builder.Services.AddHttpContextAccessor();
 

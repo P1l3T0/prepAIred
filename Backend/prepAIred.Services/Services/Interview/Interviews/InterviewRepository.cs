@@ -12,13 +12,14 @@ namespace prepAIred.Services
     /// <param name="interviewSessionService">The interview session service for managing interview session entities.</param>
     /// <param name="promptService">The prompt service for generating prompts for the AI agent.</param>
     public class InterviewRepository(IAIService aIService, IUserService userService, IInterviewService interviewService,
-        IInterviewSessionService interviewSessionService, IPromptService promptService) : IInterviewRepository
+        IInterviewSessionService interviewSessionService, IPromptService promptService, ISerializationService serializationService) : IInterviewRepository
     {
         private readonly IAIService _aIService = aIService;
         private readonly IUserService _userService = userService;
         private readonly IInterviewService _interviewService = interviewService;
         private readonly IInterviewSessionService _interviewSessionService = interviewSessionService;
         private readonly IPromptService _promptService = promptService;
+        private readonly ISerializationService _serializationService = serializationService;
 
         public async Task GenerateInterviewsAsync<TInterview>(BaseRequestDTO request) where TInterview : Interview
         {
@@ -32,19 +33,6 @@ namespace prepAIred.Services
                 nameof(TechnicalInterview) when request is TechnicalRequestDTO techRequest => CreateTechnicalInterviewAsync(techRequest, currentUser, aiAgent),
                 _ => Task.CompletedTask
             });
-        }
-
-        public async Task<List<TInterviewDTO>> GetLatestInterviews<TInterview, TInterviewDTO>()
-            where TInterview : Interview
-            where TInterviewDTO : InterviewDTO
-        {
-            int currentUserID = await _userService.GetCurrentUserID();
-            int latestSessionID = await _interviewSessionService.GetLatestInterviewSessionID(currentUserID);
-
-            List<TInterview> interviews = await _interviewService.GetInterviewsBySessionIdAsync<TInterview>(latestSessionID);
-            List<TInterviewDTO> interviewDTOs = interviews.Select(i => i.ToDto<TInterviewDTO>()).ToList();
-
-            return interviewDTOs;
         }
 
         private async Task CreateHrInterviewAsync(HrRequestDTO hrRequest, User currentUser, AIAgent aiAgent)
@@ -75,6 +63,41 @@ namespace prepAIred.Services
 
             await _interviewSessionService.UpdateInterviewSessionAsync(interviewSession);
             await _interviewService.CreateInterviewsAsync(interviews, currentUser, interviewSession);
+        }
+
+        public async Task<List<TInterviewDTO>> GetLatestInterviews<TInterview, TInterviewDTO>()
+            where TInterview : Interview
+            where TInterviewDTO : InterviewDTO
+        {
+            int currentUserID = await _userService.GetCurrentUserID();
+            int latestSessionID = await _interviewSessionService.GetLatestInterviewSessionID(currentUserID);
+
+            List<TInterview> interviews = await _interviewService.GetInterviewsBySessionIdAsync<TInterview>(latestSessionID);
+            List<TInterviewDTO> interviewDTOs = interviews.Select(i => i.ToDto<TInterviewDTO>()).ToList();
+
+            return interviewDTOs;
+        }
+
+        public async Task EvaluateInterviewsAsync<TInterview>(List<EvaluateRequestDTO> evaluateRequest) where TInterview : Interview
+        {
+            InterviewSession interviewSession = await _interviewSessionService.GetInterviewSessionFromQuestionsAsync(evaluateRequest);
+
+            string basePrompt = typeof(TInterview).Name switch
+            {
+                nameof(HRInterview) => _promptService.CreateHrEvaluationPrompt(evaluateRequest),
+                nameof(TechnicalInterview) => _promptService.CreateTechnicalEvaluationPrompt(evaluateRequest),
+                _ => string.Empty
+            };
+
+            List<TInterview> existingInterviews = await _interviewService.GetInterviewsBySessionIdAsync<TInterview>(interviewSession.ID);
+            string serializedInterviews = _serializationService.SerializeCollection(existingInterviews);
+            string prompt = _promptService.GetPromptWithSerializedInterviews(basePrompt, serializedInterviews);
+
+            List<Interview> evaluatedInterviews = await _aIService.EvaluateInterviewsAsync<TInterview>(prompt, interviewSession.AIAgent);
+            List<TInterview> evaluatedTInterviews = [..evaluatedInterviews.Cast<TInterview>()];
+            _interviewService.UpdateExistingInterviewWithEvaluation(evaluatedTInterviews, existingInterviews);
+
+            await _interviewService.UpdateInterviewAsync(existingInterviews);
         }
     }
 }

@@ -26,8 +26,7 @@ const useGetUser = () => {
 
   const userQuery = useQuery({
     queryKey: ["user"],
-    queryFn: getUser,
-    refetchOnWindowFocus: false,
+    queryFn: getUser
   });
 
   const { data, isLoading, isError } = userQuery;

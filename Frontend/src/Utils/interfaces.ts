@@ -63,6 +63,18 @@ export interface HrRequestDTO extends BaseRequestDTO {
   contextScenario: string;
 }
 
+export interface EvaluateRequestDTO {
+  question: string;
+  answer: string | string[];
+}
+
+export interface UseEvaluateInterviewsProps {
+  interviewType: "HR-Interview" | "Technical-Interview";
+  singleChoiceAnswers: Answer[];
+  multipleChoiceAnswers: MultipleChoiceAnswer[];
+  openEndedAnswers: Answer[];
+}
+
 //#endregion
 
 //#region Response DTOs
