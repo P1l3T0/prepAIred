@@ -134,7 +134,12 @@ const InterviewDisplay = ({
         <Button
           onClick={handleEvaluateInterviews}
           themeColor={"primary"}
-          disabled={isSubmitting || interviews?.length === 0}
+          disabled={
+            isSubmitting ||
+            !Array.isArray(interviews) ||
+            interviews.length === 0 ||
+            interviews[0]?.isAnswered
+          }
         >
           {isSubmitting ? "Evaluating..." : "Evaluate Interviews"}
         </Button>

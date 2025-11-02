@@ -3,20 +3,27 @@ import { useState, type SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { generateHrInterviewsEndPoint } from "../../../Utils/endpoints";
 import type { HrRequestDTO } from "../../../Utils/interfaces";
-import type { DropDownListChangeEvent, MultiSelectChangeEvent } from "@progress/kendo-react-dropdowns";
+import type {
+  DropDownListChangeEvent,
+  MultiSelectChangeEvent,
+} from "@progress/kendo-react-dropdowns";
 import type { NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
 const useGenerateHrInterviews = () => {
   const queryClient = useQueryClient();
+  const [disabled, setDisabled] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [hrRequest, setHrRequest] = useState<HrRequestDTO>({
     aiAgent: "ChatGPT",
     softSkillFocus: ["Communication", "Teamwork"],
     contextScenario: ["Team Collaboration", "Conflict Resolution"],
-    numberOfQuestions: 3
+    numberOfQuestions: 3,
   });
 
-  const handleDropDownChange = (e: DropDownListChangeEvent | MultiSelectChangeEvent) => {
+  const handleDropDownChange = (
+    e: DropDownListChangeEvent | MultiSelectChangeEvent
+  ) => {
     const name: string = e.target.props.name as string;
 
     setHrRequest({
@@ -30,7 +37,7 @@ const useGenerateHrInterviews = () => {
 
     setHrRequest({
       ...hrRequest,
-      [name]: e.value
+      [name]: e.value,
     });
   };
 
@@ -45,8 +52,13 @@ const useGenerateHrInterviews = () => {
 
   const { mutateAsync } = useMutation({
     mutationFn: generateHrInterviews,
+    onMutate: () => {
+      setIsSubmitting(true);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["hr-interviews"] });
+      setDisabled(true);
+      setIsSubmitting(false);
     },
   });
 
@@ -55,7 +67,13 @@ const useGenerateHrInterviews = () => {
     mutateAsync();
   };
 
-  return { handleDropDownChange, handleInputChange, handleGenerateHrInterviews };
+  return {
+    handleDropDownChange,
+    handleInputChange,
+    handleGenerateHrInterviews,
+    disabled,
+    isSubmitting,
+  };
 };
 
 export default useGenerateHrInterviews;
