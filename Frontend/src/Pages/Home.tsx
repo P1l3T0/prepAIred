@@ -3,6 +3,7 @@ import GetHrInterviews from "../Components/Interviews/HR/GetHrInterviews";
 import GenerateTechnicalInterviews from "../Components/Interviews/Technical/GenerateTechnicalInterviews";
 import GetTechnicalInterviews from "../Components/Interviews/Technical/GetTechnicalInterviews";
 import LogOutButton from "../Components/LogOutButton";
+import ThemeButton from "../Components/ThemeButton";
 import useGetUser from "../Hooks/User/useGetUser";
 
 const Home = () => {
@@ -17,6 +18,8 @@ const Home = () => {
       <p>Email: {user?.email}</p>
       <p>Member since: {user?.dateCreated.toLocaleDateString()}</p>
       <p>User ID: {user?.id}</p>
+
+      <ThemeButton />
 
       <LogOutButton />
 
