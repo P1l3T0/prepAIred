@@ -122,13 +122,6 @@ export interface InterviewSessionDTO extends BaseDTO {
 
 //#region Answers
 
-export interface InterviewDisplayProps {
-  title: string;
-  interviewType: "HR-Interview" | "Technical-Interview";
-  interviews: HRInterviewDTO[] | TechnicalInterviewDTO[] | void;
-}
-
-
 export interface AnswersProps {
   interview: InterviewDTO;
   interviewType: string;

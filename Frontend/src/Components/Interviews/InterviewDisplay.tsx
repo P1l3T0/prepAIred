@@ -1,6 +1,5 @@
 import type {
   HRInterviewDTO,
-  InterviewDisplayProps,
   TechnicalInterviewDTO,
 } from "../../Utils/interfaces";
 import SingleChoiceAnswers from "./Answers/SingleChoiceAnswers";
@@ -10,6 +9,12 @@ import useEvaluateInterviews from "../../Hooks/Interviews/Answers/useEvaluateInt
 import useHandleAnswers from "../../Hooks/Interviews/Answers/useHandleAnswers";
 import { Button } from "@progress/kendo-react-buttons";
 import "./Interviews.css";
+
+interface InterviewDisplayProps {
+  title: string;
+  interviewType: "HR-Interview" | "Technical-Interview";
+  interviews: HRInterviewDTO[] | TechnicalInterviewDTO[] | void;
+}
 
 const InterviewDisplay = ({
   title,
