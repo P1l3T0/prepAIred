@@ -6,28 +6,26 @@ const SingleChoiceAnswers = ({
   interviewIndex,
   interviewType,
   onChange,
-}: AnswersProps) => {
-  return (
-    <>
-      {interview.answers?.map((answer, answerIndex) => (
-        <div key={answerIndex} className="answer">
-          <RadioButton
-            id={`${interviewType}-single-choice-answer-${interviewIndex}-${answerIndex}`}
-            name={`${interviewType}-single-choice-answer-${interviewIndex}`}
-            label={answer}
-            value={answer}
-            disabled={interview.isAnswered}
-            checked={
-              interview.selectedAnswer
-                ? interview.selectedAnswer === answer
-                : undefined
-            }
-            onChange={(e) => onChange(e.value)}
-          />
-        </div>
-      ))}
-    </>
-  );
-};
+}: AnswersProps) => (
+  <>
+    {interview.answers?.map((answer, answerIndex) => (
+      <div key={answerIndex} className="answer">
+        <RadioButton
+          id={`${interviewType}-single-choice-answer-${interviewIndex}-${answerIndex}`}
+          name={`${interviewType}-single-choice-answer-${interviewIndex}`}
+          label={answer}
+          value={answer}
+          disabled={interview.isAnswered}
+          defaultChecked={
+            interview.selectedAnswer
+              ? interview.selectedAnswer === answer
+              : undefined
+          }
+          onChange={(e) => onChange(e.value)}
+        />
+      </div>
+    ))}
+  </>
+);
 
 export default SingleChoiceAnswers;
