@@ -8,7 +8,7 @@ import type { SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { logoutEndPoint } from "../../Utils/endpoints";
-import useAuth from "../../Context/useAuth";
+import useAuth from "../../Context/Auth/useAuth";
 
 const useLogOut = () => {
   const navigate = useNavigate();

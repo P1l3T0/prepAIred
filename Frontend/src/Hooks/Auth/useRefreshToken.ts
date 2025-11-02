@@ -5,7 +5,7 @@
 import axios from "axios";
 import { useRef, useState, useEffect } from "react";
 import { refreshTokenEndPoint } from "../../Utils/endpoints";
-import useAuth from "../../Context/useAuth";
+import useAuth from "../../Context/Auth/useAuth";
 
 const DEFAULT_REFRESH_INTERVAL = 5 * 60;
 

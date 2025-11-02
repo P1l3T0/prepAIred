@@ -1,7 +1,7 @@
 import App from "./App.tsx";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { AuthProvider } from "./Context/AuthContext.tsx";
+import { AuthProvider } from "./Context/Auth/AuthContext.tsx";
 import "./style.css";
 import "@progress/kendo-theme-default/dist/default-ocean-blue.css";
 
