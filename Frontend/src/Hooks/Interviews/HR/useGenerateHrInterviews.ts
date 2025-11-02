@@ -12,7 +12,7 @@ const useGenerateHrInterviews = () => {
   const [hrRequest, setHrRequest] = useState<HrRequestDTO>({
     aiAgent: "ChatGPT",
     softSkillFocus: ["Communication", "Teamwork"],
-    contextScenario: "Team Collaboration",
+    contextScenario: ["Team Collaboration", "Conflict Resolution"],
     numberOfQuestions: 3
   });
 

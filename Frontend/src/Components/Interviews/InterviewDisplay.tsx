@@ -50,7 +50,9 @@ const InterviewDisplay = ({
                 ) : (
                   <>Subject: {(interview as TechnicalInterviewDTO).subject}</>
                 )}
-                <b>Score:</b> {interview.score}
+                &nbsp; | &nbsp;
+                <b>Score:</b>{" "}
+                {interview.score || "Not evaluated"}
               </legend>
               <div className="meta">
                 {interview.interviewType === "HR" ? (
@@ -70,9 +72,7 @@ const InterviewDisplay = ({
                 {(() => {
                   switch (interview.questionType) {
                     case "SingleChoice":
-                      const singleChoiceIdx = singleChoiceAnswers.findIndex(
-                        (a) => a.question === interview.question
-                      );
+                      const singleChoiceIdx = singleChoiceAnswers.findIndex((a) => a.question === interview.question);
                       return (
                         <SingleChoiceAnswers
                           interview={interview}
@@ -84,9 +84,7 @@ const InterviewDisplay = ({
                         />
                       );
                     case "MultipleChoice":
-                      const multipleChoiceIdx = multipleChoiceAnswers.findIndex(
-                        (a) => a.question === interview.question
-                      );
+                      const multipleChoiceIdx = multipleChoiceAnswers.findIndex((a) => a.question === interview.question);
                       return (
                         <MultipleChoiceAnswers
                           interview={interview}
@@ -116,7 +114,11 @@ const InterviewDisplay = ({
                   }
                 })()}
                 <div className="feedback">
-                  <b>Feedback:</b> {interview.feedback}
+                  {interview.feedback !== "" ? (
+                    <><b>Feedback:</b> {interview.feedback}</>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </fieldset>
@@ -127,7 +129,7 @@ const InterviewDisplay = ({
         <Button
           onClick={handleEvaluateInterviews}
           themeColor={"primary"}
-          disabled={isSubmitting || (interviews?.length ?? 0) === 0}
+          disabled={isSubmitting || interviews?.length === 0}
         >
           {isSubmitting ? "Evaluating..." : "Evaluate Interviews"}
         </Button>

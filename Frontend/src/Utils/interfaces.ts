@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 // #region Auth
 
 export interface AuthProviderProps {
@@ -60,7 +58,7 @@ export interface TechnicalRequestDTO extends BaseRequestDTO {
 
 export interface HrRequestDTO extends BaseRequestDTO {
   softSkillFocus: string[];
-  contextScenario: string;
+  contextScenario: string[];
 }
 
 export interface EvaluateRequestDTO {
