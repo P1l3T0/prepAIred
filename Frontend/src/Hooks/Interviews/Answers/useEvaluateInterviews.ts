@@ -1,3 +1,18 @@
+/**
+ * Custom hook for evaluating interview answers using AI.
+ * Handles the submission of user answers to the backend for evaluation.
+ * Works with both HR and technical interview types.
+ * 
+ * @param {UseEvaluateInterviewsProps} props - Configuration object containing:
+ *   - interviewType: Type of interview ("HR-Interview" or "Technical-Interview")
+ *   - singleChoiceAnswers: Array of single choice question answers
+ *   - multipleChoiceAnswers: Array of multiple choice question answers
+ *   - openEndedAnswers: Array of open-ended question answers
+ * 
+ * @returns {Object} - An object containing:
+ *   - handleEvaluateInterviews: Function to trigger evaluation submission
+ *   - isSubmitting: Boolean indicating if evaluation is in progress
+ */
 import axios, { AxiosError } from "axios";
 import { useState, type SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";

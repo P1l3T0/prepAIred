@@ -1,3 +1,15 @@
+/**
+ * Custom hook for generating technical interviews using AI.
+ * Manages form state, handles user input changes, and submits requests to generate interviews.
+ * Uses react-query mutations for API calls and cache invalidation.
+ *
+ * @returns {Object} - An object containing:
+ *   - handleDropDownChange: Handler for dropdown and multi-select changes
+ *   - handleInputChange: Handler for numeric input changes
+ *   - handleGenerateTechnicalInterviews: Handler for form submission
+ *   - disabled: Boolean indicating if form should be disabled after submission
+ *   - isSubmitting: Boolean indicating if request is in progress
+ */
 import axios, { AxiosError } from "axios";
 import { useState, type SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -14,19 +26,17 @@ const useGenerateTechnicalInterviews = () => {
   const [disabled, setDisabled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [technicalRequest, setTechnicalRequest] = useState<TechnicalRequestDTO>(
-    {
-      aiAgent: "ChatGPT",
-      programmingLanguage: "C#",
-      subject: [
-        "Object-Oriented Programming",
-        "Data Structures and Algorithms",
-      ],
-      difficultyLevel: "Easy",
-      position: "Junior Developer",
-      numberOfQuestions: 3,
-    }
-  );
+  const [technicalRequest, setTechnicalRequest] = useState<TechnicalRequestDTO>({
+    aiAgent: "ChatGPT",
+    programmingLanguage: "C#",
+    subject: [
+      "Object-Oriented Programming",
+      "Data Structures and Algorithms",
+    ],
+    difficultyLevel: "Easy",
+    position: "Junior Developer",
+    numberOfQuestions: 3,
+  });
 
   const handleDropDownChange = (
     e: DropDownListChangeEvent | MultiSelectChangeEvent
