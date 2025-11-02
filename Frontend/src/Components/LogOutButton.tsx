@@ -1,3 +1,4 @@
+import { Button } from "@progress/kendo-react-buttons";
 import useLogOut from "../Hooks/Auth/useLogOut";
 
 const LogOutButton = () => {
@@ -5,7 +6,7 @@ const LogOutButton = () => {
 
   return (
     <>
-      <button onClick={handleLogOut}>Logout</button>
+      <Button onClick={handleLogOut}>Logout</Button>
     </>
   );
 };
