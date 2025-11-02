@@ -2,20 +2,21 @@ import type { AnswersProps } from "../../../Utils/interfaces";
 import { TextArea } from "@progress/kendo-react-inputs";
 
 const OpenEndedAnswer = ({
+  interview,
   interviewIndex,
-  isAnswered,
   interviewType,
   onChange,
-}: AnswersProps) => {
-  return (
+}: AnswersProps) => (
+  <>
     <TextArea
       id={`${interviewType}-open-ended-answer-${interviewIndex}`}
       placeholder={"Type your answer..."}
-      disabled={isAnswered}
+      disabled={interview.isAnswered}
       onChange={(e) => onChange(e.value)}
+      defaultValue={interview.selectedAnswer || ""}
       style={{ width: "100%", height: "100px", resize: "vertical" }}
     />
-  );
-};
+  </>
+);
 
 export default OpenEndedAnswer;

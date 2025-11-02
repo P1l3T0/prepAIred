@@ -1,5 +1,20 @@
+/**
+ * Custom hook for managing interview answer state and handling user input.
+ * Initializes answer arrays based on interview questions and provides handlers for different question types.
+ * Automatically categorizes questions by type and sets up appropriate state structures.
+ * 
+ * @param {HRInterviewDTO[] | TechnicalInterviewDTO[]} interviews - Array of interview questions to manage
+ * 
+ * @returns {Object} - An object containing:
+ *   - openEndedAnswers: Array of open-ended question answers
+ *   - handleOpenEndedChange: Handler for text input changes
+ *   - singleChoiceAnswers: Array of single choice answers
+ *   - handleSingleChoiceChange: Handler for radio button changes
+ *   - multipleChoiceAnswers: Array of multiple choice answers (array of selected options)
+ *   - handleMultipleChoiceChange: Handler for checkbox changes
+ */
 import { useState, useEffect } from "react";
-import type { Answer, MultipleChoiceAnswer, HRInterviewDTO, TechnicalInterviewDTO } from "../../Utils/interfaces";
+import type { Answer, MultipleChoiceAnswer, HRInterviewDTO, TechnicalInterviewDTO } from "../../../Utils/interfaces";
 
 const useHandleAnswers = ( interviews: HRInterviewDTO[] | TechnicalInterviewDTO[]) => {
   const [openEndedAnswers, setOpenEndedAnswers] = useState<Answer[]>([]);

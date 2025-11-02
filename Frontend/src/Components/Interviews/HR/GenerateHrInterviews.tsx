@@ -1,11 +1,21 @@
 import useGenerateHrInterviews from "../../../Hooks/Interviews/HR/useGenerateHrInterviews";
-import { aiAgentData, contextScenarioData, softSkillFocusData } from "../../../Utils/data";
+import {
+  aiAgentData,
+  contextScenarioData,
+  softSkillFocusData,
+} from "../../../Utils/data";
 import { NumericTextBox } from "@progress/kendo-react-inputs";
 import { DropDownList, MultiSelect } from "@progress/kendo-react-dropdowns";
 import { Button } from "@progress/kendo-react-buttons";
 
 const GenerateHrInterviews = () => {
-  const { handleDropDownChange, handleInputChange, handleGenerateHrInterviews } = useGenerateHrInterviews();
+  const {
+    handleDropDownChange,
+    handleInputChange,
+    handleGenerateHrInterviews,
+    disabled,
+    isSubmitting,
+  } = useGenerateHrInterviews();
 
   return (
     <>
@@ -56,8 +66,12 @@ const GenerateHrInterviews = () => {
 
       <br />
 
-      <Button id="hr-button" onClick={handleGenerateHrInterviews}>
-        Generate HR Interviews
+      <Button
+        id="hr-button"
+        disabled={disabled || isSubmitting}
+        onClick={handleGenerateHrInterviews}
+      >
+        {isSubmitting ? "Generating..." : "Generate HR Interviews"}
       </Button>
     </>
   );

@@ -1,11 +1,23 @@
 import useGenerateTechnicalInterviews from "../../../Hooks/Interviews/Technical/useGenerateTechnicalInterviews";
-import { aiAgentData, difficultyLevelData, positionData, programmingLanguageData, subjectData } from "../../../Utils/data";
+import {
+  aiAgentData,
+  difficultyLevelData,
+  positionData,
+  programmingLanguageData,
+  subjectData,
+} from "../../../Utils/data";
 import { NumericTextBox } from "@progress/kendo-react-inputs";
 import { DropDownList, MultiSelect } from "@progress/kendo-react-dropdowns";
 import { Button } from "@progress/kendo-react-buttons";
 
 const GenerateTechnicalInterviews = () => {
-  const { handleDropDownChange, handleInputChange, handleGenerateTechnicalInterviews } = useGenerateTechnicalInterviews();
+  const {
+    handleDropDownChange,
+    handleInputChange,
+    handleGenerateTechnicalInterviews,
+    disabled,
+    isSubmitting,
+  } = useGenerateTechnicalInterviews();
 
   return (
     <>
@@ -77,8 +89,12 @@ const GenerateTechnicalInterviews = () => {
 
       <br />
 
-      <Button id="tech-button" onClick={handleGenerateTechnicalInterviews}>
-        Generate Technical Interviews
+      <Button
+        id="tech-button"
+        disabled={disabled || isSubmitting}
+        onClick={handleGenerateTechnicalInterviews}
+      >
+        {isSubmitting ? "Generating..." : "Generate Technical Interviews"}
       </Button>
     </>
   );

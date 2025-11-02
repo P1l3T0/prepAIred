@@ -1,22 +1,41 @@
+/**
+ * Custom hook for generating HR interviews using AI.
+ * Manages form state, handles user input changes, and submits requests to generate interviews.
+ * Uses react-query mutations for API calls and cache invalidation.
+ * 
+ * @returns {Object} - An object containing:
+ *   - handleDropDownChange: Handler for dropdown and multi-select changes
+ *   - handleInputChange: Handler for numeric input changes
+ *   - handleGenerateHrInterviews: Handler for form submission
+ *   - disabled: Boolean indicating if form should be disabled after submission
+ *   - isSubmitting: Boolean indicating if request is in progress
+ */
 import axios, { AxiosError } from "axios";
 import { useState, type SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { generateHrInterviewsEndPoint } from "../../../Utils/endpoints";
 import type { HrRequestDTO } from "../../../Utils/interfaces";
-import type { DropDownListChangeEvent, MultiSelectChangeEvent } from "@progress/kendo-react-dropdowns";
+import type {
+  DropDownListChangeEvent,
+  MultiSelectChangeEvent,
+} from "@progress/kendo-react-dropdowns";
 import type { NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
 const useGenerateHrInterviews = () => {
   const queryClient = useQueryClient();
+  const [disabled, setDisabled] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [hrRequest, setHrRequest] = useState<HrRequestDTO>({
     aiAgent: "ChatGPT",
     softSkillFocus: ["Communication", "Teamwork"],
-    contextScenario: "Team Collaboration",
-    numberOfQuestions: 3
+    contextScenario: ["Team Collaboration", "Conflict Resolution"],
+    numberOfQuestions: 3,
   });
 
-  const handleDropDownChange = (e: DropDownListChangeEvent | MultiSelectChangeEvent) => {
+  const handleDropDownChange = (
+    e: DropDownListChangeEvent | MultiSelectChangeEvent
+  ) => {
     const name: string = e.target.props.name as string;
 
     setHrRequest({
@@ -30,7 +49,7 @@ const useGenerateHrInterviews = () => {
 
     setHrRequest({
       ...hrRequest,
-      [name]: e.value
+      [name]: e.value,
     });
   };
 
@@ -45,8 +64,13 @@ const useGenerateHrInterviews = () => {
 
   const { mutateAsync } = useMutation({
     mutationFn: generateHrInterviews,
+    onMutate: () => {
+      setIsSubmitting(true);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["hr-interviews"] });
+      setDisabled(true);
+      setIsSubmitting(false);
     },
   });
 
@@ -55,7 +79,13 @@ const useGenerateHrInterviews = () => {
     mutateAsync();
   };
 
-  return { handleDropDownChange, handleInputChange, handleGenerateHrInterviews };
+  return {
+    handleDropDownChange,
+    handleInputChange,
+    handleGenerateHrInterviews,
+    disabled,
+    isSubmitting,
+  };
 };
 
 export default useGenerateHrInterviews;

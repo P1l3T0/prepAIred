@@ -1,3 +1,10 @@
+/**
+ * Custom hook for deleting all interview sessions for the current user.
+ * Uses react-query mutations to handle deletion and automatic cache invalidation.
+ * 
+ * @returns {Object} - An object containing:
+ *   - handleDelete: Function to trigger the deletion of all interview sessions
+ */
 import axios, { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteInterviewSessionsEndPoint } from "../../Utils/endpoints";

@@ -1,3 +1,10 @@
+/**
+ * Custom hook for fetching the latest HR interviews from the backend API.
+ * Uses react-query for data fetching, caching, and state management.
+ * Automatically converts date strings to Date objects for proper handling.
+ * 
+ * @returns {Object} - object containing data, isLoading, isError
+ */
 import { useQuery } from "react-query";
 import axios, { AxiosError, type AxiosResponse } from "axios";
 import { getLatestHrInterviewsEndPoint } from "../../../Utils/endpoints";
