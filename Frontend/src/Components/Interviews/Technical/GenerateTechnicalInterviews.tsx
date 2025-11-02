@@ -90,7 +90,7 @@ const GenerateTechnicalInterviews = () => {
       <br />
 
       <Button
-        id="hr-button"
+        id="tech-button"
         disabled={disabled || isSubmitting}
         onClick={handleGenerateTechnicalInterviews}
       >

@@ -62,8 +62,8 @@ const InterviewDisplay = ({
               <div className="meta">
                 {interview.interviewType === "HR" ? (
                   <>
-                    <b>Competency Area:</b>{" "}
-                    {(interview as HRInterviewDTO).competencyArea}
+                    <b>Behavioral Context:</b>{" "}
+                    {(interview as HRInterviewDTO).behavioralContext}
                   </>
                 ) : (
                   <>

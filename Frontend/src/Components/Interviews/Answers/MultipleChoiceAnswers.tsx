@@ -15,9 +15,7 @@ const MultipleChoiceAnswers = ({
           label={answer}
           value={answer}
           disabled={interview.isAnswered}
-          defaultChecked={
-            interview.selectedAnswer.includes(answer) ?? undefined
-          }
+          defaultChecked={interview.selectedAnswer.includes(answer)}
           onChange={(e) => onChange(e.target.element?.value!)}
         />
       </div>
