@@ -1,16 +1,16 @@
-import { Button } from "@progress/kendo-react-buttons";
-import { useTheme } from "../Context/Theme/useTheme";
+import { DropDownButton } from "@progress/kendo-react-buttons";
 import { kpiStatusOpenIcon, circleShapeIcon } from "@progress/kendo-svg-icons";
+import useClickItem from "../Hooks/useClickItem";
 
 const ThemeButton = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { items, theme, onItemClick } = useClickItem();
 
   return (
     <>
-      <Button
-        togglable={true}
-        onClick={toggleTheme}
-        selected={theme === "dark"}
+      <DropDownButton
+        items={items}
+        text="Change Theme"
+        onItemClick={onItemClick}
         svgIcon={theme === "light" ? circleShapeIcon : kpiStatusOpenIcon}
       />
     </>
