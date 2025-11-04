@@ -1,6 +1,6 @@
 import { DropDownButton } from "@progress/kendo-react-buttons";
 import { kpiStatusOpenIcon, circleShapeIcon } from "@progress/kendo-svg-icons";
-import useClickItem from "../Hooks/useClickItem";
+import useClickItem from "../../Hooks/Buttons/useClickItem";
 
 const ThemeButton = () => {
   const { items, theme, onItemClick } = useClickItem();

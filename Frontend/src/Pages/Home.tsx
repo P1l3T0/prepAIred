@@ -2,8 +2,8 @@ import GenerateHrInterviews from "../Components/Interviews/HR/GenerateHrIntervie
 import GetHrInterviews from "../Components/Interviews/HR/GetHrInterviews";
 import GenerateTechnicalInterviews from "../Components/Interviews/Technical/GenerateTechnicalInterviews";
 import GetTechnicalInterviews from "../Components/Interviews/Technical/GetTechnicalInterviews";
-import LogOutButton from "../Components/LogOutButton";
-import ThemeButton from "../Components/ThemeButton";
+import LogOutButton from "../Components/Buttons/LogOutButton";
+import ThemeButton from "../Components/Buttons/ThemeButton";
 import useGetUser from "../Hooks/User/useGetUser";
 
 const Home = () => {
