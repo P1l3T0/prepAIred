@@ -34,6 +34,18 @@ namespace prepAIred.Services
         Task<List<TInterview>> GetInterviewsBySessionIdAsync<TInterview>(int sessionID) where TInterview : Interview;
 
         /// <summary>
+        /// Retrieves the latest interviews from the provided list and maps them to the specified DTO type.
+        /// </summary>
+        /// <typeparam name="TInterview">The type of the interview entities, which must inherit from <see cref="Interview"/>.</typeparam>
+        /// <typeparam name="TInterviewDTO">The type of the interview DTOs, which must inherit from <see cref="InterviewDTO"/>.</typeparam>
+        /// <param name="interviews">The list of interview entities to process.</param>
+        /// <returns>A list of the latest interviews mapped to the specified DTO type. The list will be empty if no interviews
+        /// are provided.</returns>
+        List<TInterviewDTO> GetLatestInterviews<TInterview, TInterviewDTO>(List<TInterview> interviews)
+            where TInterview : Interview
+            where TInterviewDTO : InterviewDTO;
+
+        /// <summary>
         /// Updates an existing interview in the collection with the provided evaluated interview.
         /// </summary>
         /// <typeparam name="TInterview">The type of the interview, which must derive from <see cref="Interview"/>.</typeparam>
