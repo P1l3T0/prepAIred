@@ -3,10 +3,12 @@ import AuthenticationForms from "./Pages/AuthenticationForms";
 import PersistLogin from "./Context/Auth/PersistLogin";
 import ProtectedRoute from "./Context/Auth/ProtectedRoute";
 import Home from "./Pages/Home";
+import Navbar from "./Components/Buttons/Navbar";
 
 function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route element={<PersistLogin />}>
           <Route path="/" element={<Navigate to="/authenticate" replace />} />

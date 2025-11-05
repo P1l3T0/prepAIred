@@ -1,6 +1,6 @@
 /**
  * Custom hook for handling user logout functionality.
- * Sends logout request, updates auth context, and navigates to login page.
+ * Sends logout request, updates auth context, and navigates to Authentication page.
  * @returns {Object} - handleLogOut function
  */
 import axios, { AxiosError } from "axios";
@@ -18,7 +18,7 @@ const useLogOut = () => {
   const logOut = async () => {
     await axios
       .post(logoutEndPoint, null, { withCredentials: true })
-      .then(() => navigate("/login"))
+      .then(() => navigate("/authenticate"))
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
         console.error(error?.title);
