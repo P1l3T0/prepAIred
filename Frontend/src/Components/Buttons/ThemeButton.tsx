@@ -6,12 +6,14 @@ const ThemeButton = () => {
   const { items, theme, onItemClick } = useClickItem();
 
   return (
-    <DropDownButton
-      items={items}
-      text="Change Theme"
-      onItemClick={onItemClick}
-      svgIcon={theme === "light" ? circleShapeIcon : kpiStatusOpenIcon}
-    />
+    <>
+      <DropDownButton
+        items={items}
+        text="Change Theme"
+        onItemClick={onItemClick}
+        svgIcon={theme === "light" ? circleShapeIcon : kpiStatusOpenIcon}
+      />
+    </>
   );
 };
 
