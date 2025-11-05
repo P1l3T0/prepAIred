@@ -1,7 +1,7 @@
-import LogOutButton from "./LogOutButton";
-import ThemeButton from "./ThemeButton";
-import HamburgerButton from "./HamburgerButtons";
 import MobileMenuSidebar from "./MobileMenuSidebar";
+import LogOutButton from "../Buttons/LogOutButton";
+import ThemeButton from "../Buttons/ThemeButton";
+import HamburgerButton from "../Buttons/HamburgerButtons";
 import useToggleHamburgerButton from "../../Hooks/Buttons/useToggleHamburgerMenu";
 
 const Navbar = () => {
@@ -16,7 +16,10 @@ const Navbar = () => {
             <ThemeButton />
             <LogOutButton />
           </div>
-          <HamburgerButton isHamburger={true} toggleMobileMenu={toggleMobileMenu} />
+          <HamburgerButton
+            isHamburger={true}
+            toggleMobileMenu={toggleMobileMenu}
+          />
         </div>
         <MobileMenuSidebar
           isMobileMenuOpen={isMobileMenuOpen}

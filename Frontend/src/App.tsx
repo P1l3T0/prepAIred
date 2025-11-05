@@ -2,8 +2,8 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AuthenticationForms from "./Pages/AuthenticationForms";
 import PersistLogin from "./Context/Auth/PersistLogin";
 import ProtectedRoute from "./Context/Auth/ProtectedRoute";
+import Navbar from "./Components/Common/Navbar";
 import Home from "./Pages/Home";
-import Navbar from "./Components/Buttons/Navbar";
 
 function App() {
   return (

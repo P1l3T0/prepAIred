@@ -1,6 +1,6 @@
-import HamburgerButton from "./HamburgerButtons";
-import LogOutButton from "./LogOutButton";
-import ThemeButton from "./ThemeButton";
+import HamburgerButton from "../Buttons/HamburgerButtons";
+import LogOutButton from "../Buttons/LogOutButton";
+import ThemeButton from "../Buttons/ThemeButton";
 
 interface MobileMenuSidebarProps {
   isMobileMenuOpen: boolean;
