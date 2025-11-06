@@ -7,6 +7,7 @@ import {
 import { NumericTextBox } from "@progress/kendo-react-inputs";
 import { DropDownList, MultiSelect } from "@progress/kendo-react-dropdowns";
 import { Button } from "@progress/kendo-react-buttons";
+import { Loader } from "@progress/kendo-react-indicators";
 
 const GenerateHrInterviews = () => {
   const {
@@ -18,62 +19,112 @@ const GenerateHrInterviews = () => {
   } = useGenerateHrInterviews();
 
   return (
-    <>
-      <DropDownList
-        id="ai-agent"
-        name="aiAgent"
-        data={aiAgentData}
-        label="AI Agent"
-        style={{ width: "500px" }}
-        onChange={handleDropDownChange}
-      />
+    <div className="bg-card rounded-lg shadow-lg p-6 border border-border h-fit">
+      <form onSubmit={handleGenerateHrInterviews} className="space-y-4">
+        <div className="form-group">
+          <label
+            htmlFor="ai-agent"
+            className="block text-sm font-medium text-text-primary mb-2"
+          >
+            AI Agent
+          </label>
+          <DropDownList
+            id="ai-agent"
+            name="aiAgent"
+            data={aiAgentData}
+            defaultValue={"ChatGPT"}
+            style={{ width: "100%" }}
+            onChange={handleDropDownChange}
+          />
+        </div>
 
-      <br />
+        <div className="form-group">
+          <label
+            htmlFor="soft-skill-focus"
+            className="block text-sm font-medium text-text-primary mb-2"
+          >
+            Soft Skills Focus
+          </label>
+          <MultiSelect
+            id="soft-skill-focus"
+            name="softSkillFocus"
+            data={softSkillFocusData}
+            placeholder="Select soft skills to focus on..."
+            style={{ width: "100%" }}
+            onChange={handleDropDownChange}
+          />
+        </div>
 
-      <MultiSelect
-        id="soft-skill-focus"
-        name="softSkillFocus"
-        data={softSkillFocusData}
-        label="Soft Skill Focus"
-        style={{ width: "500px" }}
-        onChange={handleDropDownChange}
-      />
+        <div className="form-group">
+          <label
+            htmlFor="context-scenario"
+            className="block text-sm font-medium text-text-primary mb-2"
+          >
+            Context Scenarios
+          </label>
+          <MultiSelect
+            id="context-scenario"
+            name="contextScenario"
+            data={contextScenarioData}
+            autoClose={true}
+            placeholder="Select interview scenarios..."
+            style={{ width: "100%" }}
+            onChange={handleDropDownChange}
+          />
+        </div>
 
-      <br />
+        <div className="form-group">
+          <label
+            htmlFor="number-of-questions"
+            className="block text-sm font-medium text-text-primary mb-2"
+          >
+            Number of Questions
+          </label>
+          <NumericTextBox
+            id="number-of-questions"
+            name="numberOfQuestions"
+            placeholder="Enter number (1-10)"
+            min={1}
+            max={10}
+            defaultValue={3}
+            style={{ width: "100%" }}
+            onChange={handleInputChange}
+          />
+        </div>
 
-      <MultiSelect
-        id="context-scenario"
-        name="contextScenario"
-        data={contextScenarioData}
-        autoClose={true}
-        label="Context Scenario"
-        style={{ width: "500px" }}
-        onChange={handleDropDownChange}
-      />
+        <div className="pt-4">
+          <Button
+            id="hr-button"
+            themeColor="primary"
+            fillMode={"outline"}
+            size="large"
+            disabled={disabled || isSubmitting}
+            onClick={handleGenerateHrInterviews}
+            style={{ width: "100%" }}
+          >
+            {isSubmitting ? (
+              <>
+              <Loader type={"infinite-spinner"} className="mr-2" />
+                Generating...
+              </>
+            ) : (
+              <>
+                <span className="mr-2"></span>
+                Generate Questions
+              </>
+            )}
+          </Button>
 
-      <br />
-
-      <NumericTextBox
-        id="number-of-questions"
-        name="numberOfQuestions"
-        placeholder="Number of Questions"
-        min={1}
-        max={10}
-        defaultValue={3}
-        style={{ width: "500px" }}
-        onChange={handleInputChange}
-      />
-
-      <br />
-
-      <Button
-        id="hr-button"
-        disabled={disabled || isSubmitting}
-        onClick={handleGenerateHrInterviews}
-      >
-        {isSubmitting ? "Generating..." : "Generate HR Interviews"}
-      </Button>
-    </>
+          {disabled && (
+            <div className="mt-4 p-3 bg-success/10 border border-success rounded-lg">
+              <p className="text-sm text-success text-center font-medium">
+                ✓ Questions generated successfully!
+              </p>
+            </div>
+          )}
+        </div>
+      </form>
+    </div>
   );
 };
 
