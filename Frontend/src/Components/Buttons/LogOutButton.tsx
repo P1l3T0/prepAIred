@@ -6,7 +6,9 @@ const LogOutButton = () => {
 
   return (
     <>
-      <Button onClick={handleLogOut}>Logout</Button>
+      <Button fillMode={"flat"} themeColor={"primary"} onClick={handleLogOut}>
+        Logout
+      </Button>
     </>
   );
 };

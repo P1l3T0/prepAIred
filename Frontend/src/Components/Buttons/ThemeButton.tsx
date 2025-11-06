@@ -7,6 +7,8 @@ const ThemeButton = () => {
   return (
     <Button
       value={theme}
+      fillMode={"flat"}
+      themeColor={"primary"}
       onClick={handleClick}
       iconClass={`${
         theme === "light" ? "fa-solid fa-sun" : "fa-solid fa-moon"
