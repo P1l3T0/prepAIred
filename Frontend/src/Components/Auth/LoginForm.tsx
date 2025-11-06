@@ -1,8 +1,15 @@
 import type { FormRenderProps } from "@progress/kendo-react-form";
-import { Form, Field, FormElement, FieldWrapper, FormFieldSet, FormSeparator } from "@progress/kendo-react-form";
+import {
+  Form,
+  Field,
+  FormElement,
+  FieldWrapper,
+  FormFieldSet,
+} from "@progress/kendo-react-form";
 import { Button } from "@progress/kendo-react-buttons";
 import useLogin from "../../Hooks/Auth/useLogin";
 import useInputValidations from "./useInputValidations";
+import { Link } from "react-router";
 
 const LoginForm = () => {
   const { handleSubmit, handleChange } = useLogin();
@@ -12,8 +19,8 @@ const LoginForm = () => {
     <Form
       onSubmit={handleSubmit}
       render={(formRenderProps: FormRenderProps) => (
-        <FormElement>
-          <FormFieldSet>
+        <FormElement className="space-y-6">
+          <FormFieldSet className="space-y-4">
             <FieldWrapper>
               <Field
                 name={"email"}
@@ -22,25 +29,40 @@ const LoginForm = () => {
                 component={EmailInput}
                 validator={emailValidator}
                 onChange={handleChange}
+                className="w-full"
               />
             </FieldWrapper>
             <FieldWrapper>
-              <div className="k-form-field-wrap">
-                <Field
-                  name={"password"}
-                  labelClassName={"k-form-label"}
-                  label={"Password"}
-                  type={"password"}
-                  component={PasswordInput}
-                  validator={passwordValidator}
-                  onChange={handleChange}
-                />
-              </div>
+              <Field
+                name={"password"}
+                label={"Password"}
+                type={"password"}
+                component={PasswordInput}
+                validator={passwordValidator}
+                onChange={handleChange}
+                className="w-full"
+              />
             </FieldWrapper>
           </FormFieldSet>
-          <FormSeparator />
-          <div className="k-form-buttons">
-            <Button disabled={!formRenderProps.allowSubmit}>Login</Button>
+
+          <div className="mt-10">
+            <Button
+              fillMode={"outline"}
+              themeColor={"primary"}
+              className="w-full mb-5"
+              disabled={!formRenderProps.allowSubmit}
+            >
+              Sign In
+            </Button>
+            <p className="text-center text-sm text-text-secondary">
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="text-primary font-medium cursor-pointer hover:underline"
+              >
+                Sign up
+              </Link>
+            </p>
           </div>
         </FormElement>
       )}

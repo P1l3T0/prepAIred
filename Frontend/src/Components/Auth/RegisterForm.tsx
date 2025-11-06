@@ -1,20 +1,40 @@
 import type { FormRenderProps } from "@progress/kendo-react-form";
-import { Form, Field, FormElement, FieldWrapper, FormFieldSet, FormSeparator } from "@progress/kendo-react-form";
-import { Input } from "@progress/kendo-react-inputs";
+import {
+  Form,
+  Field,
+  FormElement,
+  FieldWrapper,
+  FormFieldSet,
+} from "@progress/kendo-react-form";
 import { Button } from "@progress/kendo-react-buttons";
 import useRegister from "../../Hooks/Auth/useRegister";
 import useInputValidations from "./useInputValidations";
+import { Link } from "react-router";
 
 const RegisterForm = () => {
   const { handleSubmit, handleChange } = useRegister();
-  const { emailValidator, EmailInput, passwordValidator, PasswordInput } = useInputValidations();
+  const {
+    emailValidator,
+    EmailInput,
+    passwordValidator,
+    PasswordInput,
+    UsernameInput,
+  } = useInputValidations();
 
   return (
     <Form
       onSubmit={handleSubmit}
       render={(formRenderProps: FormRenderProps) => (
-        <FormElement>
-          <FormFieldSet>
+        <FormElement className="space-y-6">
+          <FormFieldSet className="space-y-4">
+            <FieldWrapper>
+              <Field
+                name={"username"}
+                component={UsernameInput}
+                onChange={handleChange}
+                className="w-full"
+              />
+            </FieldWrapper>
             <FieldWrapper>
               <Field
                 name={"email"}
@@ -23,36 +43,40 @@ const RegisterForm = () => {
                 component={EmailInput}
                 validator={emailValidator}
                 onChange={handleChange}
+                className="w-full"
               />
             </FieldWrapper>
             <FieldWrapper>
-              <div className="k-form-field-wrap">
-                <Field
-                  name={"username"}
-                  labelClassName={"k-form-label"}
-                  label={"Username"}
-                  component={Input}
-                  onChange={handleChange}
-                />
-              </div>
-            </FieldWrapper>
-            <FieldWrapper>
-              <div className="k-form-field-wrap">
-                <Field
-                  name={"password"}
-                  labelClassName={"k-form-label"}
-                  label={"Password"}
-                  type={"password"}
-                  component={PasswordInput}
-                  validator={passwordValidator}
-                  onChange={handleChange}
-                />
-              </div>
+              <Field
+                name={"password"}
+                label={"Password"}
+                type={"password"}
+                component={PasswordInput}
+                validator={passwordValidator}
+                onChange={handleChange}
+                className="w-full"
+              />
             </FieldWrapper>
           </FormFieldSet>
-          <FormSeparator />
-          <div className="k-form-buttons">
-            <Button disabled={!formRenderProps.allowSubmit}>Register</Button>
+
+          <div className="mt-10">
+            <Button
+              fillMode={"outline"}
+              themeColor={"primary"}
+              className="w-full mb-5"
+              disabled={!formRenderProps.allowSubmit}
+            >
+              Create Account
+            </Button>
+            <p className="text-center text-sm text-text-secondary">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="text-primary font-medium cursor-pointer hover:underline"
+              >
+                Sign in
+              </Link>
+            </p>
           </div>
         </FormElement>
       )}

@@ -1,25 +1,24 @@
-import { useState } from "react";
-import { TabStrip, TabStripTab } from "@progress/kendo-react-layout";
-import type { TabStripSelectEventArguments } from "@progress/kendo-react-layout";
-import RegisterForm from "./RegisterForm";
-import LoginForm from "./LoginForm";
+interface AuthFormProps {
+  children: React.ReactNode;
+}
 
-const AuthForm = () => {
-  const [selected, setSelected] = useState<number>(0);
-
-  const handleSelect = (e: TabStripSelectEventArguments) => setSelected(e.selected);
-
+const AuthForm = ({ children }: AuthFormProps) => {
   return (
-    <>
-      <TabStrip selected={selected} onSelect={handleSelect}>
-        <TabStripTab title="Login">
-          <LoginForm />
-        </TabStripTab>
-        <TabStripTab title="Register">
-          <RegisterForm />
-        </TabStripTab>
-      </TabStrip>
-    </>
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-background via-background to-primary p-4">
+      <div className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-text-primary mb-2">
+            <span className="text-primary">prep</span>AIred
+          </h1>
+          <p className="text-text-secondary text-sm">
+            Prepare for your next interview with AI
+          </p>
+        </div>
+        <div className="bg-background border border-border rounded-lg shadow-xl p-6 sm:p-8">
+          {children}
+        </div>
+      </div>
+    </div>
   );
 };
 
