@@ -1,7 +1,3 @@
-import GenerateHrInterviews from "../Components/Interviews/HR/GenerateHrInterviews";
-import GetHrInterviews from "../Components/Interviews/HR/GetHrInterviews";
-import GenerateTechnicalInterviews from "../Components/Interviews/Technical/GenerateTechnicalInterviews";
-import GetTechnicalInterviews from "../Components/Interviews/Technical/GetTechnicalInterviews";
 import useGetUser from "../Hooks/User/useGetUser";
 
 const Home = () => {
@@ -20,14 +16,6 @@ const Home = () => {
         </p>
         <p className="text-text-primary">User ID: {user?.id}</p>
       </div>
-
-      <br />
-
-      <GenerateHrInterviews />
-      <GetHrInterviews />
-
-      <GenerateTechnicalInterviews />
-      <GetTechnicalInterviews />
     </>
   );
 };
