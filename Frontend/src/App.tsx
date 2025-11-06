@@ -5,11 +5,14 @@ import ProtectedRoute from "./Context/Auth/ProtectedRoute";
 import Navbar from "./Components/Common/Navbar";
 import Home from "./Pages/Home";
 import Interviews from "./Pages/Interviews";
+import useAuth from "./Context/Auth/useAuth";
 
 function App() {
+  const { isUserLoggedIn } = useAuth();
+  
   return (
     <BrowserRouter>
-      <Navbar />
+      {isUserLoggedIn ? <Navbar /> : null}
       <Routes>
         <Route element={<PersistLogin />}>
           <Route path="/" element={<Navigate to="/authenticate" replace />} />
