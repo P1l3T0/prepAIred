@@ -7,16 +7,14 @@ const OpenEndedAnswer = ({
   interviewType,
   onChange,
 }: AnswersProps) => (
-  <>
-    <TextArea
-      id={`${interviewType}-open-ended-answer-${interviewIndex}`}
-      placeholder={"Type your answer..."}
-      disabled={interview.isAnswered}
-      onChange={(e) => onChange(e.value)}
-      defaultValue={interview.selectedAnswer || ""}
-      style={{ width: "100%", height: "100px", resize: "vertical" }}
-    />
-  </>
+  <TextArea
+    id={`${interviewType}-open-ended-answer-${interviewIndex}`}
+    placeholder={"Type your answer..."}
+    disabled={interview.isAnswered}
+    onChange={(e) => onChange(e.value)}
+    defaultValue={interview.selectedAnswer || ""}
+    style={{ width: "100%", height: "100px", resize: "vertical" }}
+  />
 );
 
 export default OpenEndedAnswer;
