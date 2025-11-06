@@ -23,7 +23,6 @@ import type { NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
 const useGenerateTechnicalInterviews = () => {
   const queryClient = useQueryClient();
-  const [disabled, setDisabled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [technicalRequest, setTechnicalRequest] = useState<TechnicalRequestDTO>({
@@ -76,7 +75,6 @@ const useGenerateTechnicalInterviews = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["technical-interviews"] });
-      setDisabled(true);
       setIsSubmitting(false);
     },
   });
@@ -90,7 +88,6 @@ const useGenerateTechnicalInterviews = () => {
     handleDropDownChange,
     handleInputChange,
     handleGenerateTechnicalInterviews,
-    disabled,
     isSubmitting,
   };
 };

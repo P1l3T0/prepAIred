@@ -23,7 +23,6 @@ import type { NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
 const useGenerateHrInterviews = () => {
   const queryClient = useQueryClient();
-  const [disabled, setDisabled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [hrRequest, setHrRequest] = useState<HrRequestDTO>({
@@ -69,7 +68,6 @@ const useGenerateHrInterviews = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["hr-interviews"] });
-      setDisabled(true);
       setIsSubmitting(false);
     },
   });
@@ -83,7 +81,6 @@ const useGenerateHrInterviews = () => {
     handleDropDownChange,
     handleInputChange,
     handleGenerateHrInterviews,
-    disabled,
     isSubmitting,
   };
 };

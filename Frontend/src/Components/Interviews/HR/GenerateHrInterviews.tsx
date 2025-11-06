@@ -51,9 +51,9 @@ const GenerateHrInterviews = () => {
           />
         </FormField>
 
-        <FormField label="Number of Questions" htmlFor="number-of-questions">
+        <FormField label="Number of Questions" htmlFor="number-of-questions-hr">
           <NumericTextBox
-            id="number-of-questions"
+            id="number-of-questions-hr"
             name="numberOfQuestions"
             placeholder="Enter number (1-10)"
             min={1}
@@ -62,7 +62,7 @@ const GenerateHrInterviews = () => {
           />
         </FormField>
 
-        <SubmitButton id="hr-button" isSubmitting={isSubmitting} />
+        <SubmitButton id="hr-button" isSubmitting={isSubmitting} interviewType="HR" />
       </form>
     </div>
   );

@@ -1,4 +1,5 @@
-import InterviewDisplay from "../InterviewDisplay";
+import InterviewDisplay from "../InterviewDisplay/InterviewDisplay";
+import InterviewContainer from "../Common/InterviewContainer";
 import useGetLatestTechnicalInterviews from "../../../Hooks/Interviews/Technical/useGetLatestTechnicalInterviews";
 
 const GetTechnicalInterviews = () => {
@@ -8,11 +9,12 @@ const GetTechnicalInterviews = () => {
   if (isError) return <div> Error loading Technical interviews.</div>;
 
   return (
-    <InterviewDisplay
-      title="Latest Technical Interviews"
-      interviewType="Technical-Interview"
-      interviews={technicalInterviews}
-    />
+    <InterviewContainer title="Generated Technical Interview">
+      <InterviewDisplay
+        interviewType="Technical-Interview"
+        interviews={technicalInterviews}
+      />
+    </InterviewContainer>
   );
 };
 

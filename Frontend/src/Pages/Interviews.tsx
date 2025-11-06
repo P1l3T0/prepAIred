@@ -1,6 +1,6 @@
 import GenerateHrInterviews from "../Components/Interviews/HR/GenerateHrInterviews";
 import GetHrInterviews from "../Components/Interviews/HR/GetHrInterviews";
-import InterviewSection from "../Components/Interviews/IntterviewSection";
+import InterviewSection from "../Components/Interviews/Common/IntterviewSection";
 import GenerateTechnicalInterviews from "../Components/Interviews/Technical/GenerateTechnicalInterviews";
 import GetTechnicalInterviews from "../Components/Interviews/Technical/GetTechnicalInterviews";
 
@@ -18,13 +18,11 @@ const Interviews = () => {
         </div>
 
         <InterviewSection
-          interviewType="HR-Interview"
           generateInterviews={<GenerateHrInterviews />}
           getInterviews={<GetHrInterviews />}
         />
 
         <InterviewSection
-          interviewType="Technical-Interview"
           generateInterviews={<GenerateTechnicalInterviews />}
           getInterviews={<GetTechnicalInterviews />}
         />
