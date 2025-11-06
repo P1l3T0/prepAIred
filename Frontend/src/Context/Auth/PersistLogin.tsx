@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import useRefreshToken from "../Hooks/Auth/useRefreshToken";
+import useRefreshToken from "../../Hooks/Auth/useRefreshToken";
 import useAuth from "./useAuth";
 
 const PersistLogin = () => {

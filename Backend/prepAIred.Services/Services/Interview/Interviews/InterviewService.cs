@@ -34,6 +34,15 @@ namespace prepAIred.Services
             await _dataContext.SaveChangesAsync();
         }
 
+        public List<TInterviewDTO> GetLatestInterviews<TInterview, TInterviewDTO>(List<TInterview> interviews)
+            where TInterview : Interview
+            where TInterviewDTO : InterviewDTO
+        {
+            return interviews
+                .Select(i => i.ToDto<TInterviewDTO>())
+                .ToList();
+        }
+
         public void UpdateExistingInterviewWithEvaluation<TInterview>(List<TInterview> evaluatedInterviews, List<TInterview> existingInterviews) where TInterview : Interview
         {
             foreach (TInterview evaluatedInterview in evaluatedInterviews)

@@ -10,7 +10,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { registerEndPoint } from "../../Utils/endpoints";
 import type { RegisterDto } from "../../Utils/interfaces";
-import useAuth from "../../Context/useAuth";
+import useAuth from "../../Context/Auth/useAuth";
 
 const useRegister = () => {
   const navigate = useNavigate();

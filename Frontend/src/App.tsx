@@ -1,12 +1,14 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Home from "./Pages/Home";
-import PersistLogin from "./Context/PersistLogin";
-import ProtectedRoute from "./Context/ProtectedRoute";
 import AuthenticationForms from "./Pages/AuthenticationForms";
+import PersistLogin from "./Context/Auth/PersistLogin";
+import ProtectedRoute from "./Context/Auth/ProtectedRoute";
+import Navbar from "./Components/Common/Navbar";
+import Home from "./Pages/Home";
 
 function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route element={<PersistLogin />}>
           <Route path="/" element={<Navigate to="/authenticate" replace />} />

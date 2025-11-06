@@ -73,7 +73,7 @@ namespace prepAIred.Services
             int latestSessionID = await _interviewSessionService.GetLatestInterviewSessionID(currentUserID);
 
             List<TInterview> interviews = await _interviewService.GetInterviewsBySessionIdAsync<TInterview>(latestSessionID);
-            List<TInterviewDTO> interviewDTOs = interviews.Select(i => i.ToDto<TInterviewDTO>()).ToList();
+            List<TInterviewDTO> interviewDTOs = _interviewService.GetLatestInterviews<TInterview, TInterviewDTO>(interviews);
 
             return interviewDTOs;
         }

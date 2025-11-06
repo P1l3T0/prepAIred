@@ -10,7 +10,7 @@ import { loginEndPoint } from "../../Utils/endpoints";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import type { LoginDto } from "../../Utils/interfaces";
-import useAuth from "../../Context/useAuth";
+import useAuth from "../../Context/Auth/useAuth";
 
 const useLogin = () => {
   const navigate = useNavigate();

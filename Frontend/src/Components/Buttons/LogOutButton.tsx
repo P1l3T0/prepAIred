@@ -1,5 +1,5 @@
 import { Button } from "@progress/kendo-react-buttons";
-import useLogOut from "../Hooks/Auth/useLogOut";
+import useLogOut from "../../Hooks/Buttons/useLogOut";
 
 const LogOutButton = () => {
   const { handleLogOut } = useLogOut();
