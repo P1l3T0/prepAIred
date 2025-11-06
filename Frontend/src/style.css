@@ -76,6 +76,8 @@
 }
 
 .dark {
+  --kendo-color-surface-alt: #1e293b;
+  
   --color-background: #0f172a;
   --color-surface: #1e293b;
   --color-card: #1e293b;
