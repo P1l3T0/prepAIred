@@ -4,7 +4,6 @@
  * @returns {Object} - handleLogOut function
  */
 import axios, { AxiosError } from "axios";
-import type { SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { logoutEndPoint } from "../../Utils/endpoints";
@@ -34,8 +33,7 @@ const useLogOut = () => {
     },
   });
 
-  const handleLogOut = async (e: SyntheticEvent) => {
-    e.preventDefault();
+  const handleLogOut = async () => {
     mutateAsync();
   };
 

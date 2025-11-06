@@ -4,11 +4,13 @@ interface LinkButtonProps {
   isLogo?: boolean;
   to: string;
   label: string;
+  onClick?: () => void;
 }
 
-const LinkButton = ({ to, label, isLogo = false }: LinkButtonProps) => {
+const LinkButton = ({ to, label, isLogo = false, onClick }: LinkButtonProps) => {
   return (
     <Link
+      onClick={onClick}
       to={to}
       className={
         isLogo

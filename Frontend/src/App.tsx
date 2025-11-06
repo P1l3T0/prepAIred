@@ -10,7 +10,7 @@ import Register from "./Pages/Register";
 
 function App() {
   const { isUserLoggedIn } = useAuth();
-  
+
   return (
     <BrowserRouter>
       {isUserLoggedIn ? <Navbar /> : null}
