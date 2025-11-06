@@ -1,4 +1,4 @@
-import InterviewDisplay from "../InterviewDisplay";
+import InterviewDisplay from "../InterviewDisplay/InterviewDisplay";
 import useGetLatestHrInterviews from "../../../Hooks/Interviews/HR/useGetLatestHrInterviews";
 
 const GetHrInterviews = () => {
@@ -9,12 +9,9 @@ const GetHrInterviews = () => {
 
   return (
     <div className="bg-card rounded-lg shadow-lg p-6 border border-border">
-      <h3 className="text-xl font-bold text-text-primary mb-2">
+      <h3 className="text-xl font-bold text-text-primary mb-2 text-center">
         Generated Interviews
       </h3>
-      <p className="text-sm text-text-secondary mb-6">
-        Your most recent HR interview questions
-      </p>
       <InterviewDisplay
         interviewType="HR-Interview"
         interviews={hrInterviews}
