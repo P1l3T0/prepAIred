@@ -32,34 +32,29 @@ const RegisterForm = () => {
                 name={"username"}
                 component={UsernameInput}
                 onChange={handleChange}
-                className="w-full"
               />
             </FieldWrapper>
             <FieldWrapper>
               <Field
                 name={"email"}
                 type={"email"}
-                label={"Email"}
                 component={EmailInput}
                 validator={emailValidator}
                 onChange={handleChange}
-                className="w-full"
               />
             </FieldWrapper>
             <FieldWrapper>
               <Field
                 name={"password"}
-                label={"Password"}
                 type={"password"}
                 component={PasswordInput}
                 validator={passwordValidator}
                 onChange={handleChange}
-                className="w-full"
               />
             </FieldWrapper>
           </FormFieldSet>
 
-          <div className="mt-10">
+          <div className="my-5">
             <Button
               fillMode={"outline"}
               themeColor={"primary"}
