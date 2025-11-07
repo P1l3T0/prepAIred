@@ -1,4 +1,4 @@
-import InterviewDisplay from "../InterviewDisplay/InterviewDisplay";
+import InterviewDisplay from "../Components/InterviewDisplay/InterviewDisplay";
 import useGetLatestTechnicalInterviews from "../../../Hooks/Interviews/Technical/useGetLatestTechnicalInterviews";
 
 const GetTechnicalInterviews = () => {

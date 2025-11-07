@@ -1,4 +1,4 @@
-import InterviewDisplay from "../InterviewDisplay/InterviewDisplay";
+import InterviewDisplay from "../Components/InterviewDisplay/InterviewDisplay";
 import useGetLatestHrInterviews from "../../../Hooks/Interviews/HR/useGetLatestHrInterviews";
 
 const GetHrInterviews = () => {

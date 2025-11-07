@@ -1,5 +1,5 @@
-import type { AnswersProps } from "../../../Utils/interfaces";
 import { RadioButton } from "@progress/kendo-react-inputs";
+import type { AnswersProps } from "../../../../Utils/interfaces";
 
 const SingleChoiceAnswers = ({
   interview,

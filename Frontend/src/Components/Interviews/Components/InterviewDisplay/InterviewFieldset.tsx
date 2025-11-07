@@ -1,7 +1,7 @@
 import type {
   HRInterviewDTO,
   TechnicalInterviewDTO,
-} from "../../../Utils/interfaces";
+} from "../../../../Utils/interfaces";
 
 interface InterviewFieldsetProps {
   interview: HRInterviewDTO | TechnicalInterviewDTO;

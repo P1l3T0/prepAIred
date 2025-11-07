@@ -8,8 +8,8 @@ import {
 } from "../../../Utils/data";
 import { NumericTextBox } from "@progress/kendo-react-inputs";
 import { DropDownList, MultiSelect } from "@progress/kendo-react-dropdowns";
-import FormField from "../Common/FormField";
-import GenerateButton from "../Common/GenerateButton";
+import FormField from "../Components/Common/FormField";
+import GenerateButton from "../Components/Common/GenerateButton";
 
 const GenerateTechnicalInterviews = () => {
   const {

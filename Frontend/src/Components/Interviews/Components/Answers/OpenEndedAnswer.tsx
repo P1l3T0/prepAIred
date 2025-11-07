@@ -1,5 +1,5 @@
-import type { AnswersProps } from "../../../Utils/interfaces";
 import { TextArea } from "@progress/kendo-react-inputs";
+import type { AnswersProps } from "../../../../Utils/interfaces";
 
 const OpenEndedAnswer = ({
   interview,

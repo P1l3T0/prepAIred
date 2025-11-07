@@ -1,5 +1,5 @@
-import type { AnswersProps } from "../../../Utils/interfaces";
 import { Checkbox } from "@progress/kendo-react-inputs";
+import type { AnswersProps } from "../../../../Utils/interfaces";
 
 const MultipleChoiceAnswers = ({
   interview,

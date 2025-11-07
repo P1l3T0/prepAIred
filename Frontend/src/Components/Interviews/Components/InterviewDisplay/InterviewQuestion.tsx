@@ -1,7 +1,7 @@
 import type {
   HRInterviewDTO,
   TechnicalInterviewDTO,
-} from "../../../Utils/interfaces";
+} from "../../../../Utils/interfaces";
 import SingleChoiceAnswers from "../Answers/SingleChoiceAnswers";
 import MultipleChoiceAnswers from "../Answers/MultipleChoiceAnswers";
 import OpenEndedAnswer from "../Answers/OpenEndedAnswer";
@@ -38,7 +38,9 @@ const InterviewQuestion = ({
             interview={interview}
             interviewType={interviewType}
             interviewIndex={singleChoiceIdx}
-            onChange={(value) => handleSingleChoiceChange(singleChoiceIdx, value)}
+            onChange={(value) =>
+              handleSingleChoiceChange(singleChoiceIdx, value)
+            }
           />
         );
       case "MultipleChoice":
