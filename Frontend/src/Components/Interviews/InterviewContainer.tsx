@@ -7,7 +7,7 @@ import GetTechnicalInterviews from "./Technical/GetTechnicalInterviews";
 const InterviewContainer = () => {
   return (
     <>
-      <div className="bg-background p-6">
+      <div className="bg-linear-to-br from-background via-background to-primary p-6">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-text-primary mb-3">
