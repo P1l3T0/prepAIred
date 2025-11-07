@@ -7,7 +7,7 @@ import {
 import { NumericTextBox } from "@progress/kendo-react-inputs";
 import { DropDownList, MultiSelect } from "@progress/kendo-react-dropdowns";
 import FormField from "../Common/FormField";
-import SubmitButton from "../Common/SubmitButton";
+import GenerateButton from "../Common/GenerateButton";
 
 const GenerateHrInterviews = () => {
   const {
@@ -62,7 +62,7 @@ const GenerateHrInterviews = () => {
           />
         </FormField>
 
-        <SubmitButton id="hr-button" isSubmitting={isSubmitting} interviewType="HR" />
+        <GenerateButton interviewType="HR" isSubmitting={isSubmitting} />
       </form>
     </div>
   );
