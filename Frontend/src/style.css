@@ -76,6 +76,11 @@
 }
 
 .dark {
+  --kendo-color-base: #0e1b36;
+  --kendo-color-base-hover: #07132b;
+  --kendo-color-base-subtle: #0e1b36;
+  --kendo-color-base-subtle-hover: #0e1b36;
+  --kendo-color-surface: #0e1b36;
   --kendo-color-surface-alt: #1e293b;
 
   --color-background: #0f172a;
@@ -109,4 +114,11 @@
   --color-input-bg: #1e293b;
   --color-input-border: #475569;
   --color-input-focus: #60a5fa;
+}
+
+.dark {
+  .k-radio-label,
+  .k-checkbox-label {
+    color: var(--color-text-primary);
+  }
 }
