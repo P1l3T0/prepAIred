@@ -6,20 +6,13 @@ import {
   FieldWrapper,
   FormFieldSet,
 } from "@progress/kendo-react-form";
-import { Button } from "@progress/kendo-react-buttons";
 import useRegister from "../../Hooks/Auth/useRegister";
 import useInputValidations from "./useInputValidations";
-import { Link } from "react-router";
+import FormButton from "./FormButton";
 
 const RegisterForm = () => {
   const { handleSubmit, handleChange } = useRegister();
-  const {
-    emailValidator,
-    EmailInput,
-    passwordValidator,
-    PasswordInput,
-    UsernameInput,
-  } = useInputValidations();
+  const { emailValidator, EmailInput, passwordValidator, PasswordInput, UsernameInput } = useInputValidations();
 
   return (
     <Form
@@ -54,25 +47,7 @@ const RegisterForm = () => {
             </FieldWrapper>
           </FormFieldSet>
 
-          <div className="my-5">
-            <Button
-              fillMode={"outline"}
-              themeColor={"primary"}
-              className="w-full mb-5"
-              disabled={!formRenderProps.allowSubmit}
-            >
-              Create Account
-            </Button>
-            <p className="text-center text-sm text-text-secondary">
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="text-primary font-medium cursor-pointer hover:underline"
-              >
-                Sign in
-              </Link>
-            </p>
-          </div>
+          <FormButton to="/login" text="Create Account" formRenderProps={formRenderProps} />
         </FormElement>
       )}
     />

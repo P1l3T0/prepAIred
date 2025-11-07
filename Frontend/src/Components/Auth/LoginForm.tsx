@@ -6,10 +6,9 @@ import {
   FieldWrapper,
   FormFieldSet,
 } from "@progress/kendo-react-form";
-import { Button } from "@progress/kendo-react-buttons";
 import useLogin from "../../Hooks/Auth/useLogin";
 import useInputValidations from "./useInputValidations";
-import { Link } from "react-router";
+import FormButton from "./FormButton";
 
 const LoginForm = () => {
   const { handleSubmit, handleChange } = useLogin();
@@ -45,25 +44,7 @@ const LoginForm = () => {
             </FieldWrapper>
           </FormFieldSet>
 
-          <div className="mt-10">
-            <Button
-              fillMode={"outline"}
-              themeColor={"primary"}
-              className="w-full mb-5"
-              disabled={!formRenderProps.allowSubmit}
-            >
-              Sign In
-            </Button>
-            <p className="text-center text-sm text-text-secondary">
-              Don't have an account?{" "}
-              <Link
-                to="/register"
-                className="text-primary font-medium cursor-pointer hover:underline"
-              >
-                Sign up
-              </Link>
-            </p>
-          </div>
+          <FormButton to="/register" text="Log In" formRenderProps={formRenderProps} />
         </FormElement>
       )}
     />
