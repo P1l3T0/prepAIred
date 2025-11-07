@@ -1,5 +1,4 @@
 import InterviewDisplay from "../InterviewDisplay/InterviewDisplay";
-import InterviewContainer from "../Common/InterviewContainer";
 import useGetLatestHrInterviews from "../../../Hooks/Interviews/HR/useGetLatestHrInterviews";
 
 const GetHrInterviews = () => {
@@ -9,12 +8,12 @@ const GetHrInterviews = () => {
   if (isError) return <div>Error loading HR interviews</div>;
 
   return (
-    <InterviewContainer title="Generated HR Interview">
+    <div className="rounded-lg shadow-lg p-6 border border-border">
       <InterviewDisplay
         interviewType="HR-Interview"
         interviews={hrInterviews}
       />
-    </InterviewContainer>
+    </div>
   );
 };
 
