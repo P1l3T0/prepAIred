@@ -10,7 +10,7 @@ namespace prepAIred.Services
         /// <param name="aIRequest">The request DTO containing interview parameters.</param>
         /// <param name="currentUserID">The ID of the current user.</param>
         /// <returns>The generated prompt string.</returns>
-        string CreateTechnicalPrompt(TechnicalRequestDTO aIRequest, int currentUserID);
+        string CreateTechnicalPrompt(TechnicalRequestDTO techRequest, int currentUserID);
 
         /// <summary>
         /// Creates a prompt tailored for human resources (HR) based on the provided AI request data and the current
