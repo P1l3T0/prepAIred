@@ -4,7 +4,7 @@ import {
   contextScenarioData,
   softSkillFocusData,
 } from "../../../Utils/data";
-import { NumericTextBox } from "@progress/kendo-react-inputs";
+import { Checkbox, NumericTextBox } from "@progress/kendo-react-inputs";
 import { DropDownList, MultiSelect } from "@progress/kendo-react-dropdowns";
 import FormField from "../Components/Common/FormField";
 import GenerateButton from "../Components/Common/GenerateButton";
@@ -14,6 +14,7 @@ const GenerateHrInterviews = () => {
     handleDropDownChange,
     handleInputChange,
     handleGenerateHrInterviews,
+    handleCheckBoxChange,
     isSubmitting,
   } = useGenerateHrInterviews();
 
@@ -25,6 +26,7 @@ const GenerateHrInterviews = () => {
             id="ai-agent"
             name="aiAgent"
             data={aiAgentData}
+            size={"large"}
             defaultValue={"Select AI Agent"}
             onChange={handleDropDownChange}
           />
@@ -35,6 +37,7 @@ const GenerateHrInterviews = () => {
             id="soft-skill-focus"
             name="softSkillFocus"
             data={softSkillFocusData}
+            size={"large"}
             placeholder="Select soft skills to focus on..."
             onChange={handleDropDownChange}
           />
@@ -46,6 +49,7 @@ const GenerateHrInterviews = () => {
             name="contextScenario"
             data={contextScenarioData}
             autoClose={true}
+            size={"large"}
             placeholder="Select interview scenarios..."
             onChange={handleDropDownChange}
           />
@@ -55,10 +59,21 @@ const GenerateHrInterviews = () => {
           <NumericTextBox
             id="number-of-questions-hr"
             name="numberOfQuestions"
+            size={"large"}
             placeholder="Enter number (1-10)"
             min={1}
             max={10}
             onChange={handleInputChange}
+          />
+        </FormField>
+
+        <FormField label="Prior Experience" htmlFor="prior-experience-hr">
+          <Checkbox
+            id="prior-experience-hr"
+            name="hasPriorExperience"
+            size={"large"}
+            label="Do you have prior experience?"
+            onChange={handleCheckBoxChange}
           />
         </FormField>
 

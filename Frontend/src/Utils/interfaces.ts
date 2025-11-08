@@ -47,6 +47,7 @@ export interface User {
 interface BaseRequestDTO {
   aiAgent: string;
   numberOfQuestions: number;
+  hasPriorExperience: boolean;
 }
 
 export interface TechnicalRequestDTO extends BaseRequestDTO {

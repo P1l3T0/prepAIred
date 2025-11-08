@@ -9,7 +9,7 @@ const FormField = ({ label, htmlFor, children }: FormFieldProps) => {
     <div className="form-group">
       <label
         htmlFor={htmlFor}
-        className="block text-sm font-medium text-text-primary mb-2"
+        className="block text-lg font-medium text-text-primary mb-2"
       >
         {label}
       </label>

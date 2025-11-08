@@ -19,7 +19,7 @@ import type {
   DropDownListChangeEvent,
   MultiSelectChangeEvent,
 } from "@progress/kendo-react-dropdowns";
-import type { NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
+import type { CheckboxChangeEvent, NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
 const useGenerateTechnicalInterviews = () => {
   const queryClient = useQueryClient();
@@ -35,6 +35,7 @@ const useGenerateTechnicalInterviews = () => {
     difficultyLevel: "Easy",
     position: "Junior Developer",
     numberOfQuestions: 3,
+    hasPriorExperience: false,
   });
 
   const handleDropDownChange = (
@@ -56,6 +57,13 @@ const useGenerateTechnicalInterviews = () => {
       [name]: e.value,
     });
   };
+
+  const handleCheckBoxChange = (e: CheckboxChangeEvent) => {
+    setTechnicalRequest({
+      ...technicalRequest,
+      hasPriorExperience: e.value,
+    });
+  }
 
   const generateTechnicalInterviews = async () => {
     await axios
@@ -88,6 +96,7 @@ const useGenerateTechnicalInterviews = () => {
     handleDropDownChange,
     handleInputChange,
     handleGenerateTechnicalInterviews,
+    handleCheckBoxChange,
     isSubmitting,
   };
 };

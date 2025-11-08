@@ -6,7 +6,7 @@ import {
   programmingLanguageData,
   subjectData,
 } from "../../../Utils/data";
-import { NumericTextBox } from "@progress/kendo-react-inputs";
+import { Checkbox, NumericTextBox } from "@progress/kendo-react-inputs";
 import { DropDownList, MultiSelect } from "@progress/kendo-react-dropdowns";
 import FormField from "../Components/Common/FormField";
 import GenerateButton from "../Components/Common/GenerateButton";
@@ -16,6 +16,7 @@ const GenerateTechnicalInterviews = () => {
     handleDropDownChange,
     handleInputChange,
     handleGenerateTechnicalInterviews,
+    handleCheckBoxChange,
     isSubmitting,
   } = useGenerateTechnicalInterviews();
 
@@ -27,6 +28,7 @@ const GenerateTechnicalInterviews = () => {
             id="ai-agent-tech"
             name="aiAgent"
             data={aiAgentData}
+            size={"large"}
             defaultValue={"Select AI Agent"}
             onChange={handleDropDownChange}
           />
@@ -37,6 +39,7 @@ const GenerateTechnicalInterviews = () => {
             id="programming-language"
             name="programmingLanguage"
             data={programmingLanguageData}
+            size={"large"}
             defaultValue={"Select Language"}
             onChange={handleDropDownChange}
           />
@@ -47,6 +50,7 @@ const GenerateTechnicalInterviews = () => {
             id="difficulty-level"
             name="difficultyLevel"
             data={difficultyLevelData}
+            size={"large"}
             defaultValue={"Select Difficulty Level"}
             onChange={handleDropDownChange}
           />
@@ -57,6 +61,7 @@ const GenerateTechnicalInterviews = () => {
             id="position"
             name="position"
             data={positionData}
+            size={"large"}
             defaultValue={"Select Position"}
             onChange={handleDropDownChange}
           />
@@ -67,6 +72,7 @@ const GenerateTechnicalInterviews = () => {
             id="subject"
             name="subject"
             data={subjectData}
+            size={"large"}
             placeholder="Select technical subjects"
             onChange={handleDropDownChange}
           />
@@ -79,10 +85,21 @@ const GenerateTechnicalInterviews = () => {
           <NumericTextBox
             id="number-of-questions-tech"
             name="numberOfQuestions"
+            size={"large"}
             placeholder="Enter number (1-10)"
             min={1}
             max={10}
             onChange={handleInputChange}
+          />
+        </FormField>
+
+        <FormField label="Prior Experience" htmlFor="prior-experience-hr">
+          <Checkbox
+            id="prior-experience-hr"
+            name="hasPriorExperience"
+            size={"large"}
+            label="Do you have prior experience?"
+            onChange={handleCheckBoxChange}
           />
         </FormField>
 

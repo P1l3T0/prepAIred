@@ -19,7 +19,7 @@ import type {
   DropDownListChangeEvent,
   MultiSelectChangeEvent,
 } from "@progress/kendo-react-dropdowns";
-import type { NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
+import type { CheckboxChangeEvent, NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
 const useGenerateHrInterviews = () => {
   const queryClient = useQueryClient();
@@ -27,14 +27,19 @@ const useGenerateHrInterviews = () => {
 
   const [hrRequest, setHrRequest] = useState<HrRequestDTO>({
     aiAgent: "ChatGPT",
-    softSkillFocus: ["Communication", "Teamwork"],
-    contextScenario: ["Team Collaboration", "Conflict Resolution"],
+    softSkillFocus: [
+      "Communication", 
+      "Teamwork"
+    ],
+    contextScenario: [
+      "Team Collaboration", 
+      "Conflict Resolution"
+    ],
     numberOfQuestions: 3,
+    hasPriorExperience: false,
   });
 
-  const handleDropDownChange = (
-    e: DropDownListChangeEvent | MultiSelectChangeEvent
-  ) => {
+  const handleDropDownChange = (e: DropDownListChangeEvent | MultiSelectChangeEvent) => {
     const name: string = e.target.props.name as string;
 
     setHrRequest({
@@ -51,6 +56,13 @@ const useGenerateHrInterviews = () => {
       [name]: e.value,
     });
   };
+
+  const handleCheckBoxChange = (e: CheckboxChangeEvent) => {
+    setHrRequest({
+      ...hrRequest,
+      hasPriorExperience: e.value,
+    });
+  }
 
   const generateHrInterviews = async () => {
     await axios
@@ -81,6 +93,7 @@ const useGenerateHrInterviews = () => {
     handleDropDownChange,
     handleInputChange,
     handleGenerateHrInterviews,
+    handleCheckBoxChange,
     isSubmitting,
   };
 };
