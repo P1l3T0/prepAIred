@@ -12,7 +12,7 @@ const EmailInput = (fieldRenderProps: FieldRenderProps) => {
   const { validationMessage, visited, ...rest } = fieldRenderProps;
   return (
     <div className="k-form-field-wrap">
-      <Input {...rest} autoComplete="off" label="" placeholder="Email" />
+      <Input {...rest} autoComplete="off" placeholder="Email" />
       {visited && validationMessage && <Error>{validationMessage}</Error>}
     </div>
   );
@@ -25,7 +25,6 @@ const PasswordInput = (fieldRenderProps: FieldRenderProps) => {
       <Input
         {...rest}
         autoComplete="off"
-        label=""
         placeholder="Password"
         type="password"
       />

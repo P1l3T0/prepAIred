@@ -24,7 +24,6 @@ const LoginForm = () => {
               <Field
                 name={"email"}
                 type={"email"}
-                label={"Email"}
                 component={EmailInput}
                 validator={emailValidator}
                 onChange={handleChange}
@@ -34,7 +33,6 @@ const LoginForm = () => {
             <FieldWrapper>
               <Field
                 name={"password"}
-                label={"Password"}
                 type={"password"}
                 component={PasswordInput}
                 validator={passwordValidator}

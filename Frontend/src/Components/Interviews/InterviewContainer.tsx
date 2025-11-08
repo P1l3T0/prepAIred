@@ -1,4 +1,4 @@
-import InterviewSection from "./Components/Common/IntterviewSection";
+import InterviewSection from "./Components/Common/InterviewSection";
 import GenerateHrInterviews from "./HR/GenerateHrInterviews";
 import GetHrInterviews from "./HR/GetHrInterviews";
 import GenerateTechnicalInterviews from "./Technical/GenerateTechnicalInterviews";
