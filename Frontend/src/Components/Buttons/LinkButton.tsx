@@ -7,7 +7,12 @@ interface LinkButtonProps {
   onClick?: () => void;
 }
 
-const LinkButton = ({ to, label, isLogo = false, onClick }: LinkButtonProps) => {
+const LinkButton = ({
+  to,
+  label,
+  isLogo = false,
+  onClick,
+}: LinkButtonProps) => {
   return (
     <Link
       onClick={onClick}
@@ -18,7 +23,13 @@ const LinkButton = ({ to, label, isLogo = false, onClick }: LinkButtonProps) => 
           : "text-text-primary hover:text-primary font-medium duration-200 p-3 rounded-md hover:bg-primary/10"
       }
     >
-      {isLogo ? <span className="text-primary">{label}</span> : label}
+      {isLogo ? (
+        <h1 className="text-2xl md:text-3xl font-bold text-text-primary mb-1">
+          <span className="text-primary">prep</span>AIred
+        </h1>
+      ) : (
+        label
+      )}
     </Link>
   );
 };
