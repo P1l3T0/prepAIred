@@ -3,8 +3,12 @@ import GenerateHrInterviews from "./HR/GenerateHrInterviews";
 import GetHrInterviews from "./HR/GetHrInterviews";
 import GenerateTechnicalInterviews from "./Technical/GenerateTechnicalInterviews";
 import GetTechnicalInterviews from "./Technical/GetTechnicalInterviews";
+import InterviewStepper from "./Components/Common/InterviewStepper";
+import useChangeStep from "../../Hooks/Interviews/Common/useChangeStep";
 
 const InterviewContainer = () => {
+  const { value, items, handleChange } = useChangeStep();
+  
   return (
     <>
       <div className="bg-linear-to-br from-background via-background to-primary p-6">
@@ -18,19 +22,27 @@ const InterviewContainer = () => {
             </p>
           </div>
 
-          <InterviewSection
-            generateInterviews={<GenerateHrInterviews />}
-            getInterviews={<GetHrInterviews />}
+          <InterviewStepper
+            value={value}
+            items={items}
+            handleChange={handleChange}
           />
 
-          <InterviewSection
-            generateInterviews={<GenerateTechnicalInterviews />}
-            getInterviews={<GetTechnicalInterviews />}
-          />
+          {value === 0 ? (
+            <InterviewSection
+              generateInterviews={<GenerateHrInterviews />}
+              getInterviews={<GetHrInterviews />}
+            />
+          ) : (
+            <InterviewSection
+              generateInterviews={<GenerateTechnicalInterviews />}
+              getInterviews={<GetTechnicalInterviews />}
+            />
+          )}
         </div>
       </div>
     </>
   );
-}
+};
 
 export default InterviewContainer;
