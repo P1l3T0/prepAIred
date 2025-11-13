@@ -7,15 +7,18 @@ import useHandleAnswers from "../../../../Hooks/Interviews/Answers/useHandleAnsw
 import EvaluationButton from "../Common/EvaluationButton";
 import InterviewFieldset from "./InterviewFieldset";
 import InterviewQuestion from "./InterviewQuestion";
+import ChangeStepButton from "../Common/ChnageStepButton";
 
 interface InterviewDisplayProps {
   interviewType: "HR-Interview" | "Technical-Interview";
   interviews: HRInterviewDTO[] | TechnicalInterviewDTO[] | void;
+  handleChangeStep: () => void;
 }
 
 const InterviewDisplay = ({
   interviews,
   interviewType,
+  handleChangeStep,
 }: InterviewDisplayProps) => {
   const {
     handleSingleChoiceChange,
@@ -28,12 +31,29 @@ const InterviewDisplay = ({
     (interviews as HRInterviewDTO[] | TechnicalInterviewDTO[]) ?? []
   );
 
+  const label =
+    interviewType === "HR-Interview"
+      ? "Proceed to Technical Interviews"
+      : "Back to HR Interviews";
+  
   const { handleEvaluateInterviews, isSubmitting } = useEvaluateInterviews({
     interviewType,
     singleChoiceAnswers,
     multipleChoiceAnswers,
     openEndedAnswers,
   });
+
+  const disableHrInterviews: boolean =
+    isSubmitting ||
+    !Array.isArray(interviews) ||
+    interviews.length === 0 ||
+    interviews.every((interview) => interview.isAnswered);
+
+  const disableTechnicalInterviews: boolean =
+    !Array.isArray(interviews) ||
+    (interviewType === "HR-Interview" &&
+      (interviews.length === 0 ||
+        interviews.some((interview) => !interview.isAnswered)));
 
   return (
     <div className="p-2 md:p-4 bg-card rounded-lg shadow-sm">
@@ -60,16 +80,19 @@ const InterviewDisplay = ({
         </div>
       )}
 
-      <EvaluationButton
-        onClick={handleEvaluateInterviews}
-        isSubmitting={isSubmitting}
-        disabled={
-          isSubmitting ||
-          !Array.isArray(interviews) ||
-          interviews.length === 0 ||
-          interviews[0]?.isAnswered
-        }
-      />
+      <div className="justify-between gap-4 flex flex-col md:flex-row">
+        <EvaluationButton
+          isSubmitting={isSubmitting}
+          disabled={disableHrInterviews}
+          onClick={handleEvaluateInterviews}
+        />
+
+        <ChangeStepButton
+          label={label}
+          disabled={disableTechnicalInterviews}
+          onClick={handleChangeStep}
+        />
+      </div>
     </div>
   );
 };

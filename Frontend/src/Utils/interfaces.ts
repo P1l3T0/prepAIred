@@ -141,3 +141,7 @@ export interface MultipleChoiceAnswer {
 }
 
 //#endregion
+
+export interface ChangeStepButtonProps {
+  handleChangeStep: () => void;
+}

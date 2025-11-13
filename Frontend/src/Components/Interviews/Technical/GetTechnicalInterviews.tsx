@@ -1,7 +1,8 @@
 import InterviewDisplay from "../Components/InterviewDisplay/InterviewDisplay";
 import useGetLatestTechnicalInterviews from "../../../Hooks/Interviews/Technical/useGetLatestTechnicalInterviews";
+import type { ChangeStepButtonProps } from "../../../Utils/interfaces";
 
-const GetTechnicalInterviews = () => {
+const GetTechnicalInterviews = ({ handleChangeStep }: ChangeStepButtonProps) => {
   const { data: technicalInterviews, isLoading, isError } = useGetLatestTechnicalInterviews();
 
   if (isLoading) return <div>Loading...</div>;
@@ -12,6 +13,7 @@ const GetTechnicalInterviews = () => {
       <InterviewDisplay
         interviewType="Technical-Interview"
         interviews={technicalInterviews}
+        handleChangeStep={handleChangeStep}
       />
     </div>
   );

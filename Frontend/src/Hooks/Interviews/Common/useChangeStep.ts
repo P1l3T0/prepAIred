@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type StepperChangeEvent, type StepProps } from "@progress/kendo-react-layout";
+import { type StepProps } from "@progress/kendo-react-layout";
 import { eyeIcon, trackChangesIcon } from "@progress/kendo-svg-icons";
 
 const useChangeStep = () => {
@@ -10,11 +10,11 @@ const useChangeStep = () => {
 
   const [value, setValue] = useState<number>(0);
 
-  const handleChange = (e: StepperChangeEvent) => {
-    setValue(e.value);
+  const handleChangeStep = () => {
+    setValue((prev) => prev === 0 ? 1 : 0);
   };
 
-  return { items, value, handleChange };
+  return { items, value, handleChangeStep };
 };
 
 export default useChangeStep;

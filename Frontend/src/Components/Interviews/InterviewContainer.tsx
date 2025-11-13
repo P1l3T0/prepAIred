@@ -7,8 +7,8 @@ import InterviewStepper from "./Components/Common/InterviewStepper";
 import useChangeStep from "../../Hooks/Interviews/Common/useChangeStep";
 
 const InterviewContainer = () => {
-  const { value, items, handleChange } = useChangeStep();
-  
+  const { value, items, handleChangeStep } = useChangeStep();
+
   return (
     <>
       <div className="bg-linear-to-br from-background via-background to-primary p-6">
@@ -22,21 +22,21 @@ const InterviewContainer = () => {
             </p>
           </div>
 
-          <InterviewStepper
-            value={value}
-            items={items}
-            handleChange={handleChange}
-          />
+          <InterviewStepper value={value} items={items} />
 
           {value === 0 ? (
             <InterviewSection
               generateInterviews={<GenerateHrInterviews />}
-              getInterviews={<GetHrInterviews />}
+              getInterviews={
+                <GetHrInterviews handleChangeStep={handleChangeStep} />
+              }
             />
           ) : (
             <InterviewSection
               generateInterviews={<GenerateTechnicalInterviews />}
-              getInterviews={<GetTechnicalInterviews />}
+              getInterviews={
+                <GetTechnicalInterviews handleChangeStep={handleChangeStep} />
+              }
             />
           )}
         </div>

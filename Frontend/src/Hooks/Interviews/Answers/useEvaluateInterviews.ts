@@ -64,6 +64,15 @@ const useEvaluateInterviews = ({
   });
 
   const handleEvaluateInterviews = async (e: SyntheticEvent) => {
+    const hasSingleChoiceAnswer = singleChoiceAnswers.every(answer => answer.answer !== "");
+    const hasOpenEndedAnswer = openEndedAnswers.every(answer => answer.answer !== "");
+    const hasMultipleChoiceAnswer = multipleChoiceAnswers.some(answer => answer.answers.length > 0);
+
+    if (!hasSingleChoiceAnswer && !hasOpenEndedAnswer && !hasMultipleChoiceAnswer) {
+      alert("Please answer all questions before submitting.");
+      return;
+    }
+
     e.preventDefault();
     await mutateAsync();
   };

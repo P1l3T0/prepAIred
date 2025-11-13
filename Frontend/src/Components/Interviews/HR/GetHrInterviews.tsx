@@ -1,7 +1,8 @@
 import InterviewDisplay from "../Components/InterviewDisplay/InterviewDisplay";
 import useGetLatestHrInterviews from "../../../Hooks/Interviews/HR/useGetLatestHrInterviews";
+import type { ChangeStepButtonProps } from "../../../Utils/interfaces";
 
-const GetHrInterviews = () => {
+const GetHrInterviews = ({ handleChangeStep }: ChangeStepButtonProps) => {
   const { data: hrInterviews, isLoading, isError } = useGetLatestHrInterviews();
 
   if (isLoading) return <div>Loading...</div>;
@@ -12,6 +13,7 @@ const GetHrInterviews = () => {
       <InterviewDisplay
         interviewType="HR-Interview"
         interviews={hrInterviews}
+        handleChangeStep={handleChangeStep}
       />
     </div>
   );
