@@ -14,10 +14,10 @@ const InterviewContainer = () => {
       <div className="bg-linear-to-br from-background via-background to-primary p-6">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-text-primary mb-3">
+            <h1 className="text-[clamp(1.5rem,4vw,2.5rem)] font-bold text-text-primary mb-3">
               Interview Preparation Hub
             </h1>
-            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+            <p className="text-[clamp(1rem,2vw,1.25rem)] text-text-secondary max-w-2xl mx-auto">
               Generate AI-powered interviews and review your practice sessions
             </p>
           </div>

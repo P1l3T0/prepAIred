@@ -26,7 +26,7 @@ const GenerateHrInterviews = () => {
             id="ai-agent"
             name="aiAgent"
             data={aiAgentData}
-            size={"large"}
+            size={"medium"}
             defaultValue={"Select AI Agent"}
             onChange={handleDropDownChange}
           />
@@ -37,7 +37,7 @@ const GenerateHrInterviews = () => {
             id="soft-skill-focus"
             name="softSkillFocus"
             data={softSkillFocusData}
-            size={"large"}
+            size={"medium"}
             placeholder="Select soft skills to focus on..."
             onChange={handleDropDownChange}
           />
@@ -49,7 +49,7 @@ const GenerateHrInterviews = () => {
             name="contextScenario"
             data={contextScenarioData}
             autoClose={true}
-            size={"large"}
+            size={"medium"}
             placeholder="Select interview scenarios..."
             onChange={handleDropDownChange}
           />
@@ -59,7 +59,7 @@ const GenerateHrInterviews = () => {
           <NumericTextBox
             id="number-of-questions-hr"
             name="numberOfQuestions"
-            size={"large"}
+            size={"medium"}
             placeholder="Enter number (1-10)"
             min={1}
             max={10}
@@ -71,7 +71,7 @@ const GenerateHrInterviews = () => {
           <Checkbox
             id="prior-experience-hr"
             name="hasPriorExperience"
-            size={"large"}
+            size={"medium"}
             label="Do you have prior experience?"
             onChange={handleCheckBoxChange}
           />

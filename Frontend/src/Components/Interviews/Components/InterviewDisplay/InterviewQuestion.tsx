@@ -76,7 +76,7 @@ const InterviewQuestion = ({
 
   return (
     <div className="mb-4 pt-3.5 border-t border-border">
-      <div className="font-semibold mb-1.5 text-[1.05rem] text-text-primary">
+      <div className="font-semibold mb-1.5 text-[clamp(0.75rem,2vw,1.125rem)] text-text-primary">
         {interview.question}
       </div>
 

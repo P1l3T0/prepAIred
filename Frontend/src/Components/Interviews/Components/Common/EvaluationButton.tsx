@@ -25,12 +25,16 @@ const EvaluationButton = ({
         <>
           <div className="flex items-center">
             <Loader type={"infinite-spinner"} className="mr-2" />
-            <span className="font-bold">Evaluating Interviews...</span>
+            <span className="font-bold text-[clamp(1rem,4vw,1.25rem)]">
+              Evaluating Interviews...
+            </span>
           </div>
         </>
       ) : (
         <div className="flex items-center">
-          <span className="font-bold">Evaluate</span>
+          <span className="font-bold text-[clamp(1rem,4vw,1.25rem)]">
+            Evaluate Interview
+          </span>
         </div>
       )}
     </Button>

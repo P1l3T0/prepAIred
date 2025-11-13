@@ -28,7 +28,7 @@ const GenerateTechnicalInterviews = () => {
             id="ai-agent-tech"
             name="aiAgent"
             data={aiAgentData}
-            size={"large"}
+            size={"medium"}
             defaultValue={"Select AI Agent"}
             onChange={handleDropDownChange}
           />
@@ -39,7 +39,7 @@ const GenerateTechnicalInterviews = () => {
             id="programming-language"
             name="programmingLanguage"
             data={programmingLanguageData}
-            size={"large"}
+            size={"medium"}
             defaultValue={"Select Language"}
             onChange={handleDropDownChange}
           />
@@ -50,7 +50,7 @@ const GenerateTechnicalInterviews = () => {
             id="difficulty-level"
             name="difficultyLevel"
             data={difficultyLevelData}
-            size={"large"}
+            size={"medium"}
             defaultValue={"Select Difficulty Level"}
             onChange={handleDropDownChange}
           />
@@ -61,7 +61,7 @@ const GenerateTechnicalInterviews = () => {
             id="position"
             name="position"
             data={positionData}
-            size={"large"}
+            size={"medium"}
             defaultValue={"Select Position"}
             onChange={handleDropDownChange}
           />
@@ -72,20 +72,17 @@ const GenerateTechnicalInterviews = () => {
             id="subject"
             name="subject"
             data={subjectData}
-            size={"large"}
+            size={"medium"}
             placeholder="Select technical subjects"
             onChange={handleDropDownChange}
           />
         </FormField>
 
-        <FormField
-          label="Number of Questions"
-          htmlFor="number-of-questions-tech"
-        >
+        <FormField label="Number of Questions" htmlFor="number-of-questions-tech">
           <NumericTextBox
             id="number-of-questions-tech"
             name="numberOfQuestions"
-            size={"large"}
+            size={"medium"}
             placeholder="Enter number (1-10)"
             min={1}
             max={10}
@@ -97,7 +94,7 @@ const GenerateTechnicalInterviews = () => {
           <Checkbox
             id="prior-experience-hr"
             name="hasPriorExperience"
-            size={"large"}
+            size={"medium"}
             label="Do you have prior experience?"
             onChange={handleCheckBoxChange}
           />

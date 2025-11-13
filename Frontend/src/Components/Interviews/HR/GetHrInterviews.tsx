@@ -8,7 +8,7 @@ const GetHrInterviews = () => {
   if (isError) return <div>Error loading HR interviews</div>;
 
   return (
-    <div className="rounded-lg shadow-lg p-6 border border-border bg-background">
+    <div className="rounded-lg shadow-lg p-3 md:p-6 border border-border bg-background">
       <InterviewDisplay
         interviewType="HR-Interview"
         interviews={hrInterviews}

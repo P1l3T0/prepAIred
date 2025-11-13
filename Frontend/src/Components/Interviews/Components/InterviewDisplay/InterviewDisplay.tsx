@@ -36,7 +36,7 @@ const InterviewDisplay = ({
   });
 
   return (
-    <div className="p-4 md:p-8 bg-card rounded-lg shadow-sm">
+    <div className="p-2 md:p-4 bg-card rounded-lg shadow-sm">
       {interviews && interviews.length > 0 ? (
         <div className="space-y-8">
           {interviews.map((interview, interviewIndex) => (
