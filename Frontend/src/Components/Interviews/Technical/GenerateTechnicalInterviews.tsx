@@ -21,7 +21,7 @@ const GenerateTechnicalInterviews = () => {
   } = useGenerateTechnicalInterviews();
 
   return (
-    <div className="bg-background rounded-lg shadow-lg p-6 border border-border h-fit">
+    <div className="bg-background rounded-lg shadow-lg p-3 md:p-6 border border-border h-fit">
       <form onSubmit={handleGenerateTechnicalInterviews} className="space-y-4">
         <FormField label="AI Agent" htmlFor="ai-agent-tech">
           <DropDownList
@@ -78,7 +78,10 @@ const GenerateTechnicalInterviews = () => {
           />
         </FormField>
 
-        <FormField label="Number of Questions" htmlFor="number-of-questions-tech">
+        <FormField
+          label="Number of Questions"
+          htmlFor="number-of-questions-tech"
+        >
           <NumericTextBox
             id="number-of-questions-tech"
             name="numberOfQuestions"

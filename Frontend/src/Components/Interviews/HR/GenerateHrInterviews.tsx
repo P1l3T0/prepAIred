@@ -19,7 +19,7 @@ const GenerateHrInterviews = () => {
   } = useGenerateHrInterviews();
 
   return (
-    <div className="bg-background rounded-lg shadow-lg p-6 border border-border h-fit">
+    <div className="bg-background rounded-lg shadow-lg p-3 md:p-6 border border-border h-fit">
       <form onSubmit={handleGenerateHrInterviews} className="space-y-4">
         <FormField label="AI Agent" htmlFor="ai-agent">
           <DropDownList

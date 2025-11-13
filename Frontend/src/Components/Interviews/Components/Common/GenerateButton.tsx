@@ -25,7 +25,7 @@ const GenerateButton = ({
             <div className="flex items-center ">
               <Loader type={"infinite-spinner"} className="mr-2" />
               <span className="font-bold text-[clamp(1rem,4vw,1.25rem)]">
-                Generating {interviewType} interviews...
+                Generating {interviewType} interview...
               </span>
             </div>
           </>

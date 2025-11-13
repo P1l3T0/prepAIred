@@ -11,7 +11,7 @@ const InterviewContainer = () => {
 
   return (
     <>
-      <div className="bg-linear-to-br from-background via-background to-primary p-6">
+      <div className="bg-linear-to-br from-background via-background to-primary p-3 md:p-6">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center mb-8">
             <h1 className="text-[clamp(1.5rem,4vw,2.5rem)] font-bold text-text-primary mb-3">

@@ -33,8 +33,8 @@ const InterviewDisplay = ({
 
   const label =
     interviewType === "HR-Interview"
-      ? "Proceed to Technical Interviews"
-      : "Back to HR Interviews";
+      ? "Proceed to Technical Interview"
+      : "Back to HR Interview";
   
   const { handleEvaluateInterviews, isSubmitting } = useEvaluateInterviews({
     interviewType,
@@ -76,7 +76,7 @@ const InterviewDisplay = ({
         </div>
       ) : (
         <div className="text-center text-text-tertiary text-lg my-5">
-          No interviews found
+          No interview found
         </div>
       )}
 
