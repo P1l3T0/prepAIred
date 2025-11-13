@@ -7,7 +7,7 @@ import useHandleAnswers from "../../../../Hooks/Interviews/Answers/useHandleAnsw
 import EvaluationButton from "../Common/EvaluationButton";
 import InterviewFieldset from "./InterviewFieldset";
 import InterviewQuestion from "./InterviewQuestion";
-import ChangeStepButton from "../Common/ChnageStepButton";
+import ChangeStepButton from "../Common/ChangeStepButton";
 
 interface InterviewDisplayProps {
   interviewType: "HR-Interview" | "Technical-Interview";

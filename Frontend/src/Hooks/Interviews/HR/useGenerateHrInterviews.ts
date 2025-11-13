@@ -2,7 +2,7 @@
  * Custom hook for generating HR interviews using AI.
  * Manages form state, handles user input changes, and submits requests to generate interviews.
  * Uses react-query mutations for API calls and cache invalidation.
- * 
+ *
  * @returns {Object} - An object containing:
  *   - handleDropDownChange: Handler for dropdown and multi-select changes
  *   - handleInputChange: Handler for numeric input changes
@@ -19,7 +19,10 @@ import type {
   DropDownListChangeEvent,
   MultiSelectChangeEvent,
 } from "@progress/kendo-react-dropdowns";
-import type { CheckboxChangeEvent, NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
+import type {
+  CheckboxChangeEvent,
+  NumericTextBoxChangeEvent,
+} from "@progress/kendo-react-inputs";
 
 const useGenerateHrInterviews = () => {
   const queryClient = useQueryClient();
@@ -27,14 +30,8 @@ const useGenerateHrInterviews = () => {
 
   const [hrRequest, setHrRequest] = useState<HrRequestDTO>({
     aiAgent: "ChatGPT",
-    softSkillFocus: [
-      "Communication", 
-      "Teamwork"
-    ],
-    contextScenario: [
-      "Team Collaboration", 
-      "Conflict Resolution"
-    ],
+    softSkillFocus: ["Communication", "Teamwork"],
+    contextScenario: ["Team Collaboration", "Conflict Resolution"],
     numberOfQuestions: 3,
     hasPriorExperience: false,
   });
@@ -62,7 +59,7 @@ const useGenerateHrInterviews = () => {
       ...hrRequest,
       hasPriorExperience: e.value,
     });
-  }
+  };
 
   const generateHrInterviews = async () => {
     await axios

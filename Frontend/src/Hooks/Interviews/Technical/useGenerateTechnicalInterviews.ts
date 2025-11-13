@@ -19,7 +19,10 @@ import type {
   DropDownListChangeEvent,
   MultiSelectChangeEvent,
 } from "@progress/kendo-react-dropdowns";
-import type { CheckboxChangeEvent, NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
+import type {
+  CheckboxChangeEvent,
+  NumericTextBoxChangeEvent,
+} from "@progress/kendo-react-inputs";
 
 const useGenerateTechnicalInterviews = () => {
   const queryClient = useQueryClient();
@@ -63,7 +66,7 @@ const useGenerateTechnicalInterviews = () => {
       ...technicalRequest,
       hasPriorExperience: e.value,
     });
-  }
+  };
 
   const generateTechnicalInterviews = async () => {
     await axios
