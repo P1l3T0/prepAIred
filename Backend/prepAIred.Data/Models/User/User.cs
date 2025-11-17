@@ -62,8 +62,6 @@ namespace prepAIred.Data
                 ID = ID,
                 Email = Email,
                 Username = Username,
-                PasswordHash = PasswordHash,
-                PasswordSalt = PasswordSalt,
                 DateCreated = DateCreated,
             };
 

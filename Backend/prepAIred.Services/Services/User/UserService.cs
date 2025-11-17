@@ -23,7 +23,7 @@ namespace prepAIred.Services
             return user;
         }
 
-        public async Task<CurrentUserDTO> GetUserByEmailAsync(string email) => (await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == email))!.ToDto<CurrentUserDTO>() ?? throw new InvalidCredentialsException("Invalid Email");
+        public async Task<User> GetUserByEmailAsync(string email) => await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == email)! ?? throw new InvalidCredentialsException("Invalid Email");
 
         public async Task<CurrentUserDTO> GetUserByUsernameAsync(string username) => (await _dataContext.Users.FirstOrDefaultAsync(u => u.Username == username))!.ToDto<CurrentUserDTO>() ?? throw new InvalidCredentialsException("Invalid Username");
 
@@ -99,7 +99,7 @@ namespace prepAIred.Services
             return (hashedPassword, saltPassword);
         }
 
-        public bool CheckPassword(CurrentUserDTO user, LoginDTO loginDto)
+        public bool CheckPassword(User user, LoginDTO loginDto)
         {
             using HMACSHA512 hmac = new HMACSHA512(user.PasswordSalt);
             byte[] computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
