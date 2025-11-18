@@ -145,3 +145,27 @@ export interface MultipleChoiceAnswer {
 export interface ChangeStepButtonProps {
   handleChangeStep: () => void;
 }
+
+// Home Profile Stats
+
+export interface Activity {
+  type: string;
+  subject: string;
+  score: number;
+  date: string;
+}
+
+export interface ProfileStats {
+  totalInterviews: number;
+  passedInterviews: number;
+  ongoingInterviews: number;
+  averageScore: number;
+  completionRate: number;
+  recentActivity: Activity[];
+}
+
+export interface UploadEvent {
+  affectedFiles?: any[];
+  newState: any[];
+  response?: any;
+}
