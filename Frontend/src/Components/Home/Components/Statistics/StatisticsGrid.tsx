@@ -1,4 +1,4 @@
-import type { ProfileStats } from '../../../Utils/interfaces';
+import type { ProfileStats } from '../../../../Utils/interfaces';
 import StatisticCard from './StatisticCard';
 
 interface StatisticsGridProps {
