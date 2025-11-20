@@ -55,6 +55,13 @@ namespace prepAIred.Services
         Task<int> GetCurrentUserID();
 
         /// <summary>
+        /// Updates the details of an existing user asynchronously.
+        /// </summary>
+        /// <param name="user">The <see cref="User"/> object containing the updated user details. The user must already exist in the system.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        Task UpdateUserAsync(User user);
+
+        /// <summary>
         /// Deletes the user with the specified user ID.
         /// </summary>
         /// <param name="userID">The unique identifier of the user to delete. Must be a positive integer.</param>
