@@ -30,7 +30,6 @@ const useUploadProfilePicture = () => {
         },
       })
       .catch((err: AxiosError) => {
-        debugger
         const error = err.response?.data as { title?: string };
         console.error(error?.title || "Upload failed");
         throw err;

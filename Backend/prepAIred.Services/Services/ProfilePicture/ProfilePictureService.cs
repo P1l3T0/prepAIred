@@ -31,7 +31,9 @@ namespace prepAIred.Services
                 .Select(u => u.ProfilePicture)
                 .FirstOrDefaultAsync() ?? string.Empty;
 
-            return $"https://localhost:7227/Uploads/{profilePictureName}";
+            string fullPath = $"https://localhost:7227/Uploads/{profilePictureName}";
+
+            return fullPath;
         }
 
         public async Task DeleteProfilePictureAsync(string fileNameWithExtension)

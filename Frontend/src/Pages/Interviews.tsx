@@ -1,9 +1,7 @@
 import InterviewContainer from "../Components/Interviews/InterviewContainer";
 
 const Interviews = () => {
-  return (
-    <InterviewContainer />
-  );
+  return <InterviewContainer />;
 };
 
 export default Interviews;

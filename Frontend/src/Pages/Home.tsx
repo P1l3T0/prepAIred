@@ -1,9 +1,7 @@
 import HomeContainer from "../Components/Home/HomeContainer";
 
 const Home = () => {
-  return (
-    <HomeContainer />
-  )
-}
+  return <HomeContainer />;
+};
 
 export default Home;
