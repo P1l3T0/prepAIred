@@ -6,6 +6,7 @@ import Header from "./Components/Header/Header";
 import StatisticsGrid from "./Components/Statistics/StatisticsGrid";
 import ProfileInfo from "./Components/ProfileInformation/ProfileInfo";
 import RecentActivity from "./Components/RecentActivity/RecentActivity";
+import useGetProfilePictureUrl from "../../Hooks/ProfilePicture/useGetProfilePicture";
 
 const mockProfileStats: ProfileStats = {
   totalInterviews: 23,
@@ -36,9 +37,10 @@ const mockProfileStats: ProfileStats = {
 };
 
 const HomeContainer = () => {
-  const { data: user, isLoading, isError } = useGetUser();
+  const { data: user, isLoading: isUserLoading, isError: isUserError } = useGetUser();
+  const { data: profilePictureUrl, isLoading: isProfileLoading, isError: isProfileError } = useGetProfilePictureUrl();
 
-  if (isLoading) {
+  if (isUserLoading || isProfileLoading) {
     return (
       <div className="min-h-[calc(100vh-4.05rem)] sm:min-h-[calc(100vh-4.55rem)] bg-background flex items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
@@ -49,7 +51,7 @@ const HomeContainer = () => {
     );
   }
 
-  if (isError) {
+  if (isUserError || isProfileError) {
     return (
       <div className="min-h-[calc(100vh-4.05rem)] sm:min-h-[calc(100vh-4.55rem)] bg-background flex items-center justify-center">
         <Card className="shadow-lg">
@@ -75,11 +77,11 @@ const HomeContainer = () => {
       <div className="max-w-7xl mx-auto p-6">
         <StatisticsGrid profileStats={mockProfileStats} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="col-span-2 lg:col-span-1">
-            <ProfileInfo 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="col-span-1">
+            <ProfileInfo
               user={user as User}
-              completionRate={mockProfileStats.completionRate}
+              profilePictureUrl={profilePictureUrl || ""}
             />
           </div>
 
