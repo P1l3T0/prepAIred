@@ -7,8 +7,8 @@ import {
   FormFieldSet,
 } from "@progress/kendo-react-form";
 import useRegister from "../../Hooks/Auth/useRegister";
-import useInputValidations from "./useInputValidations";
-import FormButton from "./FormButton";
+import useInputValidations from "../Auth/useInputValidations";
+import FormButton from "../Buttons/FormButton";
 
 const RegisterForm = () => {
   const { handleSubmit, handleChange } = useRegister();

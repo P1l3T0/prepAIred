@@ -1,14 +1,7 @@
-import AuthForm from "../Components/Auth/AuthForm";
-import RegisterForm from "../Components/Auth/RegisterForm";
+import RegisterContainer from "../Components/Register/RegisterContainer";
 
 const Register = () => {
-  return (
-    <>
-      <AuthForm>
-        <RegisterForm />
-      </AuthForm>
-    </>
-  );
+  return <RegisterContainer />;
 };
 
 export default Register;
