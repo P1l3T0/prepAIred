@@ -33,6 +33,12 @@ namespace prepAIred.Services
 
         public async Task<int> GetCurrentUserID() => (await GetCurrentUserAsync()).ID;
 
+        public async Task UpdateUserAsync(User user)
+        {
+            _dataContext.Users.Update(user);
+            await _dataContext.SaveChangesAsync();
+        }
+
         public async Task DeleteUserAsync(int userID)
         {
             await _dataContext.Users.Where(u => u.ID == userID).ExecuteDeleteAsync();
