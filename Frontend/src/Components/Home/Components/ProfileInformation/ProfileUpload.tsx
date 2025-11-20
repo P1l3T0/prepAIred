@@ -20,9 +20,10 @@ const ProfileUpload = ({
       {showUpload && (
         <div className="mb-4 p-4 bg-surface rounded-lg border border-border">
           <Upload
-            restrictions={restrictions}
             batch={false}
+            autoUpload={false}
             onAdd={onAdd}
+            restrictions={restrictions}
           />
         </div>
       )}

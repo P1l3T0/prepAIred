@@ -163,9 +163,3 @@ export interface ProfileStats {
   completionRate: number;
   recentActivity: Activity[];
 }
-
-export interface UploadEvent {
-  affectedFiles?: any[];
-  newState: any[];
-  response?: any;
-}
