@@ -5,14 +5,14 @@
  */
 import { useQuery } from "react-query";
 import axios, { AxiosError, type AxiosResponse } from "axios";
-import { getProfilePictureUrlEndPoint } from "../../Utils/endpoints";
+import { getProfilePictureUrlEndPoint, uploadsFolderURL } from "../../Utils/endpoints";
 
 const useGetProfilePictureUrl = () => {
   const getProfilePictureUrl = async () => {
     return await axios
       .get<string>(getProfilePictureUrlEndPoint, { withCredentials: true })
       .then((res: AxiosResponse<string>) => {
-        return res.data;
+        return res.data === uploadsFolderURL ? null : res.data;
       })
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };

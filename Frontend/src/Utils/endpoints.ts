@@ -1,5 +1,8 @@
 const baseURL: string | undefined = process.env.REACT_APP_API_URL;
 
+// Uploads Folder URL
+export const uploadsFolderURL: string = process.env.UPLOADS_FOLDER_URL || "https://localhost:7227/Uploads/";
+
 // Controllers
 const authController: string | undefined = `${baseURL}/Auth`;
 const userController: string | undefined = `${baseURL}/User`;
