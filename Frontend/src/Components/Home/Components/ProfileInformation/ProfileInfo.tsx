@@ -1,9 +1,10 @@
-import { Card, CardBody, CardHeader } from "@progress/kendo-react-layout";
+import { Card, CardBody, CardFooter, CardHeader } from "@progress/kendo-react-layout";
 import ProfileAvatar from "./ProfileAvatar";
 import ProfileUpload from "./ProfileUpload";
 import ProfileData from "./ProfileData";
 import type { User } from "../../../../Utils/interfaces";
 import useUploadProfilePicture from "../../../../Hooks/ProfilePicture/useUploadProfilePicture";
+import { Button } from "@progress/kendo-react-buttons";
 
 interface ProfileInfoProps {
   profilePictureUrl: string;
@@ -28,14 +29,15 @@ const ProfileInfo = ({ user, profilePictureUrl }: ProfileInfoProps) => {
             />
           </div>
 
-          <ProfileUpload
-            showUpload={showUpload}
-            onAdd={handleAdd}
-          />
+          <ProfileUpload showUpload={showUpload} onAdd={handleAdd} />
 
           <ProfileData user={user} />
         </div>
       </CardBody>
+      <CardFooter className="flex flex-col md:flex-row justify-center gap-2">
+        <Button themeColor={"primary"}>Update Info</Button>
+        <Button themeColor={"error"}>Delete User</Button>
+      </CardFooter>
     </Card>
   );
 };
