@@ -4,7 +4,6 @@
  * @returns {Object} - handleLogOut function
  */
 import axios, { AxiosError } from "axios";
-import type { SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { logoutEndPoint } from "../../Utils/endpoints";
@@ -18,7 +17,7 @@ const useLogOut = () => {
   const logOut = async () => {
     await axios
       .post(logoutEndPoint, null, { withCredentials: true })
-      .then(() => navigate("/authenticate"))
+      .then(() => navigate("/login"))
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
         console.error(error?.title);
@@ -34,8 +33,7 @@ const useLogOut = () => {
     },
   });
 
-  const handleLogOut = async (e: SyntheticEvent) => {
-    e.preventDefault();
+  const handleLogOut = async () => {
     mutateAsync();
   };
 

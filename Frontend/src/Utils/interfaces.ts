@@ -47,6 +47,7 @@ export interface User {
 interface BaseRequestDTO {
   aiAgent: string;
   numberOfQuestions: number;
+  hasPriorExperience: boolean;
 }
 
 export interface TechnicalRequestDTO extends BaseRequestDTO {
@@ -140,3 +141,24 @@ export interface MultipleChoiceAnswer {
 }
 
 //#endregion
+
+export interface ChangeStepButtonProps {
+  handleChangeStep: () => void;
+}
+
+// Home Profile Stats
+
+export interface Activity {
+  type: string;
+  subject: string;
+  score: number;
+  date: string;
+}
+
+export interface ProfileStats {
+  totalInterviews: number;
+  passedInterviews: number;
+  ongoingInterviews: number;
+  averageScore: number;
+  completionRate: number;
+}

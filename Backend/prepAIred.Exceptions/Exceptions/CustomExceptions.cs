@@ -39,4 +39,14 @@
     /// Exception thrown when an unsupported AI agent is specified.
     /// </summary>
     public class UnsupportedAiAgentException(string message) : Exception(message);
+
+    /// <summary>
+    /// Exception thrown when there is an error related to profile pictures.
+    /// </summary>
+    public class ProfilePictureException(string message) : Exception(message);
+
+    /// <summary>
+    /// Exception thrown when an unsupported image format is specified.
+    /// </summary>
+    public class UnsupportedFileExtensionException(string message) : Exception(message);
 }

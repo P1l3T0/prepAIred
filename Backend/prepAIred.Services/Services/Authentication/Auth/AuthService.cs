@@ -27,13 +27,13 @@ namespace prepAIred.Services
 
         public async Task<CurrentUserDTO> LoginAsync(LoginDTO loginDto)
         {
-            if (!await _userService.UserExistsAsync(loginDto.Email)) throw new ResourceNotFoundException("User does not exist");
+            if (!await _userService.UserExistsAsync(loginDto.Email)) throw new ResourceNotFoundException("Invalid Username or Password");
 
-            CurrentUserDTO currentUser = await _userService.GetUserByEmailAsync(loginDto.Email);
+            User currentUser = await _userService.GetUserByEmailAsync(loginDto.Email);
 
-            if (!_userService.CheckPassword(currentUser, loginDto)) throw new InvalidCredentialsException("Invalid Password");
+            if (!_userService.CheckPassword(currentUser, loginDto)) throw new InvalidCredentialsException("Invalid Username or Password");
 
-            return currentUser;
+            return currentUser.ToDto<CurrentUserDTO>();
         }
 
         public async Task GenerateAuthResponse(CurrentUserDTO currentUser)

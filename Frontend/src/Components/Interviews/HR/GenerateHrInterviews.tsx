@@ -4,76 +4,82 @@ import {
   contextScenarioData,
   softSkillFocusData,
 } from "../../../Utils/data";
-import { NumericTextBox } from "@progress/kendo-react-inputs";
+import { Checkbox, NumericTextBox } from "@progress/kendo-react-inputs";
 import { DropDownList, MultiSelect } from "@progress/kendo-react-dropdowns";
-import { Button } from "@progress/kendo-react-buttons";
+import FormField from "../Components/Common/FormField";
+import GenerateButton from "../Components/Common/GenerateButton";
 
 const GenerateHrInterviews = () => {
   const {
     handleDropDownChange,
     handleInputChange,
     handleGenerateHrInterviews,
-    disabled,
+    handleCheckBoxChange,
     isSubmitting,
   } = useGenerateHrInterviews();
 
   return (
-    <>
-      <DropDownList
-        id="ai-agent"
-        name="aiAgent"
-        data={aiAgentData}
-        label="AI Agent"
-        style={{ width: "500px" }}
-        onChange={handleDropDownChange}
-      />
+    <div className="bg-background rounded-lg shadow-lg p-3 md:p-6 border border-border h-fit">
+      <form onSubmit={handleGenerateHrInterviews} className="space-y-4">
+        <FormField label="AI Agent" htmlFor="ai-agent">
+          <DropDownList
+            id="ai-agent"
+            name="aiAgent"
+            data={aiAgentData}
+            size={"medium"}
+            defaultValue={"Select AI Agent"}
+            onChange={handleDropDownChange}
+          />
+        </FormField>
 
-      <br />
+        <FormField label="Soft Skills Focus" htmlFor="soft-skill-focus">
+          <MultiSelect
+            id="soft-skill-focus"
+            name="softSkillFocus"
+            data={softSkillFocusData}
+            size={"medium"}
+            placeholder="Select soft skills to focus on..."
+            onChange={handleDropDownChange}
+          />
+        </FormField>
 
-      <MultiSelect
-        id="soft-skill-focus"
-        name="softSkillFocus"
-        data={softSkillFocusData}
-        label="Soft Skill Focus"
-        style={{ width: "500px" }}
-        onChange={handleDropDownChange}
-      />
+        <FormField label="Context Scenarios" htmlFor="context-scenario">
+          <MultiSelect
+            id="context-scenario"
+            name="contextScenario"
+            data={contextScenarioData}
+            autoClose={true}
+            size={"medium"}
+            placeholder="Select interview scenarios..."
+            onChange={handleDropDownChange}
+          />
+        </FormField>
 
-      <br />
+        <FormField label="Number of Questions" htmlFor="number-of-questions-hr">
+          <NumericTextBox
+            id="number-of-questions-hr"
+            name="numberOfQuestions"
+            size={"medium"}
+            placeholder="Enter number (1-10)"
+            min={1}
+            max={10}
+            onChange={handleInputChange}
+          />
+        </FormField>
 
-      <MultiSelect
-        id="context-scenario"
-        name="contextScenario"
-        data={contextScenarioData}
-        autoClose={true}
-        label="Context Scenario"
-        style={{ width: "500px" }}
-        onChange={handleDropDownChange}
-      />
+        <FormField label="Prior Experience" htmlFor="prior-experience-hr">
+          <Checkbox
+            id="prior-experience-hr"
+            name="hasPriorExperience"
+            size={"medium"}
+            label="Do you have prior experience?"
+            onChange={handleCheckBoxChange}
+          />
+        </FormField>
 
-      <br />
-
-      <NumericTextBox
-        id="number-of-questions"
-        name="numberOfQuestions"
-        placeholder="Number of Questions"
-        min={1}
-        max={10}
-        defaultValue={3}
-        style={{ width: "500px" }}
-        onChange={handleInputChange}
-      />
-
-      <br />
-
-      <Button
-        id="hr-button"
-        disabled={disabled || isSubmitting}
-        onClick={handleGenerateHrInterviews}
-      >
-        {isSubmitting ? "Generating..." : "Generate HR Interviews"}
-      </Button>
-    </>
+        <GenerateButton interviewType="HR" isSubmitting={isSubmitting} />
+      </form>
+    </div>
   );
 };
 

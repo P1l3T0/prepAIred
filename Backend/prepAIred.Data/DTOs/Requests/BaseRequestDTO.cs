@@ -11,5 +11,10 @@
         /// Gets or sets the number of interview questions to generate.
         /// </summary>
         public int NumberOfQuestions { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the individual has prior experience.
+        /// </summary>
+        public bool HasPriorExperience { get; set; }
     }
 }

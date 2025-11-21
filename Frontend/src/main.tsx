@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { AuthProvider } from "./Context/Auth/AuthContext.tsx";
 import { ThemeProvider } from "./Context/Theme/ThemeContext.tsx";
 import "./style.css";
-import "@progress/kendo-theme-default/dist/default-ocean-blue.css";
 
 const queryClient = new QueryClient({
   defaultOptions: {

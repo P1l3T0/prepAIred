@@ -21,6 +21,12 @@ namespace prepAIred.Data
         public string Username { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets the filename of the user's profile picture.
+        /// </summary>
+        [MaxLength(50)]
+        public string ProfilePicture { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets the hashed password for the user.
         /// </summary>
         [Required, MinLength(10), MaxLength(200)]
@@ -62,8 +68,6 @@ namespace prepAIred.Data
                 ID = ID,
                 Email = Email,
                 Username = Username,
-                PasswordHash = PasswordHash,
-                PasswordSalt = PasswordSalt,
                 DateCreated = DateCreated,
             };
 

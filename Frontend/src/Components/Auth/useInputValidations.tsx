@@ -9,20 +9,35 @@ const emailValidator = (value: string) => emailRegex.test(value) ? "" : "Please 
 const passwordValidator = (value: string) => passwordRegex.test(value) ? "" : "Password must be at least 10 characters, include uppercase, lowercase, number, and special character.";
 
 const EmailInput = (fieldRenderProps: FieldRenderProps) => {
-  const { validationMessage, visited, ...others } = fieldRenderProps;
+  const { validationMessage, visited, ...rest } = fieldRenderProps;
   return (
     <div className="k-form-field-wrap">
-      <Input {...others} labelClassName={"k-form-label"} />
+      <Input {...rest} autoComplete="off" placeholder="Email" />
       {visited && validationMessage && <Error>{validationMessage}</Error>}
     </div>
   );
 };
 
 const PasswordInput = (fieldRenderProps: FieldRenderProps) => {
-  const { validationMessage, visited, ...others } = fieldRenderProps;
+  const { validationMessage, visited, ...rest } = fieldRenderProps;
   return (
     <div className="k-form-field-wrap">
-      <Input {...others} type="password" labelClassName={"k-form-label"} />
+      <Input
+        {...rest}
+        autoComplete="off"
+        placeholder="Password"
+        type="password"
+      />
+      {visited && validationMessage && <Error>{validationMessage}</Error>}
+    </div>
+  );
+};
+
+const UsernameInput = (fieldRenderProps: FieldRenderProps) => {
+  const { validationMessage, visited, ...rest } = fieldRenderProps;
+  return (
+    <div className="k-form-field-wrap">
+      <Input {...rest} autoComplete="off" placeholder="Username" />
       {visited && validationMessage && <Error>{validationMessage}</Error>}
     </div>
   );
@@ -33,6 +48,7 @@ const useInputValidations = () => ({
   EmailInput,
   passwordValidator,
   PasswordInput,
+  UsernameInput,
 });
 
 export default useInputValidations;

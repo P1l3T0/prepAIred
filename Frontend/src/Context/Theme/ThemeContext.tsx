@@ -11,7 +11,7 @@ type ThemeContextType = {
 
 const KENDO_THEMES = {
   light: "https://unpkg.com/@progress/kendo-theme-bootstrap@12.2.1/dist/bootstrap-main.css",
-  dark: "https://unpkg.com/@progress/kendo-theme-bootstrap@12.2.1/dist/bootstrap-4-dark.css",
+  dark: "https://unpkg.com/@progress/kendo-theme-bootstrap@12.2.1/dist/bootstrap-main-dark.css",
 };
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);

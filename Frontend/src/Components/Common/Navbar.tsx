@@ -3,23 +3,39 @@ import LogOutButton from "../Buttons/LogOutButton";
 import ThemeButton from "../Buttons/ThemeButton";
 import HamburgerButton from "../Buttons/HamburgerButtons";
 import useToggleHamburgerButton from "../../Hooks/Buttons/useToggleHamburgerMenu";
+import LinkButton from "../Buttons/LinkButton";
 
 const Navbar = () => {
   const { isMobileMenuOpen, toggleMobileMenu } = useToggleHamburgerButton();
 
   return (
-    <nav className="bg-background p-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-text-primary text-2xl font-bold">prepAIred</h1>
-        <div className="hidden sm:flex gap-2 items-center">
-          <ThemeButton />
-          <LogOutButton />
+    <nav className="bg-background border-b border-border shadow-sm sticky top-0 z-50">
+      <div className="px-4 lg:px-8">
+        <div className="flex items-center justify-between py-3">
+          <div className="shrink-0">
+            <LinkButton to="/home" label="prepAIred" isLogo={true} />
+          </div>
+
+          <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-3 items-center">
+            <LinkButton to="/interviews" label="New Interview" />
+            <LinkButton to="/mock-interviews" label="Mock Interview" />
+            <LinkButton to="/statistics" label="Statistics" />
+          </div>
+
+          <div className="hidden md:flex gap-3 items-center">
+            <ThemeButton />
+            <LogOutButton />
+          </div>
+
+          <div className="md:hidden">
+            <HamburgerButton
+              isHamburger={true}
+              toggleMobileMenu={toggleMobileMenu}
+            />
+          </div>
         </div>
-        <HamburgerButton
-          isHamburger={true}
-          toggleMobileMenu={toggleMobileMenu}
-        />
       </div>
+
       <MobileMenuSidebar
         isMobileMenuOpen={isMobileMenuOpen}
         toggleMobileMenu={toggleMobileMenu}

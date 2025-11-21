@@ -11,6 +11,7 @@ namespace prepAIred.Services
             string contentRules = $@"
                 Act as an experienced HR professional conducting a behavioral and competency-based interview for a position.
                 Generate {hrRequest.NumberOfQuestions} interview questions with evaluation criteria.
+                Generate the questions based on whether or not the candidate has prior experience: {hrRequest.HasPriorExperience}.
 
                 Content requirements:
                 - Questions must follow the STAR (Situation, Task, Action, Result) interview methodology
@@ -143,18 +144,19 @@ namespace prepAIred.Services
             return prompt.Trim();
         }
 
-        public string CreateTechnicalPrompt(TechnicalRequestDTO aIRequest, int currentUserID)
+        public string CreateTechnicalPrompt(TechnicalRequestDTO techRequest, int currentUserID)
         {
             string contentRules = $@"
-                Act as an experienced technical interviewer conducting an interview for a {aIRequest.DifficultyLevel} {aIRequest.Position} position.
-                Generate {aIRequest.NumberOfQuestions} interview questions with detailed answers.
+                Act as an experienced technical interviewer conducting an interview for a {techRequest.DifficultyLevel} {techRequest.Position} position.
+                Generate {techRequest.NumberOfQuestions} interview questions with detailed answers.
+                Generate the questions based on whether or not the candidate has prior experience: {techRequest.HasPriorExperience}.
 
                 Content requirements:
-                - Questions must reflect real-world, practical scenarios commonly encountered in {string.Join(", ", aIRequest.Subject)} using {aIRequest.ProgrammingLanguage}.
+                - Questions must reflect real-world, practical scenarios commonly encountered in {string.Join(", ", techRequest.Subject)} using {techRequest.ProgrammingLanguage}.
                 - Include a balanced mix of:
-                    * Core technical concepts specific to {aIRequest.ProgrammingLanguage}
+                    * Core technical concepts specific to {techRequest.ProgrammingLanguage}
                     * Problem-solving approaches
-                    * Best practices relevant to a {aIRequest.DifficultyLevel} position
+                    * Best practices relevant to a {techRequest.DifficultyLevel} position
                     * Algorithms, data structures, system design, and industry-specific technologies
                 - Each question must be challenging and thought-provoking, requiring in-depth reasoning.
                 - Each non-open-ended question must have exactly 3 possible answers.
@@ -171,15 +173,15 @@ namespace prepAIred.Services
 
                 [
                     {{
-                        ""UserID"": {currentUserID},                                                                // int - provided user ID
-                        ""Question"": """",                                                                        // string - the interview question
-                        ""QuestionType"": 0,                                                                      // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
-                        ""InterviewType"": 1,                                                                    // int - 0 = HR, 1 = Technical
-                        ""AnswersJson"": ""[]"",                                                                // string - JSON array of answers as a string
-                        ""ProgrammingLanguage"": ""{aIRequest.ProgrammingLanguage}""                           // string - programming language focus
-                        ""DifficultyLevel"": ""{aIRequest.DifficultyLevel}"",                                 // string - difficulty level of question
-                        ""Subject"": ""Use 1 of the following - {string.Join(", ", aIRequest.Subject)}"",    // string - technical topic area
-                        ""Position"": ""{aIRequest.Position}""                                              // string - position being interviewed for
+                        ""UserID"": {currentUserID},                                                                  // int - provided user ID
+                        ""Question"": """",                                                                          // string - the interview question
+                        ""QuestionType"": 0,                                                                        // int - 0 = SingleChoice, 1 = MultipleChoice, 2 = OpenEnded
+                        ""InterviewType"": 1,                                                                      // int - 0 = HR, 1 = Technical
+                        ""AnswersJson"": ""[]"",                                                                  // string - JSON array of answers as a string
+                        ""ProgrammingLanguage"": ""{techRequest.ProgrammingLanguage}""                           // string - programming language focus
+                        ""DifficultyLevel"": ""{techRequest.DifficultyLevel}"",                                 // string - difficulty level of question
+                        ""Subject"": ""Use 1 of the following - {string.Join(", ", techRequest.Subject)}"",    // string - technical topic area
+                        ""Position"": ""{techRequest.Position}""                                              // string - position being interviewed for
                     }}
                 ]
 

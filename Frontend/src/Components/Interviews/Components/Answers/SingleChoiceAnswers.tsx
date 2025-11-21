@@ -1,5 +1,5 @@
-import type { AnswersProps } from "../../../Utils/interfaces";
 import { RadioButton } from "@progress/kendo-react-inputs";
+import type { AnswersProps } from "../../../../Utils/interfaces";
 
 const SingleChoiceAnswers = ({
   interview,
@@ -7,9 +7,9 @@ const SingleChoiceAnswers = ({
   interviewType,
   onChange,
 }: AnswersProps) => (
-  <>
+  <div className="space-y-2">
     {interview.answers?.map((answer, answerIndex) => (
-      <div key={answerIndex} className="answer">
+      <div key={answerIndex} className="flex items-center gap-2 mb-2.5">
         <RadioButton
           id={`${interviewType}-single-choice-answer-${interviewIndex}-${answerIndex}`}
           name={`${interviewType}-single-choice-answer-${interviewIndex}`}
@@ -25,7 +25,7 @@ const SingleChoiceAnswers = ({
         />
       </div>
     ))}
-  </>
+  </div>
 );
 
 export default SingleChoiceAnswers;

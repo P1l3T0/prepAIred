@@ -19,7 +19,7 @@ namespace prepAIred.Services
         /// </summary>
         /// <param name="email">The email address to search for.</param>
         /// <returns>The matching user entity if found.</returns>
-        Task<CurrentUserDTO> GetUserByEmailAsync(string email);
+        Task<User> GetUserByEmailAsync(string email);
 
         /// <summary>
         /// Retrieves a user by their username.
@@ -53,6 +53,13 @@ namespace prepAIred.Services
         /// </summary>
         /// <returns>The task result contains the unique identifier of the current user.</returns>
         Task<int> GetCurrentUserID();
+
+        /// <summary>
+        /// Updates the details of an existing user asynchronously.
+        /// </summary>
+        /// <param name="user">The <see cref="User"/> object containing the updated user details. The user must already exist in the system.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        Task UpdateUserAsync(User user);
 
         /// <summary>
         /// Deletes the user with the specified user ID.
@@ -103,6 +110,6 @@ namespace prepAIred.Services
         /// <param name="currentUser">The user entity to check against.</param>
         /// <param name="loginDto">The login credentials to verify.</param>
         /// <returns>True if the password is correct, false otherwise.</returns>
-        bool CheckPassword(CurrentUserDTO currentUser, LoginDTO loginDto);
+        bool CheckPassword(User currentUser, LoginDTO loginDto);
     }
 }

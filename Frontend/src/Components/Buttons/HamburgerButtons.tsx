@@ -10,7 +10,7 @@ const HamburgerButton = ({
   return (
     <button
       onClick={toggleMobileMenu}
-      className="sm:hidden text-text-primary p-2 rounded-md hover:bg-gray-400 focus:outline-none"
+      className="md:hidden text-text-primary p-2 rounded-md hover:bg-primary/10 hover:text-primary ease-in-out duration-200"
     >
       {isHamburger ? (
         <svg

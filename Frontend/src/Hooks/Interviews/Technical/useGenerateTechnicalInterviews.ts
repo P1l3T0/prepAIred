@@ -19,11 +19,13 @@ import type {
   DropDownListChangeEvent,
   MultiSelectChangeEvent,
 } from "@progress/kendo-react-dropdowns";
-import type { NumericTextBoxChangeEvent } from "@progress/kendo-react-inputs";
+import type {
+  CheckboxChangeEvent,
+  NumericTextBoxChangeEvent,
+} from "@progress/kendo-react-inputs";
 
 const useGenerateTechnicalInterviews = () => {
   const queryClient = useQueryClient();
-  const [disabled, setDisabled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [technicalRequest, setTechnicalRequest] = useState<TechnicalRequestDTO>({
@@ -36,6 +38,7 @@ const useGenerateTechnicalInterviews = () => {
     difficultyLevel: "Easy",
     position: "Junior Developer",
     numberOfQuestions: 3,
+    hasPriorExperience: false,
   });
 
   const handleDropDownChange = (
@@ -58,6 +61,13 @@ const useGenerateTechnicalInterviews = () => {
     });
   };
 
+  const handleCheckBoxChange = (e: CheckboxChangeEvent) => {
+    setTechnicalRequest({
+      ...technicalRequest,
+      hasPriorExperience: e.value,
+    });
+  };
+
   const generateTechnicalInterviews = async () => {
     await axios
       .post(generateTechnicalInterviewsEndPoint, technicalRequest, {
@@ -76,7 +86,6 @@ const useGenerateTechnicalInterviews = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["technical-interviews"] });
-      setDisabled(true);
       setIsSubmitting(false);
     },
   });
@@ -90,7 +99,7 @@ const useGenerateTechnicalInterviews = () => {
     handleDropDownChange,
     handleInputChange,
     handleGenerateTechnicalInterviews,
-    disabled,
+    handleCheckBoxChange,
     isSubmitting,
   };
 };
