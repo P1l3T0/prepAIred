@@ -19,9 +19,9 @@ const ProfileInfo = ({ user, profilePictureUrl }: ProfileInfoProps) => {
       <CardHeader className="border-border">
         <h3 className="text-xl font-medium">Profile Information</h3>
       </CardHeader>
-      <CardBody>
-        <div className="space-y-4 p-4">
-          <div className="flex justify-center mb-6">
+      <CardBody className="flex flex-col">
+        <div className="space-y-7 p-4 flex-1 flex flex-col">
+          <div className="flex justify-center">
             <ProfileAvatar
               username={user?.username!}
               profilePictureUrl={profilePictureUrl}
@@ -31,7 +31,9 @@ const ProfileInfo = ({ user, profilePictureUrl }: ProfileInfoProps) => {
 
           <ProfileUpload showUpload={showUpload} onAdd={handleAdd} />
 
-          <ProfileData user={user} />
+          <div className="flex flex-col mt-auto">
+            <ProfileData user={user} />
+          </div>
         </div>
       </CardBody>
       <CardFooter className="flex flex-col md:flex-row justify-center gap-2">

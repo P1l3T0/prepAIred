@@ -1,7 +1,7 @@
 import { Loader } from "@progress/kendo-react-indicators";
 import { Card, CardBody } from "@progress/kendo-react-layout";
 import useGetUser from "../../Hooks/User/useGetUser";
-import type { ProfileStats, User } from "../../Utils/interfaces";
+import type { Activity, ProfileStats, User } from "../../Utils/interfaces";
 import Header from "./Components/Header/Header";
 import StatisticsGrid from "./Components/Statistics/StatisticsGrid";
 import ProfileInfo from "./Components/ProfileInformation/ProfileInfo";
@@ -14,27 +14,34 @@ const mockProfileStats: ProfileStats = {
   ongoingInterviews: 2,
   averageScore: 87.5,
   completionRate: 78.3,
-  recentActivity: [
-    {
-      type: "Technical Interview",
-      subject: "React Hooks",
-      score: 92,
-      date: "2024-11-12",
-    },
-    {
-      type: "HR Interview",
-      subject: "Communication Skills",
-      score: 85,
-      date: "2024-11-10",
-    },
-    {
-      type: "Technical Interview",
-      subject: "TypeScript",
-      score: 88,
-      date: "2024-11-08",
-    },
-  ],
 };
+
+const mockRecentActivity: Activity[] = [
+  {
+    type: "Technical Interview",
+    subject: "React Hooks",
+    score: 92,
+    date: "2024-11-12",
+  },
+  {
+    type: "HR Interview",
+    subject: "Communication Skills",
+    score: 67,
+    date: "2024-11-10",
+  },
+  {
+    type: "Technical Interview",
+    subject: "TypeScript",
+    score: 46,
+    date: "2024-11-08",
+  },
+  {
+    type: "Technical Interview",
+    subject: "TypeScript",
+    score: 32,
+    date: "2024-11-08",
+  }
+]
 
 const HomeContainer = () => {
   const { data: user, isLoading: isUserLoading, isError: isUserError } = useGetUser();
@@ -86,7 +93,7 @@ const HomeContainer = () => {
           </div>
 
           <div className="md:col-span-2">
-            <RecentActivity recentActivity={mockProfileStats.recentActivity} />
+            <RecentActivity recentActivity={mockRecentActivity} />
           </div>
         </div>
       </div>

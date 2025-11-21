@@ -18,7 +18,7 @@ const ProfileUpload = ({
   return (
     <>
       {showUpload && (
-        <div className="mb-4 p-4 bg-surface rounded-lg border border-border">
+        <div className="bg-surface rounded-lg border border-border">
           <Upload
             batch={false}
             autoUpload={false}
