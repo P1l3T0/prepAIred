@@ -2,7 +2,7 @@ import { ListView } from "@progress/kendo-react-listview";
 import { Pager } from "@progress/kendo-react-data-tools";
 import { Card, CardBody, CardFooter, CardHeader } from "@progress/kendo-react-layout";
 import type { Activity } from "../../../../Utils/interfaces";
-import useChangePage from "../../../../Hooks/ProfilePicture/useChangePage";
+import useChangePage from "../../../../Hooks/Common/useChangePage";
 import ActivityItemRender from "./ActivityItemRenderer";
 
 interface RecentActivityProps {

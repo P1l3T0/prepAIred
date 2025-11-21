@@ -60,6 +60,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         string signingKey = builder.Configuration["Appsettings:JwtKey"]!;
+        string validIssuer = builder.Configuration["Appsettings:JwtIssuer"]!;
+        string validAudience = builder.Configuration["Appsettings:JwtAudience"]!;
 
         options.TokenValidationParameters = new TokenValidationParameters()
         {
@@ -67,6 +69,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
+            ValidIssuer = validIssuer,
+            ValidAudience = validAudience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey))
         };
     });

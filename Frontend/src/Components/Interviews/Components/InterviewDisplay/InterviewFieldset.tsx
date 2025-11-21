@@ -14,7 +14,7 @@ const InterviewFieldset = ({ interview, children }: InterviewFieldsetProps) => {
       <legend className="font-bold mb-2 text-primary">
         {interview.interviewType === "HR" ? (
           <>
-            <b>Behavioral Context:</b>{" "}
+            <b>Competency Area:</b>{" "}
             {(interview as HRInterviewDTO).competencyArea}
           </>
         ) : (

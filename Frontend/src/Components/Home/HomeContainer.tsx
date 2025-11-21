@@ -41,7 +41,7 @@ const mockRecentActivity: Activity[] = [
     score: 32,
     date: "2024-11-08",
   }
-]
+];
 
 const HomeContainer = () => {
   const { data: user, isLoading: isUserLoading, isError: isUserError } = useGetUser();
