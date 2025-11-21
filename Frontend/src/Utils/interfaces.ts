@@ -161,5 +161,4 @@ export interface ProfileStats {
   ongoingInterviews: number;
   averageScore: number;
   completionRate: number;
-  recentActivity: Activity[];
 }
