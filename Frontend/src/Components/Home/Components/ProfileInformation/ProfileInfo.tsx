@@ -5,6 +5,7 @@ import ProfileData from "./ProfileData";
 import type { User } from "../../../../Utils/interfaces";
 import useUploadProfilePicture from "../../../../Hooks/ProfilePicture/useUploadProfilePicture";
 import DeleteUserButton from "../../../Buttons/DeleteUserButton";
+import UpdateUserButton from "../../../Buttons/UpdateUserButton";
 
 interface ProfileInfoProps {
   profilePictureUrl: string;
@@ -37,7 +38,8 @@ const ProfileInfo = ({ user, profilePictureUrl }: ProfileInfoProps) => {
         </div>
       </CardBody>
       <CardFooter className="flex flex-col md:flex-row justify-center gap-2">
-        <DeleteUserButton />    
+        <UpdateUserButton />
+        <DeleteUserButton />
       </CardFooter>
     </Card>
   );
