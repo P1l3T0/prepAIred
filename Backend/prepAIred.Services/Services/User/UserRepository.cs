@@ -13,6 +13,16 @@ namespace prepAIred.Services
             return user;
         }
 
+        public async Task UpdateCurrentUserAsync(UpdateUserDTO updateUserDTO)
+        {
+            await _userService.ValidateUpdateUserDataAsync(updateUserDTO);
+
+            int currentUserID = await _userService.GetCurrentUserID();
+            User currentUser = await _userService.GetCurrentUserEntityByIdAsync(currentUserID);
+
+            await _userService.UpdateUserAsync(currentUser, updateUserDTO);
+        }
+
         public async Task DeleteCurrentUserAsync()
         {
             _cookieService.DeleteCookie("AccessToken");

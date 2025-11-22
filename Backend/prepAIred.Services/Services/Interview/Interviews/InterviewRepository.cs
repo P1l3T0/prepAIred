@@ -24,7 +24,7 @@ namespace prepAIred.Services
         public async Task GenerateInterviewsAsync<TInterview>(BaseRequestDTO request) where TInterview : Interview
         {
             int currentUserID = await _userService.GetCurrentUserID();
-            User currentUser = await _userService.GetUserEntityByIdAsync(currentUserID);
+            User currentUser = await _userService.GetCurrentUserEntityByIdAsync(currentUserID);
             AIAgent aiAgent = Enum.Parse<AIAgent>(request.AIAgent);
 
             await (typeof(TInterview).Name switch

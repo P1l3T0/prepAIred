@@ -40,7 +40,7 @@ namespace prepAIred.Services
         /// </summary>
         /// <param name="userId">The ID of the user to retrieve.</param>
         /// <returns>The matching user entity if found.</returns>
-        Task<User> GetUserEntityByIdAsync(int userId);
+        Task<User> GetCurrentUserEntityByIdAsync(int userId);
 
         /// <summary>
         /// Retrieves the currently authenticated user.
@@ -58,8 +58,9 @@ namespace prepAIred.Services
         /// Updates the details of an existing user asynchronously.
         /// </summary>
         /// <param name="user">The <see cref="User"/> object containing the updated user details. The user must already exist in the system.</param>
+        /// <param name="updateUserDTO">The <see cref="UpdateUserDTO"/> object containing the updated user information.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task UpdateUserAsync(User user);
+        Task UpdateUserAsync(User user, UpdateUserDTO? updateUserDTO);
 
         /// <summary>
         /// Deletes the user with the specified user ID.
@@ -76,6 +77,13 @@ namespace prepAIred.Services
         Task ValidateUserAsync(RegisterDTO registerDto);
 
         /// <summary>
+        /// Validates user update data.
+        /// </summary>
+        /// <param name="updateUserDTO">The update data to validate.</param>
+        /// <returns>A void representing the validation operation.</returns>
+        Task ValidateUpdateUserDataAsync(UpdateUserDTO updateUserDTO);
+
+        /// <summary>
         /// Checks if a user with the specified email exists.
         /// </summary>
         /// <param name="email">The email address to check.</param>
@@ -90,12 +98,18 @@ namespace prepAIred.Services
         bool AreFieldsEmpty(RegisterDTO registerDto);
 
         /// <summary>
-        /// Validates the format of email and password.
+        /// Validates the format of the email.
         /// </summary>
-        /// <param name="email">The email to validate.</param>
+        /// <param name="email">The email address to validate.</param>
+        /// <returns>True if the email is valid, false otherwise.</returns>
+        bool ValidateEmail(string email);
+
+        /// <summary>
+        /// Validates the format of the password.
+        /// </summary>
         /// <param name="password">The password to validate.</param>
-        /// <returns>True if both email and password are valid, false otherwise.</returns>
-        bool ValidateEmailAndPassword(string email, string password);
+        /// <returns>True if the password is valid, false otherwise.</returns>
+        bool ValidatePassword(string password);
 
         /// <summary>
         /// Hashes a user's password during registration.

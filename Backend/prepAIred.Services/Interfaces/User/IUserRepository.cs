@@ -14,6 +14,13 @@ namespace prepAIred.Services
         Task<CurrentUserDTO> GetCurrentUserAsync();
 
         /// <summary>
+        /// Updates the current user's information based on the provided data.
+        /// </summary>
+        /// <param name="updateUserDTO">An object containing the updated user information. This parameter cannot be null.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        Task UpdateCurrentUserAsync(UpdateUserDTO updateUserDTO);
+
+        /// <summary>
         /// Deletes the currently authenticated user from the system.
         /// </summary>
         /// <returns>A task that represents the asynchronous operation.</returns>
