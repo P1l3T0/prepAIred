@@ -18,7 +18,7 @@ namespace prepAIred.API
     {
         private readonly IUserRepository _userRepository = userRepository;
 
-        [HttpGet("get-user")]
+        [HttpGet("get-current-user")]
         public async Task<IActionResult> GetCurrentUser()
         {
             if (string.IsNullOrEmpty(Request.Cookies["AccessToken"]))

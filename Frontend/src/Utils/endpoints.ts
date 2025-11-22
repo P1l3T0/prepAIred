@@ -17,7 +17,8 @@ export const logoutEndPoint = `${authController}/logout`;
 export const refreshTokenEndPoint = `${authController}/refresh-token`;
 
 // User
-export const getCurrentUserEndPoint = `${userController}/get-user`;
+export const getCurrentUserEndPoint = `${userController}/get-current-user`;
+export const deleteCurrentUserEndPoint = `${userController}/delete-current-user`;
 
 // Profile Picture
 export const getProfilePictureUrlEndPoint = `${profilePictureController}/get-profile-picture-url`;
