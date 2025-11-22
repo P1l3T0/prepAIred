@@ -6,7 +6,7 @@ const DeleteUserButton = () => {
 
   return (
     <>
-      <Button themeColor={"error"} onClick={handleClick}>Delete User</Button>
+      <Button className="w-full" themeColor={"error"} onClick={handleClick}>Delete</Button>
     </>
   );
 };

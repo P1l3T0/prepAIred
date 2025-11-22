@@ -34,7 +34,7 @@ export interface LoginDto {
 // User
 
 export interface User {
-  id: string;
+  id: number;
   username: string;
   email: string;
   dateCreated: Date;

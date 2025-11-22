@@ -18,6 +18,7 @@ export const refreshTokenEndPoint = `${authController}/refresh-token`;
 
 // User
 export const getCurrentUserEndPoint = `${userController}/get-current-user`;
+export const updateCurrentUserEndPoint = `${userController}/update-current-user`;
 export const deleteCurrentUserEndPoint = `${userController}/delete-current-user`;
 
 // Profile Picture
