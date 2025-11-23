@@ -55,18 +55,16 @@ const StatisticCard = ({
             {value}
           </div>
           <Label className="text-text-secondary font-medium">{title}</Label>
-          <div className="mt-2">
-            <div>
-              {progressValue && (
-                <ProgressBar
-                  progressStyle={{ backgroundColor: getProgressColor() }}
-                  value={parseFloat(progressValue!) || 0}
-                  label={(props) => {
-                    return <>{Math.round(props.value as number)}%</>;
-                  }}
-                />
-              )}
-            </div>
+          <div className={`${progressValue ? "mt-2" : "mt-8"}`}>
+            {progressValue && (
+              <ProgressBar
+                progressStyle={{ backgroundColor: getProgressColor() }}
+                value={parseFloat(progressValue!) || 0}
+                label={(props) => {
+                  return <>{Math.round((props.value as number))}%</>;
+                }}
+              />
+            )}
             {subtitle && (
               <Label className={`font-medium ${getTextColor()}`}>
                 {subtitle}
