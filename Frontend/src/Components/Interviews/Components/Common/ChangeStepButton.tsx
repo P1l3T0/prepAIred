@@ -1,16 +1,17 @@
 import { Button } from "@progress/kendo-react-buttons";
-
+import { useInterviewStep } from "../../../../Context/InterviewStep/useChangeStep";
 interface ChangeStepButtonProps {
   label: string;
   disabled: boolean;
-  onClick: () => void;
 }
 
-const ChangeStepButton = ({ label, disabled, onClick }: ChangeStepButtonProps) => {
+const ChangeStepButton = ({ label, disabled }: ChangeStepButtonProps) => {
+  const { handleChangeStep } = useInterviewStep();
+
   return (
     <>
       <Button
-        onClick={onClick}
+        onClick={handleChangeStep}
         themeColor={"tertiary"}
         fillMode="outline"
         size="large"

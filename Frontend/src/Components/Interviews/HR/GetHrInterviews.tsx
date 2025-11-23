@@ -1,10 +1,9 @@
 import InterviewDisplay from "../Components/InterviewDisplay/InterviewDisplay";
 import useGetLatestHrInterviews from "../../../Hooks/Interviews/HR/useGetLatestHrInterviews";
-import type { ChangeStepButtonProps } from "../../../Utils/interfaces";
 import { Loader } from "@progress/kendo-react-indicators";
 import { Card, CardBody } from "@progress/kendo-react-layout";
 
-const GetHrInterviews = ({ handleChangeStep }: ChangeStepButtonProps) => {
+const GetHrInterviews = () => {
   const { data: hrInterviews, isLoading, isError } = useGetLatestHrInterviews();
 
   if (isLoading) {
@@ -42,7 +41,6 @@ const GetHrInterviews = ({ handleChangeStep }: ChangeStepButtonProps) => {
       <InterviewDisplay
         interviewType="HR-Interview"
         interviews={hrInterviews}
-        handleChangeStep={handleChangeStep}
       />
     </div>
   );

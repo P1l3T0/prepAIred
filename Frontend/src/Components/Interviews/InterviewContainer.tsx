@@ -4,10 +4,11 @@ import GetHrInterviews from "./HR/GetHrInterviews";
 import GenerateTechnicalInterviews from "./Technical/GenerateTechnicalInterviews";
 import GetTechnicalInterviews from "./Technical/GetTechnicalInterviews";
 import InterviewStepper from "./Components/Common/InterviewStepper";
-import useChangeStep from "../../Hooks/Interviews/Common/useChangeStep";
+import { InterviewStepProvider } from "../../Context/InterviewStep/InterviewStepContext";
+import { useInterviewStep } from "../../Context/InterviewStep/useChangeStep";
 
-const InterviewContainer = () => {
-  const { value, items, handleChangeStep } = useChangeStep();
+const InterviewContainerContent = () => {
+  const { value, items } = useInterviewStep();
 
   return (
     <>
@@ -27,21 +28,25 @@ const InterviewContainer = () => {
           {value === 0 ? (
             <InterviewSection
               generateInterviews={<GenerateHrInterviews />}
-              getInterviews={
-                <GetHrInterviews handleChangeStep={handleChangeStep} />
-              }
+              getInterviews={<GetHrInterviews />}
             />
           ) : (
             <InterviewSection
               generateInterviews={<GenerateTechnicalInterviews />}
-              getInterviews={
-                <GetTechnicalInterviews handleChangeStep={handleChangeStep} />
-              }
+              getInterviews={<GetTechnicalInterviews />}
             />
           )}
         </div>
       </div>
     </>
+  );
+};
+
+const InterviewContainer = () => {
+  return (
+    <InterviewStepProvider>
+      <InterviewContainerContent />
+    </InterviewStepProvider>
   );
 };
 
