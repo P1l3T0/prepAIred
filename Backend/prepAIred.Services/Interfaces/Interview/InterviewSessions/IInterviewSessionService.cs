@@ -36,6 +36,13 @@ namespace prepAIred.Services
         Task<InterviewSession> GetAdjacentInterviewSessionAsync(int userID);
 
         /// <summary>
+        /// Retrieves an interview session by its unique identifier.
+        /// </summary>
+        /// <param name="sessionID">The unique identifier of the interview session to retrieve.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the <see cref="InterviewSession"/> object with the specified ID, or <see langword="null"/> if not found.</returns>
+        Task<InterviewSession> GetInterviewSessionByIdAsync(int sessionID);
+
+        /// <summary>
         /// Gets an interview session based on the provided evaluation requests.
         /// </summary>
         /// <param name="evaluateRequests">A list of evaluation requests containing the questions and answer.</param>
@@ -62,5 +69,55 @@ namespace prepAIred.Services
         /// </summary>
         /// <param name="interviewSessions">A list of <see cref="InterviewSession"/> objects representing the interview sessions to delete.</param>
         Task DeleteInterviewSessionsAsync(List<InterviewSession> interviewSessions);
+
+        /// <summary>
+        /// Marks an interview session as finished and updates its completion status.
+        /// </summary>
+        /// <param name="interviewSession">The <see cref="InterviewSession"/> object to finish.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        Task FinishInterviewSessionAsync(InterviewSession interviewSession);
+
+        /// <summary>
+        /// Retrieves the total count of interview sessions associated with a specific user.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the total number of interview sessions.</returns>
+        Task<int> GetTotalInterviewSessionsAsync(int userID);
+
+        /// <summary>
+        /// Retrieves the count of passed interview sessions for a specific user.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the number of interview sessions that were passed.</returns>
+        Task<int> GetPassedInterviewSessionsAsync(int userID);
+
+        /// <summary>
+        /// Retrieves the count of ongoing interview sessions for a specific user.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the number of interview sessions that are currently ongoing.</returns>
+        Task<int> GetOngoingInterviewSessionsAsync(int userID);
+
+        /// <summary>
+        /// Calculates and retrieves the average score of all interview sessions for a specific user.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the average score as a decimal value.</returns>
+        Task<decimal> GetAverageScoreAsync(int userID);
+
+        /// <summary>
+        /// Calculates and retrieves the completion rate of interview sessions for a specific user.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the completion rate as a decimal percentage value.</returns>
+        Task<decimal> GetCompletionRateAsync(int userID);
+
+        /// <summary>
+        /// Finalizes an interview session by updating its status and associated interviews based on the evaluated interviews
+        /// </summary>
+        /// <typeparam name="TInterview">The type of interview being finalized.</typeparam>
+        /// <param name="interviewSession">The interview session to be finalized.</param>
+        /// <param name="evaluatedTInterviews">The list of evaluated interviews to update.</param>
+        void FinalizeInterviewSession<TInterview>(InterviewSession interviewSession, List<TInterview> evaluatedTInterviews) where TInterview : Interview;
     }
 }

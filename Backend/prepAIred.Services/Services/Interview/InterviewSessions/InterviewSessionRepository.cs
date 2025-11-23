@@ -16,6 +16,31 @@ namespace prepAIred.Services
             return interviewSessionsDTOs;
         }
 
+        public async Task<ProfileStatisticsDTO> GetInterviewSessionStatistics()
+        {
+            int currentUserID = await _userService.GetCurrentUserID();
+
+            ProfileStatisticsDTO profileStatistics = new ProfileStatisticsDTO()
+            {
+                TotalInterviewSessions = await _interviewSessionService.GetTotalInterviewSessionsAsync(currentUserID),
+                PassedInterviewSessions = await _interviewSessionService.GetPassedInterviewSessionsAsync(currentUserID),
+                OngoingInterviewSessions = await _interviewSessionService.GetOngoingInterviewSessionsAsync(currentUserID),
+                AverageScore = await _interviewSessionService.GetAverageScoreAsync(currentUserID),
+                CompletionRate = await _interviewSessionService.GetCompletionRateAsync(currentUserID)
+            };
+
+            return profileStatistics;
+        }
+
+        public async Task FinishInterviewSessionAsync()
+        {
+            int currentUserID = await _userService.GetCurrentUserID();
+            int interviewSessionID = await _interviewSessionService.GetLatestInterviewSessionID(currentUserID);
+            InterviewSession latestSession = await _interviewSessionService.GetInterviewSessionByIdAsync(interviewSessionID);
+
+            await _interviewSessionService.FinishInterviewSessionAsync(latestSession);
+        }
+
         public async Task DeleteInterviewSessionsAsync()
         {
             int currentUserID = await _userService.GetCurrentUserID();
