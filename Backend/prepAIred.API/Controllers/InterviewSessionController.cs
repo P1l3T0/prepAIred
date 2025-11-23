@@ -15,19 +15,33 @@ namespace prepAIred.API.Controllers
     [Route("api/[controller]")]
     public class InterviewSessionController(IInterviewSessionRepository interviewSessionRepository) : Controller
     {
-        private readonly IInterviewSessionRepository _interviewRepository = interviewSessionRepository;
+        private readonly IInterviewSessionRepository _interviewSessionRepository = interviewSessionRepository;
 
         [HttpGet("get-interview-sessions")]
         public async Task<IActionResult> GetAiInterviews()
         {
-            List<InterviewSessionDTO> interviewSessions = await _interviewRepository.GetInterviewSessionDTOsAsync();
+            List<InterviewSessionDTO> interviewSessions = await _interviewSessionRepository.GetInterviewSessionDTOsAsync();
             return Ok(interviewSessions);
+        }
+
+        [HttpGet("get-interview-session-statistics")]
+        public async Task<IActionResult> GetInterviewSessionStatistics()
+        {
+            ProfileStatisticsDTO profileStats = await _interviewSessionRepository.GetInterviewSessionStatistics();
+            return Ok(profileStats);
+        }
+
+        [HttpPut("finish-interview-session")]
+        public async Task<IActionResult> FinishInterviewSession()
+        {
+            await _interviewSessionRepository.FinishInterviewSessionAsync();
+            return Ok("Interview session finished successfully.");
         }
 
         [HttpDelete("delete-interview-sessions")]
         public async Task<IActionResult> DeleteInterviewSessions()
         {
-            await _interviewRepository.DeleteInterviewSessionsAsync();
+            await _interviewSessionRepository.DeleteInterviewSessionsAsync();
             return Ok("All interview sessions deleted successfully.");
         }
     }
