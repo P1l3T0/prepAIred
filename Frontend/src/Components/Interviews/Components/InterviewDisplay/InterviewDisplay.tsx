@@ -1,24 +1,21 @@
-import type {
-  HRInterviewDTO,
-  TechnicalInterviewDTO,
-} from "../../../../Utils/interfaces";
+import type { HRInterviewDTO, TechnicalInterviewDTO } from "../../../../Utils/interfaces";
 import useEvaluateInterviews from "../../../../Hooks/Interviews/Answers/useEvaluateInterviews";
 import useHandleAnswers from "../../../../Hooks/Interviews/Answers/useHandleAnswers";
 import EvaluationButton from "../Common/EvaluationButton";
 import InterviewFieldset from "./InterviewFieldset";
 import InterviewQuestion from "./InterviewQuestion";
 import ChangeStepButton from "../Common/ChangeStepButton";
+import FinishInterviewSessionButton from "../Common/FinishInterviewSessionButton";
+import useInterviewSession from "../../../../Context/InterviewSession/useInterviewSession";
 
 interface InterviewDisplayProps {
   interviewType: "HR-Interview" | "Technical-Interview";
   interviews: HRInterviewDTO[] | TechnicalInterviewDTO[] | void;
-  handleChangeStep: () => void;
 }
 
 const InterviewDisplay = ({
   interviews,
   interviewType,
-  handleChangeStep,
 }: InterviewDisplayProps) => {
   const {
     handleSingleChoiceChange,
@@ -31,17 +28,15 @@ const InterviewDisplay = ({
     (interviews as HRInterviewDTO[] | TechnicalInterviewDTO[]) ?? []
   );
 
-  const label =
-    interviewType === "HR-Interview"
-      ? "Proceed to Technical Interview"
-      : "Back to HR Interview";
-  
+  const { showFinishButton } = useInterviewSession();
   const { handleEvaluateInterviews, isSubmitting } = useEvaluateInterviews({
     interviewType,
     singleChoiceAnswers,
     multipleChoiceAnswers,
     openEndedAnswers,
   });
+
+  const label: string = interviewType === "HR-Interview" ? "Proceed to Technical Interview" : "Back to HR Interview";
 
   const disableHrInterviews: boolean =
     isSubmitting ||
@@ -53,7 +48,7 @@ const InterviewDisplay = ({
     !Array.isArray(interviews) ||
     (interviewType === "HR-Interview" &&
       (interviews.length === 0 ||
-        interviews.some((interview) => !interview.isAnswered)));
+        interviews.every((interview) => !interview.isAnswered)));
 
   return (
     <div className="p-2 md:p-4 bg-card rounded-lg shadow-sm">
@@ -81,17 +76,17 @@ const InterviewDisplay = ({
       )}
 
       <div className="justify-between gap-4 flex flex-col md:flex-row">
-        <EvaluationButton
-          isSubmitting={isSubmitting}
-          disabled={disableHrInterviews}
-          onClick={handleEvaluateInterviews}
-        />
+        {showFinishButton ? (
+          <FinishInterviewSessionButton />
+        ) : (
+          <EvaluationButton
+            isSubmitting={isSubmitting}
+            disabled={disableHrInterviews}
+            onClick={handleEvaluateInterviews}
+          />
+        )}
 
-        <ChangeStepButton
-          label={label}
-          disabled={disableTechnicalInterviews}
-          onClick={handleChangeStep}
-        />
+        <ChangeStepButton label={label} disabled={disableTechnicalInterviews} />
       </div>
     </div>
   );
