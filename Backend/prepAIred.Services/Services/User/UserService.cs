@@ -83,7 +83,7 @@ namespace prepAIred.Services
         {
             if (!AreFieldsEmpty(registerDto)) throw new EmptyFieldsException("Enter data in all fields");
 
-            if (!ValidateEmail(registerDto.Email) && !ValidatePassword(registerDto.Password)) throw new InvalidCredentialsException("Invalid Email or Password");
+            if (!ValidateEmail(registerDto.Email) || !ValidatePassword(registerDto.Password)) throw new InvalidCredentialsException("Invalid Email or Password");
 
             if (await UserExistsAsync(registerDto.Email)) throw new UserAlreadyExistsException("User already exists");
         }

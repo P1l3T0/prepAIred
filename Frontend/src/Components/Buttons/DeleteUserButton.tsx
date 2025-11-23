@@ -1,5 +1,5 @@
 import { Button } from "@progress/kendo-react-buttons";
-import useDeleteUser from "../../Hooks/User/useDeleteUset";
+import useDeleteUser from "../../Hooks/User/useDeleteUser";
 
 const DeleteUserButton = () => {
   const handleClick = useDeleteUser();
