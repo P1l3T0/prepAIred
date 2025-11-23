@@ -2,10 +2,6 @@
 
 import type { StepProps } from "@progress/kendo-react-layout";
 
-export interface AuthProviderProps {
-  children: React.ReactNode;
-}
-
 export interface AuthState {
   username?: string;
   accessToken?: string;
