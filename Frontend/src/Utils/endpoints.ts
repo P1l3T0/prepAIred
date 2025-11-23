@@ -34,4 +34,6 @@ export const getLatestTechnicalInterviewsEndPoint = `${interviewController}/get-
 export const evaluateTechnicalInterviewsEndPoint = `${interviewController}/evaluate-technical-interviews`;
 
 // Interview Sessions
+export const getInterviewSessionStatisticsEndPoint = `${interviewSessionController}/get-interview-session-statistics`;
+export const finishInterviewSessionEndPoint = `${interviewSessionController}/finish-interview-session`;
 export const deleteInterviewSessionsEndPoint = `${interviewSessionController}/delete-interview-sessions`;

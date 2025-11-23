@@ -1,5 +1,7 @@
 // #region Auth
 
+import type { StepProps } from "@progress/kendo-react-layout";
+
 export interface AuthProviderProps {
   children: React.ReactNode;
 }
@@ -10,6 +12,8 @@ export interface AuthState {
   refreshToken?: string;
 }
 
+// #region Context
+
 export interface AuthContextType {
   auth: AuthState;
   isUserLoggedIn: boolean;
@@ -17,6 +21,13 @@ export interface AuthContextType {
   login: () => void;
   logout: () => void;
 }
+
+export interface InterviewStepContextType {
+  items: StepProps[];
+  value: number;
+  handleChangeStep: () => void;
+}
+
 
 // Register/Login DTOs
 
@@ -142,10 +153,6 @@ export interface MultipleChoiceAnswer {
 
 //#endregion
 
-export interface ChangeStepButtonProps {
-  handleChangeStep: () => void;
-}
-
 // Home Profile Stats
 
 export interface Activity {
@@ -156,9 +163,9 @@ export interface Activity {
 }
 
 export interface ProfileStats {
-  totalInterviews: number;
-  passedInterviews: number;
-  ongoingInterviews: number;
+  totalInterviewSessions: number;
+  passedInterviewSessions: number;
+  ongoingInterviewSessions: number;
   averageScore: number;
   completionRate: number;
 }
