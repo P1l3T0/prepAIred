@@ -1,5 +1,5 @@
 import { Button } from "@progress/kendo-react-buttons";
-import { useInterviewStep } from "../../../../Context/InterviewStep/useChangeStep";
+import { useInterviewStep } from "../../../../Context/InterviewStep/useInterviewStep";
 interface ChangeStepButtonProps {
   label: string;
   disabled: boolean;
