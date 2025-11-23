@@ -27,7 +27,7 @@ const MobileMenuSidebar = ({
         </div>
 
         <div className="flex flex-col gap-2 items-center">
-          <LinkButton to="/interviews" label="New Interview" />
+          <LinkButton to="/interviews" label="Interview Session" />
           <LinkButton to="/mock-interviews" label="Mock Interview" />
           <LinkButton to="/statistics" label="Statistics" />
         </div>
