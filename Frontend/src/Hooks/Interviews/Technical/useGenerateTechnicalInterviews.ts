@@ -23,10 +23,12 @@ import type {
   CheckboxChangeEvent,
   NumericTextBoxChangeEvent,
 } from "@progress/kendo-react-inputs";
+import useInterviewGenerateButton from "../../../Context/InterviewGenerateButton/useInterviewGenerateButton";
 
 const useGenerateTechnicalInterviews = () => {
   const queryClient = useQueryClient();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const { setDisableTechnicalInterviewButton } = useInterviewGenerateButton();
 
   const [technicalRequest, setTechnicalRequest] = useState<TechnicalRequestDTO>({
     aiAgent: "ChatGPT",
@@ -85,8 +87,9 @@ const useGenerateTechnicalInterviews = () => {
       setIsSubmitting(true);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["technical-interviews"] });
       setIsSubmitting(false);
+      setDisableTechnicalInterviewButton(true);
+      queryClient.invalidateQueries({ queryKey: ["technical-interviews"] });
     },
   });
 

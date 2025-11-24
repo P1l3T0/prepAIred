@@ -9,8 +9,10 @@ import { DropDownList, MultiSelect } from "@progress/kendo-react-dropdowns";
 import FormField from "../Components/Common/FormField";
 import GenerateButton from "../Components/Common/GenerateButton";
 import { Card, CardBody } from "@progress/kendo-react-layout";
+import useInterviewGenerateButton from "../../../Context/InterviewGenerateButton/useInterviewGenerateButton";
 
 const GenerateHrInterviews = () => {
+  const { disableHrInterviewButton } = useInterviewGenerateButton();
   const {
     handleDropDownChange,
     handleInputChange,
@@ -79,7 +81,7 @@ const GenerateHrInterviews = () => {
             />
           </FormField>
 
-          <GenerateButton interviewType="HR" isSubmitting={isSubmitting} />
+          <GenerateButton interviewType="HR" isSubmitting={isSubmitting} disabled={disableHrInterviewButton} />
         </form>
       </CardBody>
     </Card>

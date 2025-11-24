@@ -3,11 +3,13 @@ import { Loader } from "@progress/kendo-react-indicators";
 
 interface GenerateButtonProps {
   isSubmitting: boolean;
+  disabled: boolean;
   interviewType: "HR" | "Technical";
 }
 
 const GenerateButton = ({
   isSubmitting,
+  disabled,
   interviewType,
 }: GenerateButtonProps) => {
   return (
@@ -16,7 +18,7 @@ const GenerateButton = ({
         themeColor={"primary"}
         fillMode={"outline"}
         size="large"
-        disabled={isSubmitting}
+        disabled={isSubmitting || disabled}
         className="w-full"
         type="submit"
       >
