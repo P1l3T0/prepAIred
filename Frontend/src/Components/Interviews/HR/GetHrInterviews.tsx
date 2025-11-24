@@ -8,12 +8,12 @@ const GetHrInterviews = () => {
 
   if (isLoading) {
     return (
-    <div className="bg-background flex items-center justify-center">
-      <div className="flex flex-col items-center space-y-4">
-        <Loader size="large" />
-        <span className="text-text-secondary">Loading HR Interview...</span>
+      <div className="bg-background flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4">
+          <Loader size="large" />
+          <span className="text-text-secondary">Loading HR Interview...</span>
+        </div>
       </div>
-    </div>
     );
   }
 
@@ -37,11 +37,15 @@ const GetHrInterviews = () => {
   }
 
   return (
-    <div className="rounded-lg shadow-lg p-3 md:p-6 border border-border bg-background">
-      <InterviewDisplay
-        interviewType="HR-Interview"
-        interviews={hrInterviews}
-      />
+    <div className="border-border bg-background">
+      <Card className="shadow-sm shadow-primary">
+        <CardBody>
+          <InterviewDisplay
+            interviewType="HR-Interview"
+            interviews={hrInterviews}
+          />
+        </CardBody>
+      </Card>
     </div>
   );
 };

@@ -1,4 +1,6 @@
-﻿namespace prepAIred.Data
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace prepAIred.Data
 {
     /// <summary>
     /// Represents an Interview Session for a user, including data such as topic, AI agent, and score.
@@ -33,6 +35,7 @@
         /// <summary>
         /// Gets the overall score or rating assigned to this interview session.
         /// </summary>
+        [AllowNull]
         public float AverageScore => (float)Math.Round((HrScore + TechnicalScore) / 2, 2);
 
         /// <summary>

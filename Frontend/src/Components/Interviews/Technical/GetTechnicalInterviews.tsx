@@ -37,11 +37,15 @@ const GetTechnicalInterviews = () => {
   }
 
   return (
-    <div className="rounded-lg shadow-lg p-3 md:p-6 border border-border bg-background">
-      <InterviewDisplay
-        interviewType="Technical-Interview"
-        interviews={technicalInterviews}
-      />
+    <div className="border-border bg-background">
+      <Card className="shadow-sm shadow-primary">
+        <CardBody>
+          <InterviewDisplay
+            interviewType="Technical-Interview"
+            interviews={technicalInterviews}
+          />
+        </CardBody>
+      </Card>
     </div>
   );
 };
