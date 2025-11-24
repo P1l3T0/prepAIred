@@ -26,7 +26,7 @@ import type {
 
 const useGenerateHrInterviews = () => {
   const queryClient = useQueryClient();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const [hrRequest, setHrRequest] = useState<HrRequestDTO>({
     aiAgent: "ChatGPT",
@@ -76,8 +76,8 @@ const useGenerateHrInterviews = () => {
       setIsSubmitting(true);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["hr-interviews"] });
       setIsSubmitting(false);
+      queryClient.invalidateQueries({ queryKey: ["hr-interviews"] });
     },
   });
 

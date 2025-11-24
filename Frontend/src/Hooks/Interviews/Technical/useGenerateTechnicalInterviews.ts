@@ -26,7 +26,7 @@ import type {
 
 const useGenerateTechnicalInterviews = () => {
   const queryClient = useQueryClient();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const [technicalRequest, setTechnicalRequest] = useState<TechnicalRequestDTO>({
     aiAgent: "ChatGPT",
