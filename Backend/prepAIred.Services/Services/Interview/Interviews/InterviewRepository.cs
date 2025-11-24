@@ -73,9 +73,12 @@ namespace prepAIred.Services
             int latestSessionID = await _interviewSessionService.GetLatestInterviewSessionID(currentUserID);
             InterviewSession interviewSession = await _interviewSessionService.GetInterviewSessionByIdAsync(latestSessionID);
 
-            if (interviewSession.Status != InterviewSessionStatus.Ongoing)
+            if (interviewSession is null || interviewSession.Status != InterviewSessionStatus.Ongoing)
             {
-                return new List<TInterviewDTO>();
+                return [];
+                // After the Technical Interviews are evaluated, the status of the session is set to Passed/Failed,
+                // meaning the interviews will automatically disappear after evaluation. This check prevents this behavior
+                // by returning an empty list if the user hasn't clicked the "Finish Interview Session" button.
             }
 
             List<TInterview> interviews = await _interviewService.GetInterviewsBySessionIdAsync<TInterview>(latestSessionID);

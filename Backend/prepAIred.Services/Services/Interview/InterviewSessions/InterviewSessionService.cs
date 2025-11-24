@@ -23,7 +23,7 @@ namespace prepAIred.Services
             return await _dataContext.InterviewSessions
                 .Where(intSession => intSession.UserID == currentUserID)
                 .OrderByDescending(s => s.DateCreated)
-                .FirstOrDefaultAsync() ?? new InterviewSession();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<InterviewSession>> GetInterviewSessionsByUserIdAsync(int userID)
@@ -38,7 +38,7 @@ namespace prepAIred.Services
         {
             return await _dataContext.InterviewSessions
                 .Where(s => s.ID == sessionID)
-                .FirstOrDefaultAsync() ?? new InterviewSession();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<InterviewSession> GetInterviewSessionFromQuestionsAsync(List<EvaluateRequestDTO> evaluateRequests)
@@ -49,7 +49,7 @@ namespace prepAIred.Services
             return await _dataContext.InterviewSessions
                 .Include(s => s.Interviews)
                 .Where(s => s.Interviews.Any(i => i.Question == firstQuestion && !i.IsAnswered))
-                .FirstOrDefaultAsync() ?? new InterviewSession();
+                .FirstOrDefaultAsync();
         }
 
         public async Task DeleteInterviewSessionsAsync(List<InterviewSession> interviewSessions)

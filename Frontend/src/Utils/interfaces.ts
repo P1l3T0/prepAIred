@@ -21,7 +21,7 @@ export interface AuthContextType {
 export interface InterviewStepContextType {
   items: StepProps[];
   value: number;
-  handleChangeStep: () => void;
+  handleChangeStep: (step?: number) => void;
 }
 
 

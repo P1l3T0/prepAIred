@@ -29,7 +29,7 @@ const UpdateUserButton = () => {
                 <TextBox id="email" type="email" name="email" onChange={handleChange} />
               </div>
               <div>
-                <Label className="text-sm font-medium text-text-secondary">Password</Label>
+                <Label className="text-sm font-medium text-text-secondary">Password (not required)</Label>
                 <TextBox id="password" type="password" name="password" onChange={handleChange} />
               </div>
             </div>

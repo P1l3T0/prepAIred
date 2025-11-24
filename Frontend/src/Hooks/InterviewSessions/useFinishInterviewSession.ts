@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "react-query";
-import { finishInterviewSessionEndPoint } from "../../../Utils/endpoints";
-import { useInterviewStep } from "../../../Context/InterviewStep/useInterviewStep";
+import { finishInterviewSessionEndPoint } from "../../Utils/endpoints";
+import { useInterviewStep } from "../../Context/InterviewStep/useInterviewStep";
 
 const useFinishInterviewSession = () => {
   const queryClient = useQueryClient();
@@ -19,7 +19,7 @@ const useFinishInterviewSession = () => {
   const { mutateAsync } = useMutation({
     mutationFn: finishInterviewSession,
     onSuccess: () => {
-      handleChangeStep();
+      handleChangeStep(0);
       queryClient.invalidateQueries({ queryKey: ["interviewSessionStatistics"] });
       queryClient.invalidateQueries({ queryKey: ["hr-interviews"] });
       queryClient.invalidateQueries({ queryKey: ["technical-interviews"] });
@@ -28,7 +28,7 @@ const useFinishInterviewSession = () => {
 
   const handleFinishInterviewSessionClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    mutateAsync();
+    await mutateAsync();
   };
 
   return { handleFinishInterviewSessionClick };

@@ -18,9 +18,11 @@ interface ProcessedStatistics {
   ongoingInterviewSubtitle: string;
 }
 
+const INTERVIEW_SESSION_GOAL: number = 10;
+
 const useProcessStatistics = (profileStats: ProfileStats): ProcessedStatistics => {
   const totalInterviewSessions: number = profileStats.totalInterviewSessions || 0;
-  const totalInterviewSessionsProgress: string = `${(totalInterviewSessions / 10) * 100 }%`;
+  const totalInterviewSessionsProgress: string = `${(totalInterviewSessions / INTERVIEW_SESSION_GOAL) * 100 }%`;
 
   const passedInterviewSessions: number = profileStats.passedInterviewSessions || 0;
   const passedInterviewSessionsProgress: string = totalInterviewSessions > 0 ? `${(profileStats.completionRate)}%` : "0%";

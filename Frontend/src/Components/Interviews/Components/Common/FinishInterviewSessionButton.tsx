@@ -1,5 +1,5 @@
 import { Button } from "@progress/kendo-react-buttons";
-import useFinishInterviewSession from "../../../../Hooks/Interviews/Common/useFinishInterviewSession";
+import useFinishInterviewSession from "../../../../Hooks/InterviewSessions/useFinishInterviewSession";
 
 const FinishInterviewSessionButton = () => {
   const { handleFinishInterviewSessionClick } = useFinishInterviewSession();

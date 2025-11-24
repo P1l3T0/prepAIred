@@ -31,9 +31,9 @@
         public float TechnicalScore { get; set; } = 0;
 
         /// <summary>
-        /// Gets or sets the overall score or rating assigned to this interview session.
+        /// Gets the overall score or rating assigned to this interview session.
         /// </summary>
-        public float AverageScore { get => (float)Math.Round((HrScore + TechnicalScore) / 2, 2); set { } }
+        public float AverageScore => (float)Math.Round((HrScore + TechnicalScore) / 2, 2);
 
         /// <summary>
         /// Gets or sets the current status of the interview session.

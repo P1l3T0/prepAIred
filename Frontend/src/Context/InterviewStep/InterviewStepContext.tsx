@@ -17,7 +17,12 @@ export const InterviewStepProvider = ({ children }: InterviewStepProviderProps) 
 
   const [value, setValue] = useState<number>(0);
 
-  const handleChangeStep = () => {
+  const handleChangeStep = (step?: number) => {
+    if (typeof step === "number") {
+      setValue(step);
+      return;
+    }
+
     setValue((prev) => prev === 0 ? 1 : 0);
   };
 

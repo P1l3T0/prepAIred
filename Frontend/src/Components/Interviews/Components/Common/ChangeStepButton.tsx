@@ -11,7 +11,7 @@ const ChangeStepButton = ({ label, disabled }: ChangeStepButtonProps) => {
   return (
     <>
       <Button
-        onClick={handleChangeStep}
+        onClick={() => handleChangeStep()}
         themeColor={"tertiary"}
         fillMode="outline"
         size="large"

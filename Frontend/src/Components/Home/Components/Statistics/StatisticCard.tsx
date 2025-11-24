@@ -61,7 +61,7 @@ const StatisticCard = ({
                 progressStyle={{ backgroundColor: getProgressColor() }}
                 value={parseFloat(progressValue!) || 0}
                 label={(props) => {
-                  return <>{Math.round((props.value as number))}%</>;
+                  return <>{Math.round(props.value as number)}%</>;
                 }}
               />
             )}
