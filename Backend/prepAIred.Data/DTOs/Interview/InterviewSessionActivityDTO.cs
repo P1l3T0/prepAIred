@@ -21,6 +21,11 @@ namespace prepAIred.Data
         public string AiAgent { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets the name of the programming language.
+        /// </summary>
+        public string ProgrammingLanguage { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets the list of interview types included in the session.
         /// </summary>
         public List<string> InterviewTypes { get; set; } = new List<string>();

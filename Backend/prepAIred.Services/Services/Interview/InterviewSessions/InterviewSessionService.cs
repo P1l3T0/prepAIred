@@ -163,6 +163,7 @@ namespace prepAIred.Services
                 AverageScore = session.AverageScore,
                 AiAgent = session.AIAgent.ToString(),
                 InterviewTypes = session.Interviews.Select(i => i.InterviewType.ToString()).Distinct().ToList(),
+                ProgrammingLanguage = session.Interviews.OfType<TechnicalInterview>().FirstOrDefault()?.ProgrammingLanguage ?? "N/A",
                 Status = session.Status.ToString()
             });
 
