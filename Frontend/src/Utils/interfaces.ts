@@ -120,9 +120,8 @@ export interface HRInterviewDTO extends InterviewDTO {
 export interface InterviewSessionDTO extends BaseDTO {
   userID: number;
   subject: string;
-  isCompleted: boolean;
   aiAgent: string;
-  score: string;
+  averageScore: number;
   interviews: InterviewDTO[];
 }
 
@@ -151,11 +150,14 @@ export interface MultipleChoiceAnswer {
 
 // Home Profile Stats
 
-export interface Activity {
-  type: string;
+export interface InterviewSessionActivity {
+  id: number;
   subject: string;
-  score: number;
-  date: string;
+  averageScore: number;
+  aiAgent: string;
+  dateCreated: string;
+  interviewTypes: string[];
+  status: string;
 }
 
 export interface ProfileStats {
