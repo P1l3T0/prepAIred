@@ -1,5 +1,5 @@
-﻿using prepAIred.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using prepAIred.Data;
 
 namespace prepAIred.Services
 {
@@ -145,6 +145,28 @@ namespace prepAIred.Services
 
                 interviewSession.TechnicalScore = technicalScore;
             }
+        }
+
+        public async Task<List<InterviewSessionActivityDTO>> GetInterviewSessionActivitiesAsync(int userID)
+        {
+            List<InterviewSession> interviewSessions = await _dataContext.InterviewSessions
+                .Where(session => session.UserID == userID && session.Status != InterviewSessionStatus.Ongoing)
+                .Include(session => session.Interviews)
+                .OrderByDescending(session => session.DateCreated)
+                .ToListAsync();
+
+            List<InterviewSessionActivityDTO> activityDTOs = interviewSessions.ConvertAll(session => new InterviewSessionActivityDTO()
+            {
+                ID = session.ID,
+                DateCreated = session.DateCreated,
+                Subject = session.Subject,
+                AverageScore = session.AverageScore,
+                AiAgent = session.AIAgent.ToString(),
+                InterviewTypes = session.Interviews.Select(i => i.InterviewType.ToString()).Distinct().ToList(),
+                Status = session.Status.ToString()
+            });
+
+            return activityDTOs;
         }
     }
 }

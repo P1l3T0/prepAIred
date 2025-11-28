@@ -16,17 +16,31 @@ namespace prepAIred.Services
             return interviewSessionsDTOs;
         }
 
+        public async Task<List<InterviewSessionActivityDTO>> GetInterviewSessionActivities()
+        {
+            int currentUserID = await _userService.GetCurrentUserID();
+            List<InterviewSessionActivityDTO> activities = await _interviewSessionService.GetInterviewSessionActivitiesAsync(currentUserID);
+
+            return activities;
+        }
+
         public async Task<ProfileStatisticsDTO> GetInterviewSessionStatistics()
         {
             int currentUserID = await _userService.GetCurrentUserID();
 
+            int totalInterviewSessions = await _interviewSessionService.GetTotalInterviewSessionsAsync(currentUserID);
+            int passedInterviewSessions = await _interviewSessionService.GetPassedInterviewSessionsAsync(currentUserID);
+            int ongoingInterviewSessions = await _interviewSessionService.GetOngoingInterviewSessionsAsync(currentUserID);
+            decimal averageScore = await _interviewSessionService.GetAverageScoreAsync(currentUserID);
+            decimal completionRate = await _interviewSessionService.GetCompletionRateAsync(currentUserID);
+
             ProfileStatisticsDTO profileStatistics = new ProfileStatisticsDTO()
             {
-                TotalInterviewSessions = await _interviewSessionService.GetTotalInterviewSessionsAsync(currentUserID),
-                PassedInterviewSessions = await _interviewSessionService.GetPassedInterviewSessionsAsync(currentUserID),
-                OngoingInterviewSessions = await _interviewSessionService.GetOngoingInterviewSessionsAsync(currentUserID),
-                AverageScore = await _interviewSessionService.GetAverageScoreAsync(currentUserID),
-                CompletionRate = await _interviewSessionService.GetCompletionRateAsync(currentUserID)
+                TotalInterviewSessions = totalInterviewSessions,
+                PassedInterviewSessions = passedInterviewSessions,
+                OngoingInterviewSessions = ongoingInterviewSessions,
+                AverageScore = averageScore,
+                CompletionRate = completionRate
             };
 
             return profileStatistics;

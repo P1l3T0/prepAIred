@@ -119,5 +119,12 @@ namespace prepAIred.Services
         /// <param name="interviewSession">The interview session to be finalized.</param>
         /// <param name="evaluatedTInterviews">The list of evaluated interviews to update.</param>
         void FinalizeInterviewSession<TInterview>(InterviewSession interviewSession, List<TInterview> evaluatedTInterviews) where TInterview : Interview;
+
+        /// <summary>
+        /// Retrieves recent interview session activities for the user.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of recent interview session activities.</returns>
+        Task<List<InterviewSessionActivityDTO>> GetInterviewSessionActivitiesAsync(int userID);
     }
 }

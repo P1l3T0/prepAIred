@@ -1,6 +1,6 @@
 ﻿using prepAIred.Data;
-using Microsoft.AspNetCore.Mvc;
 using prepAIred.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace prepAIred.API.Controllers
 {
@@ -22,6 +22,13 @@ namespace prepAIred.API.Controllers
         {
             List<InterviewSessionDTO> interviewSessions = await _interviewSessionRepository.GetInterviewSessionDTOsAsync();
             return Ok(interviewSessions);
+        }
+
+        [HttpGet("get-interview-session-activities")]
+        public async Task<IActionResult> GetRecentInterviewSessions()
+        {
+            List<InterviewSessionActivityDTO> interviewSessionActivities = await _interviewSessionRepository.GetInterviewSessionActivities();
+            return Ok(interviewSessionActivities);
         }
 
         [HttpGet("get-interview-session-statistics")]
