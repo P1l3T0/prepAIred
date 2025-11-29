@@ -11,7 +11,7 @@ import { getLatestHrInterviewsEndPoint } from "../../../Utils/endpoints";
 import type { HRInterviewDTO } from "../../../Utils/interfaces";
 
 const useGetLatestHrInterviews = () => {
-  const getLatestHrInterviews = async () => {
+  const getLatestHrInterviews = async (): Promise<HRInterviewDTO[]> => {
     return await axios
       .get<HRInterviewDTO[]>(`${getLatestHrInterviewsEndPoint}`, { withCredentials: true })
       .then((res: AxiosResponse<HRInterviewDTO[]>) => {
@@ -23,6 +23,7 @@ const useGetLatestHrInterviews = () => {
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
         alert(error?.title);
+        return [] as HRInterviewDTO[];
       });
   };
 

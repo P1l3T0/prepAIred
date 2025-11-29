@@ -9,7 +9,7 @@ import { getInterviewSessionStatisticsEndPoint } from "../../Utils/endpoints";
 import type { ProfileStats } from "../../Utils/interfaces";
 
 const useGetInterviewSessionStatistics = () => {
-  const getInterviewSessionStatistics = async () => {
+  const getInterviewSessionStatistics = async (): Promise<ProfileStats> => {
     return await axios
       .get<ProfileStats>(getInterviewSessionStatisticsEndPoint, { withCredentials: true })
       .then((res: AxiosResponse<ProfileStats>) => {
@@ -18,6 +18,7 @@ const useGetInterviewSessionStatistics = () => {
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
         console.error(error?.title);
+        return {} as ProfileStats;
       });
   };
 
