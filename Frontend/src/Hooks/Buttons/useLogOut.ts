@@ -8,11 +8,13 @@ import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { logoutEndPoint } from "../../Utils/endpoints";
 import useAuth from "../../Context/Auth/useAuth";
+import useInterviewGenerateButton from "../../Context/InterviewGenerateButton/useInterviewGenerateButton";
 
 const useLogOut = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { logout } = useAuth();
+  const { setDisableHrInterviewButton, setDisableTechnicalInterviewButton } = useInterviewGenerateButton();
 
   const logOut = async () => {
     await axios
@@ -28,6 +30,8 @@ const useLogOut = () => {
     mutationFn: logOut,
     onSuccess: () => {
       logout();
+      setDisableHrInterviewButton(false);
+      setDisableTechnicalInterviewButton(false);
       queryClient.setQueryData(["user"], null);
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },

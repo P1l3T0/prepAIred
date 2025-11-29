@@ -17,7 +17,9 @@ export const logoutEndPoint = `${authController}/logout`;
 export const refreshTokenEndPoint = `${authController}/refresh-token`;
 
 // User
-export const getCurrentUserEndPoint = `${userController}/get-user`;
+export const getCurrentUserEndPoint = `${userController}/get-current-user`;
+export const updateCurrentUserEndPoint = `${userController}/update-current-user`;
+export const deleteCurrentUserEndPoint = `${userController}/delete-current-user`;
 
 // Profile Picture
 export const getProfilePictureUrlEndPoint = `${profilePictureController}/get-profile-picture-url`;
@@ -32,4 +34,7 @@ export const getLatestTechnicalInterviewsEndPoint = `${interviewController}/get-
 export const evaluateTechnicalInterviewsEndPoint = `${interviewController}/evaluate-technical-interviews`;
 
 // Interview Sessions
+export const getInterviewSessionStatisticsEndPoint = `${interviewSessionController}/get-interview-session-statistics`;
+export const getRecentInterviewSessionsEndPoint = `${interviewSessionController}/get-interview-session-activities`;
+export const finishInterviewSessionEndPoint = `${interviewSessionController}/finish-interview-session`;
 export const deleteInterviewSessionsEndPoint = `${interviewSessionController}/delete-interview-sessions`;

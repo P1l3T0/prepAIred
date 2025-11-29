@@ -24,7 +24,7 @@ namespace prepAIred.Services
         public async Task GenerateInterviewsAsync<TInterview>(BaseRequestDTO request) where TInterview : Interview
         {
             int currentUserID = await _userService.GetCurrentUserID();
-            User currentUser = await _userService.GetUserEntityByIdAsync(currentUserID);
+            User currentUser = await _userService.GetCurrentUserEntityByIdAsync(currentUserID);
             AIAgent aiAgent = Enum.Parse<AIAgent>(request.AIAgent);
 
             await (typeof(TInterview).Name switch
@@ -46,7 +46,7 @@ namespace prepAIred.Services
                 User = currentUser,
                 Interviews = interviews,
                 AIAgent = aiAgent,
-                Score = InterviewSessionScore.NotRated
+                Status = InterviewSessionStatus.Ongoing
             };
 
             await _interviewSessionService.CreateInterviewSessionAsync(interviewSession);
@@ -71,6 +71,15 @@ namespace prepAIred.Services
         {
             int currentUserID = await _userService.GetCurrentUserID();
             int latestSessionID = await _interviewSessionService.GetLatestInterviewSessionID(currentUserID);
+            InterviewSession interviewSession = await _interviewSessionService.GetInterviewSessionByIdAsync(latestSessionID);
+
+            if (interviewSession is null || interviewSession.Status != InterviewSessionStatus.Ongoing)
+            {
+                // After the Technical Interviews are evaluated, the status of the session is set to Passed/Failed,
+                // meaning the interviews will automatically disappear after evaluation. This check prevents this behavior
+                // by returning an empty list if the user hasn't clicked the "Finish Interview Session" button.
+                return [];
+            }
 
             List<TInterview> interviews = await _interviewService.GetInterviewsBySessionIdAsync<TInterview>(latestSessionID);
             List<TInterviewDTO> interviewDTOs = _interviewService.GetLatestInterviews<TInterview, TInterviewDTO>(interviews);
@@ -95,7 +104,9 @@ namespace prepAIred.Services
 
             List<Interview> evaluatedInterviews = await _aIService.EvaluateInterviewsAsync<TInterview>(prompt, interviewSession.AIAgent);
             List<TInterview> evaluatedTInterviews = [..evaluatedInterviews.Cast<TInterview>()];
+
             _interviewService.UpdateExistingInterviewWithEvaluation(evaluatedTInterviews, existingInterviews);
+            _interviewSessionService.FinalizeInterviewSession(interviewSession, evaluatedTInterviews);
 
             await _interviewService.UpdateInterviewAsync(existingInterviews);
         }

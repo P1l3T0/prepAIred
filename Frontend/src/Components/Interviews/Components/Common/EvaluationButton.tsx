@@ -2,9 +2,9 @@ import { Button } from "@progress/kendo-react-buttons";
 import { Loader } from "@progress/kendo-react-indicators";
 
 interface EvaluationButtonProps {
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  isSubmitting: boolean;
   disabled: boolean;
+  isSubmitting: boolean;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const EvaluationButton = ({

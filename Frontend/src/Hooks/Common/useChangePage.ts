@@ -1,11 +1,11 @@
 import { useState } from "react";
 import type { PageChangeEvent } from "@progress/kendo-react-data-tools";
-import type { Activity } from "../../Utils/interfaces";
+import type { InterviewSessionActivity } from "../../Utils/interfaces";
 
-const useChangePage = (recentActivity: Activity[]) => {
+const useChangePage = (recentActivity: InterviewSessionActivity[]) => {
   const [page, setPage] = useState({
     skip: 0,
-    take: 4,
+    take: 3,
   });
 
   const handlePageChange = (e: PageChangeEvent) => {

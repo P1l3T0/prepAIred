@@ -3,8 +3,9 @@ import ProfileAvatar from "./ProfileAvatar";
 import ProfileUpload from "./ProfileUpload";
 import ProfileData from "./ProfileData";
 import type { User } from "../../../../Utils/interfaces";
-import useUploadProfilePicture from "../../../../Hooks/ProfilePicture/useUploadProfilePicture";
-import { Button } from "@progress/kendo-react-buttons";
+import DeleteUserButton from "../../../Buttons/DeleteUserButton";
+import UpdateUserButton from "../../../Buttons/UpdateUserButton";
+import useUploadProfilePicture from "../../../../Hooks/Home/ProfilePicture/useUploadProfilePicture";
 
 interface ProfileInfoProps {
   profilePictureUrl: string;
@@ -37,8 +38,8 @@ const ProfileInfo = ({ user, profilePictureUrl }: ProfileInfoProps) => {
         </div>
       </CardBody>
       <CardFooter className="flex flex-col md:flex-row justify-center gap-2">
-        <Button themeColor={"primary"}>Update Info</Button>
-        <Button themeColor={"error"}>Delete User</Button>
+        <UpdateUserButton />
+        <DeleteUserButton />
       </CardFooter>
     </Card>
   );

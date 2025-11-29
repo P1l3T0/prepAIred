@@ -26,7 +26,7 @@ const useEvaluateInterviews = ({
   openEndedAnswers,
 }: UseEvaluateInterviewsProps) => {
   const queryClient = useQueryClient();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { getEndpoint, prepareEvaluationRequests } = usePrepareEvaluationRequests({
     interviewType,

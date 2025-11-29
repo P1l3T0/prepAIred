@@ -16,7 +16,7 @@ const ProfileAvatar = ({ username, profilePictureUrl, onAvatarClick }: ProfileAv
         {profilePictureUrl ? (
           <img src={profilePictureUrl} alt="Profile Avatar" />
         ) : (
-          username.charAt(0).toUpperCase() || "U"
+          username?.charAt(0).toUpperCase() || "U"
         )}
       </Avatar>
     </div>

@@ -11,7 +11,7 @@ import { getLatestTechnicalInterviewsEndPoint } from "../../../Utils/endpoints";
 import type { TechnicalInterviewDTO } from "../../../Utils/interfaces";
 
 const useGetLatestTechnicalInterviews = () => {
-  const getLatestTechnicalInterviews = async () => {
+  const getLatestTechnicalInterviews = async (): Promise<TechnicalInterviewDTO[]> => {
     return await axios
       .get<TechnicalInterviewDTO[]>(`${getLatestTechnicalInterviewsEndPoint}`, { withCredentials: true })
       .then((res: AxiosResponse<TechnicalInterviewDTO[]>) => {
@@ -23,6 +23,7 @@ const useGetLatestTechnicalInterviews = () => {
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
         alert(error?.title);
+        return [] as TechnicalInterviewDTO[];
       });
   };
 

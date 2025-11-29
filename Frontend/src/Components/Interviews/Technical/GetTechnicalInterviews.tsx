@@ -1,10 +1,9 @@
 import InterviewDisplay from "../Components/InterviewDisplay/InterviewDisplay";
 import useGetLatestTechnicalInterviews from "../../../Hooks/Interviews/Technical/useGetLatestTechnicalInterviews";
-import type { ChangeStepButtonProps } from "../../../Utils/interfaces";
 import { Loader } from "@progress/kendo-react-indicators";
 import { Card, CardBody } from "@progress/kendo-react-layout";
 
-const GetTechnicalInterviews = ({ handleChangeStep }: ChangeStepButtonProps) => {
+const GetTechnicalInterviews = () => {
   const { data: technicalInterviews, isLoading, isError } = useGetLatestTechnicalInterviews();
 
   if (isLoading) {
@@ -38,12 +37,15 @@ const GetTechnicalInterviews = ({ handleChangeStep }: ChangeStepButtonProps) => 
   }
 
   return (
-    <div className="rounded-lg shadow-lg p-3 md:p-6 border border-border bg-background">
-      <InterviewDisplay
-        interviewType="Technical-Interview"
-        interviews={technicalInterviews}
-        handleChangeStep={handleChangeStep}
-      />
+    <div className="border-border bg-background">
+      <Card className="shadow-sm shadow-primary">
+        <CardBody>
+          <InterviewDisplay
+            interviewType="Technical-Interview"
+            interviews={technicalInterviews}
+          />
+        </CardBody>
+      </Card>
     </div>
   );
 };

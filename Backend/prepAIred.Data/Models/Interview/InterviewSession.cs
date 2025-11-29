@@ -1,4 +1,6 @@
-﻿namespace prepAIred.Data
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace prepAIred.Data
 {
     /// <summary>
     /// Represents an Interview Session for a user, including data such as topic, AI agent, and score.
@@ -16,19 +18,30 @@
         public string Subject { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the interview session has been completed.
-        /// </summary>
-        public bool IsCompleted { get; set; } = false;
-
-        /// <summary>
         /// Gets or sets the AI agent used to conduct or assist with the interview session.
         /// </summary>
         public AIAgent AIAgent { get; set; } = AIAgent.ChatGPT;
 
         /// <summary>
-        /// Gets or sets the overall score or rating assigned to this interview session.
+        /// Gets or sets the HR score for this interview session.
         /// </summary>
-        public InterviewSessionScore Score { get; set; } = InterviewSessionScore.Good;
+        public float HrScore { get; set; } = 0;
+
+        /// <summary>
+        /// Gets or sets the technical score for this interview session.
+        /// </summary>
+        public float TechnicalScore { get; set; } = 0;
+
+        /// <summary>
+        /// Gets the overall score or rating assigned to this interview session.
+        /// </summary>
+        [AllowNull]
+        public float AverageScore => (float)Math.Round((HrScore + TechnicalScore) / 2, 2);
+
+        /// <summary>
+        /// Gets or sets the current status of the interview session.
+        /// </summary>
+        public InterviewSessionStatus Status { get; set; } = InterviewSessionStatus.Failed;
 
         /// <summary>
         /// Gets or sets the user entity associated with this session (navigation property).
@@ -52,9 +65,8 @@
                 ID = ID,
                 UserID = UserID,
                 Subject = Subject,
-                IsCompleted = IsCompleted,
+                AverageScore = AverageScore,
                 AIAgent = AIAgent.ToString(),
-                Score = Score.ToString(),
                 Interviews = Interviews.ConvertAll(i => i.ToDto<InterviewDTO>()),
                 DateCreated = DateCreated,
             };

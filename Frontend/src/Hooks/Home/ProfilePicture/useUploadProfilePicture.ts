@@ -7,8 +7,8 @@
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { changeProfilePictureEndPoint } from "../../Utils/endpoints";
 import type { UploadOnAddEvent } from '@progress/kendo-react-upload';
+import { changeProfilePictureEndPoint } from "../../../Utils/endpoints";
 
 const useUploadProfilePicture = () => {
   const queryClient = useQueryClient();
