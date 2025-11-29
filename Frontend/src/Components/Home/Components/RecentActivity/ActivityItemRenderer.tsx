@@ -1,3 +1,4 @@
+import useAdjustRecentActivities from "../../../../Hooks/Home/RecentActivity/useAdjustRecentActivities";
 import type { InterviewSessionActivity } from "../../../../Utils/interfaces";
 
 interface ActivityItemRenderProps {
@@ -15,22 +16,7 @@ const ActivityItemRender = (props: ActivityItemRenderProps) => {
 };
 
 const ActivityItem = ({ dataItem }: ActivityItemRenderProps) => {
-  const getScoreColor = (score: number) => {
-    if (score >= 8) return "text-success";
-    if (score >= 6) return "text-primary";
-    if (score >= 4) return "text-warning";
-
-    return "text-error";
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Passed":
-        return "text-success";
-      case "Failed":
-        return "text-error";
-    }
-  };
+  const { getScoreColor, getStatusColor } = useAdjustRecentActivities();
 
   return (
     <div className="flex items-center justify-between p-3 bg-text-inverse rounded-lg border border-border-subtle hover:bg-hover transition-colors">
