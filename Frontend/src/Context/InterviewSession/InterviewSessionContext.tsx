@@ -24,22 +24,19 @@ const InterviewSessionContextProvider: React.FC<InterviewSessionProviderProps> =
 
   const { setDisableTechnicalInterviewButton, setDisableHrInterviewButton } = useInterviewGenerateButton();
 
-  const { data: interviews } = useQuery(["interviews"],
+  const { data: technicalInterviews } = useQuery(["technical-interviews"],
     async () => {
-      const [technicalResponse, hrResponse] = await Promise.all([
-        axios.get(getLatestTechnicalInterviewsEndPoint, { withCredentials: true }),
-        axios.get(getLatestHrInterviewsEndPoint, { withCredentials: true })
-      ]);
-
-      return {
-        technicalInterviews: technicalResponse.data,
-        hrInterviews: hrResponse.data
-      };
+      const response = await axios.get(getLatestTechnicalInterviewsEndPoint, { withCredentials: true });
+      return response.data;
     }
   );
 
-const hrInterviews = interviews?.hrInterviews;
-  const technicalInterviews = interviews?.technicalInterviews;
+  const { data: hrInterviews } = useQuery(["hr-interviews"],
+    async () => {
+      const response = await axios.get(getLatestHrInterviewsEndPoint, { withCredentials: true });
+      return response.data;
+    }
+  );
 
   useEffect(() => {
     const hasHrInterviews: boolean = hrInterviews?.length > 0;
@@ -53,7 +50,7 @@ const hrInterviews = interviews?.hrInterviews;
     setIsReadyToFinish(technicalCompleted);
 
     technicalCompleted ? setShowFinishButton(true) : setShowFinishButton(false);
-  }, [interviews]);
+  }, [hrInterviews, technicalInterviews]);
 
   const contextValue: InterviewSessionContextType = {
     showFinishButton,
