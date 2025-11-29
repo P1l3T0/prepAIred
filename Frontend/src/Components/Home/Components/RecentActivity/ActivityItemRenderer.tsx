@@ -38,7 +38,7 @@ const ActivityItem = ({ dataItem }: ActivityItemRenderProps) => {
         <div className="w-3 h-3 rounded-full bg-primary" />
         <div className="flex flex-col">
           <h4 className="text-text-primary font-medium">{dataItem.subject}</h4>
-          <p className="text-text-secondary text-sm">
+          <p style={{ margin: 0.5 }} className="text-text-secondary text-sm">
             {dataItem.interviewTypes.join(", ")}
           </p>
           <p style={{ margin: 0.5 }} className="text-text-tertiary text-xs">
