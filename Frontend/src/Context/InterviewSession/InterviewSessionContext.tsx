@@ -2,8 +2,9 @@ import React, { createContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import { getLatestTechnicalInterviewsEndPoint } from '../../Utils/endpoints';
+import { getLatestTechnicalInterviewsEndPoint, getLatestHrInterviewsEndPoint } from '../../Utils/endpoints';
 import type { InterviewDTO } from '../../Utils/interfaces';
+import useInterviewGenerateButton from '../InterviewGenerateButton/useInterviewGenerateButton';
 
 interface InterviewSessionContextType {
   showFinishButton: boolean;
@@ -21,28 +22,38 @@ const InterviewSessionContextProvider: React.FC<InterviewSessionProviderProps> =
   const [showFinishButton, setShowFinishButton] = useState<boolean>(false);
   const [isReadyToFinish, setIsReadyToFinish] = useState<boolean>(false);
 
-  const { data: technicalInterviews } = useQuery(
-    ["technical-interviews"],
+  const { setDisableTechnicalInterviewButton, setDisableHrInterviewButton } = useInterviewGenerateButton();
+
+  const { data: interviews } = useQuery(["interviews"],
     async () => {
-      const response = await axios.get(getLatestTechnicalInterviewsEndPoint, {
-        withCredentials: true,
-      });
-      return response.data;
+      const [technicalResponse, hrResponse] = await Promise.all([
+        axios.get(getLatestTechnicalInterviewsEndPoint, { withCredentials: true }),
+        axios.get(getLatestHrInterviewsEndPoint, { withCredentials: true })
+      ]);
+
+      return {
+        technicalInterviews: technicalResponse.data,
+        hrInterviews: hrResponse.data
+      };
     }
   );
 
-  useEffect(() => {
-    const technicalCompleted =
-      technicalInterviews &&
-      technicalInterviews.length > 0 &&
-      technicalInterviews.every(
-        (interview: InterviewDTO) => interview.isAnswered
-      );
+const hrInterviews = interviews?.hrInterviews;
+  const technicalInterviews = interviews?.technicalInterviews;
 
+  useEffect(() => {
+    const hasHrInterviews: boolean = hrInterviews?.length > 0;
+    const hasTechnicalInterviews: boolean = technicalInterviews?.length > 0;
+
+    const allTechnicalAnswered: boolean = technicalInterviews?.every((interview: InterviewDTO) => interview.isAnswered);
+    const technicalCompleted: boolean = hasTechnicalInterviews && allTechnicalAnswered;
+
+    setDisableHrInterviewButton(hasHrInterviews);
+    setDisableTechnicalInterviewButton(hasTechnicalInterviews);
     setIsReadyToFinish(technicalCompleted);
 
     technicalCompleted ? setShowFinishButton(true) : setShowFinishButton(false);
-  }, [technicalInterviews]);
+  }, [interviews]);
 
   const contextValue: InterviewSessionContextType = {
     showFinishButton,
