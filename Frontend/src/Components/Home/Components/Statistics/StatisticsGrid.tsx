@@ -8,6 +8,7 @@ interface StatisticsGridProps {
 
 const StatisticsGrid = ({ profileStats }: StatisticsGridProps) => {
   const {
+    interviewSessionGoal,
     totalInterviewSessions,
     totalInterviewSessionsProgress,
     passedInterviewSessions,
@@ -24,7 +25,7 @@ const StatisticsGrid = ({ profileStats }: StatisticsGridProps) => {
       <StatisticCard
         title={totalInterviewSessions > 1 ? "Total Interview Sessions" : "Total Interview Session"}
         themeColor="primary"
-        subtitle="Goal: 10"
+        subtitle={`Goal: ${interviewSessionGoal}`}
         value={totalInterviewSessions}
         progressValue={totalInterviewSessionsProgress}
       />

@@ -104,7 +104,7 @@ namespace prepAIred.Services
 
             if (updateUserDTO.Email != currentUser.Email)
             {
-                if (await UserExistsAsync(updateUserDTO.Email)) throw new UserAlreadyExistsException("User Email already in use");
+                if (await UserExistsAsync(updateUserDTO.Email)) throw new UserAlreadyExistsException("User already exists");
             }
         }
 
