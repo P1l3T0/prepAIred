@@ -162,8 +162,8 @@ namespace prepAIred.Services
                 Subject = session.Subject,
                 AverageScore = session.AverageScore,
                 AiAgent = session.AIAgent.ToString(),
-                InterviewTypes = session.Interviews.Select(i => i.InterviewType.ToString()).Distinct().ToList(),
-                ProgrammingLanguage = session.Interviews.OfType<TechnicalInterview>().FirstOrDefault()?.ProgrammingLanguage ?? "N/A",
+                Position = session.Interviews.OfType<TechnicalInterview>().FirstOrDefault()?.Position ?? "Junior Developer",
+                ProgrammingLanguage = session.Interviews.OfType<TechnicalInterview>().FirstOrDefault()?.ProgrammingLanguage ?? "C#",
                 Status = session.Status.ToString()
             });
 

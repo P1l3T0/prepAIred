@@ -26,9 +26,9 @@ namespace prepAIred.Data
         public string ProgrammingLanguage { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the list of interview types included in the session.
+        /// Gets or sets the position in the session.
         /// </summary>
-        public List<string> InterviewTypes { get; set; } = new List<string>();
+        public string Position { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the status of the interview session (Passed, Failed, Ongoing).

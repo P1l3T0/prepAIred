@@ -75,10 +75,10 @@ namespace prepAIred.Services
 
             if (interviewSession is null || interviewSession.Status != InterviewSessionStatus.Ongoing)
             {
-                return [];
                 // After the Technical Interviews are evaluated, the status of the session is set to Passed/Failed,
                 // meaning the interviews will automatically disappear after evaluation. This check prevents this behavior
                 // by returning an empty list if the user hasn't clicked the "Finish Interview Session" button.
+                return [];
             }
 
             List<TInterview> interviews = await _interviewService.GetInterviewsBySessionIdAsync<TInterview>(latestSessionID);

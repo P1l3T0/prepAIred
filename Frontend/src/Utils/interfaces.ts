@@ -157,7 +157,7 @@ export interface InterviewSessionActivity {
   aiAgent: string;
   programmingLanguage: string;
   dateCreated: string;
-  interviewTypes: string[];
+  position: string;
   status: string;
 }
 

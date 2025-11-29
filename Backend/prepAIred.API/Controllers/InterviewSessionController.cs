@@ -18,14 +18,14 @@ namespace prepAIred.API.Controllers
         private readonly IInterviewSessionRepository _interviewSessionRepository = interviewSessionRepository;
 
         [HttpGet("get-interview-sessions")]
-        public async Task<IActionResult> GetAiInterviews()
+        public async Task<IActionResult> GetInterviewSessionDTOs()
         {
             List<InterviewSessionDTO> interviewSessions = await _interviewSessionRepository.GetInterviewSessionDTOsAsync();
             return Ok(interviewSessions);
         }
 
         [HttpGet("get-interview-session-activities")]
-        public async Task<IActionResult> GetRecentInterviewSessions()
+        public async Task<IActionResult> GetInterviewSessionActivities()
         {
             List<InterviewSessionActivityDTO> interviewSessionActivities = await _interviewSessionRepository.GetInterviewSessionActivities();
             return Ok(interviewSessionActivities);

@@ -25,10 +25,10 @@ const ActivityItem = ({ dataItem }: ActivityItemRenderProps) => {
         <div className="flex flex-col">
           <h4 className="text-text-primary font-medium">{dataItem.subject}</h4>
           <p style={{ margin: 0.5 }} className="text-text-secondary text-sm">
-            {dataItem.interviewTypes.join(", ")}
+            Position: <b>{dataItem.position}</b>
           </p>
           <p style={{ margin: 0.5 }} className="text-text-tertiary text-xs">
-            {dataItem.programmingLanguage || "N/A"} • {dataItem.aiAgent} •{" "}
+            {dataItem.programmingLanguage || "N/A"} • {dataItem.aiAgent} • {" "}
             <span className={getStatusColor(dataItem.status)}>
               {dataItem.status}
             </span>
