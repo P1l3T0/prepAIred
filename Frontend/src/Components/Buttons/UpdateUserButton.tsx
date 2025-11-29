@@ -1,8 +1,8 @@
 import { Button } from "@progress/kendo-react-buttons";
 import { Window } from "@progress/kendo-react-dialogs";
 import { TextBox } from "@progress/kendo-react-inputs";
-import useUpdateUser from "../../Hooks/User/useUpdateUser";
 import { Label } from "@progress/kendo-react-labels";
+import useUpdateUser from "../../Hooks/Home/User/useUpdateUser";
 
 const UpdateUserButton = () => {
   const {

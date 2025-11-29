@@ -4,10 +4,10 @@ import Header from "./Components/Header/Header";
 import StatisticsGrid from "./Components/Statistics/StatisticsGrid";
 import ProfileInfo from "./Components/ProfileInformation/ProfileInfo";
 import RecentActivity from "./Components/RecentActivity/RecentActivity";
-import useGetUser from "../../Hooks/User/useGetUser";
-import useGetProfilePictureUrl from "../../Hooks/ProfilePicture/useGetProfilePicture";
 import useGetInterviewSessionStatistics from "../../Hooks/InterviewSessions/useGetInterviewSessionStatistics";
 import useGetRecentInterviewSessions from "../../Hooks/InterviewSessions/useGetRecentInterviewSessions";
+import useGetProfilePictureUrl from "../../Hooks/Home/ProfilePicture/useGetProfilePicture";
+import useGetUser from "../../Hooks/Home/User/useGetUser";
 import type { InterviewSessionActivity, ProfileStats, User } from "../../Utils/interfaces";
 
 const HomeContainer = () => {

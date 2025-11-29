@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "react-query";
 import axios, { AxiosError } from "axios";
-import { deleteCurrentUserEndPoint } from "../../Utils/endpoints";
-import useAuth from "../../Context/Auth/useAuth";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../../Context/Auth/useAuth";
+import { deleteCurrentUserEndPoint } from "../../../Utils/endpoints";
 
 const useDeleteUser = () => {
   const queryClient = useQueryClient();

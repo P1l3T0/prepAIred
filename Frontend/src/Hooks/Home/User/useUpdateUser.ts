@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
-import { updateCurrentUserEndPoint } from "../../Utils/endpoints";
 import { useMutation, useQueryClient } from "react-query";
 import type { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
+import { updateCurrentUserEndPoint } from "../../../Utils/endpoints";
 
 interface UpdateUserDTO {
   username: string;
@@ -36,9 +36,7 @@ const useUpdateUser = () => {
 
   const updateUser = async () => {
     await axios
-      .put<UpdateUserDTO>(updateCurrentUserEndPoint, updatedUser, {
-        withCredentials: true,
-      })
+      .put<UpdateUserDTO>(updateCurrentUserEndPoint, updatedUser, { withCredentials: true })
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
         console.error(error?.title);

@@ -5,8 +5,8 @@
  */
 import { useQuery } from "react-query";
 import axios, { AxiosError, type AxiosResponse } from "axios";
-import { getCurrentUserEndPoint } from "../../Utils/endpoints";
-import type { User } from "../../Utils/interfaces";
+import { getCurrentUserEndPoint } from "../../../Utils/endpoints";
+import type { User } from "../../../Utils/interfaces";
 
 const useGetUser = () => {
   const getUser = async () => {

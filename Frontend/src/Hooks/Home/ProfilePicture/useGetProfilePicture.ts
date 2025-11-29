@@ -5,7 +5,7 @@
  */
 import { useQuery } from "react-query";
 import axios, { AxiosError, type AxiosResponse } from "axios";
-import { getProfilePictureUrlEndPoint, uploadsFolderURL } from "../../Utils/endpoints";
+import { getProfilePictureUrlEndPoint, uploadsFolderURL } from "../../../Utils/endpoints";
 
 const useGetProfilePictureUrl = () => {
   const getProfilePictureUrl = async () => {
