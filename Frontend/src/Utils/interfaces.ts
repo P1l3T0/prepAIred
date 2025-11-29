@@ -155,6 +155,7 @@ export interface InterviewSessionActivity {
   subject: string;
   averageScore: number;
   aiAgent: string;
+  programmingLanguage: string;
   dateCreated: string;
   interviewTypes: string[];
   status: string;
