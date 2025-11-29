@@ -42,13 +42,13 @@ const InterviewDisplay = ({
     isSubmitting ||
     !Array.isArray(interviews) ||
     interviews.length === 0 ||
-    interviews.some((interview) => interview.isAnswered);
+    interviews.every((interview) => interview.isAnswered);
 
   const disableTechnicalInterviews: boolean =
     !Array.isArray(interviews) ||
     (interviewType === "HR-Interview" &&
     (interviews.length === 0 ||
-    interviews.some((interview) => !interview.isAnswered)));
+    interviews.every((interview) => !interview.isAnswered)));
 
   return (
     <div className="p-2 md:p-4 bg-card rounded-lg shadow-sm">

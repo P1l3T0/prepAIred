@@ -86,6 +86,9 @@ const useGenerateTechnicalInterviews = () => {
     onMutate: () => {
       setIsSubmitting(true);
     },
+    onError: () => {
+      setDisableTechnicalInterviewButton(false);
+    },
     onSuccess: () => {
       setIsSubmitting(false);
       setDisableTechnicalInterviewButton(true);

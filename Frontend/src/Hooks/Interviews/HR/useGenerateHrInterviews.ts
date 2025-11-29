@@ -77,11 +77,14 @@ const useGenerateHrInterviews = () => {
     onMutate: () => {
       setIsSubmitting(true);
     },
+    onError: () => {
+      setDisableHrInterviewButton(false);
+    },
     onSuccess: () => {
       setIsSubmitting(false);
       setDisableHrInterviewButton(true);
       queryClient.invalidateQueries({ queryKey: ["hr-interviews"] });
-    },
+    }
   });
 
   const handleGenerateHrInterviews = async (e: SyntheticEvent) => {
