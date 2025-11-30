@@ -7,6 +7,7 @@ import Interviews from "./Pages/Interviews";
 import useAuth from "./Context/Auth/useAuth";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import Footer from "./Components/Common/Footer/Footer";
 
 function App() {
   const { isUserLoggedIn } = useAuth();
@@ -37,6 +38,7 @@ function App() {
           />
         </Route>
       </Routes>
+      {isUserLoggedIn ? <Footer /> : null}
     </BrowserRouter>
   );
 }

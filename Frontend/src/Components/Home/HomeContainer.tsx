@@ -47,7 +47,7 @@ const HomeContainer = () => {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4.55rem)] bg-linear-to-br from-background via-background to-primary">
+    <div className="bg-linear-to-br from-background via-background to-primary">
       <Header username={user?.username!} />
 
       <div className="max-w-7xl mx-auto p-6">
