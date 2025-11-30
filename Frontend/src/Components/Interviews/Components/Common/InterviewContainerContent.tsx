@@ -12,7 +12,7 @@ const InterviewContainerContent = () => {
 
   return (
     <>
-      <div className="bg-linear-to-br from-background via-background to-primary p-3 md:p-6">
+      <main className="bg-background p-3 md:p-6">
         <div className="max-w-7xl mx-auto space-y-12">
           <InterviewStepper value={value} items={items} />
 
@@ -28,7 +28,7 @@ const InterviewContainerContent = () => {
             />
           )}
         </div>
-      </div>
+      </main>
     </>
   );
 };

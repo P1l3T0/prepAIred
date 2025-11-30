@@ -1,6 +1,6 @@
 const NotFoundContainer = () => {
   return (
-    <div className="min-h-[calc(100vh-4.05rem)] sm:min-h-[calc(100vh-4.55rem)] bg-background flex items-center justify-center px-4">
+    <main className="min-h-[calc(100vh-4.05rem)] sm:min-h-[calc(100vh-4.55rem)] bg-background flex items-center justify-center px-4">
       <div className="max-w-lg w-full text-center">
         <div className="mb-8">
           <h1 className="text-9xl font-bold text-primary opacity-80">404</h1>
@@ -14,7 +14,7 @@ const NotFoundContainer = () => {
           </p>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

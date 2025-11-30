@@ -1,6 +1,5 @@
 import { Loader } from "@progress/kendo-react-indicators";
 import { Card, CardBody } from "@progress/kendo-react-layout";
-import Header from "./Components/Header/Header";
 import StatisticsGrid from "./Components/Statistics/StatisticsGrid";
 import ProfileInfo from "./Components/ProfileInformation/ProfileInfo";
 import RecentActivity from "./Components/RecentActivity/RecentActivity";
@@ -47,13 +46,11 @@ const HomeContainer = () => {
   }
 
   return (
-    <div className="bg-linear-to-br from-background via-background to-primary">
-      <Header username={user?.username!} />
-
+    <main className="bg-background">
       <div className="max-w-7xl mx-auto p-6">
         <StatisticsGrid profileStats={interviewSessionStatistics as ProfileStats} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="col-span-1">
             <ProfileInfo 
               user={user as User}
@@ -61,12 +58,12 @@ const HomeContainer = () => {
             />
           </div>
 
-          <div className="md:col-span-2">
+          <div className="lg:col-span-2">
             <RecentActivity recentActivity={recentActivities as InterviewSessionActivity[]} />
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
