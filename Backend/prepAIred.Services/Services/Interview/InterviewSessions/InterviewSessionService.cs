@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using prepAIred.Data;
+﻿using prepAIred.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace prepAIred.Services
 {
@@ -155,16 +155,21 @@ namespace prepAIred.Services
                 .OrderByDescending(session => session.DateCreated)
                 .ToListAsync();
 
-            List<InterviewSessionActivityDTO> activityDTOs = interviewSessions.ConvertAll(session => new InterviewSessionActivityDTO()
+            List<InterviewSessionActivityDTO> activityDTOs = interviewSessions.ConvertAll(session =>
             {
-                ID = session.ID,
-                DateCreated = session.DateCreated,
-                Subject = session.Subject,
-                AverageScore = session.AverageScore,
-                AiAgent = session.AIAgent.ToString(),
-                Position = session.Interviews.OfType<TechnicalInterview>().FirstOrDefault()?.Position ?? "Junior Developer",
-                ProgrammingLanguage = session.Interviews.OfType<TechnicalInterview>().FirstOrDefault()?.ProgrammingLanguage ?? "C#",
-                Status = session.Status.ToString()
+                TechnicalInterview? technicalInterview = session.Interviews.OfType<TechnicalInterview>().FirstOrDefault();
+
+                return new InterviewSessionActivityDTO()
+                {
+                    ID = session.ID,
+                    DateCreated = session.DateCreated,
+                    Subject = session.Subject,
+                    AverageScore = session.AverageScore,
+                    AiAgent = session.AIAgent.ToString(),
+                    Position = technicalInterview?.Position ?? "Junior Developer",
+                    ProgrammingLanguage = technicalInterview?.ProgrammingLanguage ?? "C#",
+                    Status = session.Status.ToString()
+                };
             });
 
             return activityDTOs;

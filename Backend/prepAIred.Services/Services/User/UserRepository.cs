@@ -13,14 +13,14 @@ namespace prepAIred.Services
             return user;
         }
 
-        public async Task UpdateCurrentUserAsync(UpdateUserDTO updateUserDTO)
+        public async Task UpdateCurrentUserAsync(UserCredentialsDTO userCredentialsDto)
         {
-            await _userService.ValidateUpdateUserDataAsync(updateUserDTO);
+            await _userService.ValidateUpdateUserDataAsync(userCredentialsDto);
 
             int currentUserID = await _userService.GetCurrentUserID();
             User currentUser = await _userService.GetCurrentUserEntityByIdAsync(currentUserID);
 
-            await _userService.UpdateUserAsync(currentUser, updateUserDTO);
+            await _userService.UpdateUserAsync(currentUser, userCredentialsDto);
         }
 
         public async Task DeleteCurrentUserAsync()

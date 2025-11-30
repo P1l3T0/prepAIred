@@ -31,9 +31,9 @@ namespace prepAIred.API
         }
 
         [HttpPut("update-current-user")]
-        public async Task<IActionResult> UpdateCurrentUser([FromBody] UpdateUserDTO updateUserDTO)
+        public async Task<IActionResult> UpdateCurrentUser([FromBody] UserCredentialsDTO userCredentialsDto)
         {
-            await _userRepository.UpdateCurrentUserAsync(updateUserDTO);
+            await _userRepository.UpdateCurrentUserAsync(userCredentialsDto);
             return Ok("User updated");
         }
 

@@ -33,16 +33,16 @@ namespace prepAIred.Services
 
         public async Task<int> GetCurrentUserID() => (await GetCurrentUserAsync()).ID;
 
-        public async Task UpdateUserAsync(User user, UpdateUserDTO? updateUserDTO)
+        public async Task UpdateUserAsync(User user, UserCredentialsDTO? userCredentialsDto)
         {
-            if (updateUserDTO is not null)
+            if (userCredentialsDto is not null)
             {
-                user.Username = updateUserDTO.Username;
-                user.Email = updateUserDTO.Email;
+                user.Username = userCredentialsDto.Username;
+                user.Email = userCredentialsDto.Email;
 
-                if (!string.IsNullOrEmpty(updateUserDTO.Password))
+                if (!string.IsNullOrEmpty(userCredentialsDto.Password))
                 {
-                    (byte[] hashedPassword, byte[] saltPassword) = HashPassword(updateUserDTO);
+                    (byte[] hashedPassword, byte[] saltPassword) = HashPassword(userCredentialsDto);
 
                     user.PasswordHash = hashedPassword;
                     user.PasswordSalt = saltPassword;
@@ -79,36 +79,36 @@ namespace prepAIred.Services
             }
         }
 
-        public async Task ValidateUserAsync(RegisterDTO registerDto)
+        public async Task ValidateUserAsync(UserCredentialsDTO userCredentialsDto)
         {
-            if (!AreFieldsEmpty(registerDto)) throw new EmptyFieldsException("Enter data in all fields");
+            if (!AreFieldsEmpty(userCredentialsDto)) throw new EmptyFieldsException("Enter data in all fields");
 
-            if (!ValidateEmail(registerDto.Email) || !ValidatePassword(registerDto.Password)) throw new InvalidCredentialsException("Invalid Email or Password");
+            if (!ValidateEmail(userCredentialsDto.Email) || !ValidatePassword(userCredentialsDto.Password)) throw new InvalidCredentialsException("Invalid Email or Password");
 
-            if (await UserExistsAsync(registerDto.Email)) throw new UserAlreadyExistsException("User already exists");
+            if (await UserExistsAsync(userCredentialsDto.Email)) throw new UserAlreadyExistsException("User already exists");
         }
 
-        public async Task ValidateUpdateUserDataAsync(UpdateUserDTO updateUserDTO)
+        public async Task ValidateUpdateUserDataAsync(UserCredentialsDTO userCredentialsDto)
         {
-            if (string.IsNullOrEmpty(updateUserDTO.Username) || string.IsNullOrEmpty(updateUserDTO.Email)) throw new EmptyFieldsException("Username and Email cannot be empty");
+            if (string.IsNullOrEmpty(userCredentialsDto.Username) || string.IsNullOrEmpty(userCredentialsDto.Email)) throw new EmptyFieldsException("Username and Email cannot be empty");
 
-            if (!ValidateEmail(updateUserDTO.Email)) throw new InvalidCredentialsException("Invalid Email format");
+            if (!ValidateEmail(userCredentialsDto.Email)) throw new InvalidCredentialsException("Invalid Email format");
 
-            if (!string.IsNullOrEmpty(updateUserDTO.Password))
+            if (!string.IsNullOrEmpty(userCredentialsDto.Password))
             {
-                if (!ValidatePassword(updateUserDTO.Password)) throw new InvalidCredentialsException("Invalid Password");
+                if (!ValidatePassword(userCredentialsDto.Password)) throw new InvalidCredentialsException("Invalid Password");
             }
 
             int currentUserID = await GetCurrentUserID();
             User currentUser = await GetCurrentUserEntityByIdAsync(currentUserID);
 
-            if (updateUserDTO.Email != currentUser.Email)
+            if (userCredentialsDto.Email != currentUser.Email)
             {
-                if (await UserExistsAsync(updateUserDTO.Email)) throw new UserAlreadyExistsException("User already exists");
+                if (await UserExistsAsync(userCredentialsDto.Email)) throw new UserAlreadyExistsException("User already exists");
             }
         }
 
-        public bool AreFieldsEmpty(RegisterDTO registerDto)
+        public bool AreFieldsEmpty(UserCredentialsDTO registerDto)
         {
             if (string.IsNullOrWhiteSpace(registerDto.Email) || string.IsNullOrWhiteSpace(registerDto.Username) || string.IsNullOrWhiteSpace(registerDto.Password))
                 return false;
@@ -134,7 +134,7 @@ namespace prepAIred.Services
             return passwordRegex.IsMatch(password);
         }
 
-        public (byte[] hashedPassword, byte[] saltPassword) HashPassword(RegisterDTO registerDTO)
+        public (byte[] hashedPassword, byte[] saltPassword) HashPassword(UserCredentialsDTO registerDTO)
         {
             using HMACSHA512 hmac = new HMACSHA512();
 

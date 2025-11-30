@@ -22,15 +22,15 @@ const UpdateUserButton = () => {
             <div className="space-y-2">
               <div>
                 <Label className="text-sm font-medium text-text-secondary">Username</Label>
-                <TextBox id="name" type="text" name="username" onChange={handleChange} />
+                <TextBox id="name" type="text" name="username" autoComplete="off" onChange={handleChange} />
               </div>
               <div>
                 <Label className="text-sm font-medium text-text-secondary">Email</Label>
-                <TextBox id="email" type="email" name="email" onChange={handleChange} />
+                <TextBox id="email" type="email" name="email" autoComplete="off" onChange={handleChange} />
               </div>
               <div>
                 <Label className="text-sm font-medium text-text-secondary">Password (not required)</Label>
-                <TextBox id="password" type="password" name="password" onChange={handleChange} />
+                <TextBox id="password" type="password" name="password" autoComplete="off" onChange={handleChange} />
               </div>
             </div>
 

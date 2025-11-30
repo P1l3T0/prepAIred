@@ -58,9 +58,9 @@ namespace prepAIred.Services
         /// Updates the details of an existing user asynchronously.
         /// </summary>
         /// <param name="user">The <see cref="User"/> object containing the updated user details. The user must already exist in the system.</param>
-        /// <param name="updateUserDTO">The <see cref="UpdateUserDTO"/> object containing the updated user information.</param>
+        /// <param name="userCredentialsDto">The <see cref="UserCredentialsDTO"/> object containing the updated user information.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task UpdateUserAsync(User user, UpdateUserDTO? updateUserDTO);
+        Task UpdateUserAsync(User user, UserCredentialsDTO? userCredentialsDto);
 
         /// <summary>
         /// Deletes the user with the specified user ID.
@@ -74,14 +74,14 @@ namespace prepAIred.Services
         /// </summary>
         /// <param name="registerDto">The registration data to validate.</param>
         /// <returns>A task representing the validation operation.</returns>
-        Task ValidateUserAsync(RegisterDTO registerDto);
+        Task ValidateUserAsync(UserCredentialsDTO registerDto);
 
         /// <summary>
         /// Validates user update data.
         /// </summary>
-        /// <param name="updateUserDTO">The update data to validate.</param>
+        /// <param name="userCredentialsDto">The update data to validate.</param>
         /// <returns>A void representing the validation operation.</returns>
-        Task ValidateUpdateUserDataAsync(UpdateUserDTO updateUserDTO);
+        Task ValidateUpdateUserDataAsync(UserCredentialsDTO userCredentialsDto);
 
         /// <summary>
         /// Checks if a user with the specified email exists.
@@ -93,9 +93,9 @@ namespace prepAIred.Services
         /// <summary>
         /// Checks if required registration fields are empty.
         /// </summary>
-        /// <param name="registerDto">The registration data to check.</param>
+        /// <param name="userCredentialsDto">The registration data to check.</param>
         /// <returns>True if any required fields are empty, false otherwise.</returns>
-        bool AreFieldsEmpty(RegisterDTO registerDto);
+        bool AreFieldsEmpty(UserCredentialsDTO userCredentialsDto);
 
         /// <summary>
         /// Validates the format of the email.
@@ -114,9 +114,9 @@ namespace prepAIred.Services
         /// <summary>
         /// Hashes a user's password during registration.
         /// </summary>
-        /// <param name="registerDto">The registration data containing the password to hash.</param>
+        /// <param name="userCredentialsDto">The registration data containing the password to hash.</param>
         /// <returns>A tuple containing the hashed password and salt.</returns>
-        (byte[] hashedPassword, byte[] saltPassword) HashPassword(RegisterDTO registerDto);
+        (byte[] hashedPassword, byte[] saltPassword) HashPassword(UserCredentialsDTO userCredentialsDto);
 
         /// <summary>
         /// Verifies a user's password during login.

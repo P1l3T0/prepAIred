@@ -10,12 +10,12 @@ namespace prepAIred.Services
         private readonly ICookieService _cookieService = cookieService;
         private readonly IUserService _userService = userService;
 
-        public async Task<CurrentUserDTO> RegisterAsync(RegisterDTO registerDto, byte[] hashedPassword, byte[] saltPassword)
+        public async Task<CurrentUserDTO> RegisterAsync(UserCredentialsDTO userCredentialsDto, byte[] hashedPassword, byte[] saltPassword)
         {
             User newUser = new User()
             {
-                Email = registerDto.Email,
-                Username = registerDto.Username,
+                Email = userCredentialsDto.Email,
+                Username = userCredentialsDto.Username,
                 PasswordHash = hashedPassword,
                 PasswordSalt = saltPassword
             };

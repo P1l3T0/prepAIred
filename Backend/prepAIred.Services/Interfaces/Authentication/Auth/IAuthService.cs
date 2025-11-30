@@ -10,11 +10,11 @@ namespace prepAIred.Services
         /// <summary>
         /// Registers a new user with hashed credentials.
         /// </summary>
-        /// <param name="registerDto">The registration details.</param>
+        /// <param name="userCredentialsDto">The registration details.</param>
         /// <param name="hashedPassword">The pre-hashed password.</param>
         /// <param name="saltPassword">The salt used in password hashing.</param>
         /// <returns>The newly created user entity.</returns>
-        Task<CurrentUserDTO> RegisterAsync(RegisterDTO registerDto, byte[] hashedPassword, byte[] saltPassword);
+        Task<CurrentUserDTO> RegisterAsync(UserCredentialsDTO userCredentialsDto, byte[] hashedPassword, byte[] saltPassword);
 
         /// <summary>
         /// Authenticates a user and returns their information.

@@ -10,9 +10,9 @@ namespace prepAIred.Services
         /// <summary>
         /// Registers a new user in the system.
         /// </summary>
-        /// <param name="registerDto">The registration data transfer object containing user details.</param>
+        /// <param name="userCredentialsDto">The registration data transfer object containing user details.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task RegisterAsync(RegisterDTO registerDto);
+        Task RegisterAsync(UserCredentialsDTO userCredentialsDto);
 
         /// <summary>
         /// Authenticates a user using their credentials.

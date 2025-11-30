@@ -19,9 +19,8 @@ interface ProcessedStatistics {
   ongoingInterviewSubtitle: string;
 }
 
-const interviewSessionGoal: number = 10;
-
 const useProcessStatistics = (profileStats: ProfileStats): ProcessedStatistics => {
+  const interviewSessionGoal: number = 10;
 
   const totalInterviewSessions: number = profileStats.totalInterviewSessions || 0;
   const totalInterviewSessionsProgress: string = `${Math.min((totalInterviewSessions / interviewSessionGoal) * 100, 100)}%`;
@@ -30,9 +29,9 @@ const useProcessStatistics = (profileStats: ProfileStats): ProcessedStatistics =
   const passedInterviewSessionsProgress: string = totalInterviewSessions > 0 ? `${(profileStats.completionRate)}%` : "0%";
   const passedInterviewsSubtitle: string = `${passedInterviewSessions} out of ${totalInterviewSessions}`;
 
-  const averageScore = profileStats.averageScore || 0;
-  const averageScoreProgress: string = `${Math.floor(averageScore * 100) / 100}`;
-  const averageScoreSubtitle =
+  const averageScore: number = profileStats.averageScore || 0;
+  const averageScoreProgress: string = averageScore.toFixed(2);
+  const averageScoreSubtitle: string =
     averageScore >= 7
       ? "Excellent"
       : averageScore > 5

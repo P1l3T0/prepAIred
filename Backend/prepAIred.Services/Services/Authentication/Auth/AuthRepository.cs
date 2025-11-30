@@ -7,13 +7,13 @@ namespace prepAIred.Services
         private readonly IAuthService _authService = authService;
         private readonly IUserService _userService = userService;
 
-        public async Task RegisterAsync(RegisterDTO registerDto)
+        public async Task RegisterAsync(UserCredentialsDTO userCredentialsDto)
         {
-            await _userService.ValidateUserAsync(registerDto);
+            await _userService.ValidateUserAsync(userCredentialsDto);
 
-            (byte[] hashedPassword, byte[] saltPassword) = _userService.HashPassword(registerDto);
+            (byte[] hashedPassword, byte[] saltPassword) = _userService.HashPassword(userCredentialsDto);
 
-            CurrentUserDTO currentUser = await _authService.RegisterAsync(registerDto, hashedPassword, saltPassword);
+            CurrentUserDTO currentUser = await _authService.RegisterAsync(userCredentialsDto, hashedPassword, saltPassword);
 
             await _authService.GenerateAuthResponse(currentUser);
         }

@@ -16,9 +16,9 @@ namespace prepAIred.Services
         /// <summary>
         /// Updates the current user's information based on the provided data.
         /// </summary>
-        /// <param name="updateUserDTO">An object containing the updated user information. This parameter cannot be null.</param>
+        /// <param name="userCredentialsDTO">An object containing the updated user information. This parameter cannot be null.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task UpdateCurrentUserAsync(UpdateUserDTO updateUserDTO);
+        Task UpdateCurrentUserAsync(UserCredentialsDTO userCredentialsDTO);
 
         /// <summary>
         /// Deletes the currently authenticated user from the system.
