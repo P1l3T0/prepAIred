@@ -7,11 +7,7 @@ interface EvaluationButtonProps {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const EvaluationButton = ({
-  onClick,
-  isSubmitting,
-  disabled,
-}: EvaluationButtonProps) => {
+const EvaluationButton = ({ onClick, isSubmitting, disabled }: EvaluationButtonProps) => {
   return (
     <Button
       onClick={onClick}

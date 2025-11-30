@@ -23,7 +23,7 @@ const StatisticsGrid = ({ profileStats }: StatisticsGridProps) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <StatisticCard
-        title={totalInterviewSessions > 1 ? "Total Interview Sessions" : "Total Interview Session"}
+        title={totalInterviewSessions === 1 ? "Interview Session" : "Interview Sessions"}
         themeColor="primary"
         subtitle={`Goal: ${interviewSessionGoal}`}
         value={totalInterviewSessions}

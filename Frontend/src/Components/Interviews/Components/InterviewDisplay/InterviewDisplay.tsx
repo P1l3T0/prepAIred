@@ -13,10 +13,7 @@ interface InterviewDisplayProps {
   interviews: HRInterviewDTO[] | TechnicalInterviewDTO[] | void;
 }
 
-const InterviewDisplay = ({
-  interviews,
-  interviewType,
-}: InterviewDisplayProps) => {
+const InterviewDisplay = ({ interviews, interviewType }: InterviewDisplayProps) => {
   const {
     handleSingleChoiceChange,
     handleMultipleChoiceChange,
@@ -24,9 +21,7 @@ const InterviewDisplay = ({
     singleChoiceAnswers,
     multipleChoiceAnswers,
     openEndedAnswers,
-  } = useHandleAnswers(
-    (interviews as HRInterviewDTO[] | TechnicalInterviewDTO[]) ?? []
-  );
+  } = useHandleAnswers((interviews as HRInterviewDTO[] | TechnicalInterviewDTO[]) ?? []);
 
   const { showFinishButton } = useInterviewSession();
   const { handleEvaluateInterviews, isSubmitting } = useEvaluateInterviews({

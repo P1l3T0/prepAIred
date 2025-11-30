@@ -7,11 +7,7 @@ interface GenerateButtonProps {
   interviewType: "HR" | "Technical";
 }
 
-const GenerateButton = ({
-  isSubmitting,
-  disabled,
-  interviewType,
-}: GenerateButtonProps) => {
+const GenerateButton = ({ isSubmitting, disabled, interviewType }: GenerateButtonProps) => {
   return (
     <div className="pt-4">
       <Button

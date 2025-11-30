@@ -8,10 +8,7 @@ interface MobileMenuSidebarProps {
   toggleMobileMenu: () => void;
 }
 
-const MobileMenuSidebar = ({
-  isMobileMenuOpen,
-  toggleMobileMenu,
-}: MobileMenuSidebarProps) => {
+const MobileMenuSidebar = ({ isMobileMenuOpen, toggleMobileMenu }: MobileMenuSidebarProps) => {
   return (
     <div
       className={`fixed top-0 right-0 h-full bg-background shadow-lg z-10000 duration-200 ease-in-out md:hidden ${
