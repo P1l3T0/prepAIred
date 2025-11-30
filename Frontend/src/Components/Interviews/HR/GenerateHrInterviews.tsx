@@ -22,7 +22,7 @@ const GenerateHrInterviews = () => {
   } = useGenerateHrInterviews();
 
   return (
-    <Card className="shadow-sm shadow-primary">
+    <Card className="shadow-lg border border-border">
       <CardBody>
         <form onSubmit={handleGenerateHrInterviews} className="space-y-4">
           <FormField label="AI Agent" htmlFor="ai-agent">

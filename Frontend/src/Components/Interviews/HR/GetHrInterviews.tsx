@@ -37,16 +37,14 @@ const GetHrInterviews = () => {
   }
 
   return (
-    <div className="border-border bg-background">
-      <Card className="shadow-sm shadow-primary">
-        <CardBody>
-          <InterviewDisplay
-            interviewType="HR-Interview"
-            interviews={hrInterviews}
-          />
-        </CardBody>
-      </Card>
-    </div>
+    <Card className="shadow-lg border border-border">
+      <CardBody>
+        <InterviewDisplay
+          interviewType="HR-Interview"
+          interviews={hrInterviews}
+        />
+      </CardBody>
+    </Card>
   );
 };
 

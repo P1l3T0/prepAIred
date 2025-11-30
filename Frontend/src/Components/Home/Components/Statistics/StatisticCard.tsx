@@ -48,7 +48,7 @@ const StatisticCard = ({
   };
 
   return (
-    <Card className={`border border-border shadow-sm shadow-${themeColor}`}>
+    <Card className={`border border-border shadow-md`}>
       <CardBody>
         <div className="text-center p-4">
           <div className={`text-3xl font-bold mb-2 ${getTextColor()}`}>

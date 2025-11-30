@@ -13,7 +13,7 @@ const RecentActivity = ({ recentActivity }: RecentActivityProps) => {
   const { pagedData, skip, take, handlePageChange } = useChangePage(recentActivity);
 
   return (
-    <Card className="border border-border shadow-sm shadow-primary h-full">
+    <Card className="border border-border shadow-md h-full">
       <CardHeader className="border-border">
         <h3 className="text-xl font-medium">Recent Activity</h3>
       </CardHeader>

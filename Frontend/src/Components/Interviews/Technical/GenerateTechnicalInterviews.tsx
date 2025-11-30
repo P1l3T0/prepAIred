@@ -24,7 +24,7 @@ const GenerateTechnicalInterviews = () => {
   } = useGenerateTechnicalInterviews();
 
   return (
-    <Card className="shadow-sm shadow-primary">
+    <Card className="shadow-lg border border-border">
       <CardBody>
         <form onSubmit={handleGenerateTechnicalInterviews} className="space-y-4">
           <FormField label="AI Agent" htmlFor="ai-agent-tech">

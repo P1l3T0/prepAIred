@@ -16,7 +16,7 @@ const ProfileInfo = ({ user, profilePictureUrl }: ProfileInfoProps) => {
   const { showUpload, handleAvatarClick, handleAdd } = useUploadProfilePicture();
 
   return (
-    <Card className="border border-border shadow-sm shadow-primary h-full">
+    <Card className="border border-border shadow-md h-full">
       <CardHeader className="border-border">
         <h3 className="text-xl font-medium">Profile Information</h3>
       </CardHeader>
@@ -37,7 +37,7 @@ const ProfileInfo = ({ user, profilePictureUrl }: ProfileInfoProps) => {
           </div>
         </div>
       </CardBody>
-      <CardFooter className="flex flex-col md:flex-row justify-center gap-2">
+      <CardFooter className="flex flex-col lg:flex-row justify-center gap-2">
         <UpdateUserButton />
         <DeleteUserButton />
       </CardFooter>
