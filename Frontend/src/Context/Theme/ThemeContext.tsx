@@ -33,13 +33,21 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     document.body.classList.toggle("dark", theme === "dark");
     localStorage.setItem("theme", theme);
     setKendoThemeUrl(KENDO_THEMES[theme]);
+
+    const existingLink = document.head.querySelector('link[data-theme]');
+    existingLink?.remove();
+
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = KENDO_THEMES[theme];
+    link.setAttribute('data-theme', 'true');
+    document.head.appendChild(link);
   }, [theme]);
 
   const toggleTheme = (theme: Theme) => setTheme(theme);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, kendoThemeUrl }}>
-      <link rel="stylesheet" href={kendoThemeUrl} />
       {children}
     </ThemeContext.Provider>
   );
