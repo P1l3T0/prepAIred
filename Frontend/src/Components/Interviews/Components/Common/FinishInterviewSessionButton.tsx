@@ -8,8 +8,7 @@ const FinishInterviewSessionButton = () => {
     <>
       <Button
         onClick={handleFinishInterviewSessionClick}
-        themeColor={"primary"}
-        fillMode="outline"
+        themeColor={"success"}
         size="large"
         className="w-full"
       >
