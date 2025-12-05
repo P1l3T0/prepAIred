@@ -16,11 +16,6 @@
         public string Subject { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the interview session has been completed.
-        /// </summary>
-        public bool IsCompleted { get; set; } = false;
-
-        /// <summary>
         /// Gets or sets the AI agent used for this interview session.
         /// </summary>
         public string AIAgent { get; set; } = string.Empty;
@@ -28,7 +23,7 @@
         /// <summary>
         /// Gets or sets the score or rating assigned to this interview session.
         /// </summary>
-        public string Score { get; set; } = string.Empty;
+        public float AverageScore { get; set; }
 
         /// <summary>
         /// Gets or sets the list of interviews that are part of this session.

@@ -13,7 +13,6 @@ const FormButton = ({ formRenderProps, to, text }: FormButtonProps) => {
     <>
       <div className="mt-10">
         <Button
-          fillMode={"outline"}
           themeColor={"primary"}
           className="w-full mb-5"
           disabled={!formRenderProps.allowSubmit}

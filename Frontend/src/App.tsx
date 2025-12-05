@@ -7,6 +7,8 @@ import Interviews from "./Pages/Interviews";
 import useAuth from "./Context/Auth/useAuth";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import Footer from "./Components/Common/Footer/Footer";
+import NotFound from "./Pages/NotFound";
 
 function App() {
   const { isUserLoggedIn } = useAuth();
@@ -16,6 +18,7 @@ function App() {
       {isUserLoggedIn ? <Navbar /> : null}
       <Routes>
         <Route element={<PersistLogin />}>
+          <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -37,6 +40,7 @@ function App() {
           />
         </Route>
       </Routes>
+      {isUserLoggedIn ? <Footer /> : null}
     </BrowserRouter>
   );
 }

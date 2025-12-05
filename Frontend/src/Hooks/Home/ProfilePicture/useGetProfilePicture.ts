@@ -5,10 +5,10 @@
  */
 import { useQuery } from "react-query";
 import axios, { AxiosError, type AxiosResponse } from "axios";
-import { getProfilePictureUrlEndPoint, uploadsFolderURL } from "../../Utils/endpoints";
+import { getProfilePictureUrlEndPoint, uploadsFolderURL } from "../../../Utils/endpoints";
 
 const useGetProfilePictureUrl = () => {
-  const getProfilePictureUrl = async () => {
+  const getProfilePictureUrl = async (): Promise<string | null> => {
     return await axios
       .get<string>(getProfilePictureUrlEndPoint, { withCredentials: true })
       .then((res: AxiosResponse<string>) => {
@@ -17,6 +17,7 @@ const useGetProfilePictureUrl = () => {
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
         console.error(error?.title);
+        return null;
       });
   };
 

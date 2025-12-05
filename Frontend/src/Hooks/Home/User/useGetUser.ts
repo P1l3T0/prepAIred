@@ -5,11 +5,11 @@
  */
 import { useQuery } from "react-query";
 import axios, { AxiosError, type AxiosResponse } from "axios";
-import { getCurrentUserEndPoint } from "../../Utils/endpoints";
-import type { User } from "../../Utils/interfaces";
+import { getCurrentUserEndPoint } from "../../../Utils/endpoints";
+import type { User } from "../../../Utils/interfaces";
 
 const useGetUser = () => {
-  const getUser = async () => {
+  const getUser = async (): Promise<User> => {
     return await axios
       .get<User>(`${getCurrentUserEndPoint}`, { withCredentials: true })
       .then((res: AxiosResponse<User>) => {
@@ -21,6 +21,7 @@ const useGetUser = () => {
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
         console.error(error?.title);
+        return {} as User;
       });
   };
 

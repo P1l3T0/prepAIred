@@ -12,7 +12,7 @@ namespace prepAIred.Services
             string fileName = await _profilePictureService.SaveFileAsync(profilePictureDTO.ImageFile!);
 
             int currentUserID = await _userService.GetCurrentUserID();
-            User currentUser = await _userService.GetUserEntityByIdAsync(currentUserID);
+            User currentUser = await _userService.GetCurrentUserEntityByIdAsync(currentUserID);
 
             if (!string.IsNullOrEmpty(currentUser.ProfilePicture))
             {
@@ -21,7 +21,7 @@ namespace prepAIred.Services
 
             currentUser.ProfilePicture = fileName;
 
-            await _userService.UpdateUserAsync(currentUser);
+            await _userService.UpdateUserAsync(currentUser, null);
         }
 
         public async Task<string> GetProfilePictureUrlAsync()

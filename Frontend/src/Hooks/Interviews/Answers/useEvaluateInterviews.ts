@@ -26,7 +26,7 @@ const useEvaluateInterviews = ({
   openEndedAnswers,
 }: UseEvaluateInterviewsProps) => {
   const queryClient = useQueryClient();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { getEndpoint, prepareEvaluationRequests } = usePrepareEvaluationRequests({
     interviewType,
@@ -69,7 +69,7 @@ const useEvaluateInterviews = ({
     const hasMultipleChoiceAnswer = multipleChoiceAnswers.every(answer => answer.answers.every(a => a !== "")) && multipleChoiceAnswers.length > 0;
 
     if ((!hasSingleChoiceAnswer || !hasOpenEndedAnswer) && !hasMultipleChoiceAnswer) {
-      return alert("Please answer at least one question before submitting.");
+      return alert("Please answer all questions before submitting.");
     }
 
     e.preventDefault();

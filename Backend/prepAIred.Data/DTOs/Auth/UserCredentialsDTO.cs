@@ -3,7 +3,7 @@
     /// <summary>
     /// Data Transfer Object for user registration data.
     /// </summary>
-    public class RegisterDTO
+    public class UserCredentialsDTO
     {
         /// <summary>
         /// Gets or sets the email address for the new user account.

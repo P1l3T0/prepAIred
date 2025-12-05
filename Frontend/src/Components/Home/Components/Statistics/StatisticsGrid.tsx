@@ -1,52 +1,55 @@
-import type { ProfileStats } from '../../../../Utils/interfaces';
-import StatisticCard from './StatisticCard';
+import StatisticCard from "./StatisticCard";
+import type { ProfileStats } from "../../../../Utils/interfaces";
+import useProcessStatistics from "../../../../Hooks/InterviewSessions/useProcessStatistics";
 
 interface StatisticsGridProps {
-  profileStats: Pick<ProfileStats, 'totalInterviews' | 'passedInterviews' | 'ongoingInterviews' | 'averageScore'>;
+  profileStats: ProfileStats;
 }
 
 const StatisticsGrid = ({ profileStats }: StatisticsGridProps) => {
+  const {
+    interviewSessionGoal,
+    totalInterviewSessions,
+    totalInterviewSessionsProgress,
+    passedInterviewSessions,
+    passedInterviewSessionsProgress,
+    passedInterviewsSubtitle,
+    averageScoreProgress,
+    averageScoreSubtitle,
+    ongoingInterviewSessions,
+    ongoingInterviewSubtitle,
+  } = useProcessStatistics(profileStats);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <StatisticCard
-        title="Total Interviews"
-        value={profileStats.totalInterviews}
+        title={totalInterviewSessions === 1 ? "Interview Session" : "Interview Sessions"}
         themeColor="primary"
-        progressValue="85%"
-        subtitle="Goal: 30"
+        subtitle={`Goal: ${interviewSessionGoal}`}
+        value={totalInterviewSessions}
+        progressValue={totalInterviewSessionsProgress}
       />
 
       <StatisticCard
-        title="Passed Interviews"
-        value={profileStats.passedInterviews}
+        title="Passed Interview Sessions"
         themeColor="secondary"
-        progressValue={`${
-          (profileStats.passedInterviews / profileStats.totalInterviews) * 100
-        }%`}
-        subtitle={`${Math.round(
-          (profileStats.passedInterviews / profileStats.totalInterviews) * 100
-        )}% Success Rate`}
+        subtitle={passedInterviewsSubtitle}
+        value={passedInterviewSessions}
+        progressValue={passedInterviewSessionsProgress}
       />
 
       <StatisticCard
         title="Average Score"
-        value={`${profileStats.averageScore}%`}
         themeColor="success"
-        progressValue={`${profileStats.averageScore}%`}
-        subtitle={
-          profileStats.averageScore >= 90
-            ? "Excellent"
-            : profileStats.averageScore >= 75
-              ? "Good"
-              : "Needs Improvement"
-        }
+        subtitle={averageScoreSubtitle}
+        value={averageScoreProgress}
       />
 
       <StatisticCard
-        title="Ongoing Interviews"
-        value={profileStats.ongoingInterviews}
+        title="Ongoing Interview Session"
         themeColor="warning"
-        subtitle="Continue the good work!"
+        subtitle={ongoingInterviewSubtitle}
+        value={ongoingInterviewSessions}
       />
     </div>
   );

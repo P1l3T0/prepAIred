@@ -1,14 +1,14 @@
 // #region Auth
 
-export interface AuthProviderProps {
-  children: React.ReactNode;
-}
+import type { StepProps } from "@progress/kendo-react-layout";
 
 export interface AuthState {
   username?: string;
   accessToken?: string;
   refreshToken?: string;
 }
+
+// #region Context
 
 export interface AuthContextType {
   auth: AuthState;
@@ -17,6 +17,13 @@ export interface AuthContextType {
   login: () => void;
   logout: () => void;
 }
+
+export interface InterviewStepContextType {
+  items: StepProps[];
+  value: number;
+  handleChangeStep: (step?: number) => void;
+}
+
 
 // Register/Login DTOs
 
@@ -34,7 +41,7 @@ export interface LoginDto {
 // User
 
 export interface User {
-  id: string;
+  id: number;
   username: string;
   email: string;
   dateCreated: Date;
@@ -113,9 +120,8 @@ export interface HRInterviewDTO extends InterviewDTO {
 export interface InterviewSessionDTO extends BaseDTO {
   userID: number;
   subject: string;
-  isCompleted: boolean;
   aiAgent: string;
-  score: string;
+  averageScore: number;
   interviews: InterviewDTO[];
 }
 
@@ -142,23 +148,23 @@ export interface MultipleChoiceAnswer {
 
 //#endregion
 
-export interface ChangeStepButtonProps {
-  handleChangeStep: () => void;
-}
-
 // Home Profile Stats
 
-export interface Activity {
-  type: string;
+export interface InterviewSessionActivity {
+  id: number;
   subject: string;
-  score: number;
-  date: string;
+  averageScore: number;
+  aiAgent: string;
+  programmingLanguage: string;
+  dateCreated: string;
+  position: string;
+  status: string;
 }
 
 export interface ProfileStats {
-  totalInterviews: number;
-  passedInterviews: number;
-  ongoingInterviews: number;
+  totalInterviewSessions: number;
+  passedInterviewSessions: number;
+  ongoingInterviewSessions: number;
   averageScore: number;
   completionRate: number;
 }

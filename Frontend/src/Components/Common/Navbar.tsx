@@ -16,8 +16,8 @@ const Navbar = () => {
             <LinkButton to="/home" label="prepAIred" isLogo={true} />
           </div>
 
-          <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-3 items-center">
-            <LinkButton to="/interviews" label="New Interview" />
+          <div className="hidden md:flex gap-3 items-center">
+            <LinkButton to="/interviews" label="Interview Session" />
             <LinkButton to="/mock-interviews" label="Mock Interview" />
             <LinkButton to="/statistics" label="Statistics" />
           </div>

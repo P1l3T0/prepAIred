@@ -3,27 +3,24 @@ import { Loader } from "@progress/kendo-react-indicators";
 
 interface GenerateButtonProps {
   isSubmitting: boolean;
+  disabled: boolean;
   interviewType: "HR" | "Technical";
 }
 
-const GenerateButton = ({
-  isSubmitting,
-  interviewType,
-}: GenerateButtonProps) => {
+const GenerateButton = ({ isSubmitting, disabled, interviewType }: GenerateButtonProps) => {
   return (
     <div className="pt-4">
       <Button
         themeColor={"primary"}
-        fillMode={"outline"}
         size="large"
-        disabled={isSubmitting}
+        disabled={isSubmitting || disabled}
         className="w-full"
         type="submit"
       >
         {isSubmitting ? (
           <>
             <div className="flex items-center ">
-              <Loader type={"infinite-spinner"} className="mr-2" />
+              <Loader themeColor="light" type={"infinite-spinner"} className="mr-2" />
               <span className="font-bold text-[clamp(1rem,4vw,1.25rem)]">
                 Generating {interviewType} interview...
               </span>

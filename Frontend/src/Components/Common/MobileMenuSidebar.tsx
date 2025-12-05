@@ -8,10 +8,7 @@ interface MobileMenuSidebarProps {
   toggleMobileMenu: () => void;
 }
 
-const MobileMenuSidebar = ({
-  isMobileMenuOpen,
-  toggleMobileMenu,
-}: MobileMenuSidebarProps) => {
+const MobileMenuSidebar = ({ isMobileMenuOpen, toggleMobileMenu }: MobileMenuSidebarProps) => {
   return (
     <div
       className={`fixed top-0 right-0 h-full bg-background shadow-lg z-10000 duration-200 ease-in-out md:hidden ${
@@ -27,7 +24,7 @@ const MobileMenuSidebar = ({
         </div>
 
         <div className="flex flex-col gap-2 items-center">
-          <LinkButton to="/interviews" label="New Interview" />
+          <LinkButton to="/interviews" label="Interview Session" />
           <LinkButton to="/mock-interviews" label="Mock Interview" />
           <LinkButton to="/statistics" label="Statistics" />
         </div>

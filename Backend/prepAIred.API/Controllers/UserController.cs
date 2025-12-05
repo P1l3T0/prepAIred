@@ -18,7 +18,7 @@ namespace prepAIred.API
     {
         private readonly IUserRepository _userRepository = userRepository;
 
-        [HttpGet("get-user")]
+        [HttpGet("get-current-user")]
         public async Task<IActionResult> GetCurrentUser()
         {
             if (string.IsNullOrEmpty(Request.Cookies["AccessToken"]))
@@ -28,6 +28,13 @@ namespace prepAIred.API
 
             CurrentUserDTO currentUser = await _userRepository.GetCurrentUserAsync();
             return Ok(currentUser);
+        }
+
+        [HttpPut("update-current-user")]
+        public async Task<IActionResult> UpdateCurrentUser([FromBody] UserCredentialsDTO userCredentialsDto)
+        {
+            await _userRepository.UpdateCurrentUserAsync(userCredentialsDto);
+            return Ok("User updated");
         }
 
         [HttpDelete("delete-current-user")]

@@ -21,9 +21,9 @@ namespace prepAIred.API
         private readonly IRefreshTokenRepository _refreshTokenService = refreshTokenRepository;
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register([FromBody] RegisterDTO registerDto)
+        public async Task<ActionResult> Register([FromBody] UserCredentialsDTO userCredentialsDto)
         {
-            await _authRepository.RegisterAsync(registerDto);
+            await _authRepository.RegisterAsync(userCredentialsDto);
             return Ok("Register successful");
         }
 
