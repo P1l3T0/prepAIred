@@ -2,7 +2,7 @@
 using prepAIred.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace prepAIred.API.Controllers
+namespace prepAIred.API
 {
     /// <summary>
     /// Provides endpoints for managing interview sessions, including retrieving and deleting sessions.
