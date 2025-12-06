@@ -46,6 +46,19 @@ namespace prepAIred.Services
             return profileStatistics;
         }
 
+        public async Task<List<InterviewSessionPerformanceDTO>> GetInterviewSessionPerformanceAsync()
+        {
+            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivities();
+            List<InterviewSessionPerformanceDTO> performanceData = activities.Select(a => new InterviewSessionPerformanceDTO
+            {
+                ID = a.ID,
+                DateCreated = a.DateCreated,
+                Score = a.AverageScore
+            }).ToList();
+
+            return performanceData;
+        }
+
         public async Task FinishInterviewSessionAsync()
         {
             int currentUserID = await _userService.GetCurrentUserID();

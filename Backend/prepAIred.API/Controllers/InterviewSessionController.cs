@@ -38,6 +38,13 @@ namespace prepAIred.API
             return Ok(profileStats);
         }
 
+        [HttpGet("get-interview-session-performance")]
+        public async Task<IActionResult> GetInterviewSessionPerformance()
+        {
+            List<InterviewSessionPerformanceDTO> performanceData = await _interviewSessionRepository.GetInterviewSessionPerformanceAsync();
+            return Ok(performanceData);
+        }
+
         [HttpPut("finish-interview-session")]
         public async Task<IActionResult> FinishInterviewSession()
         {
