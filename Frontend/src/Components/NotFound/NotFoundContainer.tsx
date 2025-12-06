@@ -1,6 +1,10 @@
+import useAuth from "../../Context/Auth/useAuth";
+
 const NotFoundContainer = () => {
+  const { isUserLoggedIn } = useAuth();
+
   return (
-    <main className="min-h-[calc(100vh-4.05rem)] sm:min-h-[calc(100vh-4.55rem)] bg-background flex items-center justify-center px-4">
+    <main className={`${isUserLoggedIn ? "min-h-[calc(100vh-4.55rem)]" : "min-h-screen"} bg-background flex items-center justify-center px-4`}>
       <div className="max-w-lg w-full text-center">
         <div className="mb-8">
           <h1 className="text-9xl font-bold text-primary opacity-80">404</h1>
