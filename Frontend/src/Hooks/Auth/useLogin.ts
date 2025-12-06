@@ -32,7 +32,6 @@ const useLogin = () => {
   const loginUser = async () => {
     await axios
       .post(loginEndPoint, user, { withCredentials: true })
-      .then(() => navigate("/home"))
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
         console.error(error?.title);
@@ -43,6 +42,7 @@ const useLogin = () => {
     mutationFn: loginUser,
     onSuccess: () => {
       login();
+      navigate("/home");
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });

@@ -33,7 +33,6 @@ const useRegister = () => {
   const registerUser = async () => {
     await axios
       .post(registerEndPoint, user, { withCredentials: true })
-      .then(() => navigate("/home"))
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
         console.error(error?.title);
@@ -44,6 +43,7 @@ const useRegister = () => {
     mutationFn: registerUser,
     onSuccess: () => {
       login();
+      navigate("/home");
       queryClient.invalidateQueries({ queryKey: ["user"] });
     }
   });
