@@ -9,6 +9,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Footer from "./Components/Common/Footer/Footer";
 import NotFound from "./Pages/NotFound";
+import Statistics from "./Pages/Statistics";
 
 function App() {
   const { isUserLoggedIn } = useAuth();
@@ -39,6 +40,14 @@ function App() {
             }
           />
         </Route>
+        <Route
+          path="/statistics"
+          element={
+            <ProtectedRoute>
+              <Statistics />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       {isUserLoggedIn ? <Footer /> : null}
     </BrowserRouter>
