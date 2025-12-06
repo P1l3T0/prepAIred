@@ -54,7 +54,7 @@ namespace prepAIred.Services
                 ID = a.ID,
                 DateCreated = a.DateCreated,
                 Score = a.AverageScore
-            }).ToList();
+            }).OrderBy(data => data.DateCreated).ToList();
 
             return performanceData;
         }
