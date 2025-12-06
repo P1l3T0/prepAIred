@@ -33,19 +33,19 @@ const useRegister = () => {
   const registerUser = async () => {
     await axios
       .post(registerEndPoint, user, { withCredentials: true })
+      .then(() => {
+        login();
+        navigate("/home");
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+      })
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
-        console.error(error?.title);
+        alert(error?.title);
       });
   };
 
   const { mutateAsync } = useMutation({
-    mutationFn: registerUser,
-    onSuccess: () => {
-      login();
-      navigate("/home");
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-    }
+    mutationFn: registerUser
   });
 
   const handleSubmit = async () => {

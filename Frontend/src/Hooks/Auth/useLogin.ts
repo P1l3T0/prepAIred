@@ -4,7 +4,7 @@
  * On success, navigates to home and updates auth context.
  * @returns {Object} - handleChange and handleSubmit functions
  */
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, } from "axios";
 import { useState } from "react";
 import { loginEndPoint } from "../../Utils/endpoints";
 import { useMutation, useQueryClient } from "react-query";
@@ -32,19 +32,19 @@ const useLogin = () => {
   const loginUser = async () => {
     await axios
       .post(loginEndPoint, user, { withCredentials: true })
+      .then(() => {
+        login();
+        navigate("/home");
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+      })
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
-        console.error(error?.title);
+        alert(error?.title);
       });
   };
 
   const { mutateAsync } = useMutation({
-    mutationFn: loginUser,
-    onSuccess: () => {
-      login();
-      navigate("/home");
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-    },
+    mutationFn: loginUser
   });
 
   const handleSubmit = async () => {
