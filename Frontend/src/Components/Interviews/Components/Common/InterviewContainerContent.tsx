@@ -6,27 +6,28 @@ import GetTechnicalInterviews from "../../Technical/GetTechnicalInterviews";
 import InterviewSection from "./InterviewSection";
 import InterviewStepper from "./InterviewStepper";
 
-
 const InterviewContainerContent = () => {
   const { value, items } = useInterviewStep();
 
   return (
     <>
-      <main className="bg-background p-3 md:p-6">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <InterviewStepper value={value} items={items} />
+      <main className="bg-background">
+        <div className="p-3 md:p-6">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <InterviewStepper value={value} items={items} />
 
-          {value === 0 ? (
-            <InterviewSection
-              generateInterviews={<GenerateHrInterviews />}
-              getInterviews={<GetHrInterviews />}
-            />
-          ) : (
-            <InterviewSection
-              generateInterviews={<GenerateTechnicalInterviews />}
-              getInterviews={<GetTechnicalInterviews />}
-            />
-          )}
+            {value === 0 ? (
+              <InterviewSection
+                generateInterviews={<GenerateHrInterviews />}
+                getInterviews={<GetHrInterviews />}
+              />
+            ) : (
+              <InterviewSection
+                generateInterviews={<GenerateTechnicalInterviews />}
+                getInterviews={<GetTechnicalInterviews />}
+              />
+            )}
+          </div>
         </div>
       </main>
     </>
