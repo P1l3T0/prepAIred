@@ -45,6 +45,13 @@ namespace prepAIred.API
             return Ok(performanceData);
         }
 
+        [HttpGet("get-interview-session-programming-language-data")]
+        public async Task<IActionResult> GetInterviewSessionProgrammingLanguageData()
+        {
+            List<ProgrammingLanguageDataDTO> programmingLanguageData = await _interviewSessionRepository.GetInterviewSessionProgrammingLanguageDataAsync();
+            return Ok(programmingLanguageData);
+        }
+
         [HttpPut("finish-interview-session")]
         public async Task<IActionResult> FinishInterviewSession()
         {

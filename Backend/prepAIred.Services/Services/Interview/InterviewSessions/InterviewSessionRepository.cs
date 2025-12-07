@@ -49,14 +49,30 @@ namespace prepAIred.Services
         public async Task<List<InterviewSessionPerformanceDTO>> GetInterviewSessionPerformanceAsync()
         {
             List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivities();
-            List<InterviewSessionPerformanceDTO> performanceData = activities.Select(a => new InterviewSessionPerformanceDTO
-            {
-                ID = a.ID,
-                DateCreated = a.DateCreated,
-                Score = a.AverageScore
-            }).OrderBy(data => data.DateCreated).ToList();
+            List<InterviewSessionPerformanceDTO> performanceData = activities
+                .OrderBy(activity => activity.DateCreated)
+                .Select(activity => new InterviewSessionPerformanceDTO()
+                {
+                    ID = activity.ID,
+                    DateCreated = activity.DateCreated,
+                    Score = activity.AverageScore
+                }).ToList();
 
             return performanceData;
+        }
+
+        public async Task<List<ProgrammingLanguageDataDTO>> GetInterviewSessionProgrammingLanguageDataAsync()
+        {
+            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivities();
+            List<ProgrammingLanguageDataDTO> programmingLanguageData = activities
+                .GroupBy(activity => activity.ProgrammingLanguage)
+                .Select(activity => new ProgrammingLanguageDataDTO()
+                {
+                    Language = activity.Key,
+                    Sessions = activity.Count()
+                }).ToList();
+
+            return programmingLanguageData;
         }
 
         public async Task FinishInterviewSessionAsync()
