@@ -179,3 +179,8 @@ export interface ProgrammingLanguageData {
   language: string;
   sessions: number;
 }
+
+export interface PositionData {
+  position: string;
+  sessions: number;
+}
