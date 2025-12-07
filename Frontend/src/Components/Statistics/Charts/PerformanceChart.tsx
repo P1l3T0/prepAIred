@@ -1,13 +1,4 @@
-import {
-  Chart,
-  ChartTitle,
-  ChartLegend,
-  ChartCategoryAxis,
-  ChartCategoryAxisItem,
-  ChartSeries,
-  ChartSeriesItem,
-  ChartTooltip,
-} from "@progress/kendo-react-charts";
+import { Chart, ChartLegend, ChartCategoryAxis, ChartCategoryAxisItem, ChartSeries, ChartSeriesItem, ChartTooltip } from "@progress/kendo-react-charts";
 import { Loader } from "@progress/kendo-react-indicators";
 import { Card, CardBody } from "@progress/kendo-react-layout";
 import useGetPerformanceData from "../../../Hooks/Statistics/Charts/useGetPerformanceData";
@@ -61,7 +52,6 @@ const PerformanceChart = () => {
   return (
     <>
       <Chart>
-        <ChartTitle text="Average Score Over Time" />
         <ChartLegend visible={false} />
         <ChartCategoryAxis>
           <ChartCategoryAxisItem categories={categories} />

@@ -174,3 +174,8 @@ export interface ProfileStats {
 export interface PerformanceData extends BaseDTO {
   score: number;
 }
+
+export interface ProgrammingLanguageData {
+  language: string;
+  sessions: number;
+}
