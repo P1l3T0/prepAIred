@@ -8,9 +8,9 @@ import {
   ChartSeriesItem,
   ChartTooltip,
 } from "@progress/kendo-react-charts";
-import useGetPerformanceData from "../../../../Hooks/Statistics/Charts/useGetPerformanceData";
 import { Loader } from "@progress/kendo-react-indicators";
 import { Card, CardBody } from "@progress/kendo-react-layout";
+import useGetPerformanceData from "../../../Hooks/Statistics/Charts/useGetPerformanceData";
 
 const PerformanceChart = () => {
   const { data: performanceData, isLoading, isError } = useGetPerformanceData();
