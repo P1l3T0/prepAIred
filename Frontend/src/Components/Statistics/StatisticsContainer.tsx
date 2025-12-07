@@ -17,11 +17,10 @@ const StatisticsContainer = () => {
           </StatisticsCard>
         </div>
 
-        <div className="space-y-6 last:space-y-0 mb-6">
+        <div className="space-y-6">
           <StatisticsCard title="Performance Over Time">
             <PerformanceChart />
           </StatisticsCard>
-
           <StatisticsCard title="Detailed Statistics">
             <StatisticsGrid />
           </StatisticsCard>
