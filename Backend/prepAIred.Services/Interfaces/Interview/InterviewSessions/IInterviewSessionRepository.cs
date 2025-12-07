@@ -43,6 +43,13 @@ namespace prepAIred.Services
         Task<List<ProgrammingLanguageDataDTO>> GetInterviewSessionProgrammingLanguageDataAsync();
 
         /// <summary>
+        /// Asynchronously retrieves position data for interview sessions.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of  
+        /// <see cref="PositionDataDTO"/> objects representing the position data.</returns>
+        Task<List<PositionDataDTO>> GetInterviewSessionPositionDataAsync();
+
+        /// <summary>
         /// Completes the current interview session and performs any necessary finalization tasks.
         /// </summary>
         /// <returns>A task that represents the asynchronous operation.</returns>

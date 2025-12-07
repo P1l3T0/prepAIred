@@ -75,6 +75,20 @@ namespace prepAIred.Services
             return programmingLanguageData;
         }
 
+        public async Task<List<PositionDataDTO>> GetInterviewSessionPositionDataAsync()
+        {
+            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivities();
+            List<PositionDataDTO> positionData = activities
+                .GroupBy(activity => activity.Position)
+                .Select(activity => new PositionDataDTO()
+                {
+                    Position = activity.Key,
+                    Sessions = activity.Count()
+                }).ToList();
+
+            return positionData;
+        }
+
         public async Task FinishInterviewSessionAsync()
         {
             int currentUserID = await _userService.GetCurrentUserID();

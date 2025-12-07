@@ -52,6 +52,13 @@ namespace prepAIred.API
             return Ok(programmingLanguageData);
         }
 
+        [HttpGet("get-interview-session-position-data")]
+        public async Task<IActionResult> GetInterviewSessionPositionData()
+        {
+            List<PositionDataDTO> positionData = await _interviewSessionRepository.GetInterviewSessionPositionDataAsync();
+            return Ok(positionData);
+        }
+
         [HttpPut("finish-interview-session")]
         public async Task<IActionResult> FinishInterviewSession()
         {
