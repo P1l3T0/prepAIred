@@ -2,7 +2,7 @@ import { Chart, ChartSeries, ChartSeriesItem, ChartLegend, ChartTooltip, type To
 import { Loader } from "@progress/kendo-react-indicators";
 import useGetPositionData from "../../../Hooks/Statistics/Charts/useGetPositionData";
 import { Card, CardBody } from "@progress/kendo-react-layout";
-``
+
 const PositionChart = () => {
   const { data: positionData, isLoading, isError } = useGetPositionData();
 

@@ -3,7 +3,7 @@ import { Loader } from "@progress/kendo-react-indicators";
 import { Card, CardBody } from "@progress/kendo-react-layout";
 import useGetProgrammingLanguageData from "../../../Hooks/Statistics/Charts/useGetProgrammingLanguageData";
 
-const ProgrammingLanguageChar = () => {
+const ProgrammingLanguageChart = () => {
   const { data: programmingLanguageData, isLoading, isError } = useGetProgrammingLanguageData();
 
   const languages: string[] = programmingLanguageData?.map((item) => item.language) || [];
@@ -93,4 +93,4 @@ const ProgrammingLanguageChar = () => {
   );
 }
 
-export default ProgrammingLanguageChar;
+export default ProgrammingLanguageChart;

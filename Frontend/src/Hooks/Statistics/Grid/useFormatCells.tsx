@@ -5,9 +5,10 @@ const useFormatCells = () => {
     const date = new Date(dateString);
 
     return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
       day: "numeric",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -34,11 +35,9 @@ const useFormatCells = () => {
     const score = props.dataItem.averageScore;
 
     const getScoreColor = () => {
-      if (score >= 80) return "#4caf50";
-      if (score >= 60) return "#ff9800";
-      if (score > 0) return "#f44336";
+      if (score >= 5) return "#4caf50";
 
-      return "#9e9e9e";
+      return "#f44336";
     };
 
     return (

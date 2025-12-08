@@ -39,15 +39,15 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/statistics"
+            element={
+              <ProtectedRoute>
+                <Statistics />
+              </ProtectedRoute>
+            }
+          />
         </Route>
-        <Route
-          path="/statistics"
-          element={
-            <ProtectedRoute>
-              <Statistics />
-            </ProtectedRoute>
-          }
-        />
       </Routes>
       {isUserLoggedIn ? <Footer /> : null}
     </BrowserRouter>

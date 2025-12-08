@@ -1,7 +1,7 @@
 import StatisticsCard from "./StatisticsCard";
 import PerformanceChart from "./Charts/PerformanceChart";
 import StatisticsGrid from "./Grid/StatisticsGrid";
-import ProgrammingLanguageChar from "./Charts/ProgrammingLanguageChart";
+import ProgrammingLanguageChart from "./Charts/ProgrammingLanguageChart";
 import PositionChart from "./Charts/PositionChart";
 
 const StatisticsContainer = () => {
@@ -13,7 +13,7 @@ const StatisticsContainer = () => {
             <PositionChart />
           </StatisticsCard>
           <StatisticsCard title="Programming Languages Used">
-            <ProgrammingLanguageChar />
+            <ProgrammingLanguageChart />
           </StatisticsCard>
         </div>
 

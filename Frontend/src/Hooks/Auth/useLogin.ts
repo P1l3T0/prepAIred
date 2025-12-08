@@ -4,7 +4,7 @@
  * On success, navigates to home and updates auth context.
  * @returns {Object} - handleChange and handleSubmit functions
  */
-import axios, { AxiosError, } from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { loginEndPoint } from "../../Utils/endpoints";
 import { useMutation, useQueryClient } from "react-query";

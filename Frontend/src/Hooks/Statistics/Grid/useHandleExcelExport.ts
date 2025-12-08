@@ -4,13 +4,13 @@ import { useRef } from "react";
 const useHandleExcelExport = () => {
   const _excelExport = useRef<ExcelExport | null>(null);
 
-  const hanleExcelExport = () => {
+  const handleExcelExport = () => {
     if (_excelExport.current !== null) {
       _excelExport.current.save();
     }
   };
 
-  return { _excelExport, hanleExcelExport };
+  return { _excelExport, handleExcelExport };
 };
 
 export default useHandleExcelExport;

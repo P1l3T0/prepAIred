@@ -12,7 +12,7 @@ import { Loader } from "@progress/kendo-react-indicators";
 
 const StatisticsGrid = () => {
   const { data: interviewSessionData, isLoading, isError } = useGetRecentInterviewSessions();
-  const { hanleExcelExport, _excelExport } = useHandleExcelExport();
+  const { handleExcelExport, _excelExport } = useHandleExcelExport();
   const { StatusCell, ScoreCell, DateCell } = useFormatCells();
 
   const CustomColumnMenu = (props: GridColumnMenuProps) => (
@@ -65,7 +65,7 @@ const StatisticsGrid = () => {
           defaultTake={10}
         >
         <GridToolbar>
-          <Button themeColor={'primary'} svgIcon={fileExcelIcon} onClick={hanleExcelExport}>Export to Excel</Button>
+          <Button themeColor={'primary'} svgIcon={fileExcelIcon} onClick={handleExcelExport}>Export to Excel</Button>
           <Button themeColor={'primary'} svgIcon={fileCsvIcon}>
             <CSVLink filename="Interviews" data={interviewSessionData}>Export to CSV</CSVLink>
           </Button>
