@@ -36,5 +36,8 @@ export const evaluateTechnicalInterviewsEndPoint = `${interviewController}/evalu
 // Interview Sessions
 export const getInterviewSessionStatisticsEndPoint = `${interviewSessionController}/get-interview-session-statistics`;
 export const getRecentInterviewSessionsEndPoint = `${interviewSessionController}/get-interview-session-activities`;
+export const getInterviewSessionsPerformanceEndPoint = `${interviewSessionController}/get-interview-session-performance`;
+export const getInterviewSessionsProgrammingLanguageDataEndPoint = `${interviewSessionController}/get-interview-session-programming-language-data`;
+export const getInterviewSessionsPositionDataEndPoint = `${interviewSessionController}/get-interview-session-position-data`;
 export const finishInterviewSessionEndPoint = `${interviewSessionController}/finish-interview-session`;
 export const deleteInterviewSessionsEndPoint = `${interviewSessionController}/delete-interview-sessions`;

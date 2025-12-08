@@ -11,7 +11,7 @@ interface MobileMenuSidebarProps {
 const MobileMenuSidebar = ({ isMobileMenuOpen, toggleMobileMenu }: MobileMenuSidebarProps) => {
   return (
     <div
-      className={`fixed top-0 right-0 h-full bg-background shadow-lg z-10000 duration-200 ease-in-out md:hidden ${
+      className={`fixed top-0 right-0 h-full bg-surface border border-border shadow-lg z-10000 duration-200 ease-in-out md:hidden ${
         isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >

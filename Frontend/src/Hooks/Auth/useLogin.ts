@@ -32,19 +32,19 @@ const useLogin = () => {
   const loginUser = async () => {
     await axios
       .post(loginEndPoint, user, { withCredentials: true })
-      .then(() => navigate("/home"))
+      .then(() => {
+        login();
+        navigate("/home");
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+      })
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
-        console.error(error?.title);
+        alert(error?.title);
       });
   };
 
   const { mutateAsync } = useMutation({
-    mutationFn: loginUser,
-    onSuccess: () => {
-      login();
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-    },
+    mutationFn: loginUser
   });
 
   const handleSubmit = async () => {

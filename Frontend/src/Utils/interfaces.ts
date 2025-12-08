@@ -87,7 +87,7 @@ export interface UseEvaluateInterviewsProps {
 
 interface BaseDTO {
   id: number;
-  dateCreated: Date;
+  dateCreated: string;
 }
 
 // InterviewDTO
@@ -167,4 +167,20 @@ export interface ProfileStats {
   ongoingInterviewSessions: number;
   averageScore: number;
   completionRate: number;
+}
+
+//#region Statistics
+
+export interface PerformanceData extends BaseDTO {
+  score: number;
+}
+
+export interface ProgrammingLanguageData {
+  language: string;
+  sessions: number;
+}
+
+export interface PositionData {
+  position: string;
+  sessions: number;
 }

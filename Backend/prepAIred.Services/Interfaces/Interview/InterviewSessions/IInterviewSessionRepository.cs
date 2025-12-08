@@ -29,6 +29,27 @@ namespace prepAIred.Services
         Task<ProfileStatisticsDTO> GetInterviewSessionStatistics();
 
         /// <summary>
+        /// Asynchronously retrieves performance data for interview sessions.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of  
+        /// <see cref="InterviewSessionPerformanceDTO"/> objects representing the performance data for interview sessions.</returns>
+        Task<List<InterviewSessionPerformanceDTO>> GetInterviewSessionPerformanceAsync();
+
+        /// <summary>
+        /// Asynchronously retrieves programming language data for interview sessions.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of  
+        /// <see cref="ProgrammingLanguageDataDTO"/> objects representing the programming language data.</returns>
+        Task<List<ProgrammingLanguageDataDTO>> GetInterviewSessionProgrammingLanguageDataAsync();
+
+        /// <summary>
+        /// Asynchronously retrieves position data for interview sessions.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of  
+        /// <see cref="PositionDataDTO"/> objects representing the position data.</returns>
+        Task<List<PositionDataDTO>> GetInterviewSessionPositionDataAsync();
+
+        /// <summary>
         /// Completes the current interview session and performs any necessary finalization tasks.
         /// </summary>
         /// <returns>A task that represents the asynchronous operation.</returns>

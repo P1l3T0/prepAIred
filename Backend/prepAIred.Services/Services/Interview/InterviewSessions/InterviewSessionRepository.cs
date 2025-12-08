@@ -46,6 +46,49 @@ namespace prepAIred.Services
             return profileStatistics;
         }
 
+        public async Task<List<InterviewSessionPerformanceDTO>> GetInterviewSessionPerformanceAsync()
+        {
+            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivities();
+            List<InterviewSessionPerformanceDTO> performanceData = activities
+                .OrderBy(activity => activity.DateCreated)
+                .Select(activity => new InterviewSessionPerformanceDTO()
+                {
+                    ID = activity.ID,
+                    DateCreated = activity.DateCreated,
+                    Score = activity.AverageScore
+                }).ToList();
+
+            return performanceData;
+        }
+
+        public async Task<List<ProgrammingLanguageDataDTO>> GetInterviewSessionProgrammingLanguageDataAsync()
+        {
+            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivities();
+            List<ProgrammingLanguageDataDTO> programmingLanguageData = activities
+                .GroupBy(activity => activity.ProgrammingLanguage)
+                .Select(activity => new ProgrammingLanguageDataDTO()
+                {
+                    Language = activity.Key,
+                    Sessions = activity.Count()
+                }).ToList();
+
+            return programmingLanguageData;
+        }
+
+        public async Task<List<PositionDataDTO>> GetInterviewSessionPositionDataAsync()
+        {
+            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivities();
+            List<PositionDataDTO> positionData = activities
+                .GroupBy(activity => activity.Position)
+                .Select(activity => new PositionDataDTO()
+                {
+                    Position = activity.Key,
+                    Sessions = activity.Count()
+                }).ToList();
+
+            return positionData;
+        }
+
         public async Task FinishInterviewSessionAsync()
         {
             int currentUserID = await _userService.GetCurrentUserID();

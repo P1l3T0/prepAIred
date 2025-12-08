@@ -38,6 +38,27 @@ namespace prepAIred.API
             return Ok(profileStats);
         }
 
+        [HttpGet("get-interview-session-performance")]
+        public async Task<IActionResult> GetInterviewSessionPerformance()
+        {
+            List<InterviewSessionPerformanceDTO> performanceData = await _interviewSessionRepository.GetInterviewSessionPerformanceAsync();
+            return Ok(performanceData);
+        }
+
+        [HttpGet("get-interview-session-programming-language-data")]
+        public async Task<IActionResult> GetInterviewSessionProgrammingLanguageData()
+        {
+            List<ProgrammingLanguageDataDTO> programmingLanguageData = await _interviewSessionRepository.GetInterviewSessionProgrammingLanguageDataAsync();
+            return Ok(programmingLanguageData);
+        }
+
+        [HttpGet("get-interview-session-position-data")]
+        public async Task<IActionResult> GetInterviewSessionPositionData()
+        {
+            List<PositionDataDTO> positionData = await _interviewSessionRepository.GetInterviewSessionPositionDataAsync();
+            return Ok(positionData);
+        }
+
         [HttpPut("finish-interview-session")]
         public async Task<IActionResult> FinishInterviewSession()
         {
