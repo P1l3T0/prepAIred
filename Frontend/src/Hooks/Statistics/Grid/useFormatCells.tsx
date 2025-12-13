@@ -1,58 +1,57 @@
 import type { GridCustomCellProps } from "@progress/kendo-react-grid";
 
 const useFormatCells = () => {
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-
-    return date.toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "short",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   const StatusCell = (props: GridCustomCellProps) => {
-    const status = props.dataItem.status;
+    const status: string = props.dataItem.status;
 
     const getStatusColor = () => {
-      switch (status) {
-        case "Passed":
-          return "#4caf50";
-        case "Failed":
-          return "#f44336";
-      }
+      if (status === "Passed") return "text-success";
+      if (status === "Failed") return "text-error";
     };
 
     return (
-      <td {...props.tdProps} style={{ color: getStatusColor() }}>
-        {props.dataItem.status}
+      <td {...props.tdProps}>
+        <span className={`${getStatusColor()}`}>{status}</span>
       </td>
     );
   };
 
   const ScoreCell = (props: GridCustomCellProps) => {
-    const score = props.dataItem.averageScore;
+    const score: number = props.dataItem.averageScore;
 
     const getScoreColor = () => {
-      if (score >= 5) return "#4caf50";
+      if (score >= 8) return "text-primary";
+      if (score >= 5) return "text-success";
+      if (score >= 3) return "text-warning";
 
-      return "#f44336";
+      return "text-error";
     };
 
     return (
-      <td {...props.tdProps} style={{ color: getScoreColor() }}>
-        {score > 0 ? score : "N/A"}
+      <td {...props.tdProps}>
+        <span className={`${getScoreColor()}`}>
+          {score > 0 ? score : "N/A"}
+        </span>
       </td>
     );
   };
 
   const DateCell = (props: GridCustomCellProps) => {
+    const dateCreated: string = props.dataItem.dateCreated;
+    const formattedDate: string = new Date(dateCreated).toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
     return (
       <td {...props.tdProps}>
-        {formatDate(props.dataItem.dateCreated)}
+        <span>
+          {formattedDate}
+        </span>
       </td>
-    )
+    );
   };
 
   return { StatusCell, ScoreCell, DateCell };

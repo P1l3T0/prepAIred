@@ -1,18 +1,12 @@
-import { Chart, ChartLegend, ChartCategoryAxis, ChartCategoryAxisItem, ChartSeries, ChartSeriesItem, ChartTooltip, type TooltipContext } from "@progress/kendo-react-charts";
+import { Chart, ChartLegend, ChartCategoryAxis, ChartCategoryAxisItem, ChartSeries, ChartSeriesItem, ChartTooltip } from "@progress/kendo-react-charts";
 import { Loader } from "@progress/kendo-react-indicators";
 import { Card, CardBody } from "@progress/kendo-react-layout";
 import useGetProgrammingLanguageData from "../../../Hooks/Statistics/Charts/useGetProgrammingLanguageData";
+import useFormatProgrammingLanguageData from "../../../Hooks/Statistics/Charts/useFormatProgrammingLanguageData";
 
 const ProgrammingLanguageChart = () => {
   const { data: programmingLanguageData, isLoading, isError } = useGetProgrammingLanguageData();
-
-  const languages: string[] = programmingLanguageData?.map((item) => item.language) || [];
-  const sessions: number[] = programmingLanguageData?.map((item) => item.sessions) || [];
-
-  const tooltipRender = (props: TooltipContext) => {
-    const { value } = props.point || {};
-    return `${value} ${value === 1 ? 'session' : 'sessions'}`;
-  }
+  const { languages, sessions, tooltipRender } = useFormatProgrammingLanguageData(programmingLanguageData || []);
 
   if (isLoading) {
     return (

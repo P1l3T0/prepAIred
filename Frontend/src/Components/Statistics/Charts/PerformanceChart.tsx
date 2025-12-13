@@ -2,21 +2,11 @@ import { Chart, ChartLegend, ChartCategoryAxis, ChartCategoryAxisItem, ChartSeri
 import { Loader } from "@progress/kendo-react-indicators";
 import { Card, CardBody } from "@progress/kendo-react-layout";
 import useGetPerformanceData from "../../../Hooks/Statistics/Charts/useGetPerformanceData";
+import useFormatPerformanceData from "../../../Hooks/Statistics/Charts/useFormatPerformanceData";
 
 const PerformanceChart = () => {
   const { data: performanceData, isLoading, isError } = useGetPerformanceData();
-
-  const scores: number[] = performanceData?.map((data) => data.score) || [];
-
-  const categories: string[] =
-    performanceData?.map((data) =>
-      new Date(data.dateCreated).toLocaleDateString("en-US", {
-        day: "numeric",
-        month: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    ) || [];
+  const { scores, categories, tooltipRender } = useFormatPerformanceData(performanceData || []);
 
   if (isLoading) {
     return (
@@ -61,7 +51,7 @@ const PerformanceChart = () => {
           <ChartSeries>
             <ChartSeriesItem type="line" name="Score" style="smooth" data={scores} />
           </ChartSeries>
-          <ChartTooltip />
+          <ChartTooltip render={tooltipRender} />
         </Chart>
       ) : (
         <div className="flex flex-col items-center justify-center text-center h-full py-12">

@@ -1,16 +1,13 @@
-import { Chart, ChartSeries, ChartSeriesItem, ChartLegend, ChartTooltip, type TooltipContext } from "@progress/kendo-react-charts";
+import { Chart, ChartSeries, ChartSeriesItem, ChartLegend, ChartTooltip } from "@progress/kendo-react-charts";
 import { Loader } from "@progress/kendo-react-indicators";
 import useGetPositionData from "../../../Hooks/Statistics/Charts/useGetPositionData";
 import { Card, CardBody } from "@progress/kendo-react-layout";
+import useFormatPositionData from "../../../Hooks/Statistics/Charts/useFormatPositionData";
 
 const PositionChart = () => {
   const { data: positionData, isLoading, isError } = useGetPositionData();
-
-  const tooltipRender = (props: TooltipContext) => {
-    const { category, value } = props.point || {};
-    return `${category}: ${value} ${value === 1 ? 'session' : 'sessions'}`;
-  }
-
+  const tooltipRender = useFormatPositionData(); 
+  
   if (isLoading) {
     return (
       <div className="bg-background min-h-full flex items-center justify-center">

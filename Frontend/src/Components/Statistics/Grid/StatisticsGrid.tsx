@@ -60,6 +60,7 @@ const StatisticsGrid = () => {
           pageable={true}
           sortable={true}
           groupable={true}
+          resizable={true}
           autoProcessData={true}
           pageSize={10}
           defaultTake={10}
@@ -70,8 +71,8 @@ const StatisticsGrid = () => {
             <CSVLink filename="Interviews" data={interviewSessionData}>Export to CSV</CSVLink>
           </Button>
         </GridToolbar>
-          <GridColumn field="id" title="ID" width={100} columnMenu={CustomColumnMenu} />
-          <GridColumn field="subject" title="Subject" width={500} columnMenu={CustomColumnMenu} />
+          <GridColumn field="id" title="ID"  width={50} columnMenu={CustomColumnMenu} />
+          <GridColumn field="subject" title="Subject" columnMenu={CustomColumnMenu} />
           <GridColumn field="aiAgent" title="AI Agent" columnMenu={CustomColumnMenu} />
           <GridColumn field="programmingLanguage" title="Language" columnMenu={CustomColumnMenu} />
           <GridColumn field="position" title="Position" columnMenu={CustomColumnMenu} />
