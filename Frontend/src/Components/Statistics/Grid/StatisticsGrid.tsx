@@ -99,7 +99,7 @@ const StatisticsGrid = () => {
           </svg>
         </div>
         <h3 className="text-lg font-medium text-text-primary mb-2">No Interview Sessions</h3>
-        <p className="text-text-secondary">Start your first interview session to see your activities here.</p>
+        <p className="text-text-secondary">Start your first interview session to see your interview data here.</p>
       </div>
     )}
     </>

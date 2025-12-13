@@ -79,7 +79,7 @@ const ProgrammingLanguageChart = () => {
             No Programming Language Data Available
           </h3>
           <p className="text-text-secondary">
-            Start an interview session to see your activities here.
+            Start an interview session to see your most used programming languages here.
           </p>
         </div>
       )}

@@ -74,7 +74,7 @@ const PerformanceChart = () => {
             No Performance Data Available
           </h3>
           <p className="text-text-secondary">
-            Start an interview session to see your activities here.
+            Start an interview session to see your performance here.
           </p>
         </div>
       )}
