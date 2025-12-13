@@ -9,8 +9,9 @@ const ProfileUpload = ({ showUpload, onAdd }: ProfileUploadProps) => {
   return (
     <>
       {showUpload && (
-        <div className="bg-surface rounded-lg border p-2 border-border">
+        <div className="bg-surface rounded-lg">
           <Upload
+            actionsLayout="center"
             batch={false}
             autoUpload={false}
             onAdd={onAdd}

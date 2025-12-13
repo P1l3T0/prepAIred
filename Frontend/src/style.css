@@ -53,7 +53,7 @@
   --color-text-tertiary: #94a3b8;
   --color-text-inverse: #ffffff;
 
-  --color-primary: #3b82f6;
+  --color-primary: #0D6EFD;
   --color-primary-hover: #2563eb;
   --color-secondary: #8b5cf6;
   --color-secondary-hover: #7c3aed;
@@ -94,7 +94,7 @@
   --color-text-tertiary: #64748b;
   --color-text-inverse: #0f172a;
 
-  --color-primary: #60a5fa;
+  --color-primary: #0D6EFD;
   --color-primary-hover: #3b82f6;
   --color-secondary: #a78bfa;
   --color-secondary-hover: #8b5cf6;
@@ -117,9 +117,17 @@
   --color-input-focus: #60a5fa;
 }
 
+html body .k-upload .k-dropzone-hint {
+  display: none;
+}
+
 .dark {
   .k-radio-label,
   .k-checkbox-label {
+    color: var(--color-text-primary);
+  }
+
+  .k-button-text {
     color: var(--color-text-primary);
   }
 }

@@ -22,15 +22,15 @@ const ProfileInfo = ({ user, profilePictureUrl }: ProfileInfoProps) => {
       </CardHeader>
       <CardBody className="flex flex-col">
         <div className="space-y-7 p-4 flex-1 flex flex-col">
-          <div className="flex justify-center">
+          <div className="flex items-center gap-5 ">
             <ProfileAvatar
               username={user?.username!}
               profilePictureUrl={profilePictureUrl}
               onAvatarClick={handleAvatarClick}
             />
-          </div>
 
-          <ProfileUpload showUpload={showUpload} onAdd={handleAdd} />
+            <ProfileUpload showUpload={showUpload} onAdd={handleAdd} />
+          </div>
 
           <div className="flex flex-col mt-auto">
             <ProfileData user={user} />
