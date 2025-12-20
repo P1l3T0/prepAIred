@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => {
   return {
     define: {
       "process.env.REACT_APP_API_URL": JSON.stringify(env.REACT_APP_API_URL),
+      "process.env.ELEVENLABS_AGENT_ID": JSON.stringify(env.ELEVENLABS_AGENT_ID),
     },
     plugins: [react(), tailwindcss()],
   };

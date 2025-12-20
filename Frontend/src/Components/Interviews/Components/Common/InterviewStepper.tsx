@@ -8,7 +8,7 @@ interface InterviewStepperProps {
 const InterviewStepper = ({ value, items }: InterviewStepperProps) => {
   return (
     <>
-      <Stepper style={{ display: "none"}} value={value} items={items} />
+      <Stepper style={{ display: "none" }} value={value} items={items} />
     </>
   );
 };

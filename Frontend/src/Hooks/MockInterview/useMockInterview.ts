@@ -34,7 +34,7 @@ const useMockInterview = () => {
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
       await conversation.startSession({
-        agentId: "agent_0801kckpbq8mew08w452mmv264zv",
+        agentId: process.env.ELEVENLABS_AGENT_ID || "",
         connectionType: "webrtc",
       });
     } catch (error) {
