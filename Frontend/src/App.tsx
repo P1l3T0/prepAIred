@@ -10,6 +10,7 @@ import Register from "./Pages/Register";
 import Footer from "./Components/Common/Footer/Footer";
 import NotFound from "./Pages/NotFound";
 import Statistics from "./Pages/Statistics";
+import MockInterview from "./Pages/MockInterview";
 
 function App() {
   const { isUserLoggedIn } = useAuth();
@@ -44,6 +45,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Statistics />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mock-interviews"
+            element={
+              <ProtectedRoute>
+                <MockInterview />
               </ProtectedRoute>
             }
           />
