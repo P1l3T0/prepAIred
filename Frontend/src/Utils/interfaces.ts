@@ -184,3 +184,15 @@ export interface PositionData {
   position: string;
   sessions: number;
 }
+
+//#endregion
+
+//#region Mock Interview
+
+export interface Message {
+  role: string;
+  id: string;
+  message: string;
+}
+
+//#endregion

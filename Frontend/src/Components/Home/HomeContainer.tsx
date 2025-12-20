@@ -5,7 +5,7 @@ import RecentActivity from "./Components/RecentActivity/RecentActivity";
 const HomeContainer = () => {
   return (
     <main className="bg-background">
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="mx-auto p-6">
         <StatisticsGrid />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="col-span-1">
