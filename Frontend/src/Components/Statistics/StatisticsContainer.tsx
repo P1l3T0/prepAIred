@@ -7,7 +7,7 @@ import PositionChart from "./Charts/PositionChart";
 const StatisticsContainer = () => {
   return (
     <main className="bg-background">
-      <div className="mx-auto p-6">
+      <div className="p-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <StatisticsCard title="Interviews by Position">
             <PositionChart />

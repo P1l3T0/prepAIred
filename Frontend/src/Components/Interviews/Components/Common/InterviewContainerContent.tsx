@@ -12,7 +12,7 @@ const InterviewContainerContent = () => {
   return (
     <>
       <main className="bg-background">
-        <div className="p-3 md:p-6">
+        <div className="p-6">
           <div className="max-w-7xl mx-auto space-y-12">
             <InterviewStepper value={value} items={items} />
 
