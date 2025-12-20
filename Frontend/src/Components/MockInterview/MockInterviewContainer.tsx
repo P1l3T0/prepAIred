@@ -12,7 +12,7 @@ const MockInterviewContainer = () => {
 
   return (
     <main className="bg-background">
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-4">
         <StartInterviewCard
           isConnected={isConnected}
           handleStartConversation={handleStartConversation}
