@@ -5,7 +5,6 @@ import StartInterviewCard from "./Cards/StartInterviewCard";
 const MockInterviewContainer = () => {
   const {
     isConnected,
-    isListening,
     messages,
     handleStartConversation,
     handleEndConversation,
@@ -20,11 +19,7 @@ const MockInterviewContainer = () => {
           handleEndConversation={handleEndConversation}
         />
 
-        <MockInterviewMessages
-          messages={messages}
-          isConnected={isConnected}
-          isListening={isListening}
-        />
+        <MockInterviewMessages messages={messages} />
       </div>
     </main>
   );

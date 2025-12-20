@@ -4,21 +4,17 @@ import type { Message } from "../../Utils/interfaces";
 
 const useMockInterview = () => {
   const [isConnected, setIsConnected] = useState(false);
-  const [isListening, setIsListening] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
 
   const conversation = useConversation({
-    onListening: () => setIsListening(true),
-    onThinking: () => setIsListening(false),
     onConnect: () => setIsConnected(true),
     onDisconnect: () => {
       setIsConnected(false);
-      setIsListening(false);
+      setMessages([]);
     },
-    onError: (error) => {
-      console.error("ElevenLabs error:", error);
+    onError: () => {
       setIsConnected(false);
-      setIsListening(false);
+      setMessages([]);
     },
     onMessage: (message) => {
       if (!message || !message.message || !message.role) return;
@@ -53,7 +49,6 @@ const useMockInterview = () => {
 
   return {
     isConnected,
-    isListening,
     messages,
     handleStartConversation,
     handleEndConversation,

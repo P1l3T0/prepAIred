@@ -10,7 +10,7 @@ interface StartInterviewCardProps {
 const StartInterviewCard = ({ isConnected, handleStartConversation, handleEndConversation }: StartInterviewCardProps) => {
   return (
     <>
-      <Card>
+      <Card className="shadow-md">
         <CardBody className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h1 className="text-xl font-semibold text-text-primary">
