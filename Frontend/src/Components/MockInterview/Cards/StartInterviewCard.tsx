@@ -1,4 +1,4 @@
-import { Card, CardBody } from "@progress/kendo-react-layout";
+import { Card, CardBody, CardHeader } from "@progress/kendo-react-layout";
 import { Button } from "@progress/kendo-react-buttons";
 
 interface StartInterviewCardProps {
@@ -11,35 +11,35 @@ const StartInterviewCard = ({ isConnected, handleStartConversation, handleEndCon
   return (
     <>
       <Card className="shadow-md">
-        <CardBody className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <h1 className="text-xl font-semibold text-text-primary">
-              AI Mock Technical Interview
-            </h1>
-            <p className="text-sm text-text-secondary">
+        <CardHeader>
+          <h1 className="font-bold text-text-primary">
+            AI Mock Interview
+          </h1>
+        </CardHeader>
+        <CardBody>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <p className="text-text-secondary" style={{ margin: 0 }}>
               Speak naturally, your answers are transcribed in real time.
             </p>
-          </div>
 
-          <div className="flex items-center gap-4">
-            <span
-              className={`text-sm px-3 py-1 rounded-full border ${
-                isConnected
-                  ? "text-success border-success"
-                  : "text-text-tertiary border-border"
-              }`}
-            >
-              {isConnected ? "Live Interview" : "Not Connected"}
-            </span>
+            <div className="flex items-center gap-4">
+              <span
+                className={`p-2 rounded-xl border ${
+                  isConnected
+                    ? "text-success border-success"
+                    : "text-text-tertiary border-border"
+                }`}
+              >
+                {isConnected ? "Live Interview" : "Not Connected"}
+              </span>
 
-            <Button
-              themeColor={isConnected ? "error" : "primary"}
-              onClick={
-                isConnected ? handleEndConversation : handleStartConversation
-              }
-            >
-              {isConnected ? "End Interview" : "Start Interview"}
-            </Button>
+              <Button
+                themeColor={isConnected ? "error" : "primary"}
+                onClick={isConnected ? handleEndConversation : handleStartConversation}
+              >
+                {isConnected ? "End Interview" : "Start Interview"}
+              </Button>
+            </div>
           </div>
         </CardBody>
       </Card>
