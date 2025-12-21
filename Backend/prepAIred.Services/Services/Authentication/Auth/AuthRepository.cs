@@ -15,21 +15,21 @@ namespace prepAIred.Services
 
             CurrentUserDTO currentUser = await _authService.RegisterAsync(userCredentialsDto, hashedPassword, saltPassword);
 
-            await _authService.GenerateAuthResponse(currentUser);
+            await _authService.GenerateAuthResponseAsync(currentUser);
         }
 
         public async Task LoginAsync(LoginDTO loginDto)
         {
             CurrentUserDTO currentUser = await _authService.LoginAsync(loginDto);
 
-            await _authService.GenerateAuthResponse(currentUser);
+            await _authService.GenerateAuthResponseAsync(currentUser);
         }
 
-        public Task Logout()
+        public async Task LogoutAsync()
         {
-            _authService.Logout();
+            await _authService.LogoutAsync();
 
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
     }
 }

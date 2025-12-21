@@ -16,7 +16,7 @@ namespace prepAIred.Services
             return interviewSessionsDTOs;
         }
 
-        public async Task<List<InterviewSessionActivityDTO>> GetInterviewSessionActivities()
+        public async Task<List<InterviewSessionActivityDTO>> GetInterviewSessionActivitiesAsync()
         {
             int currentUserID = await _userService.GetCurrentUserID();
             List<InterviewSessionActivityDTO> activities = await _interviewSessionService.GetInterviewSessionActivitiesAsync(currentUserID);
@@ -24,7 +24,7 @@ namespace prepAIred.Services
             return activities;
         }
 
-        public async Task<ProfileStatisticsDTO> GetInterviewSessionStatistics()
+        public async Task<ProfileStatisticsDTO> GetInterviewSessionStatisticsAsync()
         {
             int currentUserID = await _userService.GetCurrentUserID();
 
@@ -48,7 +48,7 @@ namespace prepAIred.Services
 
         public async Task<List<InterviewSessionPerformanceDTO>> GetInterviewSessionPerformanceAsync()
         {
-            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivities();
+            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivitiesAsync();
             List<InterviewSessionPerformanceDTO> performanceData = activities
                 .OrderBy(activity => activity.DateCreated)
                 .Select(activity => new InterviewSessionPerformanceDTO()
@@ -63,7 +63,7 @@ namespace prepAIred.Services
 
         public async Task<List<ProgrammingLanguageDataDTO>> GetInterviewSessionProgrammingLanguageDataAsync()
         {
-            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivities();
+            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivitiesAsync();
             List<ProgrammingLanguageDataDTO> programmingLanguageData = activities
                 .GroupBy(activity => activity.ProgrammingLanguage)
                 .Select(activity => new ProgrammingLanguageDataDTO()
@@ -77,7 +77,7 @@ namespace prepAIred.Services
 
         public async Task<List<PositionDataDTO>> GetInterviewSessionPositionDataAsync()
         {
-            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivities();
+            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivitiesAsync();
             List<PositionDataDTO> positionData = activities
                 .GroupBy(activity => activity.Position)
                 .Select(activity => new PositionDataDTO()
@@ -92,7 +92,7 @@ namespace prepAIred.Services
         public async Task FinishInterviewSessionAsync()
         {
             int currentUserID = await _userService.GetCurrentUserID();
-            int interviewSessionID = await _interviewSessionService.GetLatestInterviewSessionID(currentUserID);
+            int interviewSessionID = await _interviewSessionService.GetLatestInterviewSessionIDAsync(currentUserID);
             InterviewSession latestSession = await _interviewSessionService.GetInterviewSessionByIdAsync(interviewSessionID);
 
             await _interviewSessionService.FinishInterviewSessionAsync(latestSession);

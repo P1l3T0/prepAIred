@@ -27,7 +27,7 @@ namespace prepAIred.API
         [HttpGet("get-latest-hr-interviews")]
         public async Task<IActionResult> GetLatestHrInterview()
         {
-            List<HRInterviewDTO> hrInterviews = await _interviewRepository.GetLatestInterviews<HRInterview, HRInterviewDTO>();
+            List<HRInterviewDTO> hrInterviews = await _interviewRepository.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>();
             return Ok(hrInterviews);
         }
 
@@ -48,7 +48,7 @@ namespace prepAIred.API
         [HttpGet("get-latest-technical-interviews")]
         public async Task<IActionResult> GetLatestTechnicalInterview()
         {
-            List<TechnicalInterviewDTO> technicalInterviews = await _interviewRepository.GetLatestInterviews<TechnicalInterview, TechnicalInterviewDTO>();
+            List<TechnicalInterviewDTO> technicalInterviews = await _interviewRepository.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>();
             return Ok(technicalInterviews);
         }
 

@@ -36,7 +36,7 @@ namespace prepAIred.Services
             return currentUser.ToDto<CurrentUserDTO>();
         }
 
-        public async Task GenerateAuthResponse(CurrentUserDTO currentUser)
+        public async Task GenerateAuthResponseAsync(CurrentUserDTO currentUser)
         {
             string accessToken = _jwtService.GenerateAcessToken(currentUser.ID);
             string refreshToken = _jwtService.GenerateRefreshToken(currentUser.ID);
@@ -52,12 +52,12 @@ namespace prepAIred.Services
             _cookieService.CreateCookie("RefreshToken", refreshToken);
         }
 
-        public Task Logout()
+        public async Task LogoutAsync()
         {
             _cookieService.DeleteCookie("AccessToken");
             _cookieService.DeleteCookie("RefreshToken");
 
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
     }
 }

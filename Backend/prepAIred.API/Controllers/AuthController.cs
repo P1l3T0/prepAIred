@@ -44,7 +44,7 @@ namespace prepAIred.API
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            await _authRepository.Logout();
+            await _authRepository.LogoutAsync();
             return Ok("Logged out successfully");
         }
     }

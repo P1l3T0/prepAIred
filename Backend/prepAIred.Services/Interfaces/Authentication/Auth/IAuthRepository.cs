@@ -25,6 +25,6 @@ namespace prepAIred.Services
         /// Logs out the current user from the system.
         /// </summary>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task Logout();
+        Task LogoutAsync();
     }
 }

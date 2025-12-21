@@ -27,14 +27,14 @@ namespace prepAIred.API
         [HttpGet("get-interview-session-activities")]
         public async Task<IActionResult> GetInterviewSessionActivities()
         {
-            List<InterviewSessionActivityDTO> interviewSessionActivities = await _interviewSessionRepository.GetInterviewSessionActivities();
+            List<InterviewSessionActivityDTO> interviewSessionActivities = await _interviewSessionRepository.GetInterviewSessionActivitiesAsync();
             return Ok(interviewSessionActivities);
         }
 
         [HttpGet("get-interview-session-statistics")]
         public async Task<IActionResult> GetInterviewSessionStatistics()
         {
-            ProfileStatisticsDTO profileStats = await _interviewSessionRepository.GetInterviewSessionStatistics();
+            ProfileStatisticsDTO profileStats = await _interviewSessionRepository.GetInterviewSessionStatisticsAsync();
             return Ok(profileStats);
         }
 

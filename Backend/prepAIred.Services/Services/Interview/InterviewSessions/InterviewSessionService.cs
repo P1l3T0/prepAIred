@@ -58,7 +58,7 @@ namespace prepAIred.Services
             await _dataContext.SaveChangesAsync();
         }
 
-        public async Task<int> GetLatestInterviewSessionID(int userID)
+        public async Task<int> GetLatestInterviewSessionIDAsync(int userID)
         {
             return await _dataContext.InterviewSessions
                 .Where(intSession => intSession.UserID == userID)

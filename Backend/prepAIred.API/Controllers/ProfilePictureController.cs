@@ -14,7 +14,6 @@ namespace prepAIred.API
         public async Task<IActionResult> GetProfilePicture()
         {
             string profilePictureUrl = await _profilePictureRepository.GetProfilePictureUrlAsync();
-
             return Ok(profilePictureUrl);
         }
 

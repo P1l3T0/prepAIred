@@ -19,14 +19,14 @@ namespace prepAIred.Services
         /// </summary>
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of  
         /// <see cref="InterviewSessionActivityDTO"/> objects representing the most recent interview sessions.</returns>
-        Task<List<InterviewSessionActivityDTO>> GetInterviewSessionActivities();
+        Task<List<InterviewSessionActivityDTO>> GetInterviewSessionActivitiesAsync();
 
         /// <summary>
         /// Asynchronously retrieves interview session statistics.
         /// </summary>
         /// <returns>A task that represents the asynchronous operation. The task result contains a 
         /// <see cref="ProfileStatsDTO"/> object representing the interview session statistics.</returns>
-        Task<ProfileStatisticsDTO> GetInterviewSessionStatistics();
+        Task<ProfileStatisticsDTO> GetInterviewSessionStatisticsAsync();
 
         /// <summary>
         /// Asynchronously retrieves performance data for interview sessions.

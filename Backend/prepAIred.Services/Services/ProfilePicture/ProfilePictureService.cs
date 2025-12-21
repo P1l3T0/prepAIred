@@ -19,7 +19,7 @@ namespace prepAIred.Services
 
             string path = _fileService.CreateDirectoryIfNotExists();
             string extension = _fileService.CheckFileExtension(imageFile);
-            string fileName = await _fileService.CreateFileName(imageFile, path, extension);
+            string fileName = await _fileService.CreateFileNameAsync(imageFile, path, extension);
 
             return fileName;
         }

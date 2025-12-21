@@ -24,16 +24,16 @@ namespace prepAIred.Services
         Task<CurrentUserDTO> LoginAsync(LoginDTO loginDto);
 
         /// <summary>
-        /// Logs out the current user and cleans up their session.
-        /// </summary>
-        /// <returns>A task representing the asynchronous operation.</returns>
-        Task Logout();
-
-        /// <summary>
         /// Generates authentication response for a user.
         /// </summary>
         /// <param name="currentUser">The user to generate authentication response for.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task GenerateAuthResponse(CurrentUserDTO currentUser);
+        Task GenerateAuthResponseAsync(CurrentUserDTO currentUser);
+
+        /// <summary>
+        /// Logs out the current user and cleans up their session.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        Task LogoutAsync();
     }
 }

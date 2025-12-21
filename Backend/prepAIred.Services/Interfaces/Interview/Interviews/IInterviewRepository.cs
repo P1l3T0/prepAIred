@@ -22,7 +22,7 @@ namespace prepAIred.Services
         /// <typeparam name="TInterviewDTO">The type to which the interview entity will be mapped.</typeparam>
         /// <returns>A task that represents the asynchronous operation. The task result contains the most recent interview 
         /// mapped to the specified DTO type, or <see langword="null"/> if no interviews are available.</returns>
-        Task<List<TInterviewDTO>> GetLatestInterviews<TInterview, TInterviewDTO>() 
+        Task<List<TInterviewDTO>> GetLatestInterviewsAsync<TInterview, TInterviewDTO>() 
             where TInterview : Interview 
             where TInterviewDTO : InterviewDTO;
 

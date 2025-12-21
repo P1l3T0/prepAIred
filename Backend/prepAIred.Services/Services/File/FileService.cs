@@ -9,7 +9,7 @@ namespace prepAIred.Services
         private readonly string[] allowedFileExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
         private readonly IHostEnvironment _hostEnvironment = hostEnvironment;
 
-        public async Task<string> CreateFileName(IFormFile imageFile, string path, string extension)
+        public async Task<string> CreateFileNameAsync(IFormFile imageFile, string path, string extension)
         {
             string fileName = $"{Guid.NewGuid()}{extension}";
             string fileNameWithPath = Path.Combine(path, fileName);

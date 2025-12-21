@@ -65,12 +65,12 @@ namespace prepAIred.Services
             await _interviewService.CreateInterviewsAsync(interviews, currentUser, interviewSession);
         }
 
-        public async Task<List<TInterviewDTO>> GetLatestInterviews<TInterview, TInterviewDTO>()
+        public async Task<List<TInterviewDTO>> GetLatestInterviewsAsync<TInterview, TInterviewDTO>()
             where TInterview : Interview
             where TInterviewDTO : InterviewDTO
         {
             int currentUserID = await _userService.GetCurrentUserID();
-            int latestSessionID = await _interviewSessionService.GetLatestInterviewSessionID(currentUserID);
+            int latestSessionID = await _interviewSessionService.GetLatestInterviewSessionIDAsync(currentUserID);
             InterviewSession interviewSession = await _interviewSessionService.GetInterviewSessionByIdAsync(latestSessionID);
 
             if (interviewSession is null || interviewSession.Status != InterviewSessionStatus.Ongoing)
