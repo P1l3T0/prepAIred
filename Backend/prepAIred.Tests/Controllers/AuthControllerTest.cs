@@ -10,15 +10,15 @@ namespace prepAIred.Tests.Controllers
     public class AuthControllerTest
     {
         private readonly IAuthRepository _authRepository;
-        private readonly IRefreshTokenRepository _refreshTokenService;
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly AuthController _authController;
 
         public AuthControllerTest()
         {
             _authRepository = A.Fake<IAuthRepository>();
-            _refreshTokenService = A.Fake<IRefreshTokenRepository>();
+            _refreshTokenRepository = A.Fake<IRefreshTokenRepository>();
 
-            _authController = new AuthController(_authRepository, _refreshTokenService);
+            _authController = new AuthController(_authRepository, _refreshTokenRepository);
         }
 
         [Fact]
@@ -87,7 +87,7 @@ namespace prepAIred.Tests.Controllers
         public async Task AuthController_GenerateNewRefreshToken_ReturnsOk()
         {
             RefreshTokenResponseDTO tokenResponse = new RefreshTokenResponseDTO();
-            A.CallTo(() => _refreshTokenService.GenerateNewRefreshTokenAsync()).Returns(tokenResponse);
+            A.CallTo(() => _refreshTokenRepository.GenerateNewRefreshTokenAsync()).Returns(tokenResponse);
 
             IActionResult result = await _authController.GenerateNewRefreshToken();
 
