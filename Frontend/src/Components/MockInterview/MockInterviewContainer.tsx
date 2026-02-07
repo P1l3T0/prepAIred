@@ -8,6 +8,7 @@ const MockInterviewContainer = () => {
     messages,
     handleStartConversation,
     handleEndConversation,
+    handleDropDownChange
   } = useMockInterview();
 
   return (
@@ -17,6 +18,7 @@ const MockInterviewContainer = () => {
           isConnected={isConnected}
           handleStartConversation={handleStartConversation}
           handleEndConversation={handleEndConversation}
+          handleDropDownChange={handleDropDownChange}
         />
 
         <MockInterviewMessages messages={messages} />

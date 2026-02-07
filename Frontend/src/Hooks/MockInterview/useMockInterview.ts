@@ -1,9 +1,11 @@
 import { useConversation } from "@elevenlabs/react";
 import { useState } from "react";
 import type { Message } from "../../Utils/interfaces";
+import type { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
 
 const useMockInterview = () => {
   const [isConnected, setIsConnected] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("English");
   const [messages, setMessages] = useState<Message[]>([]);
 
   const conversation = useConversation({
@@ -30,11 +32,18 @@ const useMockInterview = () => {
     },
   });
 
+  const handleDropDownChange = (e: DropDownListChangeEvent) => {
+    setSelectedLanguage(e.value);
+  };
+
   const handleStartConversation = async () => {
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
       await conversation.startSession({
-        agentId: process.env.ELEVENLABS_AGENT_ID || "",
+        agentId:
+          selectedLanguage === "English"
+            ? process.env.ELEVENLABS_AGENT_ID_ENGLISH || ""
+            : process.env.ELEVENLABS_AGENT_ID_BULGARIAN || "",
         connectionType: "webrtc",
       });
     } catch (error) {
@@ -52,6 +61,7 @@ const useMockInterview = () => {
     messages,
     handleStartConversation,
     handleEndConversation,
+    handleDropDownChange,
   };
 };
 

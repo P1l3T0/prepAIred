@@ -1,13 +1,22 @@
 import { Card, CardBody, CardHeader } from "@progress/kendo-react-layout";
 import { Button } from "@progress/kendo-react-buttons";
+import { DropDownList, type DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
 
 interface StartInterviewCardProps {
   isConnected: boolean;
   handleStartConversation: () => void;
   handleEndConversation: () => void;
+  handleDropDownChange: (e: DropDownListChangeEvent) => void;
 }
 
-const StartInterviewCard = ({ isConnected, handleStartConversation, handleEndConversation }: StartInterviewCardProps) => {
+const StartInterviewCard = ({
+  isConnected,
+  handleStartConversation,
+  handleEndConversation,
+  handleDropDownChange
+}: StartInterviewCardProps) => {
+  const languages: string[] = ["English", "Bulgarian"];
+
   return (
     <Card className="shadow-md">
       <CardHeader>
@@ -19,7 +28,7 @@ const StartInterviewCard = ({ isConnected, handleStartConversation, handleEndCon
             Speak naturally, your answers are transcribed in real time.
           </p>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <span
               className={`p-2 rounded-xl border ${
                 isConnected
@@ -38,6 +47,13 @@ const StartInterviewCard = ({ isConnected, handleStartConversation, handleEndCon
             >
               {isConnected ? "End Interview" : "Start Interview"}
             </Button>
+            <DropDownList
+              title="Choose Language"
+              defaultItem="Select language"
+              data={languages}
+              onChange={handleDropDownChange}
+              style={{ width: "180px" }}
+            />
           </div>
         </div>
       </CardBody>
