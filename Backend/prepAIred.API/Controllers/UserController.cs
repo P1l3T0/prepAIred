@@ -31,9 +31,9 @@ namespace prepAIred.API
                 CurrentUserDTO currentUser = await _userService.GetCurrentUserAsync();
                 return Ok(currentUser);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -45,9 +45,9 @@ namespace prepAIred.API
                 await _userService.UpdateCurrentUserAsync(userCredentialsDto);
                 return Ok("User updated");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -59,9 +59,9 @@ namespace prepAIred.API
                 await _userService.DeleteCurrentUserAsync();
                 return Ok("User deleted");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

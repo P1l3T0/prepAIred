@@ -18,9 +18,9 @@ namespace prepAIred.API
                 string profilePictureUrl = await _profilePictureService.GetProfilePictureUrlAsync();
                 return Ok(profilePictureUrl);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -32,9 +32,9 @@ namespace prepAIred.API
                 await _profilePictureService.ChangeProfilePictureAsync(profilePictureDTO);
                 return Ok("Profile picture changed");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

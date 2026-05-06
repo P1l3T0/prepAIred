@@ -25,9 +25,9 @@ namespace prepAIred.API
                 await _interviewService.GenerateInterviewsAsync<HRInterview>(hrRequest);
                 return Ok("HR interviews created successfully.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -39,9 +39,9 @@ namespace prepAIred.API
                 List<HRInterviewDTO> hrInterviews = await _interviewService.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>();
                 return Ok(hrInterviews);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -53,9 +53,9 @@ namespace prepAIred.API
                 await _interviewService.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
                 return Ok("HR interviews evaluated successfully.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -67,9 +67,9 @@ namespace prepAIred.API
                 await _interviewService.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest);
                 return Ok("Technical interviews created successfully.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -81,9 +81,9 @@ namespace prepAIred.API
                 List<TechnicalInterviewDTO> technicalInterviews = await _interviewService.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>();
                 return Ok(technicalInterviews);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -95,9 +95,9 @@ namespace prepAIred.API
                 await _interviewService.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests);
                 return Ok("Technical interviews evaluated successfully.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

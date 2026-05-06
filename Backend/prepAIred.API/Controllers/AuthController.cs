@@ -28,9 +28,9 @@ namespace prepAIred.API
                 await _authService.RegisterAsync(userCredentialsDto);
                 return Ok("Register successful");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -42,9 +42,9 @@ namespace prepAIred.API
                 await _authService.LoginAsync(loginDto);
                 return Ok("Login successful");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -56,9 +56,9 @@ namespace prepAIred.API
                 RefreshTokenResponseDTO newRefreshToken = await _refreshTokenService.GenerateNewRefreshTokenAsync();
                 return Ok(newRefreshToken);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -70,9 +70,9 @@ namespace prepAIred.API
                 await _authService.LogoutAsync();
                 return Ok("Logged out successfully");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

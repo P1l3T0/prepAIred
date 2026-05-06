@@ -25,9 +25,9 @@ namespace prepAIred.API
                 List<InterviewSessionDTO> interviewSessions = await _interviewSessionService.GetInterviewSessionDTOsAsync();
                 return Ok(interviewSessions);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -39,9 +39,9 @@ namespace prepAIred.API
                 List<InterviewSessionActivityDTO> interviewSessionActivities = await _interviewSessionService.GetInterviewSessionActivitiesAsync();
                 return Ok(interviewSessionActivities);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -53,9 +53,9 @@ namespace prepAIred.API
                 ProfileStatisticsDTO profileStats = await _interviewSessionService.GetInterviewSessionStatisticsAsync();
                 return Ok(profileStats);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -67,9 +67,9 @@ namespace prepAIred.API
                 List<InterviewSessionPerformanceDTO> performanceData = await _interviewSessionService.GetInterviewSessionPerformanceAsync();
                 return Ok(performanceData);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -81,9 +81,9 @@ namespace prepAIred.API
                 List<ProgrammingLanguageDataDTO> programmingLanguageData = await _interviewSessionService.GetInterviewSessionProgrammingLanguageDataAsync();
                 return Ok(programmingLanguageData);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -95,9 +95,9 @@ namespace prepAIred.API
                 List<PositionDataDTO> positionData = await _interviewSessionService.GetInterviewSessionPositionDataAsync();
                 return Ok(positionData);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -109,9 +109,9 @@ namespace prepAIred.API
                 await _interviewSessionService.FinishInterviewSessionAsync();
                 return Ok("Interview session finished successfully.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -123,9 +123,9 @@ namespace prepAIred.API
                 await _interviewSessionService.DeleteInterviewSessionsAsync();
                 return Ok("All interview sessions deleted successfully.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }
