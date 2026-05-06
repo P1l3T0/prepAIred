@@ -21,27 +21,48 @@ namespace prepAIred.API
         [HttpGet("get-current-user")]
         public async Task<IActionResult> GetCurrentUser()
         {
-            if (string.IsNullOrEmpty(Request.Cookies["AccessToken"]))
+            try
             {
-                return NoContent();
-            }
+                if (string.IsNullOrEmpty(Request.Cookies["AccessToken"]))
+                {
+                    return NoContent();
+                }
 
-            CurrentUserDTO currentUser = await _userService.GetCurrentUserAsync();
-            return Ok(currentUser);
+                CurrentUserDTO currentUser = await _userService.GetCurrentUserAsync();
+                return Ok(currentUser);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPut("update-current-user")]
         public async Task<IActionResult> UpdateCurrentUser([FromBody] UserCredentialsDTO userCredentialsDto)
         {
-            await _userService.UpdateCurrentUserAsync(userCredentialsDto);
-            return Ok("User updated");
+            try
+            {
+                await _userService.UpdateCurrentUserAsync(userCredentialsDto);
+                return Ok("User updated");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpDelete("delete-current-user")]
         public async Task<IActionResult> DeleteCurrentUser()
         {
-            await _userService.DeleteCurrentUserAsync();
-            return Ok("User deleted");
+            try
+            {
+                await _userService.DeleteCurrentUserAsync();
+                return Ok("User deleted");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -23,29 +23,57 @@ namespace prepAIred.API
         [HttpPost("register")]
         public async Task<ActionResult> Register([FromBody] UserCredentialsDTO userCredentialsDto)
         {
-            await _authService.RegisterAsync(userCredentialsDto);
-            return Ok("Register successful");
+            try
+            {
+                await _authService.RegisterAsync(userCredentialsDto);
+                return Ok("Register successful");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginDTO loginDto)
         {
-            await _authService.LoginAsync(loginDto);
-            return Ok("Login successful");
+            try
+            {
+                await _authService.LoginAsync(loginDto);
+                return Ok("Login successful");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost("refresh-token")]
         public async Task<IActionResult> GenerateNewRefreshToken()
         {
-            RefreshTokenResponseDTO newRefreshToken = await _refreshTokenService.GenerateNewRefreshTokenAsync();
-            return Ok(newRefreshToken);
+            try
+            {
+                RefreshTokenResponseDTO newRefreshToken = await _refreshTokenService.GenerateNewRefreshTokenAsync();
+                return Ok(newRefreshToken);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            await _authService.LogoutAsync();
-            return Ok("Logged out successfully");
+            try
+            {
+                await _authService.LogoutAsync();
+                return Ok("Logged out successfully");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

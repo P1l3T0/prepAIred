@@ -13,15 +13,29 @@ namespace prepAIred.API
         [HttpGet("get-profile-picture-url")]
         public async Task<IActionResult> GetProfilePicture()
         {
-            string profilePictureUrl = await _profilePictureService.GetProfilePictureUrlAsync();
-            return Ok(profilePictureUrl);
+            try
+            {
+                string profilePictureUrl = await _profilePictureService.GetProfilePictureUrlAsync();
+                return Ok(profilePictureUrl);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost("change-profile-picture")]
         public async Task<IActionResult> ChangeProfilePicture([FromForm] ProfilePictureDTO profilePictureDTO)
         {
-            await _profilePictureService.ChangeProfilePictureAsync(profilePictureDTO);
-            return Ok("Profile picture changed");
+            try
+            {
+                await _profilePictureService.ChangeProfilePictureAsync(profilePictureDTO);
+                return Ok("Profile picture changed");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

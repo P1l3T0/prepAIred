@@ -20,43 +20,85 @@ namespace prepAIred.API
         [HttpPost("generate-hr-interviews")]
         public async Task<IActionResult> GenerateHrInterview([FromBody] HrRequestDTO hrRequest)
         {
-            await _interviewService.GenerateInterviewsAsync<HRInterview>(hrRequest);
-            return Ok("HR interviews created successfully.");
+            try
+            {
+                await _interviewService.GenerateInterviewsAsync<HRInterview>(hrRequest);
+                return Ok("HR interviews created successfully.");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpGet("get-latest-hr-interviews")]
         public async Task<IActionResult> GetLatestHrInterview()
         {
-            List<HRInterviewDTO> hrInterviews = await _interviewService.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>();
-            return Ok(hrInterviews);
+            try
+            {
+                List<HRInterviewDTO> hrInterviews = await _interviewService.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>();
+                return Ok(hrInterviews);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost("evaluate-hr-interviews")]
         public async Task<IActionResult> EvaluateHrInterviews([FromBody] List<EvaluateRequestDTO> evaluateRequests)
         {
-            await _interviewService.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
-            return Ok("HR interviews evaluated successfully.");
+            try
+            {
+                await _interviewService.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
+                return Ok("HR interviews evaluated successfully.");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost("generate-technical-interviews")]
         public async Task<IActionResult> GenerateTechnicalInterviews([FromBody] TechnicalRequestDTO technicalRequest)
         {
-            await _interviewService.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest);
-            return Ok("Technical interviews created successfully.");
+            try
+            {
+                await _interviewService.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest);
+                return Ok("Technical interviews created successfully.");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpGet("get-latest-technical-interviews")]
         public async Task<IActionResult> GetLatestTechnicalInterview()
         {
-            List<TechnicalInterviewDTO> technicalInterviews = await _interviewService.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>();
-            return Ok(technicalInterviews);
+            try
+            {
+                List<TechnicalInterviewDTO> technicalInterviews = await _interviewService.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>();
+                return Ok(technicalInterviews);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost("evaluate-technical-interviews")]
         public async Task<IActionResult> EvaluateTechnicalInterviews([FromBody] List<EvaluateRequestDTO> evaluateRequests)
         {
-            await _interviewService.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests);
-            return Ok("Technical interviews evaluated successfully.");
+            try
+            {
+                await _interviewService.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests);
+                return Ok("Technical interviews evaluated successfully.");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
