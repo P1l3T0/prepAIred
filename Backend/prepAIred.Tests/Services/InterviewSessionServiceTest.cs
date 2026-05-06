@@ -2,7 +2,7 @@ using FakeItEasy;
 using prepAIred.Data;
 using prepAIred.Services;
 
-namespace prepAIred.Tests.Repositories
+namespace prepAIred.Tests.Services
 {
     public class InterviewSessionServiceTest
     {

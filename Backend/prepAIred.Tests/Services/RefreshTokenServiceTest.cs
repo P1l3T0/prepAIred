@@ -4,7 +4,7 @@ using prepAIred.Data;
 using prepAIred.Exceptions;
 using prepAIred.Services;
 
-namespace prepAIred.Tests.Repositories
+namespace prepAIred.Tests.Services
 {
     public class RefreshTokenServiceTest
     {

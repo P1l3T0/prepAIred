@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using prepAIred.Exceptions;
 using prepAIred.Services;
 
-namespace prepAIred.Tests.Services
+namespace prepAIred.Tests.Repositories
 {
     public class ProfilePictureRepositoryTest
     {
