@@ -3,127 +3,27 @@
 namespace prepAIred.Services
 {
     /// <summary>
-    /// Service interface for managing user-related business operations.
+    /// Repository interface for handling user data persistence operations.
     /// </summary>
     public interface IUserService
     {
         /// <summary>
-        /// Creates a new user in the system.
+        /// Retrieves the currently authenticated user's information.
         /// </summary>
-        /// <param name="user">The user entity to create.</param>
-        /// <returns>The created user entity.</returns>
-        Task<User> CreateUserAsync(User user);
-
-        /// <summary>
-        /// Retrieves a user by their email address.
-        /// </summary>
-        /// <param name="email">The email address to search for.</param>
-        /// <returns>The matching user entity if found.</returns>
-        Task<User> GetUserByEmailAsync(string email);
-
-        /// <summary>
-        /// Retrieves a user by their username.
-        /// </summary>
-        /// <param name="name">The username to search for.</param>
-        /// <returns>The matching user entity if found.</returns>
-        Task<CurrentUserDTO> GetUserByUsernameAsync(string name);
-
-        /// <summary>
-        /// Retrieves a user dto by their ID.
-        /// </summary>
-        /// <param name="userId">The ID of the user to retrieve.</param>
-        /// <returns>The matching user dto if found.</returns>
-        Task<CurrentUserDTO> GetUserByIdAsync(int userId);
-
-        /// <summary>
-        /// Retrieves a user entity by their ID.
-        /// </summary>
-        /// <param name="userId">The ID of the user to retrieve.</param>
-        /// <returns>The matching user entity if found.</returns>
-        Task<User> GetCurrentUserEntityByIdAsync(int userId);
-
-        /// <summary>
-        /// Retrieves the currently authenticated user.
-        /// </summary>
-        /// <returns>The current user entity.</returns>
+        /// <returns>A DTO containing the current user's public information.</returns>
         Task<CurrentUserDTO> GetCurrentUserAsync();
 
         /// <summary>
-        /// Asynchronously retrieves the unique identifier of the currently authenticated user.
+        /// Updates the current user's information based on the provided data.
         /// </summary>
-        /// <returns>The task result contains the unique identifier of the current user.</returns>
-        Task<int> GetCurrentUserID();
-
-        /// <summary>
-        /// Updates the details of an existing user asynchronously.
-        /// </summary>
-        /// <param name="user">The <see cref="User"/> object containing the updated user details. The user must already exist in the system.</param>
-        /// <param name="userCredentialsDto">The <see cref="UserCredentialsDTO"/> object containing the updated user information.</param>
+        /// <param name="userCredentialsDTO">An object containing the updated user information. This parameter cannot be null.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task UpdateUserAsync(User user, UserCredentialsDTO? userCredentialsDto);
+        Task UpdateCurrentUserAsync(UserCredentialsDTO userCredentialsDTO);
 
         /// <summary>
-        /// Deletes the user with the specified user ID.
+        /// Deletes the currently authenticated user from the system.
         /// </summary>
-        /// <param name="userID">The unique identifier of the user to delete. Must be a positive integer.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task DeleteUserAsync(int userID);
-
-        /// <summary>
-        /// Validates user registration data.
-        /// </summary>
-        /// <param name="registerDto">The registration data to validate.</param>
-        /// <returns>A task representing the validation operation.</returns>
-        Task ValidateUserAsync(UserCredentialsDTO registerDto);
-
-        /// <summary>
-        /// Validates user update data.
-        /// </summary>
-        /// <param name="userCredentialsDto">The update data to validate.</param>
-        /// <returns>A void representing the validation operation.</returns>
-        Task ValidateUpdateUserDataAsync(UserCredentialsDTO userCredentialsDto);
-
-        /// <summary>
-        /// Checks if a user with the specified email exists.
-        /// </summary>
-        /// <param name="email">The email address to check.</param>
-        /// <returns>True if the user exists, false otherwise.</returns>
-        Task<bool> UserExistsAsync(string email);
-
-        /// <summary>
-        /// Checks if required registration fields are empty.
-        /// </summary>
-        /// <param name="userCredentialsDto">The registration data to check.</param>
-        /// <returns>True if any required fields are empty, false otherwise.</returns>
-        bool AreFieldsEmpty(UserCredentialsDTO userCredentialsDto);
-
-        /// <summary>
-        /// Validates the format of the email.
-        /// </summary>
-        /// <param name="email">The email address to validate.</param>
-        /// <returns>True if the email is valid, false otherwise.</returns>
-        bool ValidateEmail(string email);
-
-        /// <summary>
-        /// Validates the format of the password.
-        /// </summary>
-        /// <param name="password">The password to validate.</param>
-        /// <returns>True if the password is valid, false otherwise.</returns>
-        bool ValidatePassword(string password);
-
-        /// <summary>
-        /// Hashes a user's password during registration.
-        /// </summary>
-        /// <param name="userCredentialsDto">The registration data containing the password to hash.</param>
-        /// <returns>A tuple containing the hashed password and salt.</returns>
-        (byte[] hashedPassword, byte[] saltPassword) HashPassword(UserCredentialsDTO userCredentialsDto);
-
-        /// <summary>
-        /// Verifies a user's password during login.
-        /// </summary>
-        /// <param name="currentUser">The user entity to check against.</param>
-        /// <param name="loginDto">The login credentials to verify.</param>
-        /// <returns>True if the password is correct, false otherwise.</returns>
-        bool CheckPassword(User currentUser, LoginDTO loginDto);
+        Task DeleteCurrentUserAsync();
     }
 }

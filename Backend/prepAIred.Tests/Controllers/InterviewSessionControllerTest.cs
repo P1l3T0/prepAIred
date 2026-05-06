@@ -8,13 +8,13 @@ namespace prepAIred.Tests.Controllers
 {
     public class InterviewSessionControllerTest
     {
-        private readonly IInterviewSessionRepository _interviewSessionRepository;
+        private readonly IInterviewSessionService _interviewSessionService;
         private readonly InterviewSessionController _interviewSessionController;
 
         public InterviewSessionControllerTest()
         {
-            _interviewSessionRepository = A.Fake<IInterviewSessionRepository>();
-            _interviewSessionController = new InterviewSessionController(_interviewSessionRepository);
+            _interviewSessionService = A.Fake<IInterviewSessionService>();
+            _interviewSessionController = new InterviewSessionController(_interviewSessionService);
         }
 
         #region GetInterviewSessionDTOs Tests
@@ -24,7 +24,7 @@ namespace prepAIred.Tests.Controllers
         {
             List<InterviewSessionDTO> interviewSessions = new List<InterviewSessionDTO>();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionDTOsAsync()).Returns(interviewSessions);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionDTOsAsync()).Returns(interviewSessions);
 
             IActionResult result = await _interviewSessionController.GetInterviewSessionDTOs();
 
@@ -40,7 +40,7 @@ namespace prepAIred.Tests.Controllers
                 new InterviewSessionDTO { ID = 2, Subject = "Python Advanced" }
             };
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionDTOsAsync()).Returns(interviewSessions);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionDTOsAsync()).Returns(interviewSessions);
 
             IActionResult result = await _interviewSessionController.GetInterviewSessionDTOs();
 
@@ -54,11 +54,11 @@ namespace prepAIred.Tests.Controllers
         {
             List<InterviewSessionDTO> interviewSessions = new List<InterviewSessionDTO>();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionDTOsAsync()).Returns(interviewSessions);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionDTOsAsync()).Returns(interviewSessions);
 
             await _interviewSessionController.GetInterviewSessionDTOs();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionDTOsAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionDTOsAsync()).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -70,7 +70,7 @@ namespace prepAIred.Tests.Controllers
         {
             List<InterviewSessionActivityDTO> activities = new List<InterviewSessionActivityDTO>();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionActivitiesAsync()).Returns(activities);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionActivitiesAsync()).Returns(activities);
 
             IActionResult result = await _interviewSessionController.GetInterviewSessionActivities();
 
@@ -86,7 +86,7 @@ namespace prepAIred.Tests.Controllers
                 new InterviewSessionActivityDTO { ID = 2, Subject = "Python ML", AverageScore = 7.2f }
             };
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionActivitiesAsync()).Returns(activities);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionActivitiesAsync()).Returns(activities);
 
             IActionResult result = await _interviewSessionController.GetInterviewSessionActivities();
 
@@ -100,11 +100,11 @@ namespace prepAIred.Tests.Controllers
         {
             List<InterviewSessionActivityDTO> activities = new List<InterviewSessionActivityDTO>();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionActivitiesAsync()).Returns(activities);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionActivitiesAsync()).Returns(activities);
 
             await _interviewSessionController.GetInterviewSessionActivities();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionActivitiesAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionActivitiesAsync()).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -116,7 +116,7 @@ namespace prepAIred.Tests.Controllers
         {
             ProfileStatisticsDTO stats = new ProfileStatisticsDTO();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionStatisticsAsync()).Returns(stats);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionStatisticsAsync()).Returns(stats);
 
             IActionResult result = await _interviewSessionController.GetInterviewSessionStatistics();
 
@@ -133,7 +133,7 @@ namespace prepAIred.Tests.Controllers
                 AverageScore = 8.5m
             };
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionStatisticsAsync()).Returns(stats);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionStatisticsAsync()).Returns(stats);
 
             IActionResult result = await _interviewSessionController.GetInterviewSessionStatistics();
 
@@ -148,11 +148,11 @@ namespace prepAIred.Tests.Controllers
         {
             ProfileStatisticsDTO stats = new ProfileStatisticsDTO();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionStatisticsAsync()).Returns(stats);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionStatisticsAsync()).Returns(stats);
 
             await _interviewSessionController.GetInterviewSessionStatistics();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionStatisticsAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionStatisticsAsync()).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -164,7 +164,7 @@ namespace prepAIred.Tests.Controllers
         {
             List<InterviewSessionPerformanceDTO> performance = new List<InterviewSessionPerformanceDTO>();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionPerformanceAsync()).Returns(performance);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionPerformanceAsync()).Returns(performance);
 
             IActionResult result = await _interviewSessionController.GetInterviewSessionPerformance();
 
@@ -180,7 +180,7 @@ namespace prepAIred.Tests.Controllers
                 new InterviewSessionPerformanceDTO { ID = 2, Score = 9.0f }
             };
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionPerformanceAsync()).Returns(performance);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionPerformanceAsync()).Returns(performance);
 
             IActionResult result = await _interviewSessionController.GetInterviewSessionPerformance();
 
@@ -194,11 +194,11 @@ namespace prepAIred.Tests.Controllers
         {
             List<InterviewSessionPerformanceDTO> performance = new List<InterviewSessionPerformanceDTO>();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionPerformanceAsync()).Returns(performance);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionPerformanceAsync()).Returns(performance);
 
             await _interviewSessionController.GetInterviewSessionPerformance();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionPerformanceAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionPerformanceAsync()).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -210,7 +210,7 @@ namespace prepAIred.Tests.Controllers
         {
             List<ProgrammingLanguageDataDTO> languageData = new List<ProgrammingLanguageDataDTO>();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionProgrammingLanguageDataAsync()).Returns(languageData);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionProgrammingLanguageDataAsync()).Returns(languageData);
 
             IActionResult result = await _interviewSessionController.GetInterviewSessionProgrammingLanguageData();
 
@@ -226,7 +226,7 @@ namespace prepAIred.Tests.Controllers
                 new ProgrammingLanguageDataDTO { Language = "Python", Sessions = 3 }
             };
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionProgrammingLanguageDataAsync()).Returns(languageData);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionProgrammingLanguageDataAsync()).Returns(languageData);
 
             IActionResult result = await _interviewSessionController.GetInterviewSessionProgrammingLanguageData();
 
@@ -240,11 +240,11 @@ namespace prepAIred.Tests.Controllers
         {
             List<ProgrammingLanguageDataDTO> languageData = new List<ProgrammingLanguageDataDTO>();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionProgrammingLanguageDataAsync()).Returns(languageData);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionProgrammingLanguageDataAsync()).Returns(languageData);
 
             await _interviewSessionController.GetInterviewSessionProgrammingLanguageData();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionProgrammingLanguageDataAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionProgrammingLanguageDataAsync()).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -256,7 +256,7 @@ namespace prepAIred.Tests.Controllers
         {
             List<PositionDataDTO> positionData = new List<PositionDataDTO>();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionPositionDataAsync()).Returns(positionData);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionPositionDataAsync()).Returns(positionData);
 
             IActionResult result = await _interviewSessionController.GetInterviewSessionPositionData();
 
@@ -272,7 +272,7 @@ namespace prepAIred.Tests.Controllers
                 new PositionDataDTO { Position = "Senior Developer", Sessions = 6 }
             };
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionPositionDataAsync()).Returns(positionData);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionPositionDataAsync()).Returns(positionData);
 
             IActionResult result = await _interviewSessionController.GetInterviewSessionPositionData();
 
@@ -286,11 +286,11 @@ namespace prepAIred.Tests.Controllers
         {
             List<PositionDataDTO> positionData = new List<PositionDataDTO>();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionPositionDataAsync()).Returns(positionData);
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionPositionDataAsync()).Returns(positionData);
 
             await _interviewSessionController.GetInterviewSessionPositionData();
 
-            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionPositionDataAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewSessionService.GetInterviewSessionPositionDataAsync()).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -300,7 +300,7 @@ namespace prepAIred.Tests.Controllers
         [Fact]
         public async Task InterviewSessionController_FinishInterviewSession_ReturnsOk()
         {
-            A.CallTo(() => _interviewSessionRepository.FinishInterviewSessionAsync()).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewSessionService.FinishInterviewSessionAsync()).Returns(Task.CompletedTask);
 
             IActionResult result = await _interviewSessionController.FinishInterviewSession();
 
@@ -310,7 +310,7 @@ namespace prepAIred.Tests.Controllers
         [Fact]
         public async Task InterviewSessionController_FinishInterviewSession_ReturnsSuccessMessage()
         {
-            A.CallTo(() => _interviewSessionRepository.FinishInterviewSessionAsync()).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewSessionService.FinishInterviewSessionAsync()).Returns(Task.CompletedTask);
 
             IActionResult result = await _interviewSessionController.FinishInterviewSession();
 
@@ -321,11 +321,11 @@ namespace prepAIred.Tests.Controllers
         [Fact]
         public async Task InterviewSessionController_FinishInterviewSession_CallsRepositoryMethod()
         {
-            A.CallTo(() => _interviewSessionRepository.FinishInterviewSessionAsync()).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewSessionService.FinishInterviewSessionAsync()).Returns(Task.CompletedTask);
 
             await _interviewSessionController.FinishInterviewSession();
 
-            A.CallTo(() => _interviewSessionRepository.FinishInterviewSessionAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewSessionService.FinishInterviewSessionAsync()).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -335,7 +335,7 @@ namespace prepAIred.Tests.Controllers
         [Fact]
         public async Task InterviewSessionController_DeleteInterviewSessions_ReturnsOk()
         {
-            A.CallTo(() => _interviewSessionRepository.DeleteInterviewSessionsAsync()).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewSessionService.DeleteInterviewSessionsAsync()).Returns(Task.CompletedTask);
 
             IActionResult result = await _interviewSessionController.DeleteInterviewSessions();
 
@@ -345,7 +345,7 @@ namespace prepAIred.Tests.Controllers
         [Fact]
         public async Task InterviewSessionController_DeleteInterviewSessions_ReturnsSuccessMessage()
         {
-            A.CallTo(() => _interviewSessionRepository.DeleteInterviewSessionsAsync()).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewSessionService.DeleteInterviewSessionsAsync()).Returns(Task.CompletedTask);
 
             IActionResult result = await _interviewSessionController.DeleteInterviewSessions();
 
@@ -356,11 +356,11 @@ namespace prepAIred.Tests.Controllers
         [Fact]
         public async Task InterviewSessionController_DeleteInterviewSessions_CallsRepositoryMethod()
         {
-            A.CallTo(() => _interviewSessionRepository.DeleteInterviewSessionsAsync()).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewSessionService.DeleteInterviewSessionsAsync()).Returns(Task.CompletedTask);
 
             await _interviewSessionController.DeleteInterviewSessions();
 
-            A.CallTo(() => _interviewSessionRepository.DeleteInterviewSessionsAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewSessionService.DeleteInterviewSessionsAsync()).MustHaveHappenedOnceExactly();
         }
 
         #endregion

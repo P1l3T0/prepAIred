@@ -9,13 +9,13 @@ namespace prepAIred.Tests.Controllers
 {
     public class UserControllerTest
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
         private readonly UserController _userController;
 
         public UserControllerTest()
         {
-            _userRepository = A.Fake<IUserRepository>();
-            _userController = new UserController(_userRepository);
+            _userService = A.Fake<IUserService>();
+            _userController = new UserController(_userService);
         }
 
         #region GetCurrentUser Tests
@@ -67,7 +67,7 @@ namespace prepAIred.Tests.Controllers
                 HttpContext = httpContext
             };
 
-            A.CallTo(() => _userRepository.GetCurrentUserAsync()).Returns(currentUser);
+            A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(currentUser);
 
             IActionResult result = await _userController.GetCurrentUser();
 
@@ -92,7 +92,7 @@ namespace prepAIred.Tests.Controllers
                 HttpContext = httpContext
             };
 
-            A.CallTo(() => _userRepository.GetCurrentUserAsync()).Returns(currentUser);
+            A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(currentUser);
 
             IActionResult result = await _userController.GetCurrentUser();
 
@@ -116,11 +116,11 @@ namespace prepAIred.Tests.Controllers
                 HttpContext = httpContext
             };
 
-            A.CallTo(() => _userRepository.GetCurrentUserAsync()).Returns(currentUser);
+            A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(currentUser);
 
             await _userController.GetCurrentUser();
 
-            A.CallTo(() => _userRepository.GetCurrentUserAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _userService.GetCurrentUserAsync()).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace prepAIred.Tests.Controllers
 
             await _userController.GetCurrentUser();
 
-            A.CallTo(() => _userRepository.GetCurrentUserAsync()).MustNotHaveHappened();
+            A.CallTo(() => _userService.GetCurrentUserAsync()).MustNotHaveHappened();
         }
 
         #endregion
@@ -150,7 +150,7 @@ namespace prepAIred.Tests.Controllers
                 Password = "NewP@ssw0rd"
             };
 
-            A.CallTo(() => _userRepository.UpdateCurrentUserAsync(userCredentialsDto)).Returns(Task.CompletedTask);
+            A.CallTo(() => _userService.UpdateCurrentUserAsync(userCredentialsDto)).Returns(Task.CompletedTask);
 
             IActionResult result = await _userController.UpdateCurrentUser(userCredentialsDto);
 
@@ -167,7 +167,7 @@ namespace prepAIred.Tests.Controllers
                 Password = "NewP@ssw0rd"
             };
 
-            A.CallTo(() => _userRepository.UpdateCurrentUserAsync(userCredentialsDto)).Returns(Task.CompletedTask);
+            A.CallTo(() => _userService.UpdateCurrentUserAsync(userCredentialsDto)).Returns(Task.CompletedTask);
 
             IActionResult result = await _userController.UpdateCurrentUser(userCredentialsDto);
 
@@ -185,11 +185,11 @@ namespace prepAIred.Tests.Controllers
                 Password = "NewP@ssw0rd"
             };
 
-            A.CallTo(() => _userRepository.UpdateCurrentUserAsync(userCredentialsDto)).Returns(Task.CompletedTask);
+            A.CallTo(() => _userService.UpdateCurrentUserAsync(userCredentialsDto)).Returns(Task.CompletedTask);
 
             await _userController.UpdateCurrentUser(userCredentialsDto);
 
-            A.CallTo(() => _userRepository.UpdateCurrentUserAsync(userCredentialsDto)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _userService.UpdateCurrentUserAsync(userCredentialsDto)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
@@ -202,11 +202,11 @@ namespace prepAIred.Tests.Controllers
                 Password = "NewP@ssw0rd"
             };
 
-            A.CallTo(() => _userRepository.UpdateCurrentUserAsync(userCredentialsDto)).Returns(Task.CompletedTask);
+            A.CallTo(() => _userService.UpdateCurrentUserAsync(userCredentialsDto)).Returns(Task.CompletedTask);
 
             await _userController.UpdateCurrentUser(userCredentialsDto);
 
-            A.CallTo(() => _userRepository.UpdateCurrentUserAsync(A<UserCredentialsDTO>.That.Matches(dto => 
+            A.CallTo(() => _userService.UpdateCurrentUserAsync(A<UserCredentialsDTO>.That.Matches(dto => 
                 dto.Username == userCredentialsDto.Username &&
                 dto.Email == userCredentialsDto.Email &&
                 dto.Password == userCredentialsDto.Password
@@ -220,7 +220,7 @@ namespace prepAIred.Tests.Controllers
         [Fact]
         public async Task UserController_DeleteCurrentUser_ReturnsOk()
         {
-            A.CallTo(() => _userRepository.DeleteCurrentUserAsync()).Returns(Task.CompletedTask);
+            A.CallTo(() => _userService.DeleteCurrentUserAsync()).Returns(Task.CompletedTask);
 
             IActionResult result = await _userController.DeleteCurrentUser();
 
@@ -230,7 +230,7 @@ namespace prepAIred.Tests.Controllers
         [Fact]
         public async Task UserController_DeleteCurrentUser_ReturnsSuccessMessage()
         {
-            A.CallTo(() => _userRepository.DeleteCurrentUserAsync()).Returns(Task.CompletedTask);
+            A.CallTo(() => _userService.DeleteCurrentUserAsync()).Returns(Task.CompletedTask);
 
             IActionResult result = await _userController.DeleteCurrentUser();
 
@@ -241,11 +241,11 @@ namespace prepAIred.Tests.Controllers
         [Fact]
         public async Task UserController_DeleteCurrentUser_CallsRepositoryMethod()
         {
-            A.CallTo(() => _userRepository.DeleteCurrentUserAsync()).Returns(Task.CompletedTask);
+            A.CallTo(() => _userService.DeleteCurrentUserAsync()).Returns(Task.CompletedTask);
 
             await _userController.DeleteCurrentUser();
 
-            A.CallTo(() => _userRepository.DeleteCurrentUserAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _userService.DeleteCurrentUserAsync()).MustHaveHappenedOnceExactly();
         }
 
         #endregion

@@ -9,16 +9,16 @@ namespace prepAIred.Tests.Controllers
 {
     public class AuthControllerTest
     {
-        private readonly IAuthRepository _authRepository;
-        private readonly IRefreshTokenRepository _refreshTokenRepository;
+        private readonly IAuthService _authService;
+        private readonly IRefreshTokenService _refreshTokenService;
         private readonly AuthController _authController;
 
         public AuthControllerTest()
         {
-            _authRepository = A.Fake<IAuthRepository>();
-            _refreshTokenRepository = A.Fake<IRefreshTokenRepository>();
+            _authService = A.Fake<IAuthService>();
+            _refreshTokenService = A.Fake<IRefreshTokenService>();
 
-            _authController = new AuthController(_authRepository, _refreshTokenRepository);
+            _authController = new AuthController(_authService, _refreshTokenService);
         }
 
         [Fact]
@@ -31,12 +31,12 @@ namespace prepAIred.Tests.Controllers
                 Password = "StrongP@ssw0rd"
             };
 
-            A.CallTo(() => _authRepository.RegisterAsync(registerRequest)).Returns(Task.CompletedTask);
+            A.CallTo(() => _authService.RegisterAsync(registerRequest)).Returns(Task.CompletedTask);
 
             IActionResult result = await _authController.Register(registerRequest);
 
             Assert.IsType<OkObjectResult>(result);
-            A.CallTo(() => _authRepository.RegisterAsync(registerRequest)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _authService.RegisterAsync(registerRequest)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace prepAIred.Tests.Controllers
                 Password = "weakpassword"
             };
 
-            A.CallTo(() => _authRepository.RegisterAsync(registerRequest))
+            A.CallTo(() => _authService.RegisterAsync(registerRequest))
                 .ThrowsAsync(new InvalidCredentialsException("Password does not meet complexity requirements"));
 
             await Assert.ThrowsAsync<InvalidCredentialsException>(() => _authController.Register(registerRequest));
@@ -64,30 +64,30 @@ namespace prepAIred.Tests.Controllers
                 Password = "StrongP@ssw0rd"
             };
 
-            A.CallTo(() => _authRepository.LoginAsync(loginRequest)).Returns(Task.CompletedTask);
+            A.CallTo(() => _authService.LoginAsync(loginRequest)).Returns(Task.CompletedTask);
 
             IActionResult result = await _authController.Login(loginRequest);
 
             Assert.IsType<OkObjectResult>(result);
-            A.CallTo(() => _authRepository.LoginAsync(loginRequest)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _authService.LoginAsync(loginRequest)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
         public async Task AuthController_Logout_ReturnsOk()
         {
-            A.CallTo(() => _authRepository.LogoutAsync()).Returns(Task.CompletedTask);
+            A.CallTo(() => _authService.LogoutAsync()).Returns(Task.CompletedTask);
 
             IActionResult result = await _authController.Logout();
 
             Assert.IsType<OkObjectResult>(result);
-            A.CallTo(() => _authRepository.LogoutAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _authService.LogoutAsync()).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
         public async Task AuthController_GenerateNewRefreshToken_ReturnsOk()
         {
             RefreshTokenResponseDTO tokenResponse = new RefreshTokenResponseDTO();
-            A.CallTo(() => _refreshTokenRepository.GenerateNewRefreshTokenAsync()).Returns(tokenResponse);
+            A.CallTo(() => _refreshTokenService.GenerateNewRefreshTokenAsync()).Returns(tokenResponse);
 
             IActionResult result = await _authController.GenerateNewRefreshToken();
 

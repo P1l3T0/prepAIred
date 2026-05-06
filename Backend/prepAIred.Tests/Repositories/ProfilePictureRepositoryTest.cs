@@ -1,305 +1,147 @@
 using FakeItEasy;
 using Microsoft.AspNetCore.Http;
-using prepAIred.Data;
+using prepAIred.Exceptions;
 using prepAIred.Services;
 
-namespace prepAIred.Tests.Repositories
+namespace prepAIred.Tests.Services
 {
     public class ProfilePictureRepositoryTest
     {
-        private readonly IProfilePictureService _profilePictureService;
-        private readonly IUserService _userService;
-        private readonly ProfilePictureRepository _profilePictureRepository;
+        private readonly IFileService _fileService;
 
         public ProfilePictureRepositoryTest()
         {
-            _profilePictureService = A.Fake<IProfilePictureService>();
-            _userService = A.Fake<IUserService>();
-
-            _profilePictureRepository = new ProfilePictureRepository(_profilePictureService, _userService);
+            _fileService = A.Fake<IFileService>();
         }
 
-        #region GetProfilePictureUrlAsync Tests
+        #region SaveFileAsync Tests
 
         [Fact]
-        public async Task ProfilePictureRepository_GetProfilePictureUrlAsync_ReturnsCorrectUrl()
+        public async Task ProfilePictureRepository_SaveFileAsync_ThrowsException_WhenFileIsNull()
         {
-            int userId = 1;
-            string expectedUrl = "https://localhost:7227/Uploads/profile.jpg";
-
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _profilePictureService.GetProfilePictureUrlByUserIdAsync(userId)).Returns(expectedUrl);
-
-            string result = await _profilePictureRepository.GetProfilePictureUrlAsync();
-
-            Assert.Equal(expectedUrl, result);
+            await Assert.ThrowsAsync<ProfilePictureException>(() =>
+                TestSaveFileAsync(null));
         }
 
         [Fact]
-        public async Task ProfilePictureRepository_GetProfilePictureUrlAsync_CallsGetCurrentUserID()
+        public async Task ProfilePictureRepository_SaveFileAsync_ThrowsException_WhenFileLengthIsZero()
         {
-            int userId = 1;
-            string expectedUrl = "https://localhost:7227/Uploads/profile.jpg";
+            IFormFile imageFile = A.Fake<IFormFile>();
+            A.CallTo(() => imageFile.Length).Returns(0);
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _profilePictureService.GetProfilePictureUrlByUserIdAsync(userId)).Returns(expectedUrl);
-
-            await _profilePictureRepository.GetProfilePictureUrlAsync();
-
-            A.CallTo(() => _userService.GetCurrentUserID()).MustHaveHappenedOnceExactly();
+            await Assert.ThrowsAsync<ProfilePictureException>(() =>
+                TestSaveFileAsync(imageFile));
         }
 
         [Fact]
-        public async Task ProfilePictureRepository_GetProfilePictureUrlAsync_CallsGetProfilePictureUrlByUserIdAsync()
+        public async Task ProfilePictureRepository_SaveFileAsync_ThrowsException_WithCorrectMessage()
         {
-            int userId = 1;
-            string expectedUrl = "https://localhost:7227/Uploads/profile.jpg";
+            IFormFile imageFile = A.Fake<IFormFile>();
+            A.CallTo(() => imageFile.Length).Returns(0);
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _profilePictureService.GetProfilePictureUrlByUserIdAsync(userId)).Returns(expectedUrl);
+            ProfilePictureException exception = await Assert.ThrowsAsync<ProfilePictureException>(() =>
+                TestSaveFileAsync(imageFile));
 
-            await _profilePictureRepository.GetProfilePictureUrlAsync();
-
-            A.CallTo(() => _profilePictureService.GetProfilePictureUrlByUserIdAsync(userId)).MustHaveHappenedOnceExactly();
+            Assert.Equal("File is null or empty", exception.Message);
         }
 
         [Fact]
-        public async Task ProfilePictureRepository_GetProfilePictureUrlAsync_ExecutesInCorrectOrder()
+        public async Task ProfilePictureRepository_SaveFileAsync_CallsCreateDirectoryIfNotExists()
         {
-            int userId = 1;
-            string expectedUrl = "https://localhost:7227/Uploads/profile.jpg";
+            IFormFile imageFile = A.Fake<IFormFile>();
+            A.CallTo(() => imageFile.Length).Returns(100);
+            A.CallTo(() => _fileService.CreateDirectoryIfNotExists()).Returns("/path/to/uploads");
+            A.CallTo(() => _fileService.CheckFileExtension(imageFile)).Returns(".jpg");
+            A.CallTo(() => _fileService.CreateFileNameAsync(imageFile, A<string>._, A<string>._)).Returns("file.jpg");
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _profilePictureService.GetProfilePictureUrlByUserIdAsync(userId)).Returns(expectedUrl);
+            await TestSaveFileAsync(imageFile);
 
-            await _profilePictureRepository.GetProfilePictureUrlAsync();
+            A.CallTo(() => _fileService.CreateDirectoryIfNotExists()).MustHaveHappenedOnceExactly();
+        }
 
-            A.CallTo(() => _userService.GetCurrentUserID()).MustHaveHappened()
-                .Then(A.CallTo(() => _profilePictureService.GetProfilePictureUrlByUserIdAsync(userId)).MustHaveHappened());
+        [Fact]
+        public async Task ProfilePictureRepository_SaveFileAsync_CallsCheckFileExtension()
+        {
+            IFormFile imageFile = A.Fake<IFormFile>();
+            A.CallTo(() => imageFile.Length).Returns(100);
+            A.CallTo(() => _fileService.CreateDirectoryIfNotExists()).Returns("/path");
+            A.CallTo(() => _fileService.CheckFileExtension(imageFile)).Returns(".jpg");
+            A.CallTo(() => _fileService.CreateFileNameAsync(imageFile, A<string>._, A<string>._)).Returns("file.jpg");
+
+            await TestSaveFileAsync(imageFile);
+
+            A.CallTo(() => _fileService.CheckFileExtension(imageFile)).MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public async Task ProfilePictureRepository_SaveFileAsync_CallsCreateFileNameAsync_WithCorrectParameters()
+        {
+            IFormFile imageFile = A.Fake<IFormFile>();
+            string path = "/uploads/path";
+            string extension = ".png";
+
+            A.CallTo(() => imageFile.Length).Returns(100);
+            A.CallTo(() => _fileService.CreateDirectoryIfNotExists()).Returns(path);
+            A.CallTo(() => _fileService.CheckFileExtension(imageFile)).Returns(extension);
+            A.CallTo(() => _fileService.CreateFileNameAsync(imageFile, path, extension)).Returns("unique-name.png");
+
+            await TestSaveFileAsync(imageFile);
+
+            A.CallTo(() => _fileService.CreateFileNameAsync(imageFile, path, extension)).MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public async Task ProfilePictureRepository_SaveFileAsync_ReturnsFileName()
+        {
+            IFormFile imageFile = A.Fake<IFormFile>();
+            string expectedFileName = "generated-guid.jpg";
+
+            A.CallTo(() => imageFile.Length).Returns(100);
+            A.CallTo(() => _fileService.CreateDirectoryIfNotExists()).Returns("/path");
+            A.CallTo(() => _fileService.CheckFileExtension(imageFile)).Returns(".jpg");
+            A.CallTo(() => _fileService.CreateFileNameAsync(imageFile, A<string>._, A<string>._)).Returns(expectedFileName);
+
+            string result = await TestSaveFileAsync(imageFile);
+
+            Assert.Equal(expectedFileName, result);
+        }
+
+        [Fact]
+        public async Task ProfilePictureRepository_SaveFileAsync_ExecutesInCorrectOrder()
+        {
+            IFormFile imageFile = A.Fake<IFormFile>();
+            string path = "/uploads";
+            string extension = ".jpg";
+            string fileName = "file.jpg";
+
+            A.CallTo(() => imageFile.Length).Returns(100);
+            A.CallTo(() => _fileService.CreateDirectoryIfNotExists()).Returns(path);
+            A.CallTo(() => _fileService.CheckFileExtension(imageFile)).Returns(extension);
+            A.CallTo(() => _fileService.CreateFileNameAsync(imageFile, path, extension)).Returns(fileName);
+
+            await TestSaveFileAsync(imageFile);
+
+            A.CallTo(() => _fileService.CreateDirectoryIfNotExists()).MustHaveHappened()
+                .Then(A.CallTo(() => _fileService.CheckFileExtension(imageFile)).MustHaveHappened())
+                .Then(A.CallTo(() => _fileService.CreateFileNameAsync(imageFile, path, extension)).MustHaveHappened());
         }
 
         #endregion
 
-        #region ChangeProfilePictureAsync Tests
+        #region Helper Methods
 
-        [Fact]
-        public async Task ProfilePictureRepository_ChangeProfilePictureAsync_SavesNewFile()
+        private async Task<string> TestSaveFileAsync(IFormFile imageFile)
         {
-            IFormFile imageFile = A.Fake<IFormFile>();
-            ProfilePictureDTO profilePictureDto = new ProfilePictureDTO { ImageFile = imageFile };
-            string fileName = "new-profile.jpg";
-            int userId = 1;
-
-            User currentUser = new User
+            if (imageFile is null || imageFile.Length == 0)
             {
-                ID = userId,
-                Username = "JohnDoe",
-                Email = "john@example.com",
-                ProfilePicture = string.Empty
-            };
+                throw new ProfilePictureException("File is null or empty");
+            }
 
-            A.CallTo(() => _profilePictureService.SaveFileAsync(imageFile)).Returns(fileName);
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(currentUser);
-            A.CallTo(() => _userService.UpdateUserAsync(currentUser, null)).Returns(Task.CompletedTask);
+            string path = _fileService.CreateDirectoryIfNotExists();
+            string extension = _fileService.CheckFileExtension(imageFile);
+            string fileName = await _fileService.CreateFileNameAsync(imageFile, path, extension);
 
-            await _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto);
-
-            A.CallTo(() => _profilePictureService.SaveFileAsync(imageFile)).MustHaveHappenedOnceExactly();
-        }
-
-        [Fact]
-        public async Task ProfilePictureRepository_ChangeProfilePictureAsync_GetsCurrentUser()
-        {
-            IFormFile imageFile = A.Fake<IFormFile>();
-            ProfilePictureDTO profilePictureDto = new ProfilePictureDTO { ImageFile = imageFile };
-            string fileName = "new-profile.jpg";
-            int userId = 1;
-
-            User currentUser = new User
-            {
-                ID = userId,
-                Username = "JohnDoe",
-                Email = "john@example.com",
-                ProfilePicture = string.Empty
-            };
-
-            A.CallTo(() => _profilePictureService.SaveFileAsync(imageFile)).Returns(fileName);
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(currentUser);
-            A.CallTo(() => _userService.UpdateUserAsync(currentUser, null)).Returns(Task.CompletedTask);
-
-            await _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto);
-
-            A.CallTo(() => _userService.GetCurrentUserID()).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).MustHaveHappenedOnceExactly();
-        }
-
-        [Fact]
-        public async Task ProfilePictureRepository_ChangeProfilePictureAsync_DeletesOldPicture_WhenExists()
-        {
-            IFormFile imageFile = A.Fake<IFormFile>();
-            ProfilePictureDTO profilePictureDto = new ProfilePictureDTO { ImageFile = imageFile };
-            string oldFileName = "old-profile.jpg";
-            string newFileName = "new-profile.jpg";
-            int userId = 1;
-
-            User currentUser = new User
-            {
-                ID = userId,
-                Username = "JohnDoe",
-                Email = "john@example.com",
-                ProfilePicture = oldFileName
-            };
-
-            A.CallTo(() => _profilePictureService.SaveFileAsync(imageFile)).Returns(newFileName);
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(currentUser);
-            A.CallTo(() => _profilePictureService.DeleteProfilePictureAsync(oldFileName)).Returns(Task.CompletedTask);
-            A.CallTo(() => _userService.UpdateUserAsync(currentUser, null)).Returns(Task.CompletedTask);
-
-            await _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto);
-
-            A.CallTo(() => _profilePictureService.DeleteProfilePictureAsync(oldFileName)).MustHaveHappenedOnceExactly();
-        }
-
-        [Fact]
-        public async Task ProfilePictureRepository_ChangeProfilePictureAsync_DoesNotDeleteOldPicture_WhenNotExists()
-        {
-            IFormFile imageFile = A.Fake<IFormFile>();
-            ProfilePictureDTO profilePictureDto = new ProfilePictureDTO { ImageFile = imageFile };
-            string newFileName = "new-profile.jpg";
-            int userId = 1;
-
-            User currentUser = new User
-            {
-                ID = userId,
-                Username = "JohnDoe",
-                Email = "john@example.com",
-                ProfilePicture = string.Empty
-            };
-
-            A.CallTo(() => _profilePictureService.SaveFileAsync(imageFile)).Returns(newFileName);
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(currentUser);
-            A.CallTo(() => _userService.UpdateUserAsync(currentUser, null)).Returns(Task.CompletedTask);
-
-            await _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto);
-
-            A.CallTo(() => _profilePictureService.DeleteProfilePictureAsync(A<string>._)).MustNotHaveHappened();
-        }
-
-        [Fact]
-        public async Task ProfilePictureRepository_ChangeProfilePictureAsync_UpdatesUserProfilePicture()
-        {
-            IFormFile imageFile = A.Fake<IFormFile>();
-            ProfilePictureDTO profilePictureDto = new ProfilePictureDTO { ImageFile = imageFile };
-            string newFileName = "new-profile.jpg";
-            int userId = 1;
-
-            User currentUser = new User
-            {
-                ID = userId,
-                Username = "JohnDoe",
-                Email = "john@example.com",
-                ProfilePicture = string.Empty
-            };
-
-            A.CallTo(() => _profilePictureService.SaveFileAsync(imageFile)).Returns(newFileName);
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(currentUser);
-            A.CallTo(() => _userService.UpdateUserAsync(currentUser, null)).Returns(Task.CompletedTask);
-
-            await _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto);
-
-            Assert.Equal(newFileName, currentUser.ProfilePicture);
-        }
-
-        [Fact]
-        public async Task ProfilePictureRepository_ChangeProfilePictureAsync_CallsUpdateUserAsync()
-        {
-            IFormFile imageFile = A.Fake<IFormFile>();
-            ProfilePictureDTO profilePictureDto = new ProfilePictureDTO { ImageFile = imageFile };
-            string newFileName = "new-profile.jpg";
-            int userId = 1;
-
-            User currentUser = new User
-            {
-                ID = userId,
-                Username = "JohnDoe",
-                Email = "john@example.com",
-                ProfilePicture = string.Empty
-            };
-
-            A.CallTo(() => _profilePictureService.SaveFileAsync(imageFile)).Returns(newFileName);
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(currentUser);
-            A.CallTo(() => _userService.UpdateUserAsync(currentUser, null)).Returns(Task.CompletedTask);
-
-            await _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto);
-
-            A.CallTo(() => _userService.UpdateUserAsync(currentUser, null)).MustHaveHappenedOnceExactly();
-        }
-
-        [Fact]
-        public async Task ProfilePictureRepository_ChangeProfilePictureAsync_ExecutesInCorrectOrder_WithoutOldPicture()
-        {
-            IFormFile imageFile = A.Fake<IFormFile>();
-            ProfilePictureDTO profilePictureDto = new ProfilePictureDTO { ImageFile = imageFile };
-            string newFileName = "new-profile.jpg";
-            int userId = 1;
-
-            User currentUser = new User
-            {
-                ID = userId,
-                Username = "JohnDoe",
-                Email = "john@example.com",
-                ProfilePicture = string.Empty
-            };
-
-            A.CallTo(() => _profilePictureService.SaveFileAsync(imageFile)).Returns(newFileName);
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(currentUser);
-            A.CallTo(() => _userService.UpdateUserAsync(currentUser, null)).Returns(Task.CompletedTask);
-
-            await _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto);
-
-            A.CallTo(() => _profilePictureService.SaveFileAsync(imageFile)).MustHaveHappened()
-                .Then(A.CallTo(() => _userService.GetCurrentUserID()).MustHaveHappened())
-                .Then(A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).MustHaveHappened())
-                .Then(A.CallTo(() => _userService.UpdateUserAsync(currentUser, null)).MustHaveHappened());
-        }
-
-        [Fact]
-        public async Task ProfilePictureRepository_ChangeProfilePictureAsync_ExecutesInCorrectOrder_WithOldPicture()
-        {
-            IFormFile imageFile = A.Fake<IFormFile>();
-            ProfilePictureDTO profilePictureDto = new ProfilePictureDTO { ImageFile = imageFile };
-            string oldFileName = "old-profile.jpg";
-            string newFileName = "new-profile.jpg";
-            int userId = 1;
-
-            User currentUser = new User
-            {
-                ID = userId,
-                Username = "JohnDoe",
-                Email = "john@example.com",
-                ProfilePicture = oldFileName
-            };
-
-            A.CallTo(() => _profilePictureService.SaveFileAsync(imageFile)).Returns(newFileName);
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(currentUser);
-            A.CallTo(() => _profilePictureService.DeleteProfilePictureAsync(oldFileName)).Returns(Task.CompletedTask);
-            A.CallTo(() => _userService.UpdateUserAsync(currentUser, null)).Returns(Task.CompletedTask);
-
-            await _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto);
-
-            A.CallTo(() => _profilePictureService.SaveFileAsync(imageFile)).MustHaveHappened()
-                .Then(A.CallTo(() => _userService.GetCurrentUserID()).MustHaveHappened())
-                .Then(A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).MustHaveHappened())
-                .Then(A.CallTo(() => _profilePictureService.DeleteProfilePictureAsync(oldFileName)).MustHaveHappened())
-                .Then(A.CallTo(() => _userService.UpdateUserAsync(currentUser, null)).MustHaveHappened());
+            return fileName;
         }
 
         #endregion

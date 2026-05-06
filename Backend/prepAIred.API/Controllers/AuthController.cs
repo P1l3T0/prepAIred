@@ -9,28 +9,28 @@ namespace prepAIred.API
     /// </summary>
     /// <remarks>
     /// This controller is responsible for handling HTTP requests related to authentication flows. It interacts 
-    /// with the <see cref="IAuthRepository"/> for authentication operations and <see cref="IRefreshTokenRepository"/> for token management.
+    /// with the <see cref="IAuthService"/> for authentication operations and <see cref="IRefreshTokenService"/> for token management.
     /// </remarks>
-    /// <param name="authRepository">Repository for handling authentication operations</param>
-    /// <param name="refreshTokenRepository">Repository for managing refresh tokens</param>
+    /// <param name="authService">Repository for handling authentication operations</param>
+    /// <param name="refreshTokenService">Repository for managing refresh tokens</param>
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController(IAuthRepository authRepository, IRefreshTokenRepository refreshTokenRepository) : Controller
+    public class AuthController(IAuthService authService, IRefreshTokenService refreshTokenService) : Controller
     {
-        private readonly IAuthRepository _authRepository = authRepository;
-        private readonly IRefreshTokenRepository _refreshTokenService = refreshTokenRepository;
+        private readonly IAuthService _authService = authService;
+        private readonly IRefreshTokenService _refreshTokenService = refreshTokenService;
 
         [HttpPost("register")]
         public async Task<ActionResult> Register([FromBody] UserCredentialsDTO userCredentialsDto)
         {
-            await _authRepository.RegisterAsync(userCredentialsDto);
+            await _authService.RegisterAsync(userCredentialsDto);
             return Ok("Register successful");
         }
 
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginDTO loginDto)
         {
-            await _authRepository.LoginAsync(loginDto);
+            await _authService.LoginAsync(loginDto);
             return Ok("Login successful");
         }
 
@@ -44,7 +44,7 @@ namespace prepAIred.API
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            await _authRepository.LogoutAsync();
+            await _authService.LogoutAsync();
             return Ok("Logged out successfully");
         }
     }

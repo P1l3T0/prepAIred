@@ -6,21 +6,21 @@ namespace prepAIred.API
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProfilePictureController(IProfilePictureRepository profilePictureRepository) : Controller
+    public class ProfilePictureController(IProfilePictureService profilePictureService) : Controller
     {
-        private readonly IProfilePictureRepository _profilePictureRepository = profilePictureRepository;
+        private readonly IProfilePictureService _profilePictureService = profilePictureService;
 
         [HttpGet("get-profile-picture-url")]
         public async Task<IActionResult> GetProfilePicture()
         {
-            string profilePictureUrl = await _profilePictureRepository.GetProfilePictureUrlAsync();
+            string profilePictureUrl = await _profilePictureService.GetProfilePictureUrlAsync();
             return Ok(profilePictureUrl);
         }
 
         [HttpPost("change-profile-picture")]
         public async Task<IActionResult> ChangeProfilePicture([FromForm] ProfilePictureDTO profilePictureDTO)
         {
-            await _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDTO);
+            await _profilePictureService.ChangeProfilePictureAsync(profilePictureDTO);
             return Ok("Profile picture changed");
         }
     }

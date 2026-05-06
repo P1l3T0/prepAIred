@@ -3,14 +3,29 @@
 namespace prepAIred.Services
 {
     /// <summary>
-    /// Repository interface for managing refresh token data operations.
+    /// Service interface for managing refresh token operations.
     /// </summary>
     public interface IRefreshTokenRepository
     {
         /// <summary>
-        /// Generates a new refresh token and its associated response.
+        /// Adds a new refresh token to the system.
         /// </summary>
-        /// <returns>A response containing the new refresh token and access token details.</returns>
-        Task<RefreshTokenResponseDTO> GenerateNewRefreshTokenAsync();
+        /// <param name="refreshToken">The refresh token to add.</param>
+        /// <returns>The added refresh token entity.</returns>
+        Task<RefreshToken> AddRefreshTokenAsync(RefreshToken refreshToken);
+
+        /// <summary>
+        /// Retrieves a refresh token by its token string.
+        /// </summary>
+        /// <param name="refreshToken">The token string to search for.</param>
+        /// <returns>The matching refresh token entity if found.</returns>
+        Task<RefreshToken> GetRefreshTokenAsync(string refreshToken);
+
+        /// <summary>
+        /// Retrieves a refresh token by user ID.
+        /// </summary>
+        /// <param name="userID">The ID of the user.</param>
+        /// <returns>The refresh token entity associated with the user if found.</returns>
+        Task<RefreshToken> GetRefreshTokenByUserIdAsync(int userID);
     }
 }

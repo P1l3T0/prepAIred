@@ -8,13 +8,13 @@ namespace prepAIred.Tests.Controllers
 {
     public class ProfilePictureControllerTest
     {
-        private readonly IProfilePictureRepository _profilePictureRepository;
+        private readonly IProfilePictureService _profilePictureService;
         private readonly ProfilePictureController _profilePictureController;
 
         public ProfilePictureControllerTest()
         {
-            _profilePictureRepository = A.Fake<IProfilePictureRepository>();
-            _profilePictureController = new ProfilePictureController(_profilePictureRepository);
+            _profilePictureService = A.Fake<IProfilePictureService>();
+            _profilePictureController = new ProfilePictureController(_profilePictureService);
         }
 
         #region GetProfilePicture Tests
@@ -24,7 +24,7 @@ namespace prepAIred.Tests.Controllers
         {
             string expectedUrl = "https://localhost:7227/Uploads/profile.jpg";
 
-            A.CallTo(() => _profilePictureRepository.GetProfilePictureUrlAsync()).Returns(expectedUrl);
+            A.CallTo(() => _profilePictureService.GetProfilePictureUrlAsync()).Returns(expectedUrl);
 
             IActionResult result = await _profilePictureController.GetProfilePicture();
 
@@ -36,7 +36,7 @@ namespace prepAIred.Tests.Controllers
         {
             string expectedUrl = "https://localhost:7227/Uploads/profile.jpg";
 
-            A.CallTo(() => _profilePictureRepository.GetProfilePictureUrlAsync()).Returns(expectedUrl);
+            A.CallTo(() => _profilePictureService.GetProfilePictureUrlAsync()).Returns(expectedUrl);
 
             IActionResult result = await _profilePictureController.GetProfilePicture();
 
@@ -49,17 +49,17 @@ namespace prepAIred.Tests.Controllers
         {
             string expectedUrl = "https://localhost:7227/Uploads/profile.jpg";
 
-            A.CallTo(() => _profilePictureRepository.GetProfilePictureUrlAsync()).Returns(expectedUrl);
+            A.CallTo(() => _profilePictureService.GetProfilePictureUrlAsync()).Returns(expectedUrl);
 
             await _profilePictureController.GetProfilePicture();
 
-            A.CallTo(() => _profilePictureRepository.GetProfilePictureUrlAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _profilePictureService.GetProfilePictureUrlAsync()).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
         public async Task ProfilePictureController_GetProfilePicture_ReturnsEmptyString_WhenNoProfilePicture()
         {
-            A.CallTo(() => _profilePictureRepository.GetProfilePictureUrlAsync()).Returns(string.Empty);
+            A.CallTo(() => _profilePictureService.GetProfilePictureUrlAsync()).Returns(string.Empty);
 
             IActionResult result = await _profilePictureController.GetProfilePicture();
 
@@ -76,7 +76,7 @@ namespace prepAIred.Tests.Controllers
         {
             ProfilePictureDTO profilePictureDto = new ProfilePictureDTO();
 
-            A.CallTo(() => _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto)).Returns(Task.CompletedTask);
+            A.CallTo(() => _profilePictureService.ChangeProfilePictureAsync(profilePictureDto)).Returns(Task.CompletedTask);
 
             IActionResult result = await _profilePictureController.ChangeProfilePicture(profilePictureDto);
 
@@ -88,7 +88,7 @@ namespace prepAIred.Tests.Controllers
         {
             ProfilePictureDTO profilePictureDto = new ProfilePictureDTO();
 
-            A.CallTo(() => _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto)).Returns(Task.CompletedTask);
+            A.CallTo(() => _profilePictureService.ChangeProfilePictureAsync(profilePictureDto)).Returns(Task.CompletedTask);
 
             IActionResult result = await _profilePictureController.ChangeProfilePicture(profilePictureDto);
 
@@ -101,11 +101,11 @@ namespace prepAIred.Tests.Controllers
         {
             ProfilePictureDTO profilePictureDto = new ProfilePictureDTO();
 
-            A.CallTo(() => _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto)).Returns(Task.CompletedTask);
+            A.CallTo(() => _profilePictureService.ChangeProfilePictureAsync(profilePictureDto)).Returns(Task.CompletedTask);
 
             await _profilePictureController.ChangeProfilePicture(profilePictureDto);
 
-            A.CallTo(() => _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _profilePictureService.ChangeProfilePictureAsync(profilePictureDto)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
@@ -113,11 +113,11 @@ namespace prepAIred.Tests.Controllers
         {
             ProfilePictureDTO profilePictureDto = new ProfilePictureDTO();
 
-            A.CallTo(() => _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDto)).Returns(Task.CompletedTask);
+            A.CallTo(() => _profilePictureService.ChangeProfilePictureAsync(profilePictureDto)).Returns(Task.CompletedTask);
 
             await _profilePictureController.ChangeProfilePicture(profilePictureDto);
 
-            A.CallTo(() => _profilePictureRepository.ChangeProfilePictureAsync(A<ProfilePictureDTO>.That.Matches(dto => dto == profilePictureDto)))
+            A.CallTo(() => _profilePictureService.ChangeProfilePictureAsync(A<ProfilePictureDTO>.That.Matches(dto => dto == profilePictureDto)))
                 .MustHaveHappenedOnceExactly();
         }
 

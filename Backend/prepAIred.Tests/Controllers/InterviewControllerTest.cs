@@ -8,13 +8,13 @@ namespace prepAIred.Tests.Controllers
 {
     public class InterviewControllerTest
     {
-        private readonly IInterviewRepository _interviewRepository;
+        private readonly IInterviewService _interviewService;
         private readonly InterviewController _interviewController;
 
         public InterviewControllerTest()
         {
-            _interviewRepository = A.Fake<IInterviewRepository>();
-            _interviewController = new InterviewController(_interviewRepository);
+            _interviewService = A.Fake<IInterviewService>();
+            _interviewController = new InterviewController(_interviewService);
         }
 
         #region GenerateHrInterview Tests
@@ -29,7 +29,7 @@ namespace prepAIred.Tests.Controllers
                 ContextScenario = new List<string> { "Team Collaboration" }
             };
 
-            A.CallTo(() => _interviewRepository.GenerateInterviewsAsync<HRInterview>(hrRequest)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewService.GenerateInterviewsAsync<HRInterview>(hrRequest)).Returns(Task.CompletedTask);
 
             IActionResult result = await _interviewController.GenerateHrInterview(hrRequest);
 
@@ -41,7 +41,7 @@ namespace prepAIred.Tests.Controllers
         {
             HrRequestDTO hrRequest = new HrRequestDTO();
 
-            A.CallTo(() => _interviewRepository.GenerateInterviewsAsync<HRInterview>(hrRequest)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewService.GenerateInterviewsAsync<HRInterview>(hrRequest)).Returns(Task.CompletedTask);
 
             IActionResult result = await _interviewController.GenerateHrInterview(hrRequest);
 
@@ -54,11 +54,11 @@ namespace prepAIred.Tests.Controllers
         {
             HrRequestDTO hrRequest = new HrRequestDTO();
 
-            A.CallTo(() => _interviewRepository.GenerateInterviewsAsync<HRInterview>(hrRequest)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewService.GenerateInterviewsAsync<HRInterview>(hrRequest)).Returns(Task.CompletedTask);
 
             await _interviewController.GenerateHrInterview(hrRequest);
 
-            A.CallTo(() => _interviewRepository.GenerateInterviewsAsync<HRInterview>(hrRequest)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewService.GenerateInterviewsAsync<HRInterview>(hrRequest)).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -70,7 +70,7 @@ namespace prepAIred.Tests.Controllers
         {
             List<HRInterviewDTO> interviews = new List<HRInterviewDTO>();
 
-            A.CallTo(() => _interviewRepository.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>()).Returns(interviews);
+            A.CallTo(() => _interviewService.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>()).Returns(interviews);
 
             IActionResult result = await _interviewController.GetLatestHrInterview();
 
@@ -86,7 +86,7 @@ namespace prepAIred.Tests.Controllers
                 new HRInterviewDTO { ID = 2, Question = "How do you handle...", SoftSkillFocus = "Teamwork" }
             };
 
-            A.CallTo(() => _interviewRepository.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>()).Returns(interviews);
+            A.CallTo(() => _interviewService.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>()).Returns(interviews);
 
             IActionResult result = await _interviewController.GetLatestHrInterview();
 
@@ -100,11 +100,11 @@ namespace prepAIred.Tests.Controllers
         {
             List<HRInterviewDTO> interviews = new List<HRInterviewDTO>();
 
-            A.CallTo(() => _interviewRepository.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>()).Returns(interviews);
+            A.CallTo(() => _interviewService.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>()).Returns(interviews);
 
             await _interviewController.GetLatestHrInterview();
 
-            A.CallTo(() => _interviewRepository.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewService.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>()).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -119,7 +119,7 @@ namespace prepAIred.Tests.Controllers
                 new EvaluateRequestDTO { Question = "Question 1", Answer = "Answer 1" }
             };
 
-            A.CallTo(() => _interviewRepository.EvaluateInterviewsAsync<HRInterview>(evaluateRequests)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewService.EvaluateInterviewsAsync<HRInterview>(evaluateRequests)).Returns(Task.CompletedTask);
 
             IActionResult result = await _interviewController.EvaluateHrInterviews(evaluateRequests);
 
@@ -131,7 +131,7 @@ namespace prepAIred.Tests.Controllers
         {
             List<EvaluateRequestDTO> evaluateRequests = new List<EvaluateRequestDTO>();
 
-            A.CallTo(() => _interviewRepository.EvaluateInterviewsAsync<HRInterview>(evaluateRequests)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewService.EvaluateInterviewsAsync<HRInterview>(evaluateRequests)).Returns(Task.CompletedTask);
 
             IActionResult result = await _interviewController.EvaluateHrInterviews(evaluateRequests);
 
@@ -144,11 +144,11 @@ namespace prepAIred.Tests.Controllers
         {
             List<EvaluateRequestDTO> evaluateRequests = new List<EvaluateRequestDTO>();
 
-            A.CallTo(() => _interviewRepository.EvaluateInterviewsAsync<HRInterview>(evaluateRequests)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewService.EvaluateInterviewsAsync<HRInterview>(evaluateRequests)).Returns(Task.CompletedTask);
 
             await _interviewController.EvaluateHrInterviews(evaluateRequests);
 
-            A.CallTo(() => _interviewRepository.EvaluateInterviewsAsync<HRInterview>(evaluateRequests)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewService.EvaluateInterviewsAsync<HRInterview>(evaluateRequests)).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -167,7 +167,7 @@ namespace prepAIred.Tests.Controllers
                 Position = "Junior Developer"
             };
 
-            A.CallTo(() => _interviewRepository.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewService.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest)).Returns(Task.CompletedTask);
 
             IActionResult result = await _interviewController.GenerateTechnicalInterviews(technicalRequest);
 
@@ -179,7 +179,7 @@ namespace prepAIred.Tests.Controllers
         {
             TechnicalRequestDTO technicalRequest = new TechnicalRequestDTO();
 
-            A.CallTo(() => _interviewRepository.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewService.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest)).Returns(Task.CompletedTask);
 
             IActionResult result = await _interviewController.GenerateTechnicalInterviews(technicalRequest);
 
@@ -192,11 +192,11 @@ namespace prepAIred.Tests.Controllers
         {
             TechnicalRequestDTO technicalRequest = new TechnicalRequestDTO();
 
-            A.CallTo(() => _interviewRepository.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewService.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest)).Returns(Task.CompletedTask);
 
             await _interviewController.GenerateTechnicalInterviews(technicalRequest);
 
-            A.CallTo(() => _interviewRepository.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewService.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest)).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -208,7 +208,7 @@ namespace prepAIred.Tests.Controllers
         {
             List<TechnicalInterviewDTO> interviews = new List<TechnicalInterviewDTO>();
 
-            A.CallTo(() => _interviewRepository.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>()).Returns(interviews);
+            A.CallTo(() => _interviewService.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>()).Returns(interviews);
 
             IActionResult result = await _interviewController.GetLatestTechnicalInterview();
 
@@ -224,7 +224,7 @@ namespace prepAIred.Tests.Controllers
                 new TechnicalInterviewDTO { ID = 2, Question = "Explain SOLID principles", ProgrammingLanguage = "C#" }
             };
 
-            A.CallTo(() => _interviewRepository.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>()).Returns(interviews);
+            A.CallTo(() => _interviewService.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>()).Returns(interviews);
 
             IActionResult result = await _interviewController.GetLatestTechnicalInterview();
 
@@ -238,11 +238,11 @@ namespace prepAIred.Tests.Controllers
         {
             List<TechnicalInterviewDTO> interviews = new List<TechnicalInterviewDTO>();
 
-            A.CallTo(() => _interviewRepository.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>()).Returns(interviews);
+            A.CallTo(() => _interviewService.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>()).Returns(interviews);
 
             await _interviewController.GetLatestTechnicalInterview();
 
-            A.CallTo(() => _interviewRepository.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewService.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>()).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -257,7 +257,7 @@ namespace prepAIred.Tests.Controllers
                 new EvaluateRequestDTO { Question = "What is OOP?", Answer = "Object-Oriented Programming" }
             };
 
-            A.CallTo(() => _interviewRepository.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewService.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests)).Returns(Task.CompletedTask);
 
             IActionResult result = await _interviewController.EvaluateTechnicalInterviews(evaluateRequests);
 
@@ -269,7 +269,7 @@ namespace prepAIred.Tests.Controllers
         {
             List<EvaluateRequestDTO> evaluateRequests = new List<EvaluateRequestDTO>();
 
-            A.CallTo(() => _interviewRepository.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewService.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests)).Returns(Task.CompletedTask);
 
             IActionResult result = await _interviewController.EvaluateTechnicalInterviews(evaluateRequests);
 
@@ -282,11 +282,11 @@ namespace prepAIred.Tests.Controllers
         {
             List<EvaluateRequestDTO> evaluateRequests = new List<EvaluateRequestDTO>();
 
-            A.CallTo(() => _interviewRepository.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewService.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests)).Returns(Task.CompletedTask);
 
             await _interviewController.EvaluateTechnicalInterviews(evaluateRequests);
 
-            A.CallTo(() => _interviewRepository.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewService.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests)).MustHaveHappenedOnceExactly();
         }
 
         #endregion

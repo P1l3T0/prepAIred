@@ -4,30 +4,30 @@ using prepAIred.Services;
 
 namespace prepAIred.Tests.Repositories
 {
-    public class InterviewRepositoryTest
+    public class InterviewServiceTest
     {
         private readonly IAIService _aiService;
-        private readonly IUserService _userService;
-        private readonly IInterviewService _interviewService;
-        private readonly IInterviewSessionService _interviewSessionService;
+        private readonly IUserRepository _userRepository;
+        private readonly IInterviewRepository _interviewRepository;
+        private readonly IInterviewSessionRepository _interviewSessionRepository;
         private readonly IPromptService _promptService;
         private readonly ISerializationService _serializationService;
-        private readonly InterviewRepository _interviewRepository;
+        private readonly InterviewService _interviewService;
 
-        public InterviewRepositoryTest()
+        public InterviewServiceTest()
         {
             _aiService = A.Fake<IAIService>();
-            _userService = A.Fake<IUserService>();
-            _interviewService = A.Fake<IInterviewService>();
-            _interviewSessionService = A.Fake<IInterviewSessionService>();
+            _userRepository = A.Fake<IUserRepository>();
+            _interviewRepository = A.Fake<IInterviewRepository>();
+            _interviewSessionRepository = A.Fake<IInterviewSessionRepository>();
             _promptService = A.Fake<IPromptService>();
             _serializationService = A.Fake<ISerializationService>();
 
-            _interviewRepository = new InterviewRepository(
+            _interviewService = new InterviewService(
                 _aiService,
-                _userService,
-                _interviewService,
-                _interviewSessionService,
+                _userRepository,
+                _interviewRepository,
+                _interviewSessionRepository,
                 _promptService,
                 _serializationService
             );
@@ -36,7 +36,7 @@ namespace prepAIred.Tests.Repositories
         #region GenerateInterviewsAsync - HR Tests
 
         [Fact]
-        public async Task InterviewRepository_GenerateInterviewsAsync_CreatesHrInterview()
+        public async Task InterviewService_GenerateInterviewsAsync_CreatesHrInterview()
         {
             HrRequestDTO hrRequest = new HrRequestDTO
             {
@@ -50,37 +50,37 @@ namespace prepAIred.Tests.Repositories
             string prompt = "HR interview prompt";
             List<Interview> interviews = new List<Interview> { new HRInterview() };
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(user);
+            A.CallTo(() => _userRepository.GetCurrentUserID()).Returns(userId);
+            A.CallTo(() => _userRepository.GetCurrentUserEntityByIdAsync(userId)).Returns(user);
             A.CallTo(() => _promptService.CreateHrPrompt(hrRequest, userId)).Returns(prompt);
             A.CallTo(() => _aiService.AskAiAgentAsync<HRInterview>(AIAgent.ChatGPT, prompt)).Returns(interviews);
-            A.CallTo(() => _interviewSessionService.CreateInterviewSessionAsync(A<InterviewSession>._)).Returns(Task.CompletedTask);
-            A.CallTo(() => _interviewService.CreateInterviewsAsync(interviews, user, A<InterviewSession>._)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewSessionRepository.CreateInterviewSessionAsync(A<InterviewSession>._)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewRepository.CreateInterviewsAsync(interviews, user, A<InterviewSession>._)).Returns(Task.CompletedTask);
 
-            await _interviewRepository.GenerateInterviewsAsync<HRInterview>(hrRequest);
+            await _interviewService.GenerateInterviewsAsync<HRInterview>(hrRequest);
 
             A.CallTo(() => _promptService.CreateHrPrompt(hrRequest, userId)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _aiService.AskAiAgentAsync<HRInterview>(AIAgent.ChatGPT, prompt)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
-        public async Task InterviewRepository_GenerateInterviewsAsync_CreatesInterviewSession_ForHrInterview()
+        public async Task InterviewService_GenerateInterviewsAsync_CreatesInterviewSession_ForHrInterview()
         {
             HrRequestDTO hrRequest = new HrRequestDTO { AIAgent = "ChatGPT" };
             int userId = 1;
             User user = new User { ID = userId };
             List<Interview> interviews = new List<Interview>();
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(user);
+            A.CallTo(() => _userRepository.GetCurrentUserID()).Returns(userId);
+            A.CallTo(() => _userRepository.GetCurrentUserEntityByIdAsync(userId)).Returns(user);
             A.CallTo(() => _promptService.CreateHrPrompt(hrRequest, userId)).Returns("prompt");
             A.CallTo(() => _aiService.AskAiAgentAsync<HRInterview>(A<AIAgent>._, A<string>._)).Returns(interviews);
-            A.CallTo(() => _interviewSessionService.CreateInterviewSessionAsync(A<InterviewSession>._)).Returns(Task.CompletedTask);
-            A.CallTo(() => _interviewService.CreateInterviewsAsync(A<List<Interview>>._, A<User>._, A<InterviewSession>._)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewSessionRepository.CreateInterviewSessionAsync(A<InterviewSession>._)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewRepository.CreateInterviewsAsync(A<List<Interview>>._, A<User>._, A<InterviewSession>._)).Returns(Task.CompletedTask);
 
-            await _interviewRepository.GenerateInterviewsAsync<HRInterview>(hrRequest);
+            await _interviewService.GenerateInterviewsAsync<HRInterview>(hrRequest);
 
-            A.CallTo(() => _interviewSessionService.CreateInterviewSessionAsync(A<InterviewSession>.That.Matches(s =>
+            A.CallTo(() => _interviewSessionRepository.CreateInterviewSessionAsync(A<InterviewSession>.That.Matches(s =>
                 s.UserID == userId &&
                 s.Status == InterviewSessionStatus.Ongoing &&
                 s.AIAgent == AIAgent.ChatGPT
@@ -88,23 +88,23 @@ namespace prepAIred.Tests.Repositories
         }
 
         [Fact]
-        public async Task InterviewRepository_GenerateInterviewsAsync_CallsCreateInterviews_ForHrInterview()
+        public async Task InterviewService_GenerateInterviewsAsync_CallsCreateInterviews_ForHrInterview()
         {
             HrRequestDTO hrRequest = new HrRequestDTO { AIAgent = "Gemini" };
             int userId = 1;
             User user = new User { ID = userId };
             List<Interview> interviews = new List<Interview> { new HRInterview() };
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(user);
+            A.CallTo(() => _userRepository.GetCurrentUserID()).Returns(userId);
+            A.CallTo(() => _userRepository.GetCurrentUserEntityByIdAsync(userId)).Returns(user);
             A.CallTo(() => _promptService.CreateHrPrompt(hrRequest, userId)).Returns("prompt");
             A.CallTo(() => _aiService.AskAiAgentAsync<HRInterview>(A<AIAgent>._, A<string>._)).Returns(interviews);
-            A.CallTo(() => _interviewSessionService.CreateInterviewSessionAsync(A<InterviewSession>._)).Returns(Task.CompletedTask);
-            A.CallTo(() => _interviewService.CreateInterviewsAsync(interviews, user, A<InterviewSession>._)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewSessionRepository.CreateInterviewSessionAsync(A<InterviewSession>._)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewRepository.CreateInterviewsAsync(interviews, user, A<InterviewSession>._)).Returns(Task.CompletedTask);
 
-            await _interviewRepository.GenerateInterviewsAsync<HRInterview>(hrRequest);
+            await _interviewService.GenerateInterviewsAsync<HRInterview>(hrRequest);
 
-            A.CallTo(() => _interviewService.CreateInterviewsAsync(interviews, user, A<InterviewSession>._)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewRepository.CreateInterviewsAsync(interviews, user, A<InterviewSession>._)).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -112,7 +112,7 @@ namespace prepAIred.Tests.Repositories
         #region GenerateInterviewsAsync - Technical Tests
 
         [Fact]
-        public async Task InterviewRepository_GenerateInterviewsAsync_CreatesTechnicalInterview()
+        public async Task InterviewService_GenerateInterviewsAsync_CreatesTechnicalInterview()
         {
             TechnicalRequestDTO techRequest = new TechnicalRequestDTO
             {
@@ -128,22 +128,22 @@ namespace prepAIred.Tests.Repositories
             List<Interview> interviews = new List<Interview> { new TechnicalInterview() };
             InterviewSession existingSession = new InterviewSession { ID = 5, UserID = userId };
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(user);
+            A.CallTo(() => _userRepository.GetCurrentUserID()).Returns(userId);
+            A.CallTo(() => _userRepository.GetCurrentUserEntityByIdAsync(userId)).Returns(user);
             A.CallTo(() => _promptService.CreateTechnicalPrompt(techRequest, userId)).Returns(prompt);
             A.CallTo(() => _aiService.AskAiAgentAsync<TechnicalInterview>(AIAgent.Claude, prompt)).Returns(interviews);
-            A.CallTo(() => _interviewSessionService.GetAdjacentInterviewSessionAsync(userId)).Returns(existingSession);
-            A.CallTo(() => _interviewSessionService.UpdateInterviewSessionAsync(existingSession)).Returns(Task.CompletedTask);
-            A.CallTo(() => _interviewService.CreateInterviewsAsync(interviews, user, existingSession)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewSessionRepository.GetAdjacentInterviewSessionAsync(userId)).Returns(existingSession);
+            A.CallTo(() => _interviewSessionRepository.UpdateInterviewSessionAsync(existingSession)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewRepository.CreateInterviewsAsync(interviews, user, existingSession)).Returns(Task.CompletedTask);
 
-            await _interviewRepository.GenerateInterviewsAsync<TechnicalInterview>(techRequest);
+            await _interviewService.GenerateInterviewsAsync<TechnicalInterview>(techRequest);
 
             A.CallTo(() => _promptService.CreateTechnicalPrompt(techRequest, userId)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _aiService.AskAiAgentAsync<TechnicalInterview>(AIAgent.Claude, prompt)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
-        public async Task InterviewRepository_GenerateInterviewsAsync_UpdatesSessionSubject_ForTechnicalInterview()
+        public async Task InterviewService_GenerateInterviewsAsync_UpdatesSessionSubject_ForTechnicalInterview()
         {
             TechnicalRequestDTO techRequest = new TechnicalRequestDTO
             {
@@ -156,22 +156,22 @@ namespace prepAIred.Tests.Repositories
             InterviewSession existingSession = new InterviewSession { ID = 5, UserID = userId, Subject = "" };
             List<Interview> interviews = new List<Interview>();
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(user);
+            A.CallTo(() => _userRepository.GetCurrentUserID()).Returns(userId);
+            A.CallTo(() => _userRepository.GetCurrentUserEntityByIdAsync(userId)).Returns(user);
             A.CallTo(() => _promptService.CreateTechnicalPrompt(techRequest, userId)).Returns("prompt");
             A.CallTo(() => _aiService.AskAiAgentAsync<TechnicalInterview>(A<AIAgent>._, A<string>._)).Returns(interviews);
-            A.CallTo(() => _interviewSessionService.GetAdjacentInterviewSessionAsync(userId)).Returns(existingSession);
-            A.CallTo(() => _interviewSessionService.UpdateInterviewSessionAsync(existingSession)).Returns(Task.CompletedTask);
-            A.CallTo(() => _interviewService.CreateInterviewsAsync(A<List<Interview>>._, A<User>._, A<InterviewSession>._)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewSessionRepository.GetAdjacentInterviewSessionAsync(userId)).Returns(existingSession);
+            A.CallTo(() => _interviewSessionRepository.UpdateInterviewSessionAsync(existingSession)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewRepository.CreateInterviewsAsync(A<List<Interview>>._, A<User>._, A<InterviewSession>._)).Returns(Task.CompletedTask);
 
-            await _interviewRepository.GenerateInterviewsAsync<TechnicalInterview>(techRequest);
+            await _interviewService.GenerateInterviewsAsync<TechnicalInterview>(techRequest);
 
             Assert.Equal("Algorithms, Data Structures", existingSession.Subject);
-            A.CallTo(() => _interviewSessionService.UpdateInterviewSessionAsync(existingSession)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewSessionRepository.UpdateInterviewSessionAsync(existingSession)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
-        public async Task InterviewRepository_GenerateInterviewsAsync_GetsAdjacentSession_ForTechnicalInterview()
+        public async Task InterviewService_GenerateInterviewsAsync_GetsAdjacentSession_ForTechnicalInterview()
         {
             TechnicalRequestDTO techRequest = new TechnicalRequestDTO { AIAgent = "ChatGPT", Subject = new List<string> { "OOP" } };
             int userId = 1;
@@ -179,17 +179,17 @@ namespace prepAIred.Tests.Repositories
             InterviewSession existingSession = new InterviewSession();
             List<Interview> interviews = new List<Interview>();
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _userService.GetCurrentUserEntityByIdAsync(userId)).Returns(user);
+            A.CallTo(() => _userRepository.GetCurrentUserID()).Returns(userId);
+            A.CallTo(() => _userRepository.GetCurrentUserEntityByIdAsync(userId)).Returns(user);
             A.CallTo(() => _promptService.CreateTechnicalPrompt(techRequest, userId)).Returns("prompt");
             A.CallTo(() => _aiService.AskAiAgentAsync<TechnicalInterview>(A<AIAgent>._, A<string>._)).Returns(interviews);
-            A.CallTo(() => _interviewSessionService.GetAdjacentInterviewSessionAsync(userId)).Returns(existingSession);
-            A.CallTo(() => _interviewSessionService.UpdateInterviewSessionAsync(existingSession)).Returns(Task.CompletedTask);
-            A.CallTo(() => _interviewService.CreateInterviewsAsync(A<List<Interview>>._, A<User>._, A<InterviewSession>._)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewSessionRepository.GetAdjacentInterviewSessionAsync(userId)).Returns(existingSession);
+            A.CallTo(() => _interviewSessionRepository.UpdateInterviewSessionAsync(existingSession)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewRepository.CreateInterviewsAsync(A<List<Interview>>._, A<User>._, A<InterviewSession>._)).Returns(Task.CompletedTask);
 
-            await _interviewRepository.GenerateInterviewsAsync<TechnicalInterview>(techRequest);
+            await _interviewService.GenerateInterviewsAsync<TechnicalInterview>(techRequest);
 
-            A.CallTo(() => _interviewSessionService.GetAdjacentInterviewSessionAsync(userId)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewSessionRepository.GetAdjacentInterviewSessionAsync(userId)).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -197,7 +197,7 @@ namespace prepAIred.Tests.Repositories
         #region GetLatestInterviewsAsync Tests
 
         [Fact]
-        public async Task InterviewRepository_GetLatestInterviewsAsync_ReturnsInterviews_WhenSessionIsOngoing()
+        public async Task InterviewService_GetLatestInterviewsAsync_ReturnsInterviews_WhenSessionIsOngoing()
         {
             int userId = 1;
             int sessionId = 5;
@@ -213,50 +213,50 @@ namespace prepAIred.Tests.Repositories
                 new HRInterviewDTO { ID = 2, Question = "Question 2" }
             };
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _interviewSessionService.GetLatestInterviewSessionIDAsync(userId)).Returns(sessionId);
-            A.CallTo(() => _interviewSessionService.GetInterviewSessionByIdAsync(sessionId)).Returns(session);
-            A.CallTo(() => _interviewService.GetInterviewsBySessionIdAsync<HRInterview>(sessionId)).Returns(interviews);
-            A.CallTo(() => _interviewService.GetLatestInterviews<HRInterview, HRInterviewDTO>(interviews)).Returns(interviewDTOs);
+            A.CallTo(() => _userRepository.GetCurrentUserID()).Returns(userId);
+            A.CallTo(() => _interviewSessionRepository.GetLatestInterviewSessionIDAsync(userId)).Returns(sessionId);
+            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionByIdAsync(sessionId)).Returns(session);
+            A.CallTo(() => _interviewRepository.GetInterviewsBySessionIdAsync<HRInterview>(sessionId)).Returns(interviews);
+            A.CallTo(() => _interviewRepository.GetLatestInterviews<HRInterview, HRInterviewDTO>(interviews)).Returns(interviewDTOs);
 
-            List<HRInterviewDTO> result = await _interviewRepository.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>();
+            List<HRInterviewDTO> result = await _interviewService.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>();
 
             Assert.Equal(2, result.Count);
         }
 
         [Fact]
-        public async Task InterviewRepository_GetLatestInterviewsAsync_ReturnsEmptyList_WhenSessionIsNull()
+        public async Task InterviewService_GetLatestInterviewsAsync_ReturnsEmptyList_WhenSessionIsNull()
         {
             int userId = 1;
             int sessionId = 5;
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _interviewSessionService.GetLatestInterviewSessionIDAsync(userId)).Returns(sessionId);
-            A.CallTo(() => _interviewSessionService.GetInterviewSessionByIdAsync(sessionId)).Returns((InterviewSession)null);
+            A.CallTo(() => _userRepository.GetCurrentUserID()).Returns(userId);
+            A.CallTo(() => _interviewSessionRepository.GetLatestInterviewSessionIDAsync(userId)).Returns(sessionId);
+            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionByIdAsync(sessionId)).Returns((InterviewSession)null);
 
-            List<HRInterviewDTO> result = await _interviewRepository.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>();
+            List<HRInterviewDTO> result = await _interviewService.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>();
 
             Assert.Empty(result);
         }
 
         [Fact]
-        public async Task InterviewRepository_GetLatestInterviewsAsync_ReturnsEmptyList_WhenSessionIsNotOngoing()
+        public async Task InterviewService_GetLatestInterviewsAsync_ReturnsEmptyList_WhenSessionIsNotOngoing()
         {
             int userId = 1;
             int sessionId = 5;
             InterviewSession session = new InterviewSession { ID = sessionId, Status = InterviewSessionStatus.Passed };
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _interviewSessionService.GetLatestInterviewSessionIDAsync(userId)).Returns(sessionId);
-            A.CallTo(() => _interviewSessionService.GetInterviewSessionByIdAsync(sessionId)).Returns(session);
+            A.CallTo(() => _userRepository.GetCurrentUserID()).Returns(userId);
+            A.CallTo(() => _interviewSessionRepository.GetLatestInterviewSessionIDAsync(userId)).Returns(sessionId);
+            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionByIdAsync(sessionId)).Returns(session);
 
-            List<TechnicalInterviewDTO> result = await _interviewRepository.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>();
+            List<TechnicalInterviewDTO> result = await _interviewService.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>();
 
             Assert.Empty(result);
         }
 
         [Fact]
-        public async Task InterviewRepository_GetLatestInterviewsAsync_CallsGetLatestInterviews()
+        public async Task InterviewService_GetLatestInterviewsAsync_CallsGetLatestInterviews()
         {
             int userId = 1;
             int sessionId = 5;
@@ -264,15 +264,15 @@ namespace prepAIred.Tests.Repositories
             List<TechnicalInterview> interviews = new List<TechnicalInterview>();
             List<TechnicalInterviewDTO> interviewDTOs = new List<TechnicalInterviewDTO>();
 
-            A.CallTo(() => _userService.GetCurrentUserID()).Returns(userId);
-            A.CallTo(() => _interviewSessionService.GetLatestInterviewSessionIDAsync(userId)).Returns(sessionId);
-            A.CallTo(() => _interviewSessionService.GetInterviewSessionByIdAsync(sessionId)).Returns(session);
-            A.CallTo(() => _interviewService.GetInterviewsBySessionIdAsync<TechnicalInterview>(sessionId)).Returns(interviews);
-            A.CallTo(() => _interviewService.GetLatestInterviews<TechnicalInterview, TechnicalInterviewDTO>(interviews)).Returns(interviewDTOs);
+            A.CallTo(() => _userRepository.GetCurrentUserID()).Returns(userId);
+            A.CallTo(() => _interviewSessionRepository.GetLatestInterviewSessionIDAsync(userId)).Returns(sessionId);
+            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionByIdAsync(sessionId)).Returns(session);
+            A.CallTo(() => _interviewRepository.GetInterviewsBySessionIdAsync<TechnicalInterview>(sessionId)).Returns(interviews);
+            A.CallTo(() => _interviewRepository.GetLatestInterviews<TechnicalInterview, TechnicalInterviewDTO>(interviews)).Returns(interviewDTOs);
 
-            await _interviewRepository.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>();
+            await _interviewService.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>();
 
-            A.CallTo(() => _interviewService.GetLatestInterviews<TechnicalInterview, TechnicalInterviewDTO>(interviews)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewRepository.GetLatestInterviews<TechnicalInterview, TechnicalInterviewDTO>(interviews)).MustHaveHappenedOnceExactly();
         }
 
         #endregion
@@ -280,7 +280,7 @@ namespace prepAIred.Tests.Repositories
         #region EvaluateInterviewsAsync Tests
 
         [Fact]
-        public async Task InterviewRepository_EvaluateInterviewsAsync_CreatesHrEvaluationPrompt()
+        public async Task InterviewService_EvaluateInterviewsAsync_CreatesHrEvaluationPrompt()
         {
             List<EvaluateRequestDTO> evaluateRequests = new List<EvaluateRequestDTO>
             {
@@ -294,21 +294,21 @@ namespace prepAIred.Tests.Repositories
             string fullPrompt = "full prompt";
             List<Interview> evaluatedInterviews = new List<Interview>();
 
-            A.CallTo(() => _interviewSessionService.GetInterviewSessionFromQuestionsAsync(evaluateRequests)).Returns(session);
+            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionFromQuestionsAsync(evaluateRequests)).Returns(session);
             A.CallTo(() => _promptService.CreateHrEvaluationPrompt(evaluateRequests)).Returns(basePrompt);
-            A.CallTo(() => _interviewService.GetInterviewsBySessionIdAsync<HRInterview>(session.ID)).Returns(existingInterviews);
+            A.CallTo(() => _interviewRepository.GetInterviewsBySessionIdAsync<HRInterview>(session.ID)).Returns(existingInterviews);
             A.CallTo(() => _serializationService.SerializeCollection(existingInterviews)).Returns(serialized);
             A.CallTo(() => _promptService.GetPromptWithSerializedInterviews(basePrompt, serialized)).Returns(fullPrompt);
             A.CallTo(() => _aiService.EvaluateInterviewsAsync<HRInterview>(fullPrompt, session.AIAgent)).Returns(evaluatedInterviews);
-            A.CallTo(() => _interviewService.UpdateInterviewAsync(existingInterviews)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewRepository.UpdateInterviewAsync(existingInterviews)).Returns(Task.CompletedTask);
 
-            await _interviewRepository.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
+            await _interviewService.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
 
             A.CallTo(() => _promptService.CreateHrEvaluationPrompt(evaluateRequests)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
-        public async Task InterviewRepository_EvaluateInterviewsAsync_CreatesTechnicalEvaluationPrompt()
+        public async Task InterviewService_EvaluateInterviewsAsync_CreatesTechnicalEvaluationPrompt()
         {
             List<EvaluateRequestDTO> evaluateRequests = new List<EvaluateRequestDTO>
             {
@@ -322,42 +322,42 @@ namespace prepAIred.Tests.Repositories
             string fullPrompt = "full";
             List<Interview> evaluatedInterviews = new List<Interview>();
 
-            A.CallTo(() => _interviewSessionService.GetInterviewSessionFromQuestionsAsync(evaluateRequests)).Returns(session);
+            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionFromQuestionsAsync(evaluateRequests)).Returns(session);
             A.CallTo(() => _promptService.CreateTechnicalEvaluationPrompt(evaluateRequests)).Returns(basePrompt);
-            A.CallTo(() => _interviewService.GetInterviewsBySessionIdAsync<TechnicalInterview>(session.ID)).Returns(existingInterviews);
+            A.CallTo(() => _interviewRepository.GetInterviewsBySessionIdAsync<TechnicalInterview>(session.ID)).Returns(existingInterviews);
             A.CallTo(() => _serializationService.SerializeCollection(existingInterviews)).Returns(serialized);
             A.CallTo(() => _promptService.GetPromptWithSerializedInterviews(basePrompt, serialized)).Returns(fullPrompt);
             A.CallTo(() => _aiService.EvaluateInterviewsAsync<TechnicalInterview>(fullPrompt, session.AIAgent)).Returns(evaluatedInterviews);
-            A.CallTo(() => _interviewService.UpdateInterviewAsync(existingInterviews)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewRepository.UpdateInterviewAsync(existingInterviews)).Returns(Task.CompletedTask);
 
-            await _interviewRepository.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests);
+            await _interviewService.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests);
 
             A.CallTo(() => _promptService.CreateTechnicalEvaluationPrompt(evaluateRequests)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
-        public async Task InterviewRepository_EvaluateInterviewsAsync_SerializesExistingInterviews()
+        public async Task InterviewService_EvaluateInterviewsAsync_SerializesExistingInterviews()
         {
             List<EvaluateRequestDTO> evaluateRequests = new List<EvaluateRequestDTO>();
             InterviewSession session = new InterviewSession { ID = 1, AIAgent = AIAgent.ChatGPT };
             List<HRInterview> existingInterviews = new List<HRInterview>();
             List<Interview> evaluatedInterviews = new List<Interview>();
 
-            A.CallTo(() => _interviewSessionService.GetInterviewSessionFromQuestionsAsync(evaluateRequests)).Returns(session);
+            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionFromQuestionsAsync(evaluateRequests)).Returns(session);
             A.CallTo(() => _promptService.CreateHrEvaluationPrompt(evaluateRequests)).Returns("prompt");
-            A.CallTo(() => _interviewService.GetInterviewsBySessionIdAsync<HRInterview>(session.ID)).Returns(existingInterviews);
+            A.CallTo(() => _interviewRepository.GetInterviewsBySessionIdAsync<HRInterview>(session.ID)).Returns(existingInterviews);
             A.CallTo(() => _serializationService.SerializeCollection(existingInterviews)).Returns("serialized");
             A.CallTo(() => _promptService.GetPromptWithSerializedInterviews(A<string>._, A<string>._)).Returns("full");
             A.CallTo(() => _aiService.EvaluateInterviewsAsync<HRInterview>(A<string>._, A<AIAgent>._)).Returns(evaluatedInterviews);
-            A.CallTo(() => _interviewService.UpdateInterviewAsync(existingInterviews)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewRepository.UpdateInterviewAsync(existingInterviews)).Returns(Task.CompletedTask);
 
-            await _interviewRepository.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
+            await _interviewService.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
 
             A.CallTo(() => _serializationService.SerializeCollection(existingInterviews)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
-        public async Task InterviewRepository_EvaluateInterviewsAsync_CallsAIServiceToEvaluate()
+        public async Task InterviewService_EvaluateInterviewsAsync_CallsAIServiceToEvaluate()
         {
             List<EvaluateRequestDTO> evaluateRequests = new List<EvaluateRequestDTO>();
             InterviewSession session = new InterviewSession { ID = 1, AIAgent = AIAgent.Claude };
@@ -365,59 +365,59 @@ namespace prepAIred.Tests.Repositories
             string fullPrompt = "evaluation prompt";
             List<Interview> evaluatedInterviews = new List<Interview>();
 
-            A.CallTo(() => _interviewSessionService.GetInterviewSessionFromQuestionsAsync(evaluateRequests)).Returns(session);
+            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionFromQuestionsAsync(evaluateRequests)).Returns(session);
             A.CallTo(() => _promptService.CreateTechnicalEvaluationPrompt(evaluateRequests)).Returns("base");
-            A.CallTo(() => _interviewService.GetInterviewsBySessionIdAsync<TechnicalInterview>(session.ID)).Returns(existingInterviews);
+            A.CallTo(() => _interviewRepository.GetInterviewsBySessionIdAsync<TechnicalInterview>(session.ID)).Returns(existingInterviews);
             A.CallTo(() => _serializationService.SerializeCollection(existingInterviews)).Returns("serialized");
             A.CallTo(() => _promptService.GetPromptWithSerializedInterviews(A<string>._, A<string>._)).Returns(fullPrompt);
             A.CallTo(() => _aiService.EvaluateInterviewsAsync<TechnicalInterview>(fullPrompt, AIAgent.Claude)).Returns(evaluatedInterviews);
-            A.CallTo(() => _interviewService.UpdateInterviewAsync(existingInterviews)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewRepository.UpdateInterviewAsync(existingInterviews)).Returns(Task.CompletedTask);
 
-            await _interviewRepository.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests);
+            await _interviewService.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests);
 
             A.CallTo(() => _aiService.EvaluateInterviewsAsync<TechnicalInterview>(fullPrompt, AIAgent.Claude)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
-        public async Task InterviewRepository_EvaluateInterviewsAsync_UpdatesExistingInterviews()
+        public async Task InterviewService_EvaluateInterviewsAsync_UpdatesExistingInterviews()
         {
             List<EvaluateRequestDTO> evaluateRequests = new List<EvaluateRequestDTO>();
             InterviewSession session = new InterviewSession { ID = 1, AIAgent = AIAgent.ChatGPT };
             List<HRInterview> existingInterviews = new List<HRInterview> { new HRInterview() };
             List<Interview> evaluatedInterviews = new List<Interview> { new HRInterview() };
 
-            A.CallTo(() => _interviewSessionService.GetInterviewSessionFromQuestionsAsync(evaluateRequests)).Returns(session);
+            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionFromQuestionsAsync(evaluateRequests)).Returns(session);
             A.CallTo(() => _promptService.CreateHrEvaluationPrompt(evaluateRequests)).Returns("prompt");
-            A.CallTo(() => _interviewService.GetInterviewsBySessionIdAsync<HRInterview>(session.ID)).Returns(existingInterviews);
+            A.CallTo(() => _interviewRepository.GetInterviewsBySessionIdAsync<HRInterview>(session.ID)).Returns(existingInterviews);
             A.CallTo(() => _serializationService.SerializeCollection(existingInterviews)).Returns("serialized");
             A.CallTo(() => _promptService.GetPromptWithSerializedInterviews(A<string>._, A<string>._)).Returns("full");
             A.CallTo(() => _aiService.EvaluateInterviewsAsync<HRInterview>(A<string>._, A<AIAgent>._)).Returns(evaluatedInterviews);
-            A.CallTo(() => _interviewService.UpdateInterviewAsync(existingInterviews)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewRepository.UpdateInterviewAsync(existingInterviews)).Returns(Task.CompletedTask);
 
-            await _interviewRepository.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
+            await _interviewService.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
 
-            A.CallTo(() => _interviewService.UpdateInterviewAsync(existingInterviews)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewRepository.UpdateInterviewAsync(existingInterviews)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
-        public async Task InterviewRepository_EvaluateInterviewsAsync_FinalizesInterviewSession()
+        public async Task InterviewService_EvaluateInterviewsAsync_FinalizesInterviewSession()
         {
             List<EvaluateRequestDTO> evaluateRequests = new List<EvaluateRequestDTO>();
             InterviewSession session = new InterviewSession { ID = 1, AIAgent = AIAgent.ChatGPT };
             List<HRInterview> existingInterviews = new List<HRInterview>();
             List<Interview> evaluatedInterviews = new List<Interview>();
 
-            A.CallTo(() => _interviewSessionService.GetInterviewSessionFromQuestionsAsync(evaluateRequests)).Returns(session);
+            A.CallTo(() => _interviewSessionRepository.GetInterviewSessionFromQuestionsAsync(evaluateRequests)).Returns(session);
             A.CallTo(() => _promptService.CreateHrEvaluationPrompt(evaluateRequests)).Returns("prompt");
-            A.CallTo(() => _interviewService.GetInterviewsBySessionIdAsync<HRInterview>(session.ID)).Returns(existingInterviews);
+            A.CallTo(() => _interviewRepository.GetInterviewsBySessionIdAsync<HRInterview>(session.ID)).Returns(existingInterviews);
             A.CallTo(() => _serializationService.SerializeCollection(existingInterviews)).Returns("serialized");
             A.CallTo(() => _promptService.GetPromptWithSerializedInterviews(A<string>._, A<string>._)).Returns("full");
             A.CallTo(() => _aiService.EvaluateInterviewsAsync<HRInterview>(A<string>._, A<AIAgent>._)).Returns(evaluatedInterviews);
-            A.CallTo(() => _interviewService.UpdateInterviewAsync(existingInterviews)).Returns(Task.CompletedTask);
+            A.CallTo(() => _interviewRepository.UpdateInterviewAsync(existingInterviews)).Returns(Task.CompletedTask);
 
-            await _interviewRepository.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
+            await _interviewService.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
 
-            A.CallTo(() => _interviewSessionService.FinalizeInterviewSession(session, A<List<HRInterview>>._)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _interviewSessionRepository.FinalizeInterviewSession(session, A<List<HRInterview>>._)).MustHaveHappenedOnceExactly();
         }
 
         #endregion
