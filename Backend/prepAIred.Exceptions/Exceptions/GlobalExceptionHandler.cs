@@ -19,7 +19,7 @@ namespace prepAIred.Exceptions
                 InterviewSessionNotFoundException => StatusCodes.Status404NotFound,
                 InterviewNotFoundException => StatusCodes.Status404NotFound,
                 EmptyFieldsException => StatusCodes.Status400BadRequest,
-                ValidationException => StatusCodes.Status400BadRequest,
+                DataValidationException => StatusCodes.Status400BadRequest,
                 UnsupportedFileExtensionException => StatusCodes.Status400BadRequest,
                 ProfilePictureException => StatusCodes.Status400BadRequest,
                 ApplicationException => StatusCodes.Status400BadRequest,

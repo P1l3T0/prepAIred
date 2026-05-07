@@ -63,5 +63,5 @@
     /// <summary>
     /// Exception thrown when user data validation fails (e.g., invalid email format, weak password).
     /// </summary>
-    public class ValidationException(string message) : Exception(message);
+    public class DataValidationException(string message) : Exception(message);
 }

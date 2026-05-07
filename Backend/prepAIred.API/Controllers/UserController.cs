@@ -50,7 +50,7 @@ namespace prepAIred.API
                 await _userService.UpdateCurrentUserAsync(userCredentialsDto);
                 return Ok("User updated");
             }
-            catch (ValidationException ex)
+            catch (DataValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
