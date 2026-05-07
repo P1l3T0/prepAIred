@@ -26,13 +26,9 @@ namespace prepAIred.API
                 List<InterviewSessionDTO> interviewSessions = await _interviewSessionService.GetInterviewSessionDTOsAsync();
                 return Ok(interviewSessions);
             }
-            catch (NoUserLoggedInException ex)
+            catch (InterviewSessionNotFoundException ex)
             {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -48,13 +44,9 @@ namespace prepAIred.API
                 List<InterviewSessionActivityDTO> interviewSessionActivities = await _interviewSessionService.GetInterviewSessionActivitiesAsync();
                 return Ok(interviewSessionActivities);
             }
-            catch (NoUserLoggedInException ex)
+            catch (InterviewSessionNotFoundException ex)
             {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -70,13 +62,9 @@ namespace prepAIred.API
                 ProfileStatisticsDTO profileStats = await _interviewSessionService.GetInterviewSessionStatisticsAsync();
                 return Ok(profileStats);
             }
-            catch (NoUserLoggedInException ex)
+            catch (InterviewSessionNotFoundException ex)
             {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -92,13 +80,9 @@ namespace prepAIred.API
                 List<InterviewSessionPerformanceDTO> performanceData = await _interviewSessionService.GetInterviewSessionPerformanceAsync();
                 return Ok(performanceData);
             }
-            catch (NoUserLoggedInException ex)
+            catch (InterviewSessionNotFoundException ex)
             {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -114,13 +98,9 @@ namespace prepAIred.API
                 List<ProgrammingLanguageDataDTO> programmingLanguageData = await _interviewSessionService.GetInterviewSessionProgrammingLanguageDataAsync();
                 return Ok(programmingLanguageData);
             }
-            catch (NoUserLoggedInException ex)
+            catch (InterviewSessionNotFoundException ex)
             {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -136,13 +116,9 @@ namespace prepAIred.API
                 List<PositionDataDTO> positionData = await _interviewSessionService.GetInterviewSessionPositionDataAsync();
                 return Ok(positionData);
             }
-            catch (NoUserLoggedInException ex)
+            catch (InterviewSessionNotFoundException ex)
             {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -158,15 +134,7 @@ namespace prepAIred.API
                 await _interviewSessionService.FinishInterviewSessionAsync();
                 return Ok("Interview session finished successfully.");
             }
-            catch (NoUserLoggedInException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (ResourceNotFoundException ex)
+            catch (InterviewSessionNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
@@ -184,13 +152,9 @@ namespace prepAIred.API
                 await _interviewSessionService.DeleteInterviewSessionsAsync();
                 return Ok("All interview sessions deleted successfully.");
             }
-            catch (NoUserLoggedInException ex)
+            catch (InterviewSessionNotFoundException ex)
             {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

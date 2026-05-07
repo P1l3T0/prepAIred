@@ -1,4 +1,5 @@
 ﻿using prepAIred.Data;
+using prepAIred.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace prepAIred.Services
@@ -23,7 +24,7 @@ namespace prepAIred.Services
             return await _dataContext.InterviewSessions
                 .Where(intSession => intSession.UserID == currentUserID)
                 .OrderByDescending(s => s.DateCreated)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync() ?? throw new InterviewSessionNotFoundException("No interview session found for the current user.");
         }
 
         public async Task<List<InterviewSession>> GetInterviewSessionsByUserIdAsync(int userID)
@@ -38,7 +39,7 @@ namespace prepAIred.Services
         {
             return await _dataContext.InterviewSessions
                 .Where(s => s.ID == sessionID)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync() ?? throw new InterviewSessionNotFoundException($"Interview session with ID {sessionID} not found.");
         }
 
         public async Task<InterviewSession> GetInterviewSessionFromQuestionsAsync(List<EvaluateRequestDTO> evaluateRequests)
@@ -49,7 +50,7 @@ namespace prepAIred.Services
             return await _dataContext.InterviewSessions
                 .Include(s => s.Interviews)
                 .Where(s => s.Interviews.Any(i => i.Question == firstQuestion && !i.IsAnswered))
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync() ?? throw new InterviewSessionNotFoundException("No interview session found matching the provided questions.");
         }
 
         public async Task DeleteInterviewSessionsAsync(List<InterviewSession> interviewSessions)

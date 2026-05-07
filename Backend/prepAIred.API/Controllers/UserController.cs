@@ -32,14 +32,6 @@ namespace prepAIred.API
                 CurrentUserDTO currentUser = await _userService.GetCurrentUserAsync();
                 return Ok(currentUser);
             }
-            catch (NoUserLoggedInException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
             catch (ResourceNotFoundException ex)
             {
                 return NotFound(ex.Message);
@@ -58,15 +50,7 @@ namespace prepAIred.API
                 await _userService.UpdateCurrentUserAsync(userCredentialsDto);
                 return Ok("User updated");
             }
-            catch (NoUserLoggedInException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (EmptyFieldsException ex)
+            catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -87,14 +71,6 @@ namespace prepAIred.API
             {
                 await _userService.DeleteCurrentUserAsync();
                 return Ok("User deleted");
-            }
-            catch (NoUserLoggedInException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
             }
             catch (ResourceNotFoundException ex)
             {

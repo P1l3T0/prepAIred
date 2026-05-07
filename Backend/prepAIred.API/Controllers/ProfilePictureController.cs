@@ -19,14 +19,6 @@ namespace prepAIred.API
                 string profilePictureUrl = await _profilePictureService.GetProfilePictureUrlAsync();
                 return Ok(profilePictureUrl);
             }
-            catch (NoUserLoggedInException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
             catch (ResourceNotFoundException ex)
             {
                 return NotFound(ex.Message);
@@ -44,14 +36,6 @@ namespace prepAIred.API
             {
                 await _profilePictureService.ChangeProfilePictureAsync(profilePictureDTO);
                 return Ok("Profile picture changed");
-            }
-            catch (NoUserLoggedInException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (InvalidAccessTokenException ex)
-            {
-                return Unauthorized(ex.Message);
             }
             catch (UnsupportedFileExtensionException ex)
             {

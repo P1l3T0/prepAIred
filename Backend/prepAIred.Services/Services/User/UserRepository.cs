@@ -90,13 +90,13 @@ namespace prepAIred.Services
 
         public async Task ValidateUpdateUserDataAsync(UserCredentialsDTO userCredentialsDto)
         {
-            if (string.IsNullOrEmpty(userCredentialsDto.Username) || string.IsNullOrEmpty(userCredentialsDto.Email)) throw new EmptyFieldsException("Username and Email cannot be empty");
+            if (string.IsNullOrEmpty(userCredentialsDto.Username) || string.IsNullOrEmpty(userCredentialsDto.Email)) throw new ValidationException("Username and Email cannot be empty");
 
-            if (!ValidateEmail(userCredentialsDto.Email)) throw new InvalidCredentialsException("Invalid Email format");
+            if (!ValidateEmail(userCredentialsDto.Email)) throw new ValidationException("Invalid Email format");
 
             if (!string.IsNullOrEmpty(userCredentialsDto.Password))
             {
-                if (!ValidatePassword(userCredentialsDto.Password)) throw new InvalidCredentialsException("Invalid Password");
+                if (!ValidatePassword(userCredentialsDto.Password)) throw new ValidationException("Invalid Password");
             }
 
             int currentUserID = await GetCurrentUserID();
@@ -104,7 +104,7 @@ namespace prepAIred.Services
 
             if (userCredentialsDto.Email != currentUser.Email)
             {
-                if (await UserExistsAsync(userCredentialsDto.Email)) throw new UserAlreadyExistsException("User already exists");
+                if (await UserExistsAsync(userCredentialsDto.Email)) throw new ValidationException("A user with this email already exists");
             }
         }
 

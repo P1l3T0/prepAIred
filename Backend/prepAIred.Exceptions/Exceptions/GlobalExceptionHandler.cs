@@ -16,7 +16,12 @@ namespace prepAIred.Exceptions
                 InvalidRefreshTokenException => StatusCodes.Status401Unauthorized,
                 UserAlreadyExistsException => StatusCodes.Status409Conflict,
                 ResourceNotFoundException => StatusCodes.Status404NotFound,
+                InterviewSessionNotFoundException => StatusCodes.Status404NotFound,
+                InterviewNotFoundException => StatusCodes.Status404NotFound,
                 EmptyFieldsException => StatusCodes.Status400BadRequest,
+                ValidationException => StatusCodes.Status400BadRequest,
+                UnsupportedFileExtensionException => StatusCodes.Status400BadRequest,
+                ProfilePictureException => StatusCodes.Status400BadRequest,
                 ApplicationException => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status500InternalServerError
             };
