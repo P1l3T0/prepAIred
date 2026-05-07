@@ -1,5 +1,6 @@
 ﻿using prepAIred.Data;
 using prepAIred.Services;
+using prepAIred.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace prepAIred.API
@@ -31,9 +32,21 @@ namespace prepAIred.API
                 CurrentUserDTO currentUser = await _userService.GetCurrentUserAsync();
                 return Ok(currentUser);
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -45,9 +58,25 @@ namespace prepAIred.API
                 await _userService.UpdateCurrentUserAsync(userCredentialsDto);
                 return Ok("User updated");
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (EmptyFieldsException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -59,9 +88,21 @@ namespace prepAIred.API
                 await _userService.DeleteCurrentUserAsync();
                 return Ok("User deleted");
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
     }

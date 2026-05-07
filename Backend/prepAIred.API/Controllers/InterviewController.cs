@@ -1,5 +1,6 @@
 ﻿using prepAIred.Data;
 using prepAIred.Services;
+using prepAIred.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace prepAIred.API
@@ -25,9 +26,21 @@ namespace prepAIred.API
                 await _interviewService.GenerateInterviewsAsync<HRInterview>(hrRequest);
                 return Ok("HR interviews created successfully.");
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (EmptyFieldsException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -39,9 +52,21 @@ namespace prepAIred.API
                 List<HRInterviewDTO> hrInterviews = await _interviewService.GetLatestInterviewsAsync<HRInterview, HRInterviewDTO>();
                 return Ok(hrInterviews);
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -53,9 +78,21 @@ namespace prepAIred.API
                 await _interviewService.EvaluateInterviewsAsync<HRInterview>(evaluateRequests);
                 return Ok("HR interviews evaluated successfully.");
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -67,9 +104,21 @@ namespace prepAIred.API
                 await _interviewService.GenerateInterviewsAsync<TechnicalInterview>(technicalRequest);
                 return Ok("Technical interviews created successfully.");
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (EmptyFieldsException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -81,9 +130,21 @@ namespace prepAIred.API
                 List<TechnicalInterviewDTO> technicalInterviews = await _interviewService.GetLatestInterviewsAsync<TechnicalInterview, TechnicalInterviewDTO>();
                 return Ok(technicalInterviews);
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -95,9 +156,21 @@ namespace prepAIred.API
                 await _interviewService.EvaluateInterviewsAsync<TechnicalInterview>(evaluateRequests);
                 return Ok("Technical interviews evaluated successfully.");
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
     }

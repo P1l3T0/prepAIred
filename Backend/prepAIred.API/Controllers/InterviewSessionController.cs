@@ -1,5 +1,6 @@
 ﻿using prepAIred.Data;
 using prepAIred.Services;
+using prepAIred.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace prepAIred.API
@@ -25,9 +26,17 @@ namespace prepAIred.API
                 List<InterviewSessionDTO> interviewSessions = await _interviewSessionService.GetInterviewSessionDTOsAsync();
                 return Ok(interviewSessions);
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -39,9 +48,17 @@ namespace prepAIred.API
                 List<InterviewSessionActivityDTO> interviewSessionActivities = await _interviewSessionService.GetInterviewSessionActivitiesAsync();
                 return Ok(interviewSessionActivities);
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -53,9 +70,17 @@ namespace prepAIred.API
                 ProfileStatisticsDTO profileStats = await _interviewSessionService.GetInterviewSessionStatisticsAsync();
                 return Ok(profileStats);
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -67,9 +92,17 @@ namespace prepAIred.API
                 List<InterviewSessionPerformanceDTO> performanceData = await _interviewSessionService.GetInterviewSessionPerformanceAsync();
                 return Ok(performanceData);
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -81,9 +114,17 @@ namespace prepAIred.API
                 List<ProgrammingLanguageDataDTO> programmingLanguageData = await _interviewSessionService.GetInterviewSessionProgrammingLanguageDataAsync();
                 return Ok(programmingLanguageData);
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -95,9 +136,17 @@ namespace prepAIred.API
                 List<PositionDataDTO> positionData = await _interviewSessionService.GetInterviewSessionPositionDataAsync();
                 return Ok(positionData);
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -109,9 +158,21 @@ namespace prepAIred.API
                 await _interviewSessionService.FinishInterviewSessionAsync();
                 return Ok("Interview session finished successfully.");
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -123,9 +184,17 @@ namespace prepAIred.API
                 await _interviewSessionService.DeleteInterviewSessionsAsync();
                 return Ok("All interview sessions deleted successfully.");
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using prepAIred.Data;
 using prepAIred.Services;
+using prepAIred.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace prepAIred.API
@@ -28,9 +29,21 @@ namespace prepAIred.API
                 await _authService.RegisterAsync(userCredentialsDto);
                 return Ok("Register successful");
             }
+            catch (InvalidCredentialsException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (UserAlreadyExistsException ex)
+            {
+                return Conflict(ex.Message);
+            }
+            catch (EmptyFieldsException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -42,9 +55,17 @@ namespace prepAIred.API
                 await _authService.LoginAsync(loginDto);
                 return Ok("Login successful");
             }
+            catch (InvalidCredentialsException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (EmptyFieldsException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -56,9 +77,21 @@ namespace prepAIred.API
                 RefreshTokenResponseDTO newRefreshToken = await _refreshTokenService.GenerateNewRefreshTokenAsync();
                 return Ok(newRefreshToken);
             }
+            catch (InvalidRefreshTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -70,9 +103,13 @@ namespace prepAIred.API
                 await _authService.LogoutAsync();
                 return Ok("Logged out successfully");
             }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                return StatusCode(500, ex.Message);
             }
         }
     }

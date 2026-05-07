@@ -40,7 +40,7 @@ namespace prepAIred.Tests.Controllers
         }
 
         [Fact]
-        public async Task AuthController_Register_ThrowsException_ForWeakPassword()
+        public async Task AuthController_Register_ReturnsUnauthorized_ForWeakPassword()
         {
             UserCredentialsDTO registerRequest = new UserCredentialsDTO()
             {
@@ -52,7 +52,10 @@ namespace prepAIred.Tests.Controllers
             A.CallTo(() => _authService.RegisterAsync(registerRequest))
                 .ThrowsAsync(new InvalidCredentialsException("Password does not meet complexity requirements"));
 
-            await Assert.ThrowsAsync<InvalidCredentialsException>(() => _authController.Register(registerRequest));
+            IActionResult result = await _authController.Register(registerRequest);
+
+            UnauthorizedObjectResult unauthorizedResult = Assert.IsType<UnauthorizedObjectResult>(result);
+            Assert.Equal("Password does not meet complexity requirements", unauthorizedResult.Value);
         }
 
         [Fact]
