@@ -39,7 +39,7 @@ namespace prepAIred.Services
         {
             return await _dataContext.InterviewSessions
                 .Where(s => s.ID == sessionID)
-                .FirstOrDefaultAsync() ?? throw new InterviewSessionNotFoundException($"Interview session with ID {sessionID} not found.");
+                .FirstOrDefaultAsync();
         }
 
         public async Task<InterviewSession> GetInterviewSessionFromQuestionsAsync(List<EvaluateRequestDTO> evaluateRequests)

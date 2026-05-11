@@ -2,41 +2,14 @@ import StatisticCard from "./StatisticCard";
 import useProcessStatistics from "../../../../Hooks/InterviewSessions/useProcessStatistics";
 import useGetInterviewSessionStatistics from "../../../../Hooks/InterviewSessions/useGetInterviewSessionStatistics";
 import type { ProfileStats } from "../../../../Utils/interfaces";
-import { Loader } from "@progress/kendo-react-indicators";
-import { Card, CardBody } from "@progress/kendo-react-layout";
+import LoaderComponent from "../../../Common/LoaderComponent";
+import ErrorComponent from "../../../Common/ErrorComponent";
 
 const StatisticsGrid = () => {
   const { data: interviewSessionStatistics, isLoading, isError} = useGetInterviewSessionStatistics();
 
-  if (isLoading) {
-    return (
-      <div className="min-h-[calc(100vh-4.05rem)] sm:min-h-[calc(100vh-4.55rem)] bg-background flex items-center justify-center">
-        <div className="flex flex-col items-center space-y-4">
-          <Loader size="large" />
-          <span className="text-text-secondary">Loading your profile...</span>
-        </div>
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="min-h-[calc(100vh-4.05rem)] sm:min-h-[calc(100vh-4.55rem)] bg-background flex items-center justify-center">
-        <Card className="shadow-lg">
-          <CardBody>
-            <div className="text-center p-8">
-              <h2 className="text-xl text-text-primary font-semibold mb-2">
-                Unable to load profile
-              </h2>
-              <p className="text-text-secondary">
-                Please try refreshing the page
-              </p>
-            </div>
-          </CardBody>
-        </Card>
-      </div>
-    );
-  }
+  if (isLoading) return <LoaderComponent />;
+  if (isError) return <ErrorComponent />;
 
   const {
     interviewSessionGoal,
