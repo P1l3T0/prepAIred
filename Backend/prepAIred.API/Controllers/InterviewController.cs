@@ -13,12 +13,12 @@ namespace prepAIred.API
     /// <see cref="IInterviewService"/> implementation to handle interview data operations.</remarks>
     /// <param name="interviewService">Repository for handling interview operations</param>
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/interviews")]
     public class InterviewController(IInterviewService interviewService) : Controller
     {
         private readonly IInterviewService _interviewService = interviewService;
 
-        [HttpPost("generate-hr-interviews")]
+        [HttpPost("hr")]
         public async Task<IActionResult> GenerateHrInterview([FromBody] HrRequestDTO hrRequest)
         {
             try
@@ -40,7 +40,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpGet("get-latest-hr-interviews")]
+        [HttpGet("hr/latest")]
         public async Task<IActionResult> GetLatestHrInterview()
         {
             try
@@ -62,7 +62,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpPost("evaluate-hr-interviews")]
+        [HttpPost("hr/evaluations")]
         public async Task<IActionResult> EvaluateHrInterviews([FromBody] List<EvaluateRequestDTO> evaluateRequests)
         {
             try
@@ -84,7 +84,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpPost("generate-technical-interviews")]
+        [HttpPost("technical")]
         public async Task<IActionResult> GenerateTechnicalInterviews([FromBody] TechnicalRequestDTO technicalRequest)
         {
             try
@@ -106,7 +106,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpGet("get-latest-technical-interviews")]
+        [HttpGet("technical/latest")]
         public async Task<IActionResult> GetLatestTechnicalInterview()
         {
             try
@@ -128,7 +128,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpPost("evaluate-technical-interviews")]
+        [HttpPost("technical/evaluations")]
         public async Task<IActionResult> EvaluateTechnicalInterviews([FromBody] List<EvaluateRequestDTO> evaluateRequests)
         {
             try

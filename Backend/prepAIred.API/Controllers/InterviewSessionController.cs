@@ -13,12 +13,12 @@ namespace prepAIred.API
     /// and deleting all existing sessions.</remarks>
     /// <param name="interviewSessionService"></param>
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/interview-sessions")]
     public class InterviewSessionController(IInterviewSessionService interviewSessionService) : Controller
     {
         private readonly IInterviewSessionService _interviewSessionService = interviewSessionService;
 
-        [HttpGet("get-interview-sessions")]
+        [HttpGet]
         public async Task<IActionResult> GetInterviewSessionDTOs()
         {
             try
@@ -36,7 +36,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpGet("get-interview-session-activities")]
+        [HttpGet("activities")]
         public async Task<IActionResult> GetInterviewSessionActivities()
         {
             try
@@ -54,7 +54,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpGet("get-interview-session-statistics")]
+        [HttpGet("statistics")]
         public async Task<IActionResult> GetInterviewSessionStatistics()
         {
             try
@@ -72,7 +72,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpGet("get-interview-session-performance")]
+        [HttpGet("performance")]
         public async Task<IActionResult> GetInterviewSessionPerformance()
         {
             try
@@ -90,7 +90,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpGet("get-interview-session-programming-language-data")]
+        [HttpGet("programming-languages")]
         public async Task<IActionResult> GetInterviewSessionProgrammingLanguageData()
         {
             try
@@ -108,7 +108,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpGet("get-interview-session-position-data")]
+        [HttpGet("positions")]
         public async Task<IActionResult> GetInterviewSessionPositionData()
         {
             try
@@ -126,7 +126,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpPut("finish-interview-session")]
+        [HttpPut("current/finish")]
         public async Task<IActionResult> FinishInterviewSession()
         {
             try
@@ -144,7 +144,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpDelete("delete-interview-sessions")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteInterviewSessions()
         {
             try

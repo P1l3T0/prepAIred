@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace prepAIred.API
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/profile-pictures")]
     public class ProfilePictureController(IProfilePictureService profilePictureService) : Controller
     {
         private readonly IProfilePictureService _profilePictureService = profilePictureService;
 
-        [HttpGet("get-profile-picture-url")]
+        [HttpGet]
         public async Task<IActionResult> GetProfilePicture()
         {
             try
@@ -29,7 +29,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpPost("change-profile-picture")]
+        [HttpPut]
         public async Task<IActionResult> ChangeProfilePicture([FromForm] ProfilePictureDTO profilePictureDTO)
         {
             try

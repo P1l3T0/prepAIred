@@ -14,12 +14,12 @@ namespace prepAIred.API
     /// </remarks>
     /// <param name="userService">Repository for handling user-related operations</param>
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/users")]
     public class UserController(IUserService userService) : Controller
     {
         private readonly IUserService _userService = userService;
 
-        [HttpGet("get-current-user")]
+        [HttpGet("me")]
         public async Task<IActionResult> GetCurrentUser()
         {
             try
@@ -42,7 +42,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpPut("update-current-user")]
+        [HttpPut("me")]
         public async Task<IActionResult> UpdateCurrentUser([FromBody] UserCredentialsDTO userCredentialsDto)
         {
             try
@@ -64,7 +64,7 @@ namespace prepAIred.API
             }
         }
 
-        [HttpDelete("delete-current-user")]
+        [HttpDelete("me")]
         public async Task<IActionResult> DeleteCurrentUser()
         {
             try
