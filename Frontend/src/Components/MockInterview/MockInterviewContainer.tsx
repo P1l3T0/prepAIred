@@ -5,6 +5,7 @@ import StartInterviewCard from "./Cards/StartInterviewCard";
 const MockInterviewContainer = () => {
   const {
     isConnected,
+    connectionError,
     messages,
     handleStartConversation,
     handleEndConversation,
@@ -16,6 +17,7 @@ const MockInterviewContainer = () => {
       <div className="p-6 space-y-4">
         <StartInterviewCard
           isConnected={isConnected}
+          connectionError={connectionError}
           handleStartConversation={handleStartConversation}
           handleEndConversation={handleEndConversation}
           handleDropDownChange={handleDropDownChange}
