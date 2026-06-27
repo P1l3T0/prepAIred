@@ -1,5 +1,6 @@
 ﻿using prepAIred.Data;
 using prepAIred.Services;
+using prepAIred.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace prepAIred.API
@@ -9,43 +10,107 @@ namespace prepAIred.API
     /// </summary>
     /// <remarks>
     /// This controller is responsible for handling HTTP requests related to authentication flows. It interacts 
-    /// with the <see cref="IAuthRepository"/> for authentication operations and <see cref="IRefreshTokenRepository"/> for token management.
+    /// with the <see cref="IAuthService"/> for authentication operations and <see cref="IRefreshTokenService"/> for token management.
     /// </remarks>
-    /// <param name="authRepository">Repository for handling authentication operations</param>
-    /// <param name="refreshTokenRepository">Repository for managing refresh tokens</param>
+    /// <param name="authService">Repository for handling authentication operations</param>
+    /// <param name="refreshTokenService">Repository for managing refresh tokens</param>
     [ApiController]
-    [Route("api/[controller]")]
-    public class AuthController(IAuthRepository authRepository, IRefreshTokenRepository refreshTokenRepository) : Controller
+    [Route("api/auth")]
+    public class AuthController(IAuthService authService, IRefreshTokenService refreshTokenService) : Controller
     {
-        private readonly IAuthRepository _authRepository = authRepository;
-        private readonly IRefreshTokenRepository _refreshTokenService = refreshTokenRepository;
+        private readonly IAuthService _authService = authService;
+        private readonly IRefreshTokenService _refreshTokenService = refreshTokenService;
 
         [HttpPost("register")]
         public async Task<ActionResult> Register([FromBody] UserCredentialsDTO userCredentialsDto)
         {
-            await _authRepository.RegisterAsync(userCredentialsDto);
-            return Ok("Register successful");
+            try
+            {
+                await _authService.RegisterAsync(userCredentialsDto);
+                return Ok("Register successful");
+            }
+            catch (InvalidCredentialsException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (UserAlreadyExistsException ex)
+            {
+                return Conflict(ex.Message);
+            }
+            catch (EmptyFieldsException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginDTO loginDto)
         {
-            await _authRepository.LoginAsync(loginDto);
-            return Ok("Login successful");
+            try
+            {
+                await _authService.LoginAsync(loginDto);
+                return Ok("Login successful");
+            }
+            catch (InvalidCredentialsException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (EmptyFieldsException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost("refresh-token")]
         public async Task<IActionResult> GenerateNewRefreshToken()
         {
-            RefreshTokenResponseDTO newRefreshToken = await _refreshTokenService.GenerateNewRefreshTokenAsync();
-            return Ok(newRefreshToken);
+            try
+            {
+                RefreshTokenResponseDTO newRefreshToken = await _refreshTokenService.GenerateNewRefreshTokenAsync();
+                return Ok(newRefreshToken);
+            }
+            catch (InvalidRefreshTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            await _authRepository.LogoutAsync();
-            return Ok("Logged out successfully");
+            try
+            {
+                await _authService.LogoutAsync();
+                return Ok("Logged out successfully");
+            }
+            catch (NoUserLoggedInException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

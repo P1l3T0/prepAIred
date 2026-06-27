@@ -1,54 +1,35 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using prepAIred.Data;
-using prepAIred.Exceptions;
+﻿using prepAIred.Data;
 
 namespace prepAIred.Services
 {
-    public class ProfilePictureService(IFileService fileService, DataContext dataContent) : IProfilePictureService
+    public class ProfilePictureService(IProfilePictureRepository profilePictureRepository, IUserRepository userRepository) : IProfilePictureService
     {
-        private readonly IFileService _fileService = fileService;
-        private readonly DataContext _dataContext = dataContent;
+        private readonly IUserRepository _userRepository = userRepository;
+        private readonly IProfilePictureRepository _profilePictureRepository = profilePictureRepository;
 
-        public async Task<string> SaveFileAsync(IFormFile imageFile)
+        public async Task ChangeProfilePictureAsync(ProfilePictureDTO profilePictureDTO)
         {
-            if (imageFile is null || imageFile.Length == 0)
+            string fileName = await _profilePictureRepository.SaveFileAsync(profilePictureDTO.ImageFile!);
+
+            int currentUserID = await _userRepository.GetCurrentUserID();
+            User currentUser = await _userRepository.GetCurrentUserEntityByIdAsync(currentUserID);
+
+            if (!string.IsNullOrEmpty(currentUser.ProfilePicture))
             {
-                throw new ProfilePictureException("File is null or empty");
+                await _profilePictureRepository.DeleteProfilePictureAsync(currentUser.ProfilePicture);
             }
 
-            string path = _fileService.CreateDirectoryIfNotExists();
-            string extension = _fileService.CheckFileExtension(imageFile);
-            string fileName = await _fileService.CreateFileNameAsync(imageFile, path, extension);
+            currentUser.ProfilePicture = fileName;
 
-            return fileName;
+            await _userRepository.UpdateUserAsync(currentUser, null);
         }
 
-        public async Task<string> GetProfilePictureUrlByUserIdAsync(int userId)
+        public async Task<string> GetProfilePictureUrlAsync()
         {
-            string profilePictureName = await _dataContext.Users
-                .Where(u => u.ID == userId)
-                .Select(u => u.ProfilePicture)
-                .FirstOrDefaultAsync() ?? string.Empty;
+            int currentUserID = await _userRepository.GetCurrentUserID();
+            string profilePictureUrl = await _profilePictureRepository.GetProfilePictureUrlByUserIdAsync(currentUserID);
 
-            string fullPath = $"https://localhost:7227/Uploads/{profilePictureName}";
-
-            return fullPath;
-        }
-
-        public async Task DeleteProfilePictureAsync(string fileNameWithExtension)
-        {
-            string fullPath = _fileService.GetFullPathOfProfilePicture(fileNameWithExtension);
-
-            if (File.Exists(fullPath))
-            {
-                File.Delete(fullPath);
-            }
-
-            await _dataContext.Users
-                .Where(u => u.ProfilePicture == fileNameWithExtension)
-                .ForEachAsync(u => u.ProfilePicture = string.Empty);
+            return profilePictureUrl;
         }
     }
 }
-

@@ -4,6 +4,7 @@ import { DropDownList, type DropDownListChangeEvent } from "@progress/kendo-reac
 
 interface StartInterviewCardProps {
   isConnected: boolean;
+  connectionError: string | null;
   handleStartConversation: () => void;
   handleEndConversation: () => void;
   handleDropDownChange: (e: DropDownListChangeEvent) => void;
@@ -11,6 +12,7 @@ interface StartInterviewCardProps {
 
 const StartInterviewCard = ({
   isConnected,
+  connectionError,
   handleStartConversation,
   handleEndConversation,
   handleDropDownChange
@@ -27,6 +29,9 @@ const StartInterviewCard = ({
           <p className="text-text-secondary" style={{ margin: 0 }}>
             Speak naturally, your answers are transcribed in real time.
           </p>
+          {connectionError && (
+            <p className="text-error text-sm">{connectionError}</p>
+          )}
 
           <div className="flex items-center gap-6">
             <span

@@ -7,10 +7,8 @@ const useFormatPerformanceData = (performanceData: PerformanceData[]) => {
   const categories: string[] =
     performanceData?.map((data) =>
       new Date(data.dateCreated).toLocaleDateString("en-US", {
-        day: "numeric",
-        month: "short",
-        hour: "2-digit",
-        minute: "2-digit",
+        day: "2-digit",
+        month: "2-digit",
       })
     ) || [];
 

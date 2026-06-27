@@ -43,7 +43,7 @@ const InterviewDisplay = ({ interviews, interviewType }: InterviewDisplayProps) 
     !Array.isArray(interviews) ||
     (interviewType === "HR-Interview" &&
     (interviews.length === 0 ||
-    interviews.every((interview) => !interview.isAnswered)));
+    !interviews.every((interview) => interview.isAnswered)));
 
   return (
     <div className="p-2 md:p-4 bg-card rounded-lg shadow-sm">

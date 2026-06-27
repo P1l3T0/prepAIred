@@ -7,8 +7,8 @@ import { Grid, GridColumn, GridToolbar,type GridColumnMenuProps } from "@progres
 import { fileExcelIcon, fileCsvIcon } from "@progress/kendo-svg-icons";
 import useHandleExcelExport from "../../../Hooks/Statistics/Grid/useHandleExcelExport";
 import useGetRecentInterviewSessions from "../../../Hooks/InterviewSessions/useGetRecentInterviewSessions";
-import { Card, CardBody } from "@progress/kendo-react-layout";
-import { Loader } from "@progress/kendo-react-indicators";
+import LoaderComponent from "../../Common/LoaderComponent";
+import ErrorComponent from "../../Common/ErrorComponent";
 
 const StatisticsGrid = () => {
   const { data: interviewSessionData, isLoading, isError } = useGetRecentInterviewSessions();
@@ -19,35 +19,8 @@ const StatisticsGrid = () => {
     <ColumnMenu {...props} data={interviewSessionData!}></ColumnMenu>
   );
 
-  if (isLoading) {
-    return (
-      <div className="bg-background flex items-center justify-center">
-        <div className="flex flex-col items-center space-y-4 m-6">
-          <Loader size="large" />
-          <span className="text-text-secondary">Loading Interview Data...</span>
-        </div>
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="bg-background flex items-center justify-center">
-        <Card className="shadow-lg w-full m-6">
-          <CardBody>
-            <div className="text-center p-8">
-              <h2 className="text-xl text-text-primary font-semibold mb-2">
-                Unable to load Interview data
-              </h2>
-              <p className="text-text-secondary">
-                Please try refreshing the page
-              </p>
-            </div>
-          </CardBody>
-        </Card>
-      </div>
-    );
-  }
+  if (isLoading) return <LoaderComponent />;
+  if (isError) return <ErrorComponent />;
 
   return (
     <>

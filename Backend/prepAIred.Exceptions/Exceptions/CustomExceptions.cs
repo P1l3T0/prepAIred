@@ -49,4 +49,19 @@
     /// Exception thrown when an unsupported image format is specified.
     /// </summary>
     public class UnsupportedFileExtensionException(string message) : Exception(message);
+
+    /// <summary>
+    /// Exception thrown when an interview session is not found.
+    /// </summary>
+    public class InterviewSessionNotFoundException(string message) : Exception(message);
+
+    /// <summary>
+    /// Exception thrown when an interview is not found.
+    /// </summary>
+    public class InterviewNotFoundException(string message) : Exception(message);
+
+    /// <summary>
+    /// Exception thrown when user data validation fails (e.g., invalid email format, weak password).
+    /// </summary>
+    public class DataValidationException(string message) : Exception(message);
 }

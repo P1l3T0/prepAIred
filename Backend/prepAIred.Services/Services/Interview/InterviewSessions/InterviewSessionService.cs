@@ -1,178 +1,109 @@
 ﻿using prepAIred.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace prepAIred.Services
 {
-    public class InterviewSessionService(DataContext dataContext) : IInterviewSessionService
+    public class InterviewSessionService(IInterviewSessionRepository interviewSessionRepository, IUserRepository userRepository) : IInterviewSessionService
     {
-        private readonly DataContext _dataContext = dataContext;
+        private readonly IInterviewSessionRepository _interviewSessionRepository = interviewSessionRepository;
+        private readonly IUserRepository _userRepository = userRepository;
 
-        public async Task CreateInterviewSessionAsync(InterviewSession interviewSession)
+        public async Task<List<InterviewSessionDTO>> GetInterviewSessionDTOsAsync()
         {
-            await _dataContext.InterviewSessions.AddAsync(interviewSession);
+            int currentUserID = await _userRepository.GetCurrentUserID();
+            List<InterviewSession> interviewSessions = await _interviewSessionRepository.GetInterviewSessionsByUserIdAsync(currentUserID);
+            List<InterviewSessionDTO> interviewSessionsDTOs = interviewSessions.ConvertAll(session => session.ToDto<InterviewSessionDTO>());
+
+            return interviewSessionsDTOs;
         }
 
-        public async Task UpdateInterviewSessionAsync(InterviewSession interviewSession)
+        public async Task<List<InterviewSessionActivityDTO>> GetInterviewSessionActivitiesAsync()
         {
-            _dataContext.InterviewSessions.Update(interviewSession);
-            await _dataContext.SaveChangesAsync();
+            int currentUserID = await _userRepository.GetCurrentUserID();
+            List<InterviewSessionActivityDTO> activities = await _interviewSessionRepository.GetInterviewSessionActivitiesAsync(currentUserID);
+
+            return activities;
         }
 
-        public async Task<InterviewSession> GetAdjacentInterviewSessionAsync(int currentUserID)
+        public async Task<ProfileStatisticsDTO> GetInterviewSessionStatisticsAsync()
         {
-            return await _dataContext.InterviewSessions
-                .Where(intSession => intSession.UserID == currentUserID)
-                .OrderByDescending(s => s.DateCreated)
-                .FirstOrDefaultAsync();
-        }
+            int currentUserID = await _userRepository.GetCurrentUserID();
 
-        public async Task<List<InterviewSession>> GetInterviewSessionsByUserIdAsync(int userID)
-        {
-            return await _dataContext.InterviewSessions
-                .Where(intSession => intSession.UserID == userID)
-                .Include(s => s.Interviews)
-                .ToListAsync();
-        }
+            int totalInterviewSessions = await _interviewSessionRepository.GetTotalInterviewSessionsAsync(currentUserID);
+            int passedInterviewSessions = await _interviewSessionRepository.GetPassedInterviewSessionsAsync(currentUserID);
+            int ongoingInterviewSessions = await _interviewSessionRepository.GetOngoingInterviewSessionsAsync(currentUserID);
+            decimal averageScore = await _interviewSessionRepository.GetAverageScoreAsync(currentUserID);
+            decimal completionRate = await _interviewSessionRepository.GetCompletionRateAsync(currentUserID);
 
-        public async Task<InterviewSession> GetInterviewSessionByIdAsync(int sessionID)
-        {
-            return await _dataContext.InterviewSessions
-                .Where(s => s.ID == sessionID)
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task<InterviewSession> GetInterviewSessionFromQuestionsAsync(List<EvaluateRequestDTO> evaluateRequests)
-        {
-            EvaluateRequestDTO firstRequest = evaluateRequests.FirstOrDefault()!;
-            string firstQuestion = firstRequest?.Question!;
-
-            return await _dataContext.InterviewSessions
-                .Include(s => s.Interviews)
-                .Where(s => s.Interviews.Any(i => i.Question == firstQuestion && !i.IsAnswered))
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task DeleteInterviewSessionsAsync(List<InterviewSession> interviewSessions)
-        {
-            _dataContext.InterviewSessions.RemoveRange(interviewSessions);
-            await _dataContext.SaveChangesAsync();
-        }
-
-        public async Task<int> GetLatestInterviewSessionIDAsync(int userID)
-        {
-            return await _dataContext.InterviewSessions
-                .Where(intSession => intSession.UserID == userID)
-                .OrderByDescending(s => s.DateCreated)
-                .Select(s => s.ID)
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task FinishInterviewSessionAsync(InterviewSession interviewSession)
-        {
-            if (interviewSession.AverageScore > 5)
+            ProfileStatisticsDTO profileStatistics = new ProfileStatisticsDTO()
             {
-                interviewSession.Status = InterviewSessionStatus.Passed;
-            }
-            else
-            {
-                interviewSession.Status = InterviewSessionStatus.Failed;
-            }
+                TotalInterviewSessions = totalInterviewSessions,
+                PassedInterviewSessions = passedInterviewSessions,
+                OngoingInterviewSessions = ongoingInterviewSessions,
+                AverageScore = averageScore,
+                CompletionRate = completionRate
+            };
 
-            _dataContext.InterviewSessions.Update(interviewSession);
-            await _dataContext.SaveChangesAsync();
+            return profileStatistics;
         }
 
-        public async Task<int> GetTotalInterviewSessionsAsync(int userID)
+        public async Task<List<InterviewSessionPerformanceDTO>> GetInterviewSessionPerformanceAsync()
         {
-            return await _dataContext.InterviewSessions
-                .Where(intSession => intSession.UserID == userID && intSession.Status != InterviewSessionStatus.Ongoing)
-                .CountAsync();
-        }
-
-        public async Task<int> GetPassedInterviewSessionsAsync(int userID)
-        {
-            return await _dataContext.InterviewSessions
-                .Where(intSession => intSession.UserID == userID && intSession.Status == InterviewSessionStatus.Passed)
-                .CountAsync();
-        }
-
-        public async Task<int> GetOngoingInterviewSessionsAsync(int userID)
-        {
-            return await _dataContext.InterviewSessions
-                .Where(intSession => intSession.UserID == userID && intSession.Status == InterviewSessionStatus.Ongoing)
-                .CountAsync();
-        }
-
-        public async Task<decimal> GetAverageScoreAsync(int userID)
-        {
-            List<InterviewSession> sessions = await _dataContext.InterviewSessions
-                .Where(intSession => intSession.UserID == userID && intSession.Status != InterviewSessionStatus.Ongoing)
-                .ToListAsync();
-
-            decimal averageScore = (decimal)(sessions.Count != 0 ? sessions.Average(s => s.AverageScore) : 0);
-
-            return averageScore;
-        }
-
-        public async Task<decimal> GetCompletionRateAsync(int userID)
-        {
-            int totalSessions = await GetTotalInterviewSessionsAsync(userID);
-            int passedSessions = await GetPassedInterviewSessionsAsync(userID);
-
-            if (totalSessions == 0) return 0;
-
-            decimal rate = (passedSessions / (decimal)totalSessions) * 100;
-
-            return Math.Round(rate, 2);
-        }
-
-        public void FinalizeInterviewSession<TInterview>(InterviewSession interviewSession, List<TInterview> evaluatedTInterviews) where TInterview : Interview
-        {
-            if (interviewSession.HrScore == 0)
-            {
-                float hrScore = evaluatedTInterviews.OfType<HRInterview>().Any()
-                    ? evaluatedTInterviews.OfType<HRInterview>().Average(i => i.Score)
-                    : 0;
-
-                interviewSession.HrScore = hrScore;
-            }
-
-            if (interviewSession.TechnicalScore == 0)
-            {
-                float technicalScore = evaluatedTInterviews.OfType<TechnicalInterview>().Any()
-                    ? evaluatedTInterviews.OfType<TechnicalInterview>().Average(i => i.Score)
-                    : 0;
-
-                interviewSession.TechnicalScore = technicalScore;
-            }
-        }
-
-        public async Task<List<InterviewSessionActivityDTO>> GetInterviewSessionActivitiesAsync(int userID)
-        {
-            List<InterviewSession> interviewSessions = await _dataContext.InterviewSessions
-                .Where(session => session.UserID == userID && session.Status != InterviewSessionStatus.Ongoing)
-                .Include(session => session.Interviews)
-                .OrderByDescending(session => session.DateCreated)
-                .ToListAsync();
-
-            List<InterviewSessionActivityDTO> activityDTOs = interviewSessions.ConvertAll(session =>
-            {
-                TechnicalInterview? technicalInterview = session.Interviews.OfType<TechnicalInterview>().FirstOrDefault();
-
-                return new InterviewSessionActivityDTO()
+            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivitiesAsync();
+            List<InterviewSessionPerformanceDTO> performanceData = activities
+                .OrderBy(activity => activity.DateCreated)
+                .Select(activity => new InterviewSessionPerformanceDTO()
                 {
-                    ID = session.ID,
-                    DateCreated = session.DateCreated,
-                    Subject = session.Subject,
-                    AverageScore = session.AverageScore,
-                    AiAgent = session.AIAgent.ToString(),
-                    Position = technicalInterview?.Position ?? "Junior Developer",
-                    ProgrammingLanguage = technicalInterview?.ProgrammingLanguage ?? "C#",
-                    Status = session.Status.ToString()
-                };
-            });
+                    ID = activity.ID,
+                    DateCreated = activity.DateCreated,
+                    Score = activity.AverageScore
+                }).ToList();
 
-            return activityDTOs;
+            return performanceData;
+        }
+
+        public async Task<List<ProgrammingLanguageDataDTO>> GetInterviewSessionProgrammingLanguageDataAsync()
+        {
+            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivitiesAsync();
+            List<ProgrammingLanguageDataDTO> programmingLanguageData = activities
+                .GroupBy(activity => activity.ProgrammingLanguage)
+                .Select(activity => new ProgrammingLanguageDataDTO()
+                {
+                    Language = activity.Key,
+                    Sessions = activity.Count()
+                }).ToList();
+
+            return programmingLanguageData;
+        }
+
+        public async Task<List<PositionDataDTO>> GetInterviewSessionPositionDataAsync()
+        {
+            List<InterviewSessionActivityDTO> activities = await GetInterviewSessionActivitiesAsync();
+            List<PositionDataDTO> positionData = activities
+                .GroupBy(activity => activity.Position)
+                .Select(activity => new PositionDataDTO()
+                {
+                    Position = activity.Key,
+                    Sessions = activity.Count()
+                }).ToList();
+
+            return positionData;
+        }
+
+        public async Task FinishInterviewSessionAsync()
+        {
+            int currentUserID = await _userRepository.GetCurrentUserID();
+            int interviewSessionID = await _interviewSessionRepository.GetLatestInterviewSessionIDAsync(currentUserID);
+            InterviewSession latestSession = await _interviewSessionRepository.GetInterviewSessionByIdAsync(interviewSessionID);
+
+            await _interviewSessionRepository.FinishInterviewSessionAsync(latestSession);
+        }
+
+        public async Task DeleteInterviewSessionsAsync()
+        {
+            int currentUserID = await _userRepository.GetCurrentUserID();
+            List<InterviewSession> interviewSessions = await _interviewSessionRepository.GetInterviewSessionsByUserIdAsync(currentUserID);
+
+            await _interviewSessionRepository.DeleteInterviewSessionsAsync(interviewSessions);
         }
     }
 }

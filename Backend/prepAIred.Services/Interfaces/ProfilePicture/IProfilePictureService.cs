@@ -1,32 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using prepAIred.Data;
 
 namespace prepAIred.Services
 {
     /// <summary>
-    /// Service interface for managing profile picture operations including file storage, retrieval, and deletion.
-    /// Coordinates between file system operations and database updates for profile picture management.
+    /// Repository interface for managing profile picture data operations in the database.
+    /// Handles retrieval and updates of user profile picture information.
     /// </summary>
     public interface IProfilePictureService
     {
         /// <summary>
-        /// Saves an uploaded image file to the file system and returns the file name.
+        /// Retrieves the profile picture URL for the current authenticated user.
         /// </summary>
-        /// <param name="imageFile">The uploaded image file to save</param>
-        /// <returns>The saved file name with extension</returns>
-        Task<string> SaveFileAsync(IFormFile imageFile);
-        
-        /// <summary>
-        /// Retrieves the profile picture URL for a specific user.
-        /// </summary>
-        /// <param name="userId">The unique identifier of the user</param>
         /// <returns>The URL path to the user's profile picture</returns>
-        Task<string> GetProfilePictureUrlByUserIdAsync(int userId);
+        Task<string> GetProfilePictureUrlAsync();
         
         /// <summary>
-        /// Deletes a profile picture file from the file system.
+        /// Updates the user's profile picture information in the database.
         /// </summary>
-        /// <param name="fileNameWithExtension">The complete file name including extension to delete</param>
+        /// <param name="profilePictureDTO">Data transfer object containing profile picture details</param>
         /// <returns>A task representing the asynchronous operation</returns>
-        Task DeleteProfilePictureAsync(string fileNameWithExtension);
+        Task ChangeProfilePictureAsync(ProfilePictureDTO profilePictureDTO);
     }
 }

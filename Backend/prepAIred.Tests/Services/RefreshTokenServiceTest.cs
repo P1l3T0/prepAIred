@@ -4,42 +4,42 @@ using prepAIred.Data;
 using prepAIred.Exceptions;
 using prepAIred.Services;
 
-namespace prepAIred.Tests.Repositories
+namespace prepAIred.Tests.Services
 {
-    public class RefreshTokenRepositoryTest
+    public class RefreshTokenServiceTest
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IRefreshTokenService _refreshTokenService;
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IJwtService _jwtService;
         private readonly ICookieService _cookieService;
-        private readonly IUserService _userService;
-        private readonly RefreshTokenRepository _refreshTokenRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly RefreshTokenService _refreshTokenService;
         private readonly HttpContext _httpContext;
 
-        public RefreshTokenRepositoryTest()
+        public RefreshTokenServiceTest()
         {
             _httpContextAccessor = A.Fake<IHttpContextAccessor>();
-            _refreshTokenService = A.Fake<IRefreshTokenService>();
+            _refreshTokenRepository = A.Fake<IRefreshTokenRepository>();
             _jwtService = A.Fake<IJwtService>();
             _cookieService = A.Fake<ICookieService>();
-            _userService = A.Fake<IUserService>();
+            _userRepository = A.Fake<IUserRepository>();
             _httpContext = new DefaultHttpContext();
 
             A.CallTo(() => _httpContextAccessor.HttpContext).Returns(_httpContext);
 
-            _refreshTokenRepository = new RefreshTokenRepository(
+            _refreshTokenService = new RefreshTokenService(
                 _httpContextAccessor,
-                _refreshTokenService,
+                _refreshTokenRepository,
                 _jwtService,
                 _cookieService,
-                _userService
+                _userRepository
             );
         }
 
         #region GenerateNewRefreshTokenAsync Tests
 
         [Fact]
-        public async Task RefreshTokenRepository_GenerateNewRefreshTokenAsync_ReturnsValidResponse()
+        public async Task RefreshTokenService_GenerateNewRefreshTokenAsync_ReturnsValidResponse()
         {
             string oldRefreshToken = "old-refresh-token";
             string newRefreshToken = "new-refresh-token";
@@ -71,13 +71,13 @@ namespace prepAIred.Tests.Repositories
                 IsRevoked = false
             };
 
-            A.CallTo(() => _refreshTokenService.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
+            A.CallTo(() => _refreshTokenRepository.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
             A.CallTo(() => _jwtService.GenerateRefreshToken(userId)).Returns(newRefreshToken);
             A.CallTo(() => _jwtService.GenerateAcessToken(userId)).Returns(newAccessToken);
-            A.CallTo(() => _refreshTokenService.AddRefreshTokenAsync(A<RefreshToken>._)).Returns(newRefreshTokenEntity);
-            A.CallTo(() => _userService.GetUserByIdAsync(userId)).Returns(currentUser);
+            A.CallTo(() => _refreshTokenRepository.AddRefreshTokenAsync(A<RefreshToken>._)).Returns(newRefreshTokenEntity);
+            A.CallTo(() => _userRepository.GetUserByIdAsync(userId)).Returns(currentUser);
 
-            RefreshTokenResponseDTO result = await _refreshTokenRepository.GenerateNewRefreshTokenAsync();
+            RefreshTokenResponseDTO result = await _refreshTokenService.GenerateNewRefreshTokenAsync();
 
             Assert.NotNull(result);
             Assert.Equal(newAccessToken, result.NewAccessToken);
@@ -87,7 +87,7 @@ namespace prepAIred.Tests.Repositories
         }
 
         [Fact]
-        public async Task RefreshTokenRepository_GenerateNewRefreshTokenAsync_RevokesOldToken()
+        public async Task RefreshTokenService_GenerateNewRefreshTokenAsync_RevokesOldToken()
         {
             string oldRefreshToken = "old-refresh-token";
             int userId = 1;
@@ -104,19 +104,19 @@ namespace prepAIred.Tests.Repositories
 
             CurrentUserDTO currentUser = new CurrentUserDTO { ID = userId, Username = "JohnDoe" };
 
-            A.CallTo(() => _refreshTokenService.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
+            A.CallTo(() => _refreshTokenRepository.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
             A.CallTo(() => _jwtService.GenerateRefreshToken(userId)).Returns("new-token");
             A.CallTo(() => _jwtService.GenerateAcessToken(userId)).Returns("new-access");
-            A.CallTo(() => _refreshTokenService.AddRefreshTokenAsync(A<RefreshToken>._)).Returns(new RefreshToken());
-            A.CallTo(() => _userService.GetUserByIdAsync(userId)).Returns(currentUser);
+            A.CallTo(() => _refreshTokenRepository.AddRefreshTokenAsync(A<RefreshToken>._)).Returns(new RefreshToken());
+            A.CallTo(() => _userRepository.GetUserByIdAsync(userId)).Returns(currentUser);
 
-            await _refreshTokenRepository.GenerateNewRefreshTokenAsync();
+            await _refreshTokenService.GenerateNewRefreshTokenAsync();
 
             Assert.True(storedToken.IsRevoked);
         }
 
         [Fact]
-        public async Task RefreshTokenRepository_GenerateNewRefreshTokenAsync_CallsJwtServiceToGenerateTokens()
+        public async Task RefreshTokenService_GenerateNewRefreshTokenAsync_CallsJwtServiceToGenerateTokens()
         {
             string oldRefreshToken = "old-refresh-token";
             int userId = 1;
@@ -133,20 +133,20 @@ namespace prepAIred.Tests.Repositories
 
             CurrentUserDTO currentUser = new CurrentUserDTO { ID = userId, Username = "JohnDoe" };
 
-            A.CallTo(() => _refreshTokenService.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
+            A.CallTo(() => _refreshTokenRepository.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
             A.CallTo(() => _jwtService.GenerateRefreshToken(userId)).Returns("new-token");
             A.CallTo(() => _jwtService.GenerateAcessToken(userId)).Returns("new-access");
-            A.CallTo(() => _refreshTokenService.AddRefreshTokenAsync(A<RefreshToken>._)).Returns(new RefreshToken());
-            A.CallTo(() => _userService.GetUserByIdAsync(userId)).Returns(currentUser);
+            A.CallTo(() => _refreshTokenRepository.AddRefreshTokenAsync(A<RefreshToken>._)).Returns(new RefreshToken());
+            A.CallTo(() => _userRepository.GetUserByIdAsync(userId)).Returns(currentUser);
 
-            await _refreshTokenRepository.GenerateNewRefreshTokenAsync();
+            await _refreshTokenService.GenerateNewRefreshTokenAsync();
 
             A.CallTo(() => _jwtService.GenerateRefreshToken(userId)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _jwtService.GenerateAcessToken(userId)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
-        public async Task RefreshTokenRepository_GenerateNewRefreshTokenAsync_AddsNewRefreshTokenToDatabase()
+        public async Task RefreshTokenService_GenerateNewRefreshTokenAsync_AddsNewRefreshTokenToDatabase()
         {
             string oldRefreshToken = "old-refresh-token";
             string newRefreshToken = "new-refresh-token";
@@ -164,15 +164,15 @@ namespace prepAIred.Tests.Repositories
 
             CurrentUserDTO currentUser = new CurrentUserDTO { ID = userId, Username = "JohnDoe" };
 
-            A.CallTo(() => _refreshTokenService.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
+            A.CallTo(() => _refreshTokenRepository.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
             A.CallTo(() => _jwtService.GenerateRefreshToken(userId)).Returns(newRefreshToken);
             A.CallTo(() => _jwtService.GenerateAcessToken(userId)).Returns("new-access");
-            A.CallTo(() => _refreshTokenService.AddRefreshTokenAsync(A<RefreshToken>._)).Returns(new RefreshToken());
-            A.CallTo(() => _userService.GetUserByIdAsync(userId)).Returns(currentUser);
+            A.CallTo(() => _refreshTokenRepository.AddRefreshTokenAsync(A<RefreshToken>._)).Returns(new RefreshToken());
+            A.CallTo(() => _userRepository.GetUserByIdAsync(userId)).Returns(currentUser);
 
-            await _refreshTokenRepository.GenerateNewRefreshTokenAsync();
+            await _refreshTokenService.GenerateNewRefreshTokenAsync();
 
-            A.CallTo(() => _refreshTokenService.AddRefreshTokenAsync(A<RefreshToken>.That.Matches(rt =>
+            A.CallTo(() => _refreshTokenRepository.AddRefreshTokenAsync(A<RefreshToken>.That.Matches(rt =>
                 rt.Token == newRefreshToken &&
                 rt.UserID == userId &&
                 !rt.IsRevoked
@@ -180,7 +180,7 @@ namespace prepAIred.Tests.Repositories
         }
 
         [Fact]
-        public async Task RefreshTokenRepository_GenerateNewRefreshTokenAsync_UpdatesCookies()
+        public async Task RefreshTokenService_GenerateNewRefreshTokenAsync_UpdatesCookies()
         {
             string oldRefreshToken = "old-refresh-token";
             string newRefreshToken = "new-refresh-token";
@@ -199,13 +199,13 @@ namespace prepAIred.Tests.Repositories
 
             CurrentUserDTO currentUser = new CurrentUserDTO { ID = userId, Username = "JohnDoe" };
 
-            A.CallTo(() => _refreshTokenService.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
+            A.CallTo(() => _refreshTokenRepository.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
             A.CallTo(() => _jwtService.GenerateRefreshToken(userId)).Returns(newRefreshToken);
             A.CallTo(() => _jwtService.GenerateAcessToken(userId)).Returns(newAccessToken);
-            A.CallTo(() => _refreshTokenService.AddRefreshTokenAsync(A<RefreshToken>._)).Returns(new RefreshToken());
-            A.CallTo(() => _userService.GetUserByIdAsync(userId)).Returns(currentUser);
+            A.CallTo(() => _refreshTokenRepository.AddRefreshTokenAsync(A<RefreshToken>._)).Returns(new RefreshToken());
+            A.CallTo(() => _userRepository.GetUserByIdAsync(userId)).Returns(currentUser);
 
-            await _refreshTokenRepository.GenerateNewRefreshTokenAsync();
+            await _refreshTokenService.GenerateNewRefreshTokenAsync();
 
             A.CallTo(() => _cookieService.DeleteCookie("RefreshToken")).MustHaveHappenedOnceExactly();
             A.CallTo(() => _cookieService.CreateCookie("AccessToken", newAccessToken)).MustHaveHappenedOnceExactly();
@@ -213,20 +213,20 @@ namespace prepAIred.Tests.Repositories
         }
 
         [Fact]
-        public async Task RefreshTokenRepository_GenerateNewRefreshTokenAsync_ThrowsException_WhenTokenIsNull()
+        public async Task RefreshTokenService_GenerateNewRefreshTokenAsync_ThrowsException_WhenTokenIsNull()
         {
             string refreshToken = "invalid-token";
 
             _httpContext.Request.Headers.Cookie = $"RefreshToken={refreshToken}";
 
-            A.CallTo(() => _refreshTokenService.GetRefreshTokenAsync(refreshToken)).Returns((RefreshToken)null);
+            A.CallTo(() => _refreshTokenRepository.GetRefreshTokenAsync(refreshToken)).Returns((RefreshToken)null);
 
             await Assert.ThrowsAsync<InvalidRefreshTokenException>(() =>
-                _refreshTokenRepository.GenerateNewRefreshTokenAsync());
+                _refreshTokenService.GenerateNewRefreshTokenAsync());
         }
 
         [Fact]
-        public async Task RefreshTokenRepository_GenerateNewRefreshTokenAsync_ThrowsException_WhenTokenIsExpired()
+        public async Task RefreshTokenService_GenerateNewRefreshTokenAsync_ThrowsException_WhenTokenIsExpired()
         {
             string oldRefreshToken = "expired-token";
 
@@ -240,14 +240,14 @@ namespace prepAIred.Tests.Repositories
                 IsRevoked = false
             };
 
-            A.CallTo(() => _refreshTokenService.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
+            A.CallTo(() => _refreshTokenRepository.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
 
             await Assert.ThrowsAsync<InvalidRefreshTokenException>(() =>
-                _refreshTokenRepository.GenerateNewRefreshTokenAsync());
+                _refreshTokenService.GenerateNewRefreshTokenAsync());
         }
 
         [Fact]
-        public async Task RefreshTokenRepository_GenerateNewRefreshTokenAsync_ThrowsException_WhenTokenIsRevoked()
+        public async Task RefreshTokenService_GenerateNewRefreshTokenAsync_ThrowsException_WhenTokenIsRevoked()
         {
             string oldRefreshToken = "revoked-token";
 
@@ -261,14 +261,14 @@ namespace prepAIred.Tests.Repositories
                 IsRevoked = true
             };
 
-            A.CallTo(() => _refreshTokenService.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
+            A.CallTo(() => _refreshTokenRepository.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
 
             await Assert.ThrowsAsync<InvalidRefreshTokenException>(() =>
-                _refreshTokenRepository.GenerateNewRefreshTokenAsync());
+                _refreshTokenService.GenerateNewRefreshTokenAsync());
         }
 
         [Fact]
-        public async Task RefreshTokenRepository_GenerateNewRefreshTokenAsync_DoesNotCreateNewToken_WhenValidationFails()
+        public async Task RefreshTokenService_GenerateNewRefreshTokenAsync_DoesNotCreateNewToken_WhenValidationFails()
         {
             string oldRefreshToken = "expired-token";
 
@@ -282,18 +282,18 @@ namespace prepAIred.Tests.Repositories
                 IsRevoked = false
             };
 
-            A.CallTo(() => _refreshTokenService.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
+            A.CallTo(() => _refreshTokenRepository.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
 
             await Assert.ThrowsAsync<InvalidRefreshTokenException>(() =>
-                _refreshTokenRepository.GenerateNewRefreshTokenAsync());
+                _refreshTokenService.GenerateNewRefreshTokenAsync());
 
             A.CallTo(() => _jwtService.GenerateRefreshToken(A<int>._)).MustNotHaveHappened();
             A.CallTo(() => _jwtService.GenerateAcessToken(A<int>._)).MustNotHaveHappened();
-            A.CallTo(() => _refreshTokenService.AddRefreshTokenAsync(A<RefreshToken>._)).MustNotHaveHappened();
+            A.CallTo(() => _refreshTokenRepository.AddRefreshTokenAsync(A<RefreshToken>._)).MustNotHaveHappened();
         }
 
         [Fact]
-        public async Task RefreshTokenRepository_GenerateNewRefreshTokenAsync_ExecutesInCorrectOrder()
+        public async Task RefreshTokenService_GenerateNewRefreshTokenAsync_ExecutesInCorrectOrder()
         {
             string oldRefreshToken = "old-refresh-token";
             string newRefreshToken = "new-refresh-token";
@@ -318,19 +318,19 @@ namespace prepAIred.Tests.Repositories
                 ExpiryDate = DateTime.Now.AddDays(7)
             };
 
-            A.CallTo(() => _refreshTokenService.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
+            A.CallTo(() => _refreshTokenRepository.GetRefreshTokenAsync(oldRefreshToken)).Returns(storedToken);
             A.CallTo(() => _jwtService.GenerateRefreshToken(userId)).Returns(newRefreshToken);
             A.CallTo(() => _jwtService.GenerateAcessToken(userId)).Returns(newAccessToken);
-            A.CallTo(() => _refreshTokenService.AddRefreshTokenAsync(A<RefreshToken>._)).Returns(newRefreshTokenEntity);
-            A.CallTo(() => _userService.GetUserByIdAsync(userId)).Returns(currentUser);
+            A.CallTo(() => _refreshTokenRepository.AddRefreshTokenAsync(A<RefreshToken>._)).Returns(newRefreshTokenEntity);
+            A.CallTo(() => _userRepository.GetUserByIdAsync(userId)).Returns(currentUser);
 
-            await _refreshTokenRepository.GenerateNewRefreshTokenAsync();
+            await _refreshTokenService.GenerateNewRefreshTokenAsync();
 
-            A.CallTo(() => _refreshTokenService.GetRefreshTokenAsync(oldRefreshToken)).MustHaveHappened()
+            A.CallTo(() => _refreshTokenRepository.GetRefreshTokenAsync(oldRefreshToken)).MustHaveHappened()
                 .Then(A.CallTo(() => _jwtService.GenerateRefreshToken(userId)).MustHaveHappened())
                 .Then(A.CallTo(() => _jwtService.GenerateAcessToken(userId)).MustHaveHappened())
-                .Then(A.CallTo(() => _refreshTokenService.AddRefreshTokenAsync(A<RefreshToken>._)).MustHaveHappened())
-                .Then(A.CallTo(() => _userService.GetUserByIdAsync(userId)).MustHaveHappened())
+                .Then(A.CallTo(() => _refreshTokenRepository.AddRefreshTokenAsync(A<RefreshToken>._)).MustHaveHappened())
+                .Then(A.CallTo(() => _userRepository.GetUserByIdAsync(userId)).MustHaveHappened())
                 .Then(A.CallTo(() => _cookieService.DeleteCookie("RefreshToken")).MustHaveHappened())
                 .Then(A.CallTo(() => _cookieService.CreateCookie("AccessToken", newAccessToken)).MustHaveHappened())
                 .Then(A.CallTo(() => _cookieService.CreateCookie("RefreshToken", newRefreshToken)).MustHaveHappened());

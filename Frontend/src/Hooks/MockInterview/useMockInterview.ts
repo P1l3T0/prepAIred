@@ -5,11 +5,15 @@ import type { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
 
 const useMockInterview = () => {
   const [isConnected, setIsConnected] = useState(false);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState("English");
   const [messages, setMessages] = useState<Message[]>([]);
 
   const conversation = useConversation({
-    onConnect: () => setIsConnected(true),
+    onConnect: () => { 
+      setIsConnected(true);
+      setConnectionError(null);
+    },
     onDisconnect: () => {
       setIsConnected(false);
       setMessages([]);
@@ -49,6 +53,7 @@ const useMockInterview = () => {
     } catch (error) {
       console.error(error);
       setIsConnected(false);
+      setConnectionError("Microphone access is required to start the interview. Please allow microphone access and try again.");
     }
   };
 
@@ -58,6 +63,7 @@ const useMockInterview = () => {
 
   return {
     isConnected,
+    connectionError,
     messages,
     handleStartConversation,
     handleEndConversation,
