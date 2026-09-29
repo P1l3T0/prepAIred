@@ -42,7 +42,7 @@ const InterviewSessionContextProvider: React.FC<InterviewSessionProviderProps> =
     const hasHrInterviews: boolean = hrInterviews?.length > 0;
     const hasTechnicalInterviews: boolean = technicalInterviews?.length > 0;
 
-    const allTechnicalAnswered: boolean = technicalInterviews?.every((interview: InterviewDTO) => interview.isAnswered);
+    const allTechnicalAnswered: boolean = Array.isArray(technicalInterviews) && technicalInterviews.every((interview: InterviewDTO) => interview.isAnswered);
     const technicalCompleted: boolean = hasTechnicalInterviews && allTechnicalAnswered;
 
     setDisableHrInterviewButton(hasHrInterviews);

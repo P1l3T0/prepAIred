@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using prepAIred.Exceptions;
 using prepAIred.Services;
 
-namespace prepAIred.Tests.Services
+namespace prepAIred.Tests.Repositories
 {
     public class FileServiceTest
     {

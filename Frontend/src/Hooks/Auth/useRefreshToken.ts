@@ -65,13 +65,14 @@ const useRefreshToken = () => {
   };
 
   useEffect(() => {
+    if (!isUserLoggedIn) return;
     setTokenRefreshTimer(DEFAULT_REFRESH_INTERVAL);
     return () => {
       if (tokenRefreshTimeout.current) {
         clearTimeout(tokenRefreshTimeout.current);
       }
     };
-  }, []);
+  }, [isUserLoggedIn]);
 
   return refresh;
 };

@@ -1,53 +1,27 @@
 ﻿using prepAIred.Data;
-using prepAIred.Exceptions;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace prepAIred.Services
 {
-    public class RefreshTokenRepository(IHttpContextAccessor httpContextAccessor, IRefreshTokenService refreshTokenService,
-        IJwtService jwtService, ICookieService cookieService, IUserService userService) : IRefreshTokenRepository
+    public class RefreshTokenRepository(DataContext dataContext) : IRefreshTokenRepository
     {
-        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
-        private readonly IRefreshTokenService _refreshTokenService = refreshTokenService;
-        private readonly IJwtService _jwtService = jwtService;
-        private readonly ICookieService _cookieService = cookieService;
-        private readonly IUserService _userService = userService;
+        private readonly DataContext _dataContext = dataContext;
 
-        public async Task<RefreshTokenResponseDTO> GenerateNewRefreshTokenAsync()
+        public async Task<RefreshToken> AddRefreshTokenAsync(RefreshToken refreshToken)
         {
-            string refreshToken = _httpContextAccessor.HttpContext!.Request.Cookies["RefreshToken"]!;
-            RefreshToken storedToken = await _refreshTokenService.GetRefreshTokenAsync(refreshToken);
+            _dataContext.RefreshTokens.Add(refreshToken);
+            await _dataContext.SaveChangesAsync();
+            return refreshToken;
+        }
 
-            if (storedToken is null || storedToken.ExpiryDate < DateTime.Now || storedToken.IsRevoked)
-            {
-                throw new InvalidRefreshTokenException("Invalid or expired refresh token.");
-            }
+        public async Task<RefreshToken> GetRefreshTokenAsync(string refreshToken)
+        {
+            return await _dataContext.RefreshTokens.FirstOrDefaultAsync(t => t.Token == refreshToken) ?? new RefreshToken();
+        }
 
-            storedToken.IsRevoked = true;
-
-            string newRefreshToken = _jwtService.GenerateRefreshToken(storedToken.UserID);
-            string newAccessToken = _jwtService.GenerateAcessToken(storedToken.UserID);
-
-            RefreshToken newRefreshTokenEntity = await _refreshTokenService.AddRefreshTokenAsync(new RefreshToken()
-            {
-                Token = newRefreshToken,
-                ExpiryDate = DateTime.Now.AddDays(7),
-                UserID = storedToken.UserID,
-            });
-
-            CurrentUserDTO currentUser = await _userService.GetUserByIdAsync(storedToken.UserID);
-
-            _cookieService.DeleteCookie("RefreshToken");
-            _cookieService.CreateCookie("AccessToken", newAccessToken);
-            _cookieService.CreateCookie("RefreshToken", newRefreshToken);
-
-            return new RefreshTokenResponseDTO()
-            {
-                NewAccessToken = newAccessToken,
-                NewRefreshToken = newRefreshToken,
-                ExpiresIn = 600,
-                Username = currentUser.Username
-            };
+        public async Task<RefreshToken> GetRefreshTokenByUserIdAsync(int userID)
+        {
+            return await _dataContext.RefreshTokens.FirstOrDefaultAsync(t => t.UserID == userID && !t.IsRevoked) ?? new RefreshToken();
         }
     }
 }

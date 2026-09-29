@@ -19,7 +19,6 @@ const useLogOut = () => {
   const logOut = async () => {
     await axios
       .post(logoutEndPoint, null, { withCredentials: true })
-      .then(() => navigate("/login"))
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
         console.error(error?.title);
@@ -30,6 +29,7 @@ const useLogOut = () => {
     mutationFn: logOut,
     onSuccess: () => {
       logout();
+      navigate("/login");
       setDisableHrInterviewButton(false);
       setDisableTechnicalInterviewButton(false);
       queryClient.setQueryData(["user"], null);

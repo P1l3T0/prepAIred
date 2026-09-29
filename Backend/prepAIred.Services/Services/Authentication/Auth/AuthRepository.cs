@@ -1,33 +1,61 @@
 ﻿using prepAIred.Data;
+using prepAIred.Exceptions;
 
 namespace prepAIred.Services
 {
-    public class AuthRepository(IAuthService authService, IUserService userService) : IAuthRepository
+    public class AuthRepository(IJwtService jwtService, IRefreshTokenRepository refreshTokenRepository, ICookieService cookieService, IUserRepository userRepository) : IAuthRepository
     {
-        private readonly IAuthService _authService = authService;
-        private readonly IUserService _userService = userService;
+        private readonly IJwtService _jwtService = jwtService;
+        private readonly IRefreshTokenRepository _refreshTokenRepository = refreshTokenRepository;
+        private readonly ICookieService _cookieService = cookieService;
+        private readonly IUserRepository _userRepository = userRepository;
 
-        public async Task RegisterAsync(UserCredentialsDTO userCredentialsDto)
+        public async Task<CurrentUserDTO> RegisterAsync(UserCredentialsDTO userCredentialsDto, byte[] hashedPassword, byte[] saltPassword)
         {
-            await _userService.ValidateUserAsync(userCredentialsDto);
+            User newUser = new User()
+            {
+                Email = userCredentialsDto.Email,
+                Username = userCredentialsDto.Username,
+                PasswordHash = hashedPassword,
+                PasswordSalt = saltPassword
+            };
 
-            (byte[] hashedPassword, byte[] saltPassword) = _userService.HashPassword(userCredentialsDto);
+            await _userRepository.CreateUserAsync(newUser);
 
-            CurrentUserDTO currentUser = await _authService.RegisterAsync(userCredentialsDto, hashedPassword, saltPassword);
-
-            await _authService.GenerateAuthResponseAsync(currentUser);
+            return newUser.ToDto<CurrentUserDTO>();
         }
 
-        public async Task LoginAsync(LoginDTO loginDto)
+        public async Task<CurrentUserDTO> LoginAsync(LoginDTO loginDto)
         {
-            CurrentUserDTO currentUser = await _authService.LoginAsync(loginDto);
+            if (!await _userRepository.UserExistsAsync(loginDto.Email)) throw new ResourceNotFoundException("Invalid Username or Password");
 
-            await _authService.GenerateAuthResponseAsync(currentUser);
+            User currentUser = await _userRepository.GetUserByEmailAsync(loginDto.Email);
+
+            if (!_userRepository.CheckPassword(currentUser, loginDto)) throw new InvalidCredentialsException("Invalid Username or Password");
+
+            return currentUser.ToDto<CurrentUserDTO>();
+        }
+
+        public async Task GenerateAuthResponseAsync(CurrentUserDTO currentUser)
+        {
+            string accessToken = _jwtService.GenerateAcessToken(currentUser.ID);
+            string refreshToken = _jwtService.GenerateRefreshToken(currentUser.ID);
+
+            await _refreshTokenRepository.AddRefreshTokenAsync(new RefreshToken()
+            {
+                Token = refreshToken,
+                ExpiryDate = DateTime.Now.AddDays(1),
+                UserID = currentUser.ID
+            });
+
+            _cookieService.CreateCookie("AccessToken", accessToken);
+            _cookieService.CreateCookie("RefreshToken", refreshToken);
         }
 
         public async Task LogoutAsync()
         {
-            await _authService.LogoutAsync();
+            _cookieService.DeleteCookie("AccessToken");
+            _cookieService.DeleteCookie("RefreshToken");
 
             await Task.CompletedTask;
         }

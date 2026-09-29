@@ -23,7 +23,7 @@ const useUploadProfilePicture = () => {
     formData.append("imageFile", file);
 
     await axios
-      .post(changeProfilePictureEndPoint, formData, {
+      .put(changeProfilePictureEndPoint, formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",

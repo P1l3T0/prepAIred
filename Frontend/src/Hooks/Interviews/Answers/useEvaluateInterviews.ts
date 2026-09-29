@@ -64,11 +64,11 @@ const useEvaluateInterviews = ({
   });
 
   const handleEvaluateInterviews = async (e: SyntheticEvent) => {
-    const hasSingleChoiceAnswer = singleChoiceAnswers.every(answer => answer.answer !== "") && singleChoiceAnswers.length > 0;
-    const hasOpenEndedAnswer = openEndedAnswers.every(answer => answer.answer !== "") && openEndedAnswers.length > 0;
-    const hasMultipleChoiceAnswer = multipleChoiceAnswers.every(answer => answer.answers.every(a => a !== "")) && multipleChoiceAnswers.length > 0;
+    const hasSingleChoiceAnswer = singleChoiceAnswers.length === 0 || singleChoiceAnswers.every(answer => answer.answer !== "");
+    const hasOpenEndedAnswer = openEndedAnswers.length === 0 || openEndedAnswers.every(answer => answer.answer !== "");
+    const hasMultipleChoiceAnswer = multipleChoiceAnswers.length === 0 || multipleChoiceAnswers.every(answer => answer.answers.length > 0);
 
-    if ((!hasSingleChoiceAnswer || !hasOpenEndedAnswer) && !hasMultipleChoiceAnswer) {
+    if (!hasSingleChoiceAnswer || !hasOpenEndedAnswer || !hasMultipleChoiceAnswer) {
       return alert("Please answer all questions before submitting.");
     }
 

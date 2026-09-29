@@ -1,27 +1,54 @@
 ﻿using prepAIred.Data;
 using prepAIred.Services;
+using prepAIred.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace prepAIred.API
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class ProfilePictureController(IProfilePictureRepository profilePictureRepository) : Controller
+    [Route("api/profile-pictures")]
+    public class ProfilePictureController(IProfilePictureService profilePictureService) : Controller
     {
-        private readonly IProfilePictureRepository _profilePictureRepository = profilePictureRepository;
+        private readonly IProfilePictureService _profilePictureService = profilePictureService;
 
-        [HttpGet("get-profile-picture-url")]
+        [HttpGet]
         public async Task<IActionResult> GetProfilePicture()
         {
-            string profilePictureUrl = await _profilePictureRepository.GetProfilePictureUrlAsync();
-            return Ok(profilePictureUrl);
+            try
+            {
+                string profilePictureUrl = await _profilePictureService.GetProfilePictureUrlAsync();
+                return Ok(profilePictureUrl);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
-        [HttpPost("change-profile-picture")]
+        [HttpPut]
         public async Task<IActionResult> ChangeProfilePicture([FromForm] ProfilePictureDTO profilePictureDTO)
         {
-            await _profilePictureRepository.ChangeProfilePictureAsync(profilePictureDTO);
-            return Ok("Profile picture changed");
+            try
+            {
+                await _profilePictureService.ChangeProfilePictureAsync(profilePictureDTO);
+                return Ok("Profile picture changed");
+            }
+            catch (UnsupportedFileExtensionException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ProfilePictureException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

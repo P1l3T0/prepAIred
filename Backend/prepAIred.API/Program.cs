@@ -35,21 +35,21 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(connectionString);
 });
 
-builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddScoped<ICookieService, CookieService>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IProfilePictureRepository, ProfilePictureRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProfilePictureService, ProfilePictureService>();
+builder.Services.AddScoped<IProfilePictureRepository, ProfilePictureRepository>();
 builder.Services.AddScoped<IAIService, AIService>();
-builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();
 builder.Services.AddScoped<IInterviewService, InterviewService>();
-builder.Services.AddScoped<IInterviewSessionRepository, InterviewSessionRepository>();
+builder.Services.AddScoped<IInterviewRepository, InterviewRepository>();
 builder.Services.AddScoped<IInterviewSessionService, InterviewSessionService>();
+builder.Services.AddScoped<IInterviewSessionRepository, InterviewSessionRepository>();
 builder.Services.AddScoped<IPromptService, PromptService>();
 builder.Services.AddScoped<ISerializationService, SerializationService>();
 builder.Services.AddScoped<IFileService, FileService>();
