@@ -48,7 +48,7 @@ namespace prepAIred.Services
             foreach (TInterview evaluatedInterview in evaluatedInterviews)
             {
                 TInterview? existing = existingInterviews.FirstOrDefault(i => i.ID == evaluatedInterview.ID);
-                if (existing is null) return;
+                if (existing is null) continue;
 
                 existing.Score = evaluatedInterview.Score;
                 existing.Feedback = evaluatedInterview.Feedback;

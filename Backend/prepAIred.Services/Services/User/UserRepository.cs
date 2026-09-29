@@ -25,9 +25,9 @@ namespace prepAIred.Services
 
         public async Task<User> GetUserByEmailAsync(string email) => await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == email)! ?? throw new InvalidCredentialsException("Invalid Email");
 
-        public async Task<CurrentUserDTO> GetUserByUsernameAsync(string username) => (await _dataContext.Users.FirstOrDefaultAsync(u => u.Username == username))!.ToDto<CurrentUserDTO>() ?? throw new InvalidCredentialsException("Invalid Username");
+        public async Task<CurrentUserDTO> GetUserByUsernameAsync(string username) => (await _dataContext.Users.FirstOrDefaultAsync(u => u.Username == username))?.ToDto<CurrentUserDTO>() ?? throw new InvalidCredentialsException("Invalid Username");
 
-        public async Task<CurrentUserDTO> GetUserByIdAsync(int userID) => (await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == userID))!.ToDto<CurrentUserDTO>() ?? throw new InvalidCredentialsException("Invalid User ID");
+        public async Task<CurrentUserDTO> GetUserByIdAsync(int userID) => (await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == userID))?.ToDto<CurrentUserDTO>() ?? throw new InvalidCredentialsException("Invalid User ID");
 
         public async Task<User> GetCurrentUserEntityByIdAsync(int userID) => await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == userID) ?? throw new InvalidCredentialsException("Invalid User ID");
 
@@ -81,7 +81,7 @@ namespace prepAIred.Services
 
         public async Task ValidateUserAsync(UserCredentialsDTO userCredentialsDto)
         {
-            if (!AreFieldsEmpty(userCredentialsDto)) throw new EmptyFieldsException("Enter data in all fields");
+            if (AreFieldsEmpty(userCredentialsDto)) throw new EmptyFieldsException("Enter data in all fields");
 
             if (!ValidateEmail(userCredentialsDto.Email) || !ValidatePassword(userCredentialsDto.Password)) throw new InvalidCredentialsException("Invalid Email or Password");
 
@@ -110,10 +110,7 @@ namespace prepAIred.Services
 
         public bool AreFieldsEmpty(UserCredentialsDTO registerDto)
         {
-            if (string.IsNullOrWhiteSpace(registerDto.Email) || string.IsNullOrWhiteSpace(registerDto.Username) || string.IsNullOrWhiteSpace(registerDto.Password))
-                return false;
-
-            return true;
+            return string.IsNullOrWhiteSpace(registerDto.Email) || string.IsNullOrWhiteSpace(registerDto.Username) || string.IsNullOrWhiteSpace(registerDto.Password);
         }
 
         public async Task<bool> UserExistsAsync(string email) => await _dataContext.Users.AnyAsync(u => u.Email == email);

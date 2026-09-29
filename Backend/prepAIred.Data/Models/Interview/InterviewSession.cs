@@ -41,7 +41,7 @@ namespace prepAIred.Data
         /// <summary>
         /// Gets or sets the current status of the interview session.
         /// </summary>
-        public InterviewSessionStatus Status { get; set; } = InterviewSessionStatus.Failed;
+        public InterviewSessionStatus Status { get; set; } = InterviewSessionStatus.Ongoing;
 
         /// <summary>
         /// Gets or sets the user entity associated with this session (navigation property).

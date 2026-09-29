@@ -48,6 +48,8 @@ namespace prepAIred.Services
             await _dataContext.Users
                 .Where(u => u.ProfilePicture == fileNameWithExtension)
                 .ForEachAsync(u => u.ProfilePicture = string.Empty);
+
+            await _dataContext.SaveChangesAsync();
         }
     }
 }
